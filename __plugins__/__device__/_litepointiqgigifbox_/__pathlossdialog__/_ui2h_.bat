@@ -1,0 +1,1 @@
+uic -o _pathlossbox__ui_.h _pathlossbox_.ui

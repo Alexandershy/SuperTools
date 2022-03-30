@@ -1,0 +1,1 @@
+uic -o _chatinfobox__ui_.h _chatinfobox_.ui

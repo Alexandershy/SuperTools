@@ -1,0 +1,1 @@
+uic -o _hitbricksbox__ui_.h _hitbricksbox_.ui

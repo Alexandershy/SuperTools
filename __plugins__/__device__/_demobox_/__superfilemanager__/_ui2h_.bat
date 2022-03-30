@@ -1,0 +1,1 @@
+uic -o _superfilemanager__ui_.h _superfilemanager_.ui

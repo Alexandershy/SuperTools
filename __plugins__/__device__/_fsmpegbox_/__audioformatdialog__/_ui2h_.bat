@@ -1,0 +1,1 @@
+uic -o _audioformatbox__ui.h _audioformatbox_.ui

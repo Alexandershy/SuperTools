@@ -1,0 +1,1 @@
+uic -o _modulea__ui_.h _modulea_.ui

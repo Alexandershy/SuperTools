@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/pdf">
+        <file>_tcpserverbox_.pdf</file>
+    </qresource>
+</RCC>

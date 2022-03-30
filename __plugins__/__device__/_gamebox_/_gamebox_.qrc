@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/"/>
+    <qresource prefix="/pdf">
+        <file>_gamebox_.pdf</file>
+    </qresource>
+</RCC>
