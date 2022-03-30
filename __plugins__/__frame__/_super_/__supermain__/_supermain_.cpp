@@ -1,10 +1,10 @@
 #include "_supermain_.h"
 
-#ifdef Q_CC_MSVC
+#ifdef Q_OS_UNIX
 const char* Supertabsymbol = "?Loadplugin@Interface@@QEAAPEAVSuperTab@@XZ";
 #endif
 
-#ifdef Q_CC_MINGW
+#ifdef Q_OS_WIN
 const char* Supertabsymbol = "_ZN9Interface10LoadpluginEv";
 #endif
 

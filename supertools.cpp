@@ -35,14 +35,14 @@
 #include <QApplication>
 #include <QSharedMemory>
 
-#ifdef Q_CC_MSVC
-const char* Resupersymbol = "?Loadplugin@Interface@@QEAAPEAVQWidget@@XZ";
-const char* Supersymbol = "?Loadplugin@Interface@@QEAAPEAVSuperWindow@@XZ";
-#endif
-
-#ifdef Q_CC_MINGW
+#ifdef Q_OS_WIN
 const char* Resupersymbol = "_ZN9Interface10LoadpluginEv";
 const char* Supersymbol = "_ZN9Interface10LoadpluginEv";
+#endif
+
+#ifdef Q_OS_UNIX
+const char* Resupersymbol = "?Loadplugin@Interface@@QEAAPEAVQWidget@@XZ";
+const char* Supersymbol = "?Loadplugin@Interface@@QEAAPEAVSuperWindow@@XZ";
 #endif
 
 int main(int argc, char *argv[])
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     }
     else if(sharedmemory.create(1))
     {
-        app.setApplicationVersion("V6.22.0325.S050.A121");
+        app.setApplicationVersion("V6.22.0330.S051.A121");
         QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
         QLibrary _super_("./__plugins__/__frame__/_super_");
         typedef QWidget*(*Widget)();
