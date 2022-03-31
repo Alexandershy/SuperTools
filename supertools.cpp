@@ -35,16 +35,6 @@
 #include <QApplication>
 #include <QSharedMemory>
 
-#ifdef Q_OS_WIN
-const char* Resupersymbol = "_ZN9Interface10LoadpluginEv";
-const char* Supersymbol = "_ZN9Interface10LoadpluginEv";
-#endif
-
-#ifdef Q_OS_UNIX
-const char* Resupersymbol = "_ZN9Interface10LoadpluginEv";
-const char* Supersymbol = "_ZN9Interface10LoadpluginEv";
-#endif
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);

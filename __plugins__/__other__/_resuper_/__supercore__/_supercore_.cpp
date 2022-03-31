@@ -67,6 +67,7 @@ bool SuperCore::Checkiprules(QString strip)
 {
     QRegularExpression iprules("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
     QRegularExpressionMatch match = iprules.match(strip);
+//    QRegularExpressionMatch::
     return match.hasMatch();
 }
 
@@ -342,7 +343,7 @@ void SuperCore::Replacefile(QString srcfile, QString targetfile)
             QFile::copy(srcfile,targetfile);
         }
     }
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
 }
 
 /*  creat qrc file for use;*/
