@@ -41,8 +41,8 @@ const char* Supersymbol = "_ZN9Interface10LoadpluginEv";
 #endif
 
 #ifdef Q_OS_UNIX
-const char* Resupersymbol = "?Loadplugin@Interface@@QEAAPEAVQWidget@@XZ";
-const char* Supersymbol = "?Loadplugin@Interface@@QEAAPEAVSuperWindow@@XZ";
+const char* Resupersymbol = "_ZN9Interface10LoadpluginEv";
+const char* Supersymbol = "_ZN9Interface10LoadpluginEv";
 #endif
 
 int main(int argc, char *argv[])
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     {
         QLibrary _resuper_("./__plugins__/__other__/_resuper_");
         typedef QWidget*(*Widget)();
-        Widget initloadplugin = (Widget)_resuper_.resolve(Resupersymbol);
+        Widget initloadplugin = (Widget)_resuper_.resolve("_ZN9Interface10LoadpluginEv");
         initloadplugin();
     }
     else if(sharedmemory.create(1))
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
         QLibrary _super_("./__plugins__/__frame__/_super_");
         typedef QWidget*(*Widget)();
-        Widget initloadplugin = (Widget)_super_.resolve(Supersymbol);
+        Widget initloadplugin = (Widget)_super_.resolve("_ZN9Interface10LoadpluginEv");
         initloadplugin();
     }
     return app.exec();

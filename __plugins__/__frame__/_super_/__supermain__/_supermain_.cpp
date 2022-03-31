@@ -1,7 +1,7 @@
 #include "_supermain_.h"
 
 #ifdef Q_OS_UNIX
-const char* Supertabsymbol = "?Loadplugin@Interface@@QEAAPEAVSuperTab@@XZ";
+const char* Supertabsymbol = "_ZN9Interface10LoadpluginEv";
 #endif
 
 #ifdef Q_OS_WIN
