@@ -23,7 +23,6 @@ void SuperTools::Superinitwindow()
     connect(this,   &SuperTools::Signalwb,  this,&SuperTools::Superselectcolor);
     Pluginlayout->addWidget(Initbox);
     Show();
-    Movecenter(this);
 }
 
 /*  add initbox;*/
@@ -56,7 +55,7 @@ void SuperTools::Supermainwindow(QString setting)
     Mainbox = new SuperMain(this,setting);
     Pluginlayout->addWidget(Mainbox);
     Mainbox->Setfocus();
-    connect(Mainbox,&SuperMain::Signalma,   this,&SuperTools::Superreadme);
+    connect(Mainbox,&SuperMain::Signalma,   SuperC,&SuperCore::Openpath);
     connect(Mainbox,&SuperMain::Signalmb,   this,&SuperTools::Quit);
     connect(Mainbox,&SuperMain::Signalmc,   this,&SuperTools::setCursor);
     connect(this,   &SuperTools::Signalwa,  Mainbox,&SuperMain::Setfocus);
@@ -73,13 +72,6 @@ void SuperTools::Supermainwindow(QString setting)
 }
 
 /*  add mainbox;*/
-
-void SuperTools::Superreadme(QString filepath)
-{
-    QDesktopServices::openUrl(QUrl::fromLocalFile(filepath));
-}
-
-/*  open current module's readme;*/
 
 void SuperTools::Supersystemtray()
 {

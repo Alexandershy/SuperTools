@@ -38,9 +38,6 @@ private slots:
     void Supermainwindow(
             QString setting);
 
-    void Superreadme(
-            QString filepath);
-
     void Supersystemtray();
 
     void Superselectcolor();

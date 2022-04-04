@@ -217,7 +217,10 @@ void SuperFileManager::Itemoptions()
 
 void SuperFileManager::Tableoptions()
 {
-    Tablemenu->exec(QCursor::pos());
+    if(qApp->mouseButtons() == Qt::RightButton)
+    {
+        Tablemenu->exec(QCursor::pos());
+    }
 }
 
 /*  exec table menu;*/

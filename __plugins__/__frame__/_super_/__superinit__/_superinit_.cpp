@@ -67,8 +67,11 @@ void SuperInit::Creatfile()
 
 void SuperInit::Creatmodulefiles()
 {
-    QDir dir("./__plugins__/__device__/");
-    dir.setNameFilters({"*.dll"});
+#ifdef Q_OS_WIN
+    QDir dir("./__plugins__/__device__/","*.dll");
+#else
+    QDir dir("./__plugins__/__device__/","*.so");
+#endif
     QStringList files = dir.entryList();
     for(int i = 0;i < files.count();i++)
     {
