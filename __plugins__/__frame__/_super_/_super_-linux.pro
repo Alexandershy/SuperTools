@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets\
 
 TEMPLATE = lib
 DEFINES += _SUPER__LIBRARY
@@ -199,3 +199,5 @@ DISTFILES += \
     _super_.pdf \
     _superapi_.html \
     _superapi_.pdf
+
+LIBS += -lX11

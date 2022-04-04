@@ -130,7 +130,12 @@ void SuperWindow::Colorinit()
 
 void SuperWindow::Parameterinit()
 {
+#ifdef Q_OS_UNIX
+    //setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
+    //setWindowFlags(Qt::BypassWindowManagerHint);
+#else
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
+#endif
     setStyleSheet("QGroupBox{border:1px solid " + Strrgbbackgroundcolor + "}");
     setWindowIcon(QIcon("./__depycache__/__cache__/__picture__/_supertools_.ico"));
     Title->setStyleSheet("QFrame#SuperTitle{border-image:url(./__depycache__/__cache__/__picture__/_localtitle_.png);background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
