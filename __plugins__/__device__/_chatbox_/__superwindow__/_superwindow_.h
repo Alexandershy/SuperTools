@@ -4,6 +4,7 @@
 #include "_supertitle_.h"
 #include "_superwindow__ui_.h"
 #include "__supercore__/_supercore_.h"
+//#include <X11/Xlib.h>
 #include <QScreen>
 #include <QTimer>
 

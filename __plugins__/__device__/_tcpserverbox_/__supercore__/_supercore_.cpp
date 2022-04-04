@@ -67,7 +67,6 @@ bool SuperCore::Checkiprules(QString strip)
 {
     QRegularExpression iprules("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
     QRegularExpressionMatch match = iprules.match(strip);
-//    QRegularExpressionMatch::
     return match.hasMatch();
 }
 
@@ -139,6 +138,7 @@ bool SuperCore::Creatfile(QString strfile)
         return true;
     }
     file.open(QIODevice::ReadWrite);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.close();
     return true;
 }
@@ -234,6 +234,7 @@ void SuperCore::Writeonlyfile(QString strpath, QString strtext)
 {
     QFile file(strpath);
     file.open(QIODevice::WriteOnly);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(strtext.toUtf8());
     file.close();
 }
@@ -245,6 +246,7 @@ void SuperCore::Writeonlyfilelist(QString strpath, QStringList *list,QString par
     QString temp;
     QFile file(strpath);
     file.open(QIODevice::WriteOnly);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     for(int i = 0;i < list->count();i++)
     {
         if(addlast)
@@ -273,6 +275,7 @@ void SuperCore::Writebytes(QString strpath,QByteArray bytes)
 {
     QFile file(strpath);
     file.open(QIODevice::WriteOnly);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(bytes);
     file.close();
 }
@@ -283,6 +286,7 @@ void SuperCore::Appendfile(QString strpath, QString strtext)
 {
     QFile file(strpath);
     file.open(QIODevice::Append);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(strtext.toUtf8());
     file.close();
 }
@@ -293,6 +297,7 @@ void SuperCore::Appendbytes(QString strpath,QByteArray bytes)
 {
     QFile file(strpath);
     file.open(QIODevice::Append);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(bytes);
     file.close();
 }
@@ -305,6 +310,7 @@ QString SuperCore::Readonlyfile(QString strpath)
     if(file.exists())
     {
         file.open(QIODevice::ReadOnly);
+        file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
         QByteArray result = file.readAll();
         file.close();
         return result;
@@ -318,6 +324,7 @@ QByteArray SuperCore::Readbytesint64(QString strpath,qint64 fileseek,qint64 data
 {
     QFile file(strpath);
     file.open( QIODevice::ReadOnly);
+    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.seek(fileseek);
     QByteArray result = file.read(datasize);
     file.close();
@@ -347,6 +354,21 @@ void SuperCore::Replacefile(QString srcfile, QString targetfile)
 }
 
 /*  creat qrc file for use;*/
+
+QString SuperCore::Getfilepath(QString filepath)
+{
+    QFileInfo fileinfo(filepath);
+    if(fileinfo.isFile() || fileinfo.isDir())
+    {
+        return fileinfo.absoluteFilePath();
+    }
+    else
+    {
+        return QDir::currentPath();
+    }
+}
+
+/*  change file path to absolutely path;*/
 
 //**************************************************QVector********************************************************//
 
@@ -619,7 +641,7 @@ QPoint SuperCore::Widgetrightbottompoint(QWidget* widget)
 
 void SuperCore::Openpath(QString path)
 {
-    QDesktopServices::openUrl(QUrl("file:" + path, QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl(Getfilepath(path), QUrl::TolerantMode));
 }
 
 /*  open folder;*/

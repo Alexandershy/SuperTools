@@ -136,7 +136,7 @@ void SuperWindow::Parameterinit()
     Title->setStyleSheet("QFrame#SuperTitle{border-image:url(./__depycache__/__cache__/__picture__/_localtitle_.png);background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
     Title->ui->pushButton_5->setStyleSheet("border-image:url(./__depycache__/__cache__/__picture__/_supertools_.ico);");
     Title->Minisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "minimize_.svg"));
-    Title->ui->label_2->setText(this->objectName());
+    Title->ui->label_2->setText(objectName());
     ui->Titlelayout->addWidget(Title);
     Addmaxisizebutton(Activatestatus);
     Addclosebutton(Activatestatus);
@@ -194,8 +194,8 @@ void SuperWindow::Settitle(QString titletext)
 
 void SuperWindow::Disablemaxisize()
 {
-    disconnect(Title,                   &SuperTitle::Signalsb,this,&SuperWindow::Changemaxicon);
-    disconnect(Title->Maxisizebutton, &QPushButton::clicked,this,&SuperWindow::Changemaxicon);
+    disconnect(Title,                   &SuperTitle::Signalsb,  this,&SuperWindow::Changemaxicon);
+    disconnect(Title->Maxisizebutton,   &QPushButton::clicked,  this,&SuperWindow::Changemaxicon);
     Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_blank_.png"));
     Title->Maxisizebutton->setEnabled(false);
     Enablemaxbutton = false;
@@ -300,7 +300,7 @@ void SuperWindow::Themeactioninit()
     Thememenuinit();
     Actionoriginal = new QAction(QIcon(":/__supericon__/_original_.svg"),"Original",this);
     Actioncolor = new QAction(QIcon(":/__supericon__/_color_.png"),"Color",this);
-    Actionheartofiron = new QAction(QIcon(":/__supericon__/_supertools_.ico"),"Heartofiron",this);
+    Actionheartofiron = new QAction(QIcon(":/__supericon__/_heartofiron_.ico"),"Heartofiron",this);
     Actiongoertek = new QAction(QIcon(":/__supericon__/_goertek_.png"),"Goertek",this);
     Themevector = {Actionoriginal,Actioncolor,Actionheartofiron,Actiongoertek};
     Themes->addAction(Actionoriginal);

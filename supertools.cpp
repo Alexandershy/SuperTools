@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     }
     else if(sharedmemory.create(1))
     {
-        app.setApplicationVersion("V6.22.0330.S051.A121");
+        app.setApplicationVersion("V6.22.0404.S052.A122");
         QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
         QLibrary _super_("./__plugins__/__frame__/_super_");
         typedef QWidget*(*Widget)();

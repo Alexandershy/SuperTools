@@ -119,6 +119,9 @@ public slots:
         QString srcfile,
         QString targetfile);
 
+    QString Getfilepath(
+        QString filepath);
+
     /*  QVector */
 
     QVector<double> Linspace(

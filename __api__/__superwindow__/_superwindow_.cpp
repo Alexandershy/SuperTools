@@ -300,7 +300,7 @@ void SuperWindow::Themeactioninit()
     Thememenuinit();
     Actionoriginal = new QAction(QIcon(":/__supericon__/_original_.svg"),"Original",this);
     Actioncolor = new QAction(QIcon(":/__supericon__/_color_.png"),"Color",this);
-    Actionheartofiron = new QAction(QIcon(":/__supericon__/_supertools_.ico"),"Heartofiron",this);
+    Actionheartofiron = new QAction(QIcon(":/__supericon__/_heartofiron_.ico"),"Heartofiron",this);
     Actiongoertek = new QAction(QIcon(":/__supericon__/_goertek_.png"),"Goertek",this);
     Themevector = {Actionoriginal,Actioncolor,Actionheartofiron,Actiongoertek};
     Themes->addAction(Actionoriginal);

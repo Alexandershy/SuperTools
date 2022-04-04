@@ -113,6 +113,7 @@
         <file>__supericon__/_network_.svg</file>
         <file>__supericon__/_config_.svg</file>
         <file>__supericon__/_check_.svg</file>
+        <file>__supericon__/_heartofiron_.ico</file>
     </qresource>
     <qresource prefix="/pdf">
         <file>_super_.pdf</file>

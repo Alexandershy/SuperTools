@@ -355,6 +355,21 @@ void SuperCore::Replacefile(QString srcfile, QString targetfile)
 
 /*  creat qrc file for use;*/
 
+QString SuperCore::Getfilepath(QString filepath)
+{
+    QFileInfo fileinfo(filepath);
+    if(fileinfo.isFile() || fileinfo.isDir())
+    {
+        return fileinfo.absoluteFilePath();
+    }
+    else
+    {
+        return QDir::currentPath();
+    }
+}
+
+/*  change file path to absolutely path;*/
+
 //**************************************************QVector********************************************************//
 
 QVector <double> SuperCore::Linspace(double doublemin, double doublemax, int intnum)
@@ -626,7 +641,7 @@ QPoint SuperCore::Widgetrightbottompoint(QWidget* widget)
 
 void SuperCore::Openpath(QString path)
 {
-    QDesktopServices::openUrl(QUrl(path, QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl(Getfilepath(path), QUrl::TolerantMode));
 }
 
 /*  open folder;*/

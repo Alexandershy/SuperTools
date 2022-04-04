@@ -207,7 +207,7 @@ void SuperFileManager::Searchfiles(QString text)
 
 void SuperFileManager::Itemoptions()
 {
-    if(qApp->mouseButtons() == Qt::RightButton)
+    if(qApp->mouseButtons() == Qt::RightButton || qApp->mouseButtons() == Qt::NoButton)
     {
         Filemenu->exec(QCursor::pos());
     }
@@ -217,7 +217,7 @@ void SuperFileManager::Itemoptions()
 
 void SuperFileManager::Tableoptions()
 {
-    if(qApp->mouseButtons() == Qt::RightButton)
+    if(qApp->mouseButtons() == Qt::RightButton || qApp->mouseButtons() == Qt::NoButton)
     {
         Tablemenu->exec(QCursor::pos());
     }
