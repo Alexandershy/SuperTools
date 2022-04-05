@@ -1,1 +1,0 @@
-uic -o _superfindbox__ui_.h _superfindbox_.ui

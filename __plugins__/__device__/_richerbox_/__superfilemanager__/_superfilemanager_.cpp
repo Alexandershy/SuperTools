@@ -12,7 +12,6 @@ SuperFileManager::SuperFileManager(QWidget *parent,QLayout *layout,QStringList f
     connect(ui->tableWidget,                    &QTableWidget::itemDoubleClicked,           this,   &SuperFileManager::Clickopen);
     connect(ui->tableWidget,                    &QTableWidget::itemPressed,                 this,   &SuperFileManager::Itemoptions);
     connect(ui->tableWidget->horizontalHeader(),&QHeaderView::customContextMenuRequested,   this,   &SuperFileManager::Tableoptions);
-    connect(ui->tableWidget,                    &QTableWidget::customContextMenuRequested,  this,   &SuperFileManager::Tableoptions);
     connect(ui->pushButton,                     &QPushButton::clicked,                      this,   &SuperFileManager::Locationfile);
     connect(ui->pushButton_2,                   &QPushButton::clicked,                      this,   &SuperFileManager::Checkfilevaildinit);
     Init();
@@ -207,7 +206,7 @@ void SuperFileManager::Searchfiles(QString text)
 
 void SuperFileManager::Itemoptions()
 {
-    if(qApp->mouseButtons() == Qt::RightButton || qApp->mouseButtons() == Qt::NoButton)
+    if(qApp->mouseButtons() == Qt::RightButton)
     {
         Filemenu->exec(QCursor::pos());
     }
@@ -217,10 +216,7 @@ void SuperFileManager::Itemoptions()
 
 void SuperFileManager::Tableoptions()
 {
-    if(qApp->mouseButtons() == Qt::RightButton || qApp->mouseButtons() == Qt::NoButton)
-    {
-        Tablemenu->exec(QCursor::pos());
-    }
+    Tablemenu->exec(QCursor::pos());
 }
 
 /*  exec table menu;*/

@@ -1,0 +1,19 @@
+bash _chatapi_.sh
+bash _csvdataapi_.sh
+bash _demoapi_.sh
+bash _fsmpegapi_.sh
+bash _gameapi_.sh
+bash _geminiapi_.sh
+bash _relayapi_.sh
+bash _ledanalyserapi_.sh
+bash _litepointiqgigifapi_.sh
+bash _resuperapi_.sh
+bash _richerapi_.sh
+bash _scannerapi_.sh
+bash _serialportapi_.sh
+bash _superapi_.sh
+bash _tcpclientapi_.sh
+bash _tcpserverapi_.sh
+bash _wasapiapi_.sh
+bash _wavdataapi_.sh
+

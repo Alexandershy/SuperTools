@@ -1,1 +1,0 @@
-uic -o _supercolorbox__ui_.h _supercolorbox_.ui

@@ -115,7 +115,7 @@ DISTFILES += \
     _wasapibox_.html \
     _wasapibox_.pdf
 
-LIBS += "C:\repos\SuperTools-Source\__plugins__\__device__\_wasapibox_\__superfftw__\__x64__\libfftw3-3.lib"
+LIBS += "/home/alexandershy/Documents/repos/SuperTools-Source/__plugins__/__device__/_wasapibox_/__superfftw__/__x64__/libfftw3-3.lib"
 
 RESOURCES += \
     _wasapibox_.qrc
