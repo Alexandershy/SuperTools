@@ -2,7 +2,7 @@
 
 SuperSender::SuperSender(QWidget *parent,QLayout *layout)
     : QFrame(parent)
-    , ui(new Ui::SuperSender)
+    , ui(new Ui::SuperSenderui)
 {
     Widget = parent;
     Layout = layout;

@@ -1,6 +1,8 @@
-
-#ifndef SUPERSERIAL_H
-#define SUPERSERIAL_H
+#ifndef _SUPERSERIAL__H
+#define _SUPERSERIAL__H
+#define _SUPERSERIAL__EXPORT Q_DECL_EXPORT
+#define _SUPERSCANSERIAL__EXPORT Q_DECL_EXPORT
+#define _SUPERSERIALTHREAD__EXPORT Q_DECL_EXPORT
 
 #include "__supercore__/_supercore_.h"
 #include <QSerialPortInfo>
@@ -9,7 +11,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 
-class SuperSerial : QObject
+class _SUPERSERIAL__EXPORT SuperSerial : public QObject
 {
     Q_OBJECT
 
@@ -67,7 +69,7 @@ private:
 
 };
 
-class ScanSerialPort : public QThread
+class _SUPERSCANSERIAL__EXPORT SuperScanSerial : public QThread
 {
     Q_OBJECT
 
@@ -75,7 +77,7 @@ public:
 
     /*main function;*/
 
-    ScanSerialPort(
+    SuperScanSerial(
             QWidget* widget,
             QSerialPort* seriala,
             int baudrate,
@@ -86,7 +88,7 @@ public:
             QString strbackvaluea,
             QString strbackvalueb);
 
-    ~ScanSerialPort();
+    ~SuperScanSerial();
 
 public slots:
 
@@ -145,7 +147,7 @@ signals:
 
 };
 
-class SerialThread : public QThread
+class _SUPERSERIALTHREAD__EXPORT SuperSerialThread : public QThread
 {
     Q_OBJECT
 
@@ -153,7 +155,7 @@ public:
 
     /*main function;*/
 
-    SerialThread(
+    SuperSerialThread(
             QSerialPort* serial,
             double timeout);
 

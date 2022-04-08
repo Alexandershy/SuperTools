@@ -1,26 +1,13 @@
 #include "_superfinddialog_.h"
 
-SuperFindDialog::SuperFindDialog(QWidget *parent,QTextEdit *textedit)
-    :SuperWindow(parent)
-{
-    Widgetindex = 0;
-    Textedit = textedit;
-    setAttribute(Qt::WA_DeleteOnClose);
-    setWindowModality(Qt::ApplicationModal);
-    Disablemaxisize();
-    Settitle("Super FindDialog");
-    Init();
-}
-
 SuperFindDialog::SuperFindDialog(QWidget *parent,QTextBrowser *textbrowser)
     :SuperWindow(parent)
 {
-    Widgetindex = 1;
     Textbrowser = textbrowser;
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
     Disablemaxisize();
-    Settitle("search dialog");
+    Settitle("Super FindDialog");
     Init();
 }
 
@@ -37,7 +24,7 @@ void SuperFindDialog::Init()
 
 void SuperFindDialog::Objectinit()
 {
-    Plugin = new SuperFindBox(this);
+    Plugin = new SuperFindDialogui(this);
     Pluginlayout->addWidget(Plugin);
     connect(Plugin->ui->pushButton_3,   &QPushButton::clicked,          this,&SuperFindDialog::Findnexttext);
     connect(Plugin->ui->comboBox,       &QComboBox::textActivated,      this,&SuperFindDialog::Findnexttext);
@@ -83,36 +70,15 @@ void SuperFindDialog::Highlightpalette(QWidget *widget)
 void SuperFindDialog::Findnexttext()
 {
     QString text = Plugin->ui->comboBox->currentText();
-    switch (Widgetindex)
+    if(Textbrowser->find(text))
     {
-        case 0:
-        {
-            if(Textedit->find(text))
-            {
-                Highlightpalette(Textedit);
-            }
-            else
-            {
-                SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to start;");
-                connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetostart);
-                notedialog->Messageinit();
-            }
-            break;
-        }
-        case 1:
-        {
-            if(Textbrowser->find(text))
-            {
-                Highlightpalette(Textbrowser);
-            }
-            else
-            {
-                SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to start;");
-                connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetostart);
-                notedialog->Messageinit();
-            }
-            break;
-        }
+        Highlightpalette(Textbrowser);
+    }
+    else
+    {
+        SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to start;");
+        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetostart);
+        notedialog->Messageinit();
     }
 }
 
@@ -121,36 +87,15 @@ void SuperFindDialog::Findnexttext()
 void SuperFindDialog::Findlasttext()
 {
     QString text = Plugin->ui->comboBox->currentText();
-    switch (Widgetindex)
+    if(Textbrowser->find(text,QTextDocument::FindBackward))
     {
-        case 0:
-        {
-            if(Textedit->find(text,QTextDocument::FindBackward))
-            {
-                Highlightpalette(Textedit);
-            }
-            else
-            {
-                SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to end;");
-                connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetoend);
-                notedialog->Messageinit();
-            }
-            break;
-        }
-        case 1:
-        {
-            if(Textbrowser->find(text,QTextDocument::FindBackward))
-            {
-                Highlightpalette(Textbrowser);
-            }
-            else
-            {
-                SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to end;");
-                connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetoend);
-                notedialog->Messageinit();
-            }
-            break;
-        }
+        Highlightpalette(Textbrowser);
+    }
+    else
+    {
+        SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to end;");
+        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetoend);
+        notedialog->Messageinit();
     }
 }
 
@@ -158,38 +103,14 @@ void SuperFindDialog::Findlasttext()
 
 void SuperFindDialog::Movetostart()
 {
-    switch(Widgetindex)
-    {
-        case 0:
-        {
-            Textedit->moveCursor(Textedit->textCursor().Start);
-            break;
-        }
-        case 1:
-        {
-            Textbrowser->moveCursor(Textbrowser->textCursor().Start);
-            break;
-        }
-    }
+    Textbrowser->moveCursor(Textbrowser->textCursor().Start);
 }
 
 /*  move text cursor to start;*/
 
 void SuperFindDialog::Movetoend()
 {
-    switch(Widgetindex)
-    {
-        case 0:
-        {
-            Textedit->moveCursor(Textedit->textCursor().End);
-            break;
-        }
-        case 1:
-        {
-            Textbrowser->moveCursor(Textbrowser->textCursor().End);
-            break;
-        }
-    }
+    Textbrowser->moveCursor(Textbrowser->textCursor().End);
 }
 
 /*  move text cursor to end;*/

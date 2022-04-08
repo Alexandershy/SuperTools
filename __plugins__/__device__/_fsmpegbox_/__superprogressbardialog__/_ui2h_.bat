@@ -1,1 +1,0 @@
-uic -o _superprogressbarbox__ui_.h _superprogressbarbox_.ui

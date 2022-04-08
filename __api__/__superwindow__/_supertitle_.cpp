@@ -2,7 +2,7 @@
 
 SuperTitle::SuperTitle(QWidget *parent)
     : QFrame(parent)
-    , ui(new Ui::SuperTitle)
+    , ui(new Ui::SuperTitleui)
 {
     ui->setupUi(this);
     Init();

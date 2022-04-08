@@ -1,1 +1,0 @@
-uic -o _supertab__ui_.h _supertab_.ui

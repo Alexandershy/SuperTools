@@ -137,13 +137,18 @@ void SuperNetwork::Closetcpclient(QTcpSocket* tcpsocket)
 
 /*  close tcp socket port;*/
 
-Tcpsocketthread::Tcpsocketthread(QTcpSocket *tcpsocket,double timeout)
+SuperTcpSocketThread::SuperTcpSocketThread(QTcpSocket *tcpsocket,double timeout)
 {
     Tcpsocket = tcpsocket;
     Timeout = timeout;
 }
 
-void Tcpsocketthread::run()
+SuperTcpSocketThread::~SuperTcpSocketThread()
+{
+
+}
+
+void SuperTcpSocketThread::run()
 {
     while(Inittime < Timeout)
     {

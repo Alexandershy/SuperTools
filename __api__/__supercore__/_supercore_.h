@@ -1,6 +1,6 @@
-
-#ifndef SUPERCORE_H
-#define SUPERCORE_H
+#ifndef _SUPERCORE__H
+#define _SUPERCORE__H
+#define _SUPERCORE__EXPORT Q_DECL_EXPORT
 
 #include <QCryptographicHash>
 #include <QFileIconProvider>
@@ -15,7 +15,7 @@
 #include <QMenu>
 #include <QDir>
 
-class SuperCore : public QObject
+class _SUPERCORE__EXPORT SuperCore : public QObject
 {
     Q_OBJECT
 
@@ -229,4 +229,4 @@ public slots:
 
 };
 
-#endif // SUPERCORE_H
+#endif // _SUPERCORE__H

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/pdf">
+        <file>_fsmpegbox_.pdf</file>
+    </qresource>
+</RCC>

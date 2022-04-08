@@ -457,7 +457,7 @@ void SuperMultiMedia::Changeanalysistext(QPushButton *playbutton,QByteArray *ana
 
 /*  change analysis status;*/
 
-PlayWav::PlayWav(QFile *file,int filepos,QByteArray* playstatus,QAudioSink* audiosink)
+SuperPlayWav::SuperPlayWav(QFile *file,int filepos,QByteArray* playstatus,QAudioSink* audiosink)
 {
     File = file;
     Filepos = filepos;
@@ -466,13 +466,13 @@ PlayWav::PlayWav(QFile *file,int filepos,QByteArray* playstatus,QAudioSink* audi
     Init();
 }
 
-PlayWav::~PlayWav()
+SuperPlayWav::~SuperPlayWav()
 {
     delete Timer;
     delete Audiosink;
 }
 
-void PlayWav::Init()
+void SuperPlayWav::Init()
 {
     Timerinit();
     Iodeviceinit();
@@ -481,14 +481,14 @@ void PlayWav::Init()
 
 /*  parameter init;*/
 
-void PlayWav::run()
+void SuperPlayWav::run()
 {
     Playing();
 }
 
 /*  play wav file;*/
 
-void PlayWav::Timerinit()
+void SuperPlayWav::Timerinit()
 {
     Timer = new QTimer();
     Timer->setInterval(1000);
@@ -498,16 +498,16 @@ void PlayWav::Timerinit()
 
 /*  timer init;*/
 
-void PlayWav::Iodeviceinit()
+void SuperPlayWav::Iodeviceinit()
 {
     Channel = Audiosink->format().channelCount();
     Iodevice = Audiosink->start();
-    connect(this,&PlayWav::Signalpc,this,&PlayWav::Writedata);
+    connect(this,&SuperPlayWav::Signalpc,this,&SuperPlayWav::Writedata);
 }
 
 /*  iodevice init;*/
 
-void PlayWav::Filestatusinit()
+void SuperPlayWav::Filestatusinit()
 {
     if(Filepos < File->size())
     {
@@ -517,7 +517,7 @@ void PlayWav::Filestatusinit()
 
 /*  file status init;*/
 
-void PlayWav::Playing()
+void SuperPlayWav::Playing()
 {
     while(true)
     {
@@ -548,14 +548,14 @@ void PlayWav::Playing()
 
 /*  playing wav file and check the status;*/
 
-void PlayWav::Writedata()
+void SuperPlayWav::Writedata()
 {
     Iodevice->write(File->read(Audiosink->bytesFree()));
 }
 
 /*  write data;*/
 
-PlaySignal::PlaySignal(QByteArray signaldata,double time,QByteArray* playstatus,QAudioSink* audiosink)
+SuperPlaySignal::SuperPlaySignal(QByteArray signaldata,double time,QByteArray* playstatus,QAudioSink* audiosink)
 {
     Signaldata = signaldata;
     Time = time;
@@ -564,13 +564,13 @@ PlaySignal::PlaySignal(QByteArray signaldata,double time,QByteArray* playstatus,
     Init();
 }
 
-PlaySignal::~PlaySignal()
+SuperPlaySignal::~SuperPlaySignal()
 {
     delete Timer;
     delete Audiosink;
 }
 
-void PlaySignal::Init()
+void SuperPlaySignal::Init()
 {
     Timerinit();
     Iodeviceinit();
@@ -578,7 +578,7 @@ void PlaySignal::Init()
 
 /*  parameter init;*/
 
-void PlaySignal::run()
+void SuperPlaySignal::run()
 {
     Initrun();
     Playing();
@@ -586,11 +586,11 @@ void PlaySignal::run()
 
 /*  play wav file;*/
 
-void PlaySignal::Timerinit()
+void SuperPlaySignal::Timerinit()
 {
     Timer = new QTimer();
     Timer->setInterval(Time * 1000);
-    connect(Timer,&QTimer::timeout,this,&PlaySignal::Stop);
+    connect(Timer,&QTimer::timeout,this,&SuperPlaySignal::Stop);
     if(Time)
     {
         Timer->start();
@@ -599,22 +599,22 @@ void PlaySignal::Timerinit()
 
 /*  play signal timer init;*/
 
-void PlaySignal::Iodeviceinit()
+void SuperPlaySignal::Iodeviceinit()
 {
     Iodevice = Audiosink->start();
-    connect(this,&PlaySignal::Signalpb,this,&PlaySignal::Writedata);
+    connect(this,&SuperPlaySignal::Signalpb,this,&SuperPlaySignal::Writedata);
 }
 
 /*  play signal file init,creat audio output device and io device,read byte from file,choose cycle or by seconds;*/
 
-void PlaySignal::Initrun()
+void SuperPlaySignal::Initrun()
 {
     Signalstatus = 1;
 }
 
 /*  init signal status;*/
 
-void PlaySignal::Playing()
+void SuperPlaySignal::Playing()
 {
     while(true)
     {
@@ -639,13 +639,13 @@ void PlaySignal::Playing()
 
 /*  play signal by pushbutton text;*/
 
-void PlaySignal::Stop()
+void SuperPlaySignal::Stop()
 {
     Signalstatus = 0;
     emit Signalpa();
 }
 
-void PlaySignal::Writedata()
+void SuperPlaySignal::Writedata()
 {
     Iodevice->write(Signaldata);
 }

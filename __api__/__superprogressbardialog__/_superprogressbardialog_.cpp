@@ -24,7 +24,7 @@ void SuperProgressBarDialog::Init()
 
 void SuperProgressBarDialog::Objectinit()
 {
-    Plugin = new SuperProgressBarBox(this);
+    Plugin = new SuperProgressBarDialogui(this);
     Pluginlayout->addWidget(Plugin);
     connect(this,&SuperProgressBarDialog::Signalpb,this,&SuperProgressBarDialog::hide);
     Stop = new QAction("Stop",this);

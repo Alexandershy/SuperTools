@@ -2,7 +2,7 @@
 
 SuperFileManager::SuperFileManager(QWidget *parent,QLayout *layout,QStringList filesplit)
     : QFrame(parent)
-    , ui(new Ui::SuperFileManager)
+    , ui(new Ui::SuperFileManagerui)
 {
     Widget = parent;
     Layout = layout;

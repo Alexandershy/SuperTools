@@ -1,6 +1,7 @@
-
 #ifndef _SUPERNETWORK__H
 #define _SUPERNETWORK__H
+#define _SUPERNETWORK__EXPORT Q_DECL_EXPORT
+#define _SUPERNETWORK__EXPORT Q_DECL_EXPORT
 
 #include <QNetworkInterface>
 #include <QNetworkDatagram>
@@ -13,7 +14,7 @@
 #include <QCheckBox>
 #include <QThread>
 
-class SuperNetwork : public QObject
+class _SUPERNETWORK__EXPORT SuperNetwork : public QObject
 {
     Q_OBJECT
 
@@ -62,7 +63,7 @@ public slots:
             QTcpSocket* tcpsocket);
 };
 
-class Tcpsocketthread : public QThread
+class SuperTcpSocketThread : public QThread
 {
     Q_OBJECT
 
@@ -70,9 +71,11 @@ public:
 
     /*main function;*/
 
-    Tcpsocketthread(
+    SuperTcpSocketThread(
             QTcpSocket* tcpsocket,
             double timeout);
+
+    ~SuperTcpSocketThread();
 
 public slots:
 

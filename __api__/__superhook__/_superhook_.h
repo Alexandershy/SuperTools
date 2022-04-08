@@ -1,10 +1,11 @@
 #ifndef _SUPERHOOK__H
 #define _SUPERHOOK__H
+#define _SUPERHOOK__EXPORT Q_DECL_EXPORT
 
 #include <windows.h>
 #include <QObject>
 
-class SuperHook : public QObject
+class _SUPERHOOK__EXPORT SuperHook : public QObject
 {
     Q_OBJECT
 

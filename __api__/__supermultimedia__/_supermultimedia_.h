@@ -1,6 +1,8 @@
-
-#ifndef SUPERMULTIMEDIA_H
-#define SUPERMULTIMEDIA_H
+#ifndef _SUPERMULTIMEDIA__H
+#define _SUPERMULTIMEDIA__H
+#define _SUPERMULTIMEDIA__EXPORT Q_DECL_EXPORT
+#define _SUPERPLAYWAV__EXPORT Q_DECL_EXPORT
+#define _SUPERPLAYSIGNAL__EXPORT Q_DECL_EXPORT
 
 #include "__supercore__/_supercore_.h"
 #include <QMediaDevices>
@@ -12,7 +14,7 @@
 #include <QTimer>
 #include <QFile>
 
-class SuperMultiMedia : public QObject
+class _SUPERMULTIMEDIA__EXPORT SuperMultiMedia : public QObject
 {
     Q_OBJECT
 
@@ -123,7 +125,7 @@ private:
 
 };
 
-class PlayWav : public QThread
+class _SUPERPLAYWAV__EXPORT SuperPlayWav : public QThread
 {
     Q_OBJECT
 
@@ -133,13 +135,13 @@ public:
 
 public:
 
-    PlayWav(
+    SuperPlayWav(
         QFile *file,
         int filepos,
         QByteArray* playstatus,
         QAudioSink* audiosink);
 
-    ~PlayWav();
+    ~SuperPlayWav();
 
 public slots:
 
@@ -180,19 +182,19 @@ signals:
 
 };
 
-class PlaySignal : public QThread
+class _SUPERPLAYSIGNAL__EXPORT SuperPlaySignal : public QThread
 {
     Q_OBJECT
 
 public:
 
-    PlaySignal(
+    SuperPlaySignal(
         QByteArray signaldata,
         double time,
         QByteArray* playstatus,
         QAudioSink* audiosink);
 
-    ~PlaySignal();
+    ~SuperPlaySignal();
 
 public slots:
 

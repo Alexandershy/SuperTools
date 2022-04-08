@@ -2,7 +2,7 @@
 
 SuperTab::SuperTab(QWidget *parent)
     : QGroupBox(parent)
-    , ui(new Ui::SuperTab)
+    , ui(new Ui::SuperTabui)
 {
     ui->setupUi(this);
     Init();

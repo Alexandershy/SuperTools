@@ -1,14 +1,15 @@
 #ifndef _SUPERFILEDIALOG__H
 #define _SUPERFILEDIALOG__H
+#define _SUPERFILEDIALOG__EXPORT Q_DECL_EXPORT
 
-#include "_superfilebox_.h"
-#include "_superfilesystemmodel_.h"
 #include "__superwindow__/_superwindow_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
+#include "_superfiledialogui_.h"
+#include "_superfilesystemmodel_.h"
 #include <QFileIconProvider>
 #include <QStandardPaths>
 
-class SuperFileDialog : public SuperWindow
+class _SUPERFILEDIALOG__EXPORT SuperFileDialog : public SuperWindow
 {
     Q_OBJECT
 
@@ -29,7 +30,7 @@ public:
 
 private:
 
-    SuperFileBox *Plugin                        = nullptr;
+    SuperFileDialogui *Plugin                   = nullptr;
     SuperFileSystemModel *Filesystemmodel       = nullptr;
     QDir *Dir                                   = nullptr;
     QMenu *Filemenu                             = nullptr;

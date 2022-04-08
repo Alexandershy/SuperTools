@@ -1,0 +1,12 @@
+#ifndef _LEDANALYSERBOX__GLOBAL_H
+#define _LEDANALYSERBOX__GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(_LEDANALYSERBOX__LIBRARY)
+#  define _LEDANALYSERBOX__EXPORT Q_DECL_EXPORT
+#else
+#  define _LEDANALYSERBOX__EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // _LEDANALYSERBOX__GLOBAL_H

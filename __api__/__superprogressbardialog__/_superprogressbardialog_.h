@@ -1,10 +1,11 @@
 #ifndef _SUPERPROGRESSBARDIALOG__H
 #define _SUPERPROGRESSBARDIALOG__H
+#define _SUPERPROGRESSBARDIALOG__EXPORT Q_DECL_EXPORT
 
+#include "_superprogressbardialogui_.h"
 #include "__superwindow__/_superwindow_.h"
-#include "_superprogressbarbox_.h"
 
-class SuperProgressBarDialog : public SuperWindow
+class _SUPERPROGRESSBARDIALOG__EXPORT SuperProgressBarDialog : public SuperWindow
 {
     Q_OBJECT
 
@@ -23,8 +24,8 @@ public slots:
 
 private:
 
-    SuperProgressBarBox *Plugin = nullptr;
-    QAction *Stop               = nullptr;
+    SuperProgressBarDialogui *Plugin    = nullptr;
+    QAction *Stop                       = nullptr;
 
 private slots:
 

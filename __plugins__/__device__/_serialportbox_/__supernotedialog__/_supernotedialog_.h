@@ -1,7 +1,7 @@
 #ifndef _SUPERNOTEDIALOG__H
 #define _SUPERNOTEDIALOG__H
 
-#include "_supernotebox_.h"
+#include "_supernotedialogui_.h"
 #include "__superwindow__/_superwindow_.h"
 
 class SuperNoteDialog : public SuperWindow
@@ -10,7 +10,7 @@ class SuperNoteDialog : public SuperWindow
 
 public:
 
-    SuperNoteBox *Plugin = nullptr;
+    SuperNoteDialogui *Plugin = nullptr;
 
 public:
 

@@ -1,16 +1,17 @@
 #ifndef _SUPERSENDER__H
 #define _SUPERSENDER__H
+#define _SUPERSENDER__EXPORT Q_DECL_EXPORT
 
 #include "__supernotedialog__/_supernotedialog_.h"
-#include "_supersender__ui_.h"
+#include "ui__supersenderui_.h"
 #include <QTimer>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE
-namespace Ui { class SuperSender; }
+namespace Ui { class SuperSenderui; }
 QT_END_NAMESPACE
 
-class SuperSender : public QFrame
+class _SUPERSENDER__EXPORT SuperSender : public QFrame
 {
     Q_OBJECT
 
@@ -32,7 +33,7 @@ public:
 
 private:
 
-    Ui::SuperSender *ui     = nullptr;
+    Ui::SuperSenderui *ui   = nullptr;
     QLayout *Layout         = nullptr;
     QWidget *Widget         = nullptr;
     QTimer *Timer           = nullptr;

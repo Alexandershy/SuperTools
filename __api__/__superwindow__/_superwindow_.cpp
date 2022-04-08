@@ -2,7 +2,7 @@
 
 SuperWindow::SuperWindow(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::SuperWindow)
+    , ui(new Ui::SuperWindowui)
 {
     ui->setupUi(this);
     Init();
@@ -12,8 +12,21 @@ SuperWindow::SuperWindow(QWidget *parent)
 SuperWindow::~SuperWindow()
 {
     removeEventFilter(this);
-    delete ui;
 }
+
+void SuperWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+        case Qt::Key_Escape:
+        {
+            Close();
+            break;
+        }
+    }
+}
+
+/*  define key;*/
 
 void SuperWindow::mousePressEvent(QMouseEvent *event)
 {
@@ -132,9 +145,9 @@ void SuperWindow::Parameterinit()
 {
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
     setStyleSheet("QGroupBox{border:1px solid " + Strrgbbackgroundcolor + "}");
-    setWindowIcon(QIcon("./__depycache__/__cache__/__picture__/_supertools_.ico"));
-    Title->setStyleSheet("QFrame#SuperTitle{border-image:url(./__depycache__/__cache__/__picture__/_localtitle_.png);background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
-    Title->ui->pushButton_5->setStyleSheet("border-image:url(./__depycache__/__cache__/__picture__/_supertools_.ico);");
+    setWindowIcon(QIcon(":/__supericon__/_supertools_.ico"));
+    Title->setStyleSheet("QFrame#SuperTitleui{border-image:url(./__depycache__/__cache__/__picture__/_localtitle_.png);background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
+    Title->ui->pushButton_5->setStyleSheet("border-image:url(:/__supericon__/_supertools_.ico);");
     Title->Minisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "minimize_.svg"));
     Title->ui->label_2->setText(objectName());
     ui->Titlelayout->addWidget(Title);
@@ -478,7 +491,7 @@ void SuperWindow::Setwidgettheme()
     Strrgbbackgroundcolor = "rgb(" + SuperC->Rgbcolor(&Backgroundcolor) + ")";
     Strrgbfontcolor = "rgb(" + SuperC->Rgbcolor(&Fontcolor) + ")";
     setStyleSheet("QGroupBox{border:1px solid " + Strrgbbackgroundcolor + "}");
-    Title->setStyleSheet("QFrame#SuperTitle{border-image:url(" + Localtitlepath + ");background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
+    Title->setStyleSheet("QFrame#SuperTitleui{border-image:url(" + Localtitlepath + ");background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
     Title->Setsourcecolor(Strrgbbackgroundcolor);
     SuperC->Writeonlyfile(Backgroundcolorpath,SuperC->Rgbcolor(&Backgroundcolor));
     SuperC->Writeonlyfile(Fontcolorpath,SuperC->Rgbcolor(&Fontcolor));

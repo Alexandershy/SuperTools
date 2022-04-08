@@ -1,18 +1,18 @@
 #ifndef _SUPERWINDOW__H
 #define _SUPERWINDOW__H
+#define _SUPERWINDOW__EXPORT Q_DECL_EXPORT
 
-#include "_supertitle_.h"
-#include "_superwindow__ui_.h"
+#include "ui__superwindowui_.h"
 #include "__supercore__/_supercore_.h"
-//#include <X11/Xlib.h>
+#include "_supertitle_.h"
 #include <QScreen>
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {class SuperWindow;}
+namespace Ui {class SuperWindowui;}
 QT_END_NAMESPACE
 
-class SuperWindow : public QWidget
+class _SUPERWINDOW__EXPORT SuperWindow : public QWidget
 {
     Q_OBJECT
 
@@ -75,6 +75,9 @@ public slots:
 
 protected:
 
+    void keyPressEvent(
+        QKeyEvent *event);
+
     void mousePressEvent(
         QMouseEvent *event);
 
@@ -90,7 +93,7 @@ protected:
 
 private:
 
-    Ui::SuperWindow *ui                 = nullptr;
+    Ui::SuperWindowui *ui               = nullptr;
     SuperTitle *Title                   = nullptr;
     bool Mouseontitle                   = false;
     bool Enablemaxbutton                = true;

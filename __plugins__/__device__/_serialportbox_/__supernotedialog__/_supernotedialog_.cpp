@@ -22,7 +22,7 @@ void SuperNoteDialog::Init()
 
 void SuperNoteDialog::Objectinit()
 {
-    Plugin = new SuperNoteBox(this);
+    Plugin = new SuperNoteDialogui(this);
     Pluginlayout->addWidget(Plugin);
     connect(Plugin->ui->pushButton,     &QPushButton::clicked,this,&SuperNoteDialog::Signalna);
     connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,this,&SuperNoteDialog::Signalnb);

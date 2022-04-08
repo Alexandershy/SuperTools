@@ -2,9 +2,8 @@
 
 SuperWindow::SuperWindow(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::SuperWindow)
+    , ui(new Ui::SuperWindowui)
 {
-    ui->setupUi(this);
     Init();
     installEventFilter(this);
 }
@@ -12,8 +11,21 @@ SuperWindow::SuperWindow(QWidget *parent)
 SuperWindow::~SuperWindow()
 {
     removeEventFilter(this);
-    delete ui;
 }
+
+void SuperWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+        case Qt::Key_Escape:
+        {
+            Close();
+            break;
+        }
+    }
+}
+
+/*  define key;*/
 
 void SuperWindow::mousePressEvent(QMouseEvent *event)
 {
@@ -137,7 +149,7 @@ void SuperWindow::Parameterinit()
     Title->ui->pushButton_5->setStyleSheet("border-image:url(./__depycache__/__cache__/__picture__/_supertools_.ico);");
     Title->Minisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "minimize_.svg"));
     Title->ui->label_2->setText(objectName());
-    ui->Titlelayout->addWidget(Title);
+//    ui->Titlelayout->addWidget(Title);
     Addmaxisizebutton(Activatestatus);
     Addclosebutton(Activatestatus);
 }
@@ -146,7 +158,7 @@ void SuperWindow::Parameterinit()
 
 void SuperWindow::Pointerinit()
 {
-    Pluginlayout = ui->Pluginlayout;
+//    Pluginlayout = ui->Pluginlayout;
 }
 
 /*  public pointer;*/
@@ -589,7 +601,7 @@ void SuperWindow::Movecenter(QWidget *widget)
 void SuperWindow::Addresizefunction()
 {
     setMouseTracking(true);
-    ui->PluginBox->setMouseTracking(true);
+//    ui->PluginBox->setMouseTracking(true);
 }
 
 /*  add drag function;*/

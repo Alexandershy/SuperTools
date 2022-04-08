@@ -1,1 +1,0 @@
-uic -o _supersender__ui_.h _supersender_.ui

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/pdf">
+        <file>_richerbox_.pdf</file>
+    </qresource>
+</RCC>

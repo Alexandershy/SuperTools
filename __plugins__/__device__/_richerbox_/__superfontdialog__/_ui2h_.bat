@@ -1,1 +1,0 @@
-uic -o _superfontbox__ui_.h _superfontbox_.ui

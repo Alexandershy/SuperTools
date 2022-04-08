@@ -155,7 +155,7 @@ void SuperSerial::Closeserial(QSerialPort* seriala)
 
 /*  close serial port;*/
 
-ScanSerialPort::ScanSerialPort(QWidget *widget,QSerialPort* seriala,int baudrate,QString commanda,QString commandb,QCheckBox* checkboxstring,QLineEdit* lineedita,QString strbackvaluea,QString strbackvalueb)
+SuperScanSerial::SuperScanSerial(QWidget *widget,QSerialPort* seriala,int baudrate,QString commanda,QString commandb,QCheckBox* checkboxstring,QLineEdit* lineedita,QString strbackvaluea,QString strbackvalueb)
 {
     Widget = widget;
     Seriala = seriala;
@@ -168,22 +168,22 @@ ScanSerialPort::ScanSerialPort(QWidget *widget,QSerialPort* seriala,int baudrate
     Strbackvalueb = strbackvalueb;
 }
 
-ScanSerialPort::~ScanSerialPort()
+SuperScanSerial::~SuperScanSerial()
 {
     delete SuperS;
 }
 
-void ScanSerialPort::Init()
+void SuperScanSerial::Init()
 {
     Objectinit();
 }
 
-void ScanSerialPort::Objectinit()
+void SuperScanSerial::Objectinit()
 {
     SuperS = new SuperSerial();
 }
 
-void ScanSerialPort::Initrun()
+void SuperScanSerial::Initrun()
 {
     Realportlist.clear();
     Listname.clear();
@@ -197,7 +197,7 @@ void ScanSerialPort::Initrun()
 
 /*  parameter init;*/
 
-void ScanSerialPort::run()
+void SuperScanSerial::run()
 {
     Initrun();
     foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
@@ -225,7 +225,7 @@ void ScanSerialPort::run()
 
 /*  from windows serial port scan this serial device;*/
 
-void ScanSerialPort::Connectserialport()
+void SuperScanSerial::Connectserialport()
 {
     for(int i = 0;i < Listname.count();i++)
     {
@@ -244,7 +244,7 @@ void ScanSerialPort::Connectserialport()
 
 /*  connect with serial port;*/
 
-void ScanSerialPort::Waitforbytes()
+void SuperScanSerial::Waitforbytes()
 {
     while(Inittime < Timeout)
     {
@@ -271,7 +271,7 @@ void ScanSerialPort::Waitforbytes()
     }
 }
 
-void ScanSerialPort::Communicatewithserialporta(QString strport)
+void SuperScanSerial::Communicatewithserialporta(QString strport)
 {
     emit Signalsa("N","try communicate with " + strport,"Communicatewithserialport function running...");
     emit Signalsb(Commanda);
@@ -292,7 +292,7 @@ void ScanSerialPort::Communicatewithserialporta(QString strport)
 
 /*  Communicate with serialporta;*/
 
-void ScanSerialPort::Communicatewithserialportb(QString strport)
+void SuperScanSerial::Communicatewithserialportb(QString strport)
 {
     emit Signalsb(Commandb);
     Waitforbytes();
@@ -312,13 +312,13 @@ void ScanSerialPort::Communicatewithserialportb(QString strport)
 
 /*  Communicate with serialportb;*/
 
-SerialThread::SerialThread(QSerialPort *serial,double timeout)
+SuperSerialThread::SuperSerialThread(QSerialPort *serial,double timeout)
 {
     Serial = serial;
     Inittimeout = timeout;
 }
 
-void SerialThread::Init()
+void SuperSerialThread::Init()
 {
     Inittime     = 0;
     Timeout      = Inittimeout;
@@ -327,7 +327,7 @@ void SerialThread::Init()
 
 /*  parameter init;*/
 
-void SerialThread::run()
+void SuperSerialThread::run()
 {
     Init();
     while(Inittime < Timeout)
