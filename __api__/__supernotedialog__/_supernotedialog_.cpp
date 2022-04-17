@@ -6,7 +6,7 @@ SuperNoteDialog::SuperNoteDialog(QWidget *parent,QString filestring)
     Filestring = filestring;
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle("Super NoteDialog");
+    Settitle("SuperNoteDialog");
     Init();
 }
 

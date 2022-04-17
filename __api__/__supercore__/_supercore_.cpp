@@ -454,6 +454,46 @@ double SuperCore::Getqvectorstandarddeviation(QVector<double> *qvectord,int ints
 
 /*  return qvector standard deviation value;*/
 
+//*****************************************************QPointF***********************************************************//
+
+QPointF SuperCore::Getqvectormaxpointf(QVector<QPointF> *qvectorpf,int intsize)
+{
+    QPointF pointftemp = qvectorpf->at(0);
+    for(int i = 0;i < intsize;i++)
+    {
+        if(pointftemp.x() < qvectorpf->at(i).x())
+        {
+            pointftemp.setX(qvectorpf->at(i).x());
+        }
+        if(pointftemp.y() < qvectorpf->at(i).y())
+        {
+            pointftemp.setY(qvectorpf->at(i).y());
+        }
+    }
+    return pointftemp;
+}
+
+/*  return qvector max pointf;*/
+
+QPointF SuperCore::Getqvectorminpointf(QVector<QPointF> *qvectorpf,int intsize)
+{
+    QPointF pointftemp = qvectorpf->at(0);
+    for(int i = 0;i < intsize;i++)
+    {
+        if(pointftemp.x() > qvectorpf->at(i).x())
+        {
+            pointftemp.setX(qvectorpf->at(i).x());
+        }
+        if(pointftemp.y() > qvectorpf->at(i).y())
+        {
+            pointftemp.setY(qvectorpf->at(i).y());
+        }
+    }
+    return pointftemp;
+}
+
+/*  return qvector min pointf;*/
+
 //***************************************************doublearray*********************************************************//
 
 double SuperCore::Getdoublearraymaxvalue(double* doublearray,int intcount)

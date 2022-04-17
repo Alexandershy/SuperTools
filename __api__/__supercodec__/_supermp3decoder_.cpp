@@ -7,7 +7,7 @@
     see COPYING and AUTHORS files in distribution or http://mpg123.org
 */
 
-#include "_mp3decoder_.h"
+#include "_supermp3decoder_.h"
 
 SuperMp3Decoder::SuperMp3Decoder(QObject *parent,QString infilename,QString outfilename)
     : QThread(parent)
@@ -41,7 +41,7 @@ void SuperMp3Decoder::Init()
 
 void SuperMp3Decoder::Objectinit()
 {
-    SuperM = new SuperMultiMedia(this);
+    Multimedia = new SuperMultiMedia(this);
     Timer = new QTimer();
     Timer->setInterval(100);
     connect(Timer,&QTimer::timeout,this,&SuperMp3Decoder::Returnprogress);
@@ -98,7 +98,7 @@ void SuperMp3Decoder::Writeaswavfile()
         int64_t filesize = file.size();
         file.close();
         file.remove();
-        SuperM->Writewavfile(Qoutfilename,filesize,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
+        Multimedia->Writewavfile(Qoutfilename,filesize,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
     }
 }
 

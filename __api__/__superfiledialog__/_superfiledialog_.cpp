@@ -8,7 +8,7 @@ SuperFileDialog::SuperFileDialog(QWidget *parent,QString folderpath,QStringList 
     Disablemaxisize();
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle("Super FileDialog");
+    Settitle("SuperFileDialog");
     Init();
 }
 
@@ -96,10 +96,10 @@ void SuperFileDialog::Menuinit()
     connect(Openfile,   &QAction::triggered,this,&SuperFileDialog::Openfiles);
     connect(Openpath,   &QAction::triggered,this,&SuperFileDialog::Openpaths);
     connect(Deletefile, &QAction::triggered,this,&SuperFileDialog::Delete);
-    SuperC->Addaction(Filemenu,Selectfile,"select file","Selectfile");
-    SuperC->Addaction(Filemenu,Openfile,"open file","Openfile");
-    SuperC->Addaction(Filemenu,Openpath,"open path","Openpath");
-    SuperC->Addaction(Filemenu,Deletefile,"delete file","Deletefile");
+    Core->Addaction(Filemenu,Selectfile,"select file","Selectfile");
+    Core->Addaction(Filemenu,Openfile,"open file","Openfile");
+    Core->Addaction(Filemenu,Openpath,"open path","Openpath");
+    Core->Addaction(Filemenu,Deletefile,"delete file","Deletefile");
     Selectfile->setIcon(QIcon(":/__supericon__/_open_.svg"));
     Openfile->setIcon(QIcon(":/__supericon__/_edit_.svg"));
     Openpath->setIcon(QIcon(":/__supericon__/_openpath_.svg"));
@@ -109,8 +109,8 @@ void SuperFileDialog::Menuinit()
     Unpin = new QAction(Treemenu);
     connect(Openfolder, &QAction::triggered,this,&SuperFileDialog::Refreshquickaccessfolder);
     connect(Unpin,      &QAction::triggered,this,&SuperFileDialog::Deletequickaccess);
-    SuperC->Addaction(Treemenu,Openfolder,"Open folder","Openfolder");
-    SuperC->Addaction(Treemenu,Unpin,"Unpin folder","Unpinfolder");
+    Core->Addaction(Treemenu,Openfolder,"Open folder","Openfolder");
+    Core->Addaction(Treemenu,Unpin,"Unpin folder","Unpinfolder");
     Openfolder->setIcon(QIcon(":/__supericon__/_open_.svg"));
     Unpin->setIcon(QIcon(":/__supericon__/_unlock_.svg"));
 }
@@ -132,7 +132,7 @@ void SuperFileDialog::Iconinit()
 
 void SuperFileDialog::Locationpathinit()
 {
-    QStringList locationpathlist = SuperC->Readonlyfile(Locationpath).split("<split>");
+    QStringList locationpathlist = Core->Readonlyfile(Locationpath).split("<split>");
     for(int i = 0;i < locationpathlist.count();i++)
     {
         QFileInfo fileinfo(locationpathlist.at(i));
@@ -164,7 +164,7 @@ void SuperFileDialog::Quickaccessinit()
 
 void SuperFileDialog::Treewidgetadditemapi(QStandardPaths::StandardLocation path)
 {
-    QStringList locationpathlist = SuperC->Readonlyfile(Locationpath).split("<split>");
+    QStringList locationpathlist = Core->Readonlyfile(Locationpath).split("<split>");
     QStringList locationpath = QStandardPaths::standardLocations(path);
     for(int i = 0;i < locationpath.count();i++)
     {
@@ -176,7 +176,7 @@ void SuperFileDialog::Treewidgetadditemapi(QStandardPaths::StandardLocation path
             item->setText(1,fileinfo.absoluteFilePath());
             item->setIcon(0,Iconprovider.icon(fileinfo));
             Plugin->ui->treeWidget->addTopLevelItem(item);
-            SuperC->Appendfile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
+            Core->Appendfile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
         }
     }
 }
@@ -221,7 +221,7 @@ void SuperFileDialog::Refreshfolder(QString folderpath)
         Allfileinfolist.append(Folderinfolist);
         Allfileinfolist.append(Fileinfolist);
         Rowcounts = Folderinfolist.count() + Fileinfolist.count();
-        SuperC->Settablewidgetitem(Rowcounts,Columncounts,Fileiconmode,Plugin->ui->tableWidget);
+        Core->Settablewidgetitem(Rowcounts,Columncounts,Fileiconmode,Plugin->ui->tableWidget);
         switch (Fileiconmode)
         {
             case 32:
@@ -399,7 +399,7 @@ void SuperFileDialog::Savefile()
 {
     QString filesuffixtemp = Plugin->ui->comboBox_3->currentText().split("*").at(1);
     QString filenametemp = Plugin->ui->comboBox_2->currentText().split(filesuffixtemp).at(0);
-    QString file = SuperC->Fixfilepath(Dir->absolutePath()) + filenametemp + filesuffixtemp;
+    QString file = Core->Fixfilepath(Dir->absolutePath()) + filenametemp + filesuffixtemp;
     if(Checkrepeatfile(filenametemp,filesuffixtemp))
     {
         emit Signalfb(file);
@@ -427,7 +427,7 @@ void SuperFileDialog::Getfoldersavemode()
 
 void SuperFileDialog::Savefolder()
 {
-    emit Signalfb(SuperC->Fixfilepath(Dir->absolutePath()));
+    emit Signalfb(Core->Fixfilepath(Dir->absolutePath()));
 }
 
 /*  save single folder;*/
@@ -586,7 +586,7 @@ void SuperFileDialog::Openfiles()
 
 void SuperFileDialog::Openpaths()
 {
-    SuperC->Openpath(Dir->absolutePath());
+    Core->Openpath(Dir->absolutePath());
 }
 
 /*  exec filemenu;*/
@@ -697,7 +697,7 @@ void SuperFileDialog::Searchfile(QString text)
 void SuperFileDialog::Addtoquickaccess()
 {
     QFileInfo fileinfo(Dir->path());
-    QStringList locationpathlist = SuperC->Readonlyfile(Locationpath).split("<split>");
+    QStringList locationpathlist = Core->Readonlyfile(Locationpath).split("<split>");
     if(!locationpathlist.contains(fileinfo.absoluteFilePath()))
     {
         QTreeWidgetItem *item = new QTreeWidgetItem(Plugin->ui->treeWidget);
@@ -705,7 +705,7 @@ void SuperFileDialog::Addtoquickaccess()
         item->setText(1,fileinfo.absoluteFilePath());
         item->setIcon(0,Iconprovider.icon(fileinfo));
         Plugin->ui->treeWidget->addTopLevelItem(item);
-        SuperC->Appendfile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
+        Core->Appendfile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
     }
 }
 
@@ -731,10 +731,10 @@ void SuperFileDialog::Changefileiconmode()
 void SuperFileDialog::Deletequickaccess()
 {
     delete Plugin->ui->treeWidget->currentItem();
-    SuperC->Writeonlyfile(Locationpath,"");
+    Core->Writeonlyfile(Locationpath,"");
     for(int i = 0;i < Plugin->ui->treeWidget->topLevelItemCount();i++)
     {
-        SuperC->Appendfile(Locationpath,Plugin->ui->treeWidget->topLevelItem(i)->text(1) + "<split>");
+        Core->Appendfile(Locationpath,Plugin->ui->treeWidget->topLevelItem(i)->text(1) + "<split>");
     }
 }
 
@@ -746,14 +746,14 @@ void SuperFileDialog::Expandmodelfolder(QDir *dir)
     QDir newdir(dir->absolutePath());
     for(int i = 0;newdir.cdUp();i++)
     {
-        absolutefilepathlist.insert(0,SuperC->Fixfilepath(newdir.absolutePath()));
+        absolutefilepathlist.insert(0,Core->Fixfilepath(newdir.absolutePath()));
     }
-    absolutefilepathlist.append(SuperC->Fixfilepath(dir->absolutePath()));
+    absolutefilepathlist.append(Core->Fixfilepath(dir->absolutePath()));
     for(int i = 0;i < absolutefilepathlist.count();i++)
     {
         Plugin->ui->treeView->expand(Filesystemmodel->index(absolutefilepathlist.at(i)));
     }
-    Plugin->ui->treeView->setCurrentIndex(Filesystemmodel->index(SuperC->Getlistlastmember(&absolutefilepathlist)));
+    Plugin->ui->treeView->setCurrentIndex(Filesystemmodel->index(Core->Getlistlastmember(&absolutefilepathlist)));
 }
 
 /*  expand current folder path by treeview;*/

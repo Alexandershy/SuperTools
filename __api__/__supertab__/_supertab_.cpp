@@ -22,7 +22,7 @@ void SuperTab::Init()
 
 void SuperTab::Objectinit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
 /*  object init;*/
@@ -61,9 +61,9 @@ void SuperTab::Setstretch(QList<int> leftstretch,QList<int> rightstretch)
 void SuperTab::Readme(QString objectname)
 {
     setObjectName(objectname);
-    SuperC->Replacefile(":/pdf/_" + SuperC->Allwordlower(objectname) + "_.pdf","./__readme__/__module__/_" + SuperC->Allwordlower(objectname).split("box").at(0) + "_.pdf");
-    SuperC->Creatfolder("__depycache__/__" + SuperC->Allwordlower(objectname).split("box").at(0) + "__");
-    SuperC->Creatfile("__depycache__/__" + SuperC->Allwordlower(objectname).split("box").at(0) + "__/_defaultsetting_.ini");
+    Core->Replacefile(":/pdf/_" + Core->Allwordlower(objectname) + "_.pdf","./__readme__/__plugins__/_" + Core->Allwordlower(objectname).split("box").at(0) + "_.pdf");
+    Core->Creatfolder("__depycache__/__" + Core->Allwordlower(objectname).split("box").at(0) + "__");
+    Core->Creatfile("__depycache__/__" + Core->Allwordlower(objectname).split("box").at(0) + "__/_defaultsetting_.ini");
 }
 
 /*  read me;*/

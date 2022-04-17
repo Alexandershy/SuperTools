@@ -31,7 +31,7 @@ public slots:
 
 private:
 
-    SuperMultiMedia *SuperM     = nullptr;
+    SuperMultiMedia *Multimedia = nullptr;
     QString Qinfilename         = "";
     QString Qoutfilename        = "";
     QByteArray Infilenamebyte   = "";

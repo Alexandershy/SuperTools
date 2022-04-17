@@ -7,7 +7,7 @@ SuperFindDialog::SuperFindDialog(QWidget *parent,QTextBrowser *textbrowser)
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
     Disablemaxisize();
-    Settitle("Super FindDialog");
+    Settitle("SuperFindDialog");
     Init();
 }
 

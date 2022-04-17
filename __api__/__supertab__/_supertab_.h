@@ -17,7 +17,7 @@ class _SUPERTAB__EXPORT SuperTab : public QGroupBox
 
 public:
 
-    SuperCore *SuperC                       = nullptr;
+    SuperCore *Core                         = nullptr;
     QList<SuperGroupBox*> Leftgroupboxlist  = {};
     QList<SuperGroupBox*> Rightgroupboxlist = {};
 

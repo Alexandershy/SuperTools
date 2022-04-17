@@ -65,7 +65,7 @@ public slots:
 
 private:
 
-    SuperCore *SuperC = nullptr;
+    SuperCore *Core = nullptr;
 
 };
 
@@ -79,7 +79,7 @@ public:
 
     SuperScanSerial(
             QWidget* widget,
-            QSerialPort* seriala,
+            QSerialPort* serialport,
             int baudrate,
             QString commanda,
             QString commandb,
@@ -114,9 +114,9 @@ private slots:
 
 private:
 
-    SuperSerial *SuperS         = nullptr;
+    SuperSerial *Serial         = nullptr;
     QStringList Listname        = {};
-    QSerialPort *Seriala        = nullptr;
+    QSerialPort *Serialport     = nullptr;
     int Baudrate                = 0;
     int Timeout                 = 1000;
     int Inittime                = 0;
@@ -167,11 +167,11 @@ public slots:
 
 private:
 
-    QSerialPort* Serial = nullptr;
-    double Inittime     = 0;
-    double Timeout      = 0;
-    double Inittimeout  = 0;
-    int Bytesavailable  = 0;
+    QSerialPort* Serialport = nullptr;
+    double Inittime         = 0;
+    double Timeout          = 0;
+    double Inittimeout      = 0;
+    int Bytesavailable      = 0;
 
 signals:
 

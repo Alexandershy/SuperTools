@@ -151,6 +151,14 @@ public slots:
         int intsize,
         double mean);
 
+    /*  QPointF */
+
+    QPointF Getqvectormaxpointf(
+        QVector<QPointF> *qvectorpf,int intsize);
+
+    QPointF Getqvectorminpointf(
+        QVector<QPointF> *qvectorpf,int intsize);
+
     /*  doublearray */
 
     double Getdoublearraymaxvalue(

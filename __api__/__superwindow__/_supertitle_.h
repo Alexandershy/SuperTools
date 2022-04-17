@@ -16,7 +16,7 @@ class SuperTitle : public QFrame
 
 public:
 
-    Ui::SuperTitleui *ui                  = nullptr;
+    Ui::SuperTitleui *ui                = nullptr;
     SuperTitleButton *Minisizebutton    = nullptr;
     SuperTitleButton *Maxisizebutton    = nullptr;
     SuperTitleButton *Closebutton       = nullptr;

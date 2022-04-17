@@ -38,9 +38,9 @@ public slots:
 
 private:
 
+    SuperCore *Core     = nullptr;
     QLayout *Layout     = nullptr;
     QWidget *Widget     = nullptr;
-    SuperCore *SuperC   = nullptr;
     QString Filepath    = "./__depycache__/__cache__/__textbrowser__/";
 
 private slots:

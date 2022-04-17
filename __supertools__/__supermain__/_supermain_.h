@@ -44,7 +44,6 @@ private:
 
     SuperCore *SuperC               = nullptr;
     QString Setting                 = "";
-    const char *Supertabsymbol      = "_ZN9Interface10LoadpluginEv";
     QStringList Tabnamelist         = {};
     QAction *Actionplugin           = nullptr;
     QAction *Actionsetting          = nullptr;

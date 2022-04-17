@@ -16,7 +16,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    __superchart__/_superchart_.cpp \
+    __superchartview__/_superchartview_.cpp \
     __supercodec__/_superapedecoder_.cpp \
     __supercodec__/_superflacdecoder_.cpp \
     __supercodec__/_supermp3decoder_.cpp \
@@ -62,7 +62,7 @@ HEADERS += \
     __superape__/SmartPtr.h \
     __superape__/Version.h \
     __superape__/WindowsEnvironment.h \
-    __superchart__/_superchart_.h \
+    __superchartview__/_superchartview_.h \
     __supercodec__/_superapedecoder_.h \
     __supercodec__/_superflacdecoder_.h \
     __supercodec__/_supermp3decoder_.h \
@@ -146,12 +146,6 @@ FORMS += \
     __supertab__/_supertabui_.ui \
     __superwindow__/_supertitleui_.ui \
     __superwindow__/_superwindowui_.ui
-
-LIBS += -luser32
-LIBS += "C:\repos\SuperTools-Source\__api__\__superflac__\__x64__\libFLAC_dynamic.lib"
-LIBS += "C:\repos\SuperTools-Source\__api__\__superape__\__x64__\MACDll.lib"
-LIBS += "C:\repos\SuperTools-Source\__api__\__supermp3__\__x64__\libmpg123-0.lib"
-LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__x64__\libfftw3-3.lib"
 
 DISTFILES += \
     __superape__/__x64__/MACDll.dll \
@@ -296,3 +290,10 @@ DISTFILES += \
     __superplot__/_superplot_.h.old \
     _superapi_.html \
     _superapi_.pdf
+
+LIBS += -luser32
+LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\fftw3.lib"
+LIBS += "C:\repos\SuperTools-Source\__api__\__superape__\__x64__\MACDll.lib"
+LIBS += "C:\repos\SuperTools-Source\__api__\__supermp3__\__x64__\libmpg123-0.lib"
+LIBS += "C:\repos\SuperTools-Source\__api__\__superflac__\__x64__\libFLAC_dynamic.lib"
+

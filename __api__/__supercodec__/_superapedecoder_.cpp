@@ -24,7 +24,7 @@ WARNING:
     everything gets finalized.  Use them at your own risk.
 ***************************************************************************************/
 
-#include "_apedecoder_.h"
+#include "_superapedecoder_.h"
 
 using namespace APE;
 
@@ -54,7 +54,7 @@ void SuperApeDecoder::Init()
 
 void SuperApeDecoder::Objectinit()
 {
-    SuperM = new SuperMultiMedia(this);
+    Multimedia = new SuperMultiMedia(this);
     Timer = new QTimer();
     Timer->setInterval(100);
     connect(Timer,&QTimer::timeout,this,&SuperApeDecoder::Returnprogress);
@@ -117,7 +117,7 @@ void SuperApeDecoder::Rewritewavfile()
         QByteArray bytes = file.readAll();
         file.close();
         file.remove();
-        SuperM->Writewavfile(Qoutfilename,Wavlength,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
+        Multimedia->Writewavfile(Qoutfilename,Wavlength,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
     }
 }
 

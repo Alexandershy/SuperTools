@@ -37,10 +37,10 @@ void SuperFrame::Supertimer()
 
 void SuperFrame::Checkstatus()
 {
-    if(!SuperC->Readonlyfile(Openstatuspath).isEmpty())
+    if(!Core->Readonlyfile(Openstatuspath).isEmpty())
     {
         Show();
-        SuperC->Writeonlyfile(Openstatuspath,"");
+        Core->Writeonlyfile(Openstatuspath,"");
     }
 }
 
@@ -53,7 +53,7 @@ void SuperFrame::Supermainwindow(QString setting)
     Mainbox = new SuperMain(this,setting);
     Pluginlayout->addWidget(Mainbox);
     Mainbox->Setfocus();
-    connect(Mainbox,&SuperMain::Signalma,   SuperC,&SuperCore::Openpath);
+    connect(Mainbox,&SuperMain::Signalma,   Core,&SuperCore::Openpath);
     connect(Mainbox,&SuperMain::Signalmb,   this,&SuperFrame::Quit);
     connect(Mainbox,&SuperMain::Signalmc,   this,&SuperFrame::setCursor);
     connect(this,   &SuperFrame::Signalwa,  Mainbox,&SuperMain::Setfocus);
@@ -119,12 +119,12 @@ void SuperRepeat::Init()
 
 void SuperRepeat::Objectinit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
 void SuperRepeat::Writeinit()
 {
-    SuperC->Writeonlyfile(Openstatuspath,"opened");
+    Core->Writeonlyfile(Openstatuspath,"opened");
 }
 
 /*  change opened status;*/

@@ -52,7 +52,7 @@ public slots:
 
 private:
 
-    SuperCore *SuperC               = nullptr;
+    SuperCore *Core                 = nullptr;
     QMenu *Filemenu                 = nullptr;
     QAction *Openfile               = nullptr;
     QAction *Openpath               = nullptr;

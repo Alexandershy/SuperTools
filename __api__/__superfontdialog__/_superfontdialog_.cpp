@@ -7,7 +7,7 @@ SuperFontDialog::SuperFontDialog(QWidget *parent,QStringList *fontfamilies)
     Disablemaxisize();
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle("Super FontDialog");
+    Settitle("SuperFontDialog");
     Init();
 }
 

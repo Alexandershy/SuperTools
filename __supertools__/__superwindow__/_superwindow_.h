@@ -18,12 +18,11 @@ class _SUPERWINDOW__EXPORT SuperWindow : public QWidget
 
 public:
 
-    SuperCore *SuperC               = nullptr;
+    SuperCore *Core                 = nullptr;
     QLayout *Pluginlayout           = nullptr;
     QColor Backgroundcolor          = {16,81,142};
     QColor Fontcolor                = Qt::black;
     QColor Concolor                 = {239,174,113};
-    Ui::SuperWindowui *ui           = nullptr;
 
 public:
 
@@ -94,6 +93,7 @@ protected:
 
 private:
 
+    Ui::SuperWindowui *ui               = nullptr;
     SuperTitle *Title                   = nullptr;
     bool Mouseontitle                   = false;
     bool Enablemaxbutton                = true;

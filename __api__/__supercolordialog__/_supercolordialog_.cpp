@@ -7,7 +7,7 @@ SuperColorDialog::SuperColorDialog(QWidget *parent,QColor sourcecolor)
     Disablemaxisize();
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle("Super ColorDialog");
+    Settitle("SuperColorDialog");
     Init();
 }
 

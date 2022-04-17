@@ -64,7 +64,7 @@ public slots:
 private:
 
     QString Openstatuspath      = "./__depycache__/__cache__/__ini__/_openedstatus_.ini";
-    SuperCore* SuperC           = nullptr;
+    SuperCore* Core             = nullptr;
     QTimer *Timer               = nullptr;
 
 private slots:

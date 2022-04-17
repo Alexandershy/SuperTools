@@ -25,7 +25,7 @@
  *   http://xiph.org/flac/api/
  */
 
-#include "_flacdecoder_.h"
+#include "_superflacdecoder_.h"
 
 QString error = "";
 static FLAC__uint64 totalsamples = 0;

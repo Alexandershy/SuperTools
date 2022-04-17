@@ -38,9 +38,9 @@ void SuperFileManager::Parameterinit()
     Layout->addWidget(this);
     ui->pushButton->setIcon(QIcon(":/__supericon__/_location_.svg"));
     ui->pushButton_2->setIcon(QIcon(":/__supericon__/_check_.svg"));
-    Cachesetting = "./__depycache__/__" + SuperC->Allwordlower(Widget->objectName()).split("box").at(0) + "__/_defaultsetting_.ini";
-    SuperC->Creatfolder("./__depycache__/__" + SuperC->Allwordlower(Widget->objectName()).split("box").at(0) + "__");
-    SuperC->Creatfile(Cachesetting);
+    Cachesetting = "./__depycache__/__" + Core->Allwordlower(Widget->objectName()).split("box").at(0) + "__/_defaultsetting_.ini";
+    Core->Creatfolder("./__depycache__/__" + Core->Allwordlower(Widget->objectName()).split("box").at(0) + "__");
+    Core->Creatfile(Cachesetting);
     Widgetlist.append(ui->pushButton);
     Widgetlist.append(ui->pushButton_2);
 }
@@ -67,7 +67,7 @@ void SuperFileManager::Headerviewinit()
 
 void SuperFileManager::Objectinit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
     Filemenu = new QMenu(this);
     Tablemenu = new QMenu(this);
     Openfile = new QAction(QIcon(":/__supericon__/_open_.svg"),"",Filemenu);
@@ -86,20 +86,20 @@ void SuperFileManager::Objectinit()
 
 void SuperFileManager::Addactioninit()
 {
-    SuperC->Addaction(Filemenu,Openfile,"Open File","Openfile");
-    SuperC->Addaction(Filemenu,Openpath,"Open Path","Openpath");
+    Core->Addaction(Filemenu,Openfile,"Open File","Openfile");
+    Core->Addaction(Filemenu,Openpath,"Open Path","Openpath");
     Filemenu->addSeparator();
-    SuperC->Addaction(Filemenu,Deletefile,"Delete File","Deletefile");
-    SuperC->Addaction(Tablemenu,Importfiles,"Import Super Files","ImportFiles");
+    Core->Addaction(Filemenu,Deletefile,"Delete File","Deletefile");
+    Core->Addaction(Tablemenu,Importfiles,"Import Super Files","ImportFiles");
     Tablemenu->addSeparator();
-    SuperC->Addaction(Tablemenu,Deleteallfiles,"Delete All Files","DeleteAllFiles");
+    Core->Addaction(Tablemenu,Deleteallfiles,"Delete All Files","DeleteAllFiles");
 }
 
 /*  add action init;*/
 
 void SuperFileManager::Loadfilesinit()
 {
-    QString filelisttemp = SuperC->Readonlyfile(Cachesetting);
+    QString filelisttemp = Core->Readonlyfile(Cachesetting);
     if(!filelisttemp.isEmpty())
     {
         Setfiles(filelisttemp.split(Split));
@@ -135,7 +135,7 @@ void SuperFileManager::Setfiles(QStringList filelistinput)
             emit Signalfa("N",file + " add completed","Selectfilesapi function run completed");
         }
     }
-    SuperC->Settablewidgetitem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
+    Core->Settablewidgetitem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
     Headerviewinit();
     for(int i = 0;i < Filelist.count();i++)
     {
@@ -143,11 +143,11 @@ void SuperFileManager::Setfiles(QStringList filelistinput)
         ui->tableWidget->item(i,0)->setText(QString("%1").arg(i,4,10,QChar('0')));
         ui->tableWidget->item(i,1)->setIcon(Iconprovider.icon(fileinfo));
         ui->tableWidget->item(i,1)->setText(fileinfo.completeBaseName() + "." + fileinfo.suffix());
-        ui->tableWidget->item(i,2)->setText(SuperC->Fixfilepath(fileinfo.absolutePath()));
+        ui->tableWidget->item(i,2)->setText(Core->Fixfilepath(fileinfo.absolutePath()));
         ui->tableWidget->item(i,3)->setText(QString::number(fileinfo.size()) + " bits");
     }
-    SuperC->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
-    Setcurrentfile(SuperC->Getlistlastmember(&filelistinput));
+    Core->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
+    Setcurrentfile(Core->Getlistlastmember(&filelistinput));
     Enablewidgetlist();
 }
 
@@ -166,8 +166,8 @@ void SuperFileManager::Cleartreewidget()
 {
     Filelist.clear();
     Enablewidgetlist();
-    SuperC->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
-    SuperC->Settablewidgetitem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
+    Core->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
+    Core->Settablewidgetitem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
     ui->tableWidget->setHorizontalHeaderLabels(Fileinfoheader);
     emit Signalfa("N","all file delete completed","Cleantreewidget function run completed");
     emit Signalfb();
@@ -244,7 +244,7 @@ void SuperFileManager::Actionopen()
 void SuperFileManager::Openfilepath()
 {
     int row = ui->tableWidget->currentRow();
-    SuperC->Openpath(ui->tableWidget->item(row,2)->text());
+    Core->Openpath(ui->tableWidget->item(row,2)->text());
 }
 
 /*  open file path*/
@@ -302,7 +302,7 @@ void SuperFileManager::Deletefiles()
     QString filedelete = Getcurrentitemtext();
     Filelist.removeOne(filedelete);
     ui->tableWidget->removeRow(ui->tableWidget->currentRow());
-    SuperC->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
+    Core->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
     Enablewidgetlist();
     Resetindex();
     emit Signalfa("N",filedelete + " has been delete from filemanager;","Checkfilevaild function run completed;");
@@ -367,7 +367,7 @@ void SuperFileManager::Locationfile()
     }
     else
     {
-        index = SuperC->Findlistmember(&Filelist,Filetemp);
+        index = Core->Findlistmember(&Filelist,Filetemp);
         if(index == -1)
         {
             SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"error: " + Filetemp + " can not determined!;");
@@ -424,7 +424,7 @@ void SuperFileManager::Checkfilevaild()
     }
     else
     {
-        emit Signalfa("N","all " + SuperC->Firstwordlower(Filesuffix) + " files are vaild;","Checkfilevaild function run completed;");
+        emit Signalfa("N","all " + Core->Firstwordlower(Filesuffix) + " files are vaild;","Checkfilevaild function run completed;");
     }
 }
 

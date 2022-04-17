@@ -1,1 +1,0 @@
-uic -o _formatbox__ui.h _formatbox_.ui

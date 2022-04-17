@@ -20,11 +20,9 @@ WasapiBox::~WasapiBox()
 {
     Stopplayaudio();
     Stopanalysisaudio();
-    SuperC->Closethread(Threadpw);
-    SuperC->Closethread(Threadps);
-    SuperC->Closethread(Threaduf);
-    delete Timefigwidget;
-    delete Fftfigwidget;
+    Core->Closethread(Threadpw);
+    Core->Closethread(Threadps);
+    Core->Closethread(Threaduf);
 }
 
 void WasapiBox::Init()
@@ -40,7 +38,7 @@ void WasapiBox::Init()
 
 void WasapiBox::Objectinit()
 {
-    SuperM = new SuperMultiMedia(this);
+    Multimedia = new SuperMultiMedia(this);
     Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
     connect(Modulea->ui->pushButton_95,     &QPushButton::clicked,          this,   &WasapiBox::Refreshdevices);
     connect(Modulea->ui->pushButton,        &QPushButton::clicked,          this,   &WasapiBox::Setaudioformat);
@@ -64,14 +62,14 @@ void WasapiBox::Objectinit()
     connect(Modulec->ui->comboBox_33,       &QComboBox::textActivated,      this,   &WasapiBox::Changedbvmode);
     connect(Modulec->ui->checkBox_2,        &QCheckBox::clicked,            this,   &WasapiBox::Changeplotmode);
     connect(Modulec->ui->doubleSpinBox_5,   &QDoubleSpinBox::textChanged,   this,   &WasapiBox::Changethddegree);
-    Timefigwidget = new SuperPlot(this);
-    Fftfigwidget = new SuperPlot(this);
+    Timechartview = new SuperChartView(this);
+    Fftchartview = new SuperChartView(this);
     Tabwidget = new SuperTabWidget(this);
     Rightgroupboxlist.at(0)->Insidelayout->addWidget(Tabwidget);
-    Tabwidget->addTab(Timefigwidget,"Time");
-    Tabwidget->addTab(Fftfigwidget,"Frequency");
-    connect(Timefigwidget,  &QCustomPlot::mouseDoubleClick, this,   &WasapiBox::Changeplotmode);
-    connect(Fftfigwidget,   &QCustomPlot::mouseDoubleClick, this,   &WasapiBox::Changeplotmode);
+    Tabwidget->addTab(Timechartview,"Time");
+    Tabwidget->addTab(Fftchartview,"Frequency");
+    connect(Timechartview,  &SuperChartView::Signalca,  this,   &WasapiBox::Changeplotmode);
+    connect(Fftchartview,   &SuperChartView::Signalca,  this,   &WasapiBox::Changeplotmode);
     Logger = new SuperLogger(this,Rightgroupboxlist.at(1)->Insidelayout);
     Modulec->ui->spinBox->setSpecialValueText("");
     Changelimitmode();
@@ -81,14 +79,14 @@ void WasapiBox::Parameterinit()
 {
     Outputwidgetlist    = {Modulea->ui->comboBox_24,Modulea->ui->lineEdit_40,Moduleb->ui->checkBox_24,Moduleb->ui->pushButton_97,Modulea->ui->pushButton};
     Inputwidgetlist     = {Modulea->ui->comboBox_25,Modulea->ui->lineEdit_41,Modulec->ui->pushButton_99,Modulec->ui->checkBox_2,Modulec->ui->label_5,Modulec->ui->doubleSpinBox_4,Modulec->ui->label,Modulec->ui->comboBox};
-    Maxval = pow(Samplewidth,SuperM->Enumbitstoint(Initbits) -1) -1;
+    Maxval = pow(Samplewidth,Multimedia->Enumbitstoint(Initbits) -1) -1;
 }
 
 /*  init widget pointer;*/
 
 void WasapiBox::Colorinit()
 {
-    SuperC->Colorinit(&Backgroundcolor,&Fontcolor,&Concolor,&Strrgbbackgroundcolor,&Strrgbfontcolor,&Strrgbconcolor);
+    Core->Colorinit(&Backgroundcolor,&Fontcolor,&Concolor,&Strrgbbackgroundcolor,&Strrgbfontcolor,&Strrgbconcolor);
 }
 
 /*  init color;*/
@@ -110,8 +108,8 @@ void WasapiBox::Enablerefreshdevicebutton()
 void WasapiBox::Refreshdevices()
 {
     Refreshdevicesinit();
-    SuperM->Getaudiooutputdeviceinfo(&Outputdevicelist,&Listoutputname,&Listoutputnumber);
-    SuperM->Getaudioinputdeviceinfo(&Inputdevicelist,&Listinputname,&Listinputnumber);
+    Multimedia->Getaudiooutputdeviceinfo(&Outputdevicelist,&Listoutputname,&Listoutputnumber);
+    Multimedia->Getaudioinputdeviceinfo(&Inputdevicelist,&Listinputname,&Listinputnumber);
     if(!Listoutputname.isEmpty())
     {
         Modulea->ui->comboBox_24->addItems(Listoutputname);
@@ -171,12 +169,12 @@ void WasapiBox::Refreshoutputnumber()
     if(Moduleb->ui->lineEdit_34->text().isEmpty())
     {
         Outputsamplerate = Outputdevicelist.at(Modulea->ui->comboBox_24->currentIndex()).preferredFormat().sampleRate();
-        Outputbits = SuperM->Enumbitstoint(Outputdevicelist.at(Modulea->ui->comboBox_24->currentIndex()).preferredFormat().sampleFormat());
+        Outputbits = Multimedia->Enumbitstoint(Outputdevicelist.at(Modulea->ui->comboBox_24->currentIndex()).preferredFormat().sampleFormat());
         Outputchannelcount = Outputdevicelist.at(Modulea->ui->comboBox_24->currentIndex()).preferredFormat().channelCount();
     }
     else
     {
-        QStringList Wavinfo = SuperM->Wavinfo(Moduleb->ui->lineEdit_34->text());
+        QStringList Wavinfo = Multimedia->Wavinfo(Moduleb->ui->lineEdit_34->text());
         Outputsamplerate = Wavinfo.at(7).toInt();
         Outputbits = Wavinfo.at(10).toInt();
         Outputchannelcount = Wavinfo.at(6).toInt();
@@ -203,7 +201,7 @@ void WasapiBox::Refreshinputnumber()
 {
     Modulea->ui->lineEdit_41->setText(Listinputnumber.at(Modulea->ui->comboBox_25->currentIndex()));
     Inputsamplerate = Inputdevicelist.at(Modulea->ui->comboBox_25->currentIndex()).preferredFormat().sampleRate();
-    Inputbits = SuperM->Enumbitstoint(Inputdevicelist.at(Modulea->ui->comboBox_25->currentIndex()).preferredFormat().sampleFormat());
+    Inputbits = Multimedia->Enumbitstoint(Inputdevicelist.at(Modulea->ui->comboBox_25->currentIndex()).preferredFormat().sampleFormat());
     Inputchannelcount = Inputdevicelist.at(Modulea->ui->comboBox_25->currentIndex()).preferredFormat().channelCount();
     Refreshaudioformatapi(&Inputformat,Inputsamplerate,Inputbits,Inputchannelcount,Modulea->ui->comboBox_25->currentText());
 }
@@ -231,7 +229,7 @@ void WasapiBox::Audioformat(QAudioFormat* format)
 void WasapiBox::Refreshaudioformatapi(QAudioFormat *format,int intsamplerate,int intsamplesize,int intchannelcount,QString straudioname)
 {
     format->setSampleRate(intsamplerate);
-    format->setSampleFormat(SuperM->Intbitstoenum(intsamplesize));
+    format->setSampleFormat(Multimedia->Intbitstoenum(intsamplesize));
     format->setChannelCount(intchannelcount);
     Logger->Displaylog("N",straudioname + " format: ","Refreshaudioformatapi function run completed");
     Logger->Displaylog("N","set " + straudioname + " format samplerate: " + QString::number(intsamplerate) + "(hz)","Refreshaudioformatapi function run completed");
@@ -280,7 +278,7 @@ void WasapiBox::Setwavfile(QString file)
     else
     {
         Moduleb->ui->lineEdit_34->setText(file);
-        QStringList wavinfo = SuperM->Wavinfo(Moduleb->ui->lineEdit_34->text());
+        QStringList wavinfo = Multimedia->Wavinfo(Moduleb->ui->lineEdit_34->text());
         QVector<QString> wavelist = {"RIFF","filelen","WAVE","fmt","fmtlen","wformattag","wchannels","dwsamplerate","dwavgbyterate","wblockalign","wbitspersample","wextsize","extralinfo"};
         Outputsamplerate = wavinfo.at(7).toInt();
         Outputbits = wavinfo.at(10).toInt();
@@ -318,30 +316,30 @@ void WasapiBox::Playwavinit()
     {
         case 4:
         {
-            SuperM->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,7);
+            Multimedia->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,7);
             Moduleb->ui->pushButton_100->setEnabled(true);
             Moduleb->ui->checkBox_24->setEnabled(false);
             Modulea->ui->comboBox_24->setEnabled(false);
             File = new QFile(Moduleb->ui->lineEdit_34->text(),this);
             File->open(QIODevice::ReadOnly);
             QAudioSink *audiosink = new QAudioSink(Outputdevicelist.at(Modulea->ui->comboBox_24->currentIndex()),Outputformat);
-            Threadpw = new PlayWav(File,File->size(),&Playstatus,audiosink);
-            connect(Threadpw,&PlayWav::Signalpa,    this,       &WasapiBox::Signalpwaslot);
-            connect(Threadpw,&PlayWav::Signalpb,    this,       &WasapiBox::Signalpwbslot);
-            connect(Threadpw,&PlayWav::finished,    Threadpw,   &QObject::deleteLater);
+            Threadpw = new SuperPlayWav(File,File->size(),&Playstatus,audiosink);
+            connect(Threadpw,&SuperPlayWav::Signalpa,   this,       &WasapiBox::Signalpwaslot);
+            connect(Threadpw,&SuperPlayWav::Signalpb,   this,       &WasapiBox::Signalpwbslot);
+            connect(Threadpw,&SuperPlayWav::finished,   Threadpw,   &QObject::deleteLater);
             Threadpw->start();
             Logger->Displaylog("N","start new thread for play wav file","Playaudio function running...");
             break;
         }
         case 7:
         {
-            SuperM->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,9);
+            Multimedia->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,9);
             Logger->Displaylog("N","wav file play suspended","Playaudio function suspended");
             break;
         }
         case 9:
         {
-            SuperM->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,7);
+            Multimedia->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,7);
             Logger->Displaylog("N","wav file resume playing...","Playaudio function running...");
             break;
         }
@@ -356,7 +354,7 @@ void WasapiBox::Playsignalinit()
     {
         case 4:
         {
-            SuperM->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,7);
+            Multimedia->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,7);
             Amplitude = Moduleb->ui->doubleSpinBox->value();
             Frequency = Moduleb->ui->doubleSpinBox_2->value();
             Durationtime = Moduleb->ui->doubleSpinBox_3->value();
@@ -366,9 +364,9 @@ void WasapiBox::Playsignalinit()
             Modulea->ui->comboBox_24->setEnabled(false);
             Moduleb->ui->pushButton_97->setEnabled(false);
             QAudioSink *audiosink = new QAudioSink(Outputdevicelist.at(Modulea->ui->comboBox_24->currentIndex()),Outputformat);
-            Threadps = new PlaySignal(Signalwave(),Moduleb->ui->doubleSpinBox_3->value(),&Playstatus,audiosink);
-            connect(Threadps,&PlaySignal::Signalpa, this,       &WasapiBox::Signalspslot);
-            connect(Threadps,&PlaySignal::finished,Threadps,    &QObject::deleteLater);
+            Threadps = new SuperPlaySignal(Signalwave(),Moduleb->ui->doubleSpinBox_3->value(),&Playstatus,audiosink);
+            connect(Threadps,&SuperPlaySignal::Signalpa,this,       &WasapiBox::Signalspslot);
+            connect(Threadps,&SuperPlaySignal::finished,Threadps,   &QObject::deleteLater);
             Threadps->start();
             Logger->Displaylog("N","start new thread for play signal,signal playing...","Playaudio function running...");
             break;
@@ -384,21 +382,21 @@ void WasapiBox::Setplaymode()
     QWidgetList widgetlistb = {Moduleb->ui->lineEdit_34,Moduleb->ui->pushButton_98};
     if(Moduleb->ui->checkBox_24->isChecked() && Playstatus.size() == 4)
     {
-        SuperC->Enablewidgetlist(&widgetlista,true);
-        SuperC->Enablewidgetlist(&widgetlistb,false);
+        Core->Enablewidgetlist(&widgetlista,true);
+        Core->Enablewidgetlist(&widgetlistb,false);
         Moduleb->ui->lineEdit_34->clear();
         Logger->Displaylog("N","play mode has been changed to signal","Setplaymode function run completed");
     }
     else if(!Moduleb->ui->checkBox_24->isChecked() && Playstatus.size() == 4)
     {
-        SuperC->Enablewidgetlist(&widgetlista,false);
-        SuperC->Enablewidgetlist(&widgetlistb,true);
+        Core->Enablewidgetlist(&widgetlista,false);
+        Core->Enablewidgetlist(&widgetlistb,true);
         Logger->Displaylog("N","play mode has been changed to wav,select file to play","Setplaymode function run completed");
     }
     else if(Playstatus.size() != 4)
     {
-        SuperC->Enablewidgetlist(&widgetlista,false);
-        SuperC->Enablewidgetlist(&widgetlistb,false);
+        Core->Enablewidgetlist(&widgetlista,false);
+        Core->Enablewidgetlist(&widgetlistb,false);
     }
 }
 
@@ -406,7 +404,7 @@ void WasapiBox::Setplaymode()
 
 void WasapiBox::Stopplayaudio()
 {
-    SuperM->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,4);
+    Multimedia->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,4);
 }
 
 /*  stop play audio;*/
@@ -514,11 +512,11 @@ void WasapiBox::Analysisaudio()
     if(status == 8)
     {
         Updatefigureparameter[3] = 11;
-        SuperM->Changeanalysistext(Modulec->ui->pushButton_99,&Analysisstatus,Updatefigureparameter.at(3));
+        Multimedia->Changeanalysistext(Modulec->ui->pushButton_99,&Analysisstatus,Updatefigureparameter.at(3));
         Analysisaudioinit(true,false);
         QAudioSource *audiosource = new QAudioSource(Inputdevicelist.at(Modulea->ui->comboBox_25->currentIndex()),Inputformat);
         audiosource->setBufferSize(Modulec->ui->doubleSpinBox_4->value() * 2);
-        Threaduf = new UpdateFigure(&Allrecorddata,audiosource,Timefigwidget,Fftfigwidget,&Updatefigureparameter);
+        Threaduf = new UpdateFigure(&Allrecorddata,audiosource,&Updatefigureparameter);
         connect(Threaduf,&UpdateFigure::Signalua,   this,       &WasapiBox::Signaluarslot);
         connect(Threaduf,&UpdateFigure::Signalub,   this,       &WasapiBox::Signalubrslot);
         connect(Threaduf,&UpdateFigure::Signaluc,   this,       &WasapiBox::Stopanalysisaudio);
@@ -549,26 +547,12 @@ void WasapiBox::Analysisaudioinit(bool boola,bool boolb)
 
 void WasapiBox::Plotinit()
 {
-    Timefigwidget->addGraph();
-    Timefigwidget->addGraph();
-    Timefigwidget->graph(0)->setPen(Backgroundcolor);
-    Timefigwidget->graph(1)->setPen(Concolor);
-    Timefigwidget->graph(0)->setAdaptiveSampling(true);
-    Timefigwidget->graph(1)->setAdaptiveSampling(true);
-    Timefigwidget->replot(QCustomPlot::rpQueuedReplot);
-    Timefigwidget->setSelectionRectMode(QCP::SelectionRectMode::srmNone);
-    Timefigwidget->setMultiSelectModifier(Qt::KeyboardModifier::ControlModifier);
-    Timefigwidget->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag);
-    Fftfigwidget->addGraph();
-    Fftfigwidget->addGraph();
-    Fftfigwidget->graph(0)->setPen(Backgroundcolor);
-    Fftfigwidget->graph(1)->setPen(Concolor);
-    Fftfigwidget->graph(0)->setAdaptiveSampling(true);
-    Fftfigwidget->graph(1)->setAdaptiveSampling(true);
-    Fftfigwidget->replot(QCustomPlot::rpQueuedReplot);
-    Fftfigwidget->setSelectionRectMode(QCP::SelectionRectMode::srmNone);
-    Fftfigwidget->setMultiSelectModifier(Qt::KeyboardModifier::ControlModifier);
-    Fftfigwidget->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag);
+    Timechartview->Addseries(2);
+    Timechartview->Lineseriesvector.at(0)->setPen(QPen(Backgroundcolor,1,Qt::SolidLine));
+    Timechartview->Lineseriesvector.at(1)->setPen(QPen(Concolor,1,Qt::SolidLine));
+    Fftchartview->Addseries(2);
+    Fftchartview->Lineseriesvector.at(0)->setPen(QPen(Backgroundcolor,1,Qt::SolidLine));
+    Fftchartview->Lineseriesvector.at(1)->setPen(QPen(Concolor,1,Qt::SolidLine));
 }
 
 /*  figure init;*/
@@ -576,7 +560,7 @@ void WasapiBox::Plotinit()
 void WasapiBox::Stopanalysisaudio()
 {
     Updatefigureparameter[3] = 8;
-    SuperM->Changeanalysistext(Modulec->ui->pushButton_99,&Analysisstatus,Updatefigureparameter.at(3));
+    Multimedia->Changeanalysistext(Modulec->ui->pushButton_99,&Analysisstatus,Updatefigureparameter.at(3));
 }
 
 /*  stop analysis audio;*/
@@ -697,8 +681,8 @@ void WasapiBox::Generatewavfile(QString wavfile)
     QFileInfo fileinfo(wavfile);
     Currentpath = fileinfo.absolutePath();
     QByteArray bytes = Sinewave(Moduleb->ui->doubleSpinBox_3->value(),Moduleb->ui->doubleSpinBox->value(),Moduleb->ui->doubleSpinBox_2->value());
-    SuperC->Creatfile(wavfile);
-    SuperM->Writewavfile(wavfile,bytes.size(),Outputchannelcount,Outputsamplerate,Outputchannelcount * Outputsamplerate * 2,Outputchannelcount * 2,bytes);
+    Core->Creatfile(wavfile);
+    Multimedia->Writewavfile(wavfile,bytes.size(),Outputchannelcount,Outputsamplerate,Outputchannelcount * Outputsamplerate * 2,Outputchannelcount * 2,bytes);
     SuperNoteDialog *messagebox = new SuperNoteDialog(nullptr,wavfile + " has been created;\nclick ok open path;");
     connect(messagebox,&SuperNoteDialog::Signalnb,this,&WasapiBox::Opengeneratepath);
     messagebox->Messageinit();
@@ -709,14 +693,14 @@ void WasapiBox::Generatewavfile(QString wavfile)
 
 void WasapiBox::Openrecordpath()
 {
-    SuperC->Openpath(Temppath);
+    Core->Openpath(Temppath);
 }
 
 /* open record path;*/
 
 void WasapiBox::Opengeneratepath()
 {
-    SuperC->Openpath(Currentpath);
+    Core->Openpath(Currentpath);
 }
 
 /* open generate path;*/
@@ -743,7 +727,7 @@ void WasapiBox::Signalpwslotapi()
     File->close();
     File = nullptr;
     Threadpw = nullptr;
-    SuperM->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,4);
+    Multimedia->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,4);
     Moduleb->ui->pushButton_97->setEnabled(true);
     Moduleb->ui->pushButton_100->setEnabled(false);
     Moduleb->ui->checkBox_24->setEnabled(true);
@@ -757,7 +741,7 @@ void WasapiBox::Signalspslot()
 {
     Threadps = nullptr;
     Moduleb->ui->pushButton_97->setEnabled(true);
-    SuperM->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,4);
+    Multimedia->Changeplaytext(Moduleb->ui->pushButton_97,&Playstatus,4);
     Moduleb->ui->pushButton_100->setEnabled(false);
     Moduleb->ui->checkBox_24->setEnabled(true);
     Modulea->ui->comboBox_24->setEnabled(true);
@@ -770,12 +754,32 @@ void WasapiBox::Signalspslot()
 
 void WasapiBox::Signaluarslot(QString strdbv,QString strfreq,QString strthd)
 {
-    Modulec->ui->lineEdit_42->setText(strdbv);
-    Modulec->ui->lineEdit_47->setText(strfreq);
-    Modulec->ui->lineEdit_49->setText(strthd);
+    if(Threaduf != nullptr)
+    {
+        Modulec->ui->lineEdit_42->setText(strdbv);
+        Modulec->ui->lineEdit_47->setText(strfreq);
+        Modulec->ui->lineEdit_49->setText(strthd);
+        switch(Tabwidget->currentIndex())
+        {
+            case 0:
+            {
+                Timechartview->Setdata(0,Threaduf->Pointl);
+                Timechartview->Setdata(1,Threaduf->Pointr);
+                Timechartview->Rescaleaxes();
+                break;
+            }
+            case 1:
+            {
+                Fftchartview->Setdata(0,Threaduf->Pointlfft);
+                Fftchartview->Setdata(1,Threaduf->Pointrfft);
+                Fftchartview->Rescaleaxes();
+                break;
+            }
+        }
+    }
 }
 
-/*  input dbv freq thd from signal;*/
+/*  display dbv freq thd and plot;*/
 
 void WasapiBox::Signalubrslot(QString text)
 {
@@ -793,7 +797,7 @@ void WasapiBox::Savewavfile()
     if(Modulec->ui->comboBox->currentIndex())
     {
         QString localtime = "_" + QDateTime::currentDateTime().toString("yyyyMMddhhmmss") + "_";
-        SuperM->Writewavfile(Temppath + localtime + ".wav",Allrecorddata.size(),Inputchannelcount,Inputsamplerate,Inputchannelcount * Inputsamplerate * 2,Inputchannelcount * 2,Allrecorddata);
+        Multimedia->Writewavfile(Temppath + localtime + ".wav",Allrecorddata.size(),Inputchannelcount,Inputsamplerate,Inputchannelcount * Inputsamplerate * 2,Inputchannelcount * 2,Allrecorddata);
         SuperNoteDialog *messagebox = new SuperNoteDialog(nullptr,localtime + ".wav has been created;\nclick ok open path;");
         connect(messagebox,&SuperNoteDialog::Signalnb,this,&WasapiBox::Openrecordpath);
         messagebox->Messageinit();
@@ -803,12 +807,10 @@ void WasapiBox::Savewavfile()
 
 /*  save wav file;*/
 
-UpdateFigure::UpdateFigure(QByteArray *allrecorddata,QAudioSource *audiosource,SuperPlot* timeplot,SuperPlot* fftplot,QVector<int> *updatefigureparameter)
+UpdateFigure::UpdateFigure(QByteArray *allrecorddata,QAudioSource *audiosource,QVector<int> *updatefigureparameter)
 {
     Allrecorddata = allrecorddata;
     Audiosource = audiosource;
-    Timeplot = timeplot;
-    Fftplot = fftplot;
     Updatefigureparameter = updatefigureparameter;
     Init();
 }
@@ -827,9 +829,9 @@ UpdateFigure::~UpdateFigure()
 
 void UpdateFigure::Init()
 {
-    SuperC = new SuperCore(this);
-    SuperM = new SuperMultiMedia(this);
-    Bits = SuperM->Enumbitstoint(Audiosource->format().sampleFormat());
+    Core = new SuperCore(this);
+    Multimedia = new SuperMultiMedia(this);
+    Bits = Multimedia->Enumbitstoint(Audiosource->format().sampleFormat());
     Inputsamplerate = Audiosource->format().sampleRate();
     Maxinputchannel = Audiosource->format().channelCount();
     Maxval = pow(2,Bits - 1) - 1;
@@ -848,8 +850,8 @@ void UpdateFigure::Recordaduioinit()
     QIODevice *iodevice = Audiosource->start();
     Buffersize = Audiosource->bufferSize();
     Intcount = Buffersize / sizeof(int16_t) / Maxinputchannel;
-    Xtime   = SuperC->Arange(0,Intcount,1);
-    Xfft    = SuperC->Linspace(0,Inputsamplerate / 2,Intcount / 2);
+    Xtime.append(Core->Arange(0,Intcount,1));
+    Xfft.append(Core->Linspace(0,Inputsamplerate / 2,Intcount / 2));
     Ylffti  = (double*)fftw_malloc(sizeof(double)* Intcount);
     Ylffto  = (fftw_complex *)fftw_malloc(sizeof(fftw_complex)* Intcount);
     Yrffti  = (double*)fftw_malloc(sizeof(double)* Intcount);
@@ -896,29 +898,25 @@ void UpdateFigure::Caldata(QIODevice* iodevice)
 
 void UpdateFigure::Analysischannela(QIODevice* iodevice)
 {
-    int16_t yl = 0;
-    QVector <double> ylvector = {};
-    QVector <double> ylfftvector = {};
-    bool boola = Read(iodevice,&Recorddata);
-    if(!Recorddata.isEmpty() && boola)
+    if(Read(iodevice,&Recorddata))
     {
+        int16_t yl = 0;
+        Pointl.clear();
+        Pointlfft.clear();
         for(int i = 0;i < Intcount;i++)
         {
             yl = Recorddata.at(i * 2) & 0x00FF;
             yl |= (Recorddata.at(i * 2 + 1) << 8) & 0xFF00;
             Ylffti[i] = yl;
-            ylvector.append(yl);
+            Pointl.append({Xtime.at(i),(double)yl});
         }
         fftw_execute_dft_r2c(Plan,Ylffti,Ylffto);
-        Calrealdata(Intcount / 2,Ylffto,Ylfftro,&ylfftvector);
-        Resultdbv = SuperM->Caldbv(Ylffti,Intcount,Updatefigureparameter->at(2),Maxval) + "(dbv)";
-        Frequencyl = SuperM->Calfreq(Ylffti,Intcount,Inputsamplerate);
+        Calrealdata(Intcount / 2,Ylffto,Ylfftro,&Pointlfft);
+        Resultdbv = Multimedia->Caldbv(Ylffti,Intcount,Updatefigureparameter->at(2),Maxval) + "(dbv)";
+        Frequencyl = Multimedia->Calfreq(Ylffti,Intcount,Inputsamplerate);
         Resultfrequency = QString::number(Frequencyl,'f',3) + "(hz)";
-        Resultthd = SuperM->Calthd(Frequencyl,Ylfftro,Inputsamplerate,Intcount,Updatefigureparameter->at(1)) + "(thd)";
+        Resultthd = Multimedia->Calthd(Frequencyl,Ylfftro,Inputsamplerate,Intcount,Updatefigureparameter->at(1)) + "(thd)";
         emit Signalua(Resultdbv,Resultfrequency,Resultthd);
-        Updatefigb(ylvector,ylfftvector);
-        Timeplot->replot(QCustomPlot::rpQueuedReplot);
-        Fftplot->replot(QCustomPlot::rpQueuedReplot);
     }
 }
 
@@ -926,15 +924,14 @@ void UpdateFigure::Analysischannela(QIODevice* iodevice)
 
 void UpdateFigure::Analysischannelb(QIODevice* iodevice)
 {
-    int16_t yl = 0;
-    int16_t yr = 0;
-    QVector <double> ylvector = {};
-    QVector <double> yrvector = {};
-    QVector <double> ylfftvector = {};
-    QVector <double> yrfftvector = {};
-    bool boola = Read(iodevice,&Recorddata);
-    if(!Recorddata.isEmpty() && boola)
+    if(Read(iodevice,&Recorddata))
     {
+        int16_t yl = 0;
+        int16_t yr = 0;
+        Pointl.clear();
+        Pointr.clear();
+        Pointlfft.clear();
+        Pointrfft.clear();
         for(int i = 0;i < Intcount;i++)
         {
             yl = Recorddata.at(i * 4) & 0x00FF;
@@ -943,35 +940,32 @@ void UpdateFigure::Analysischannelb(QIODevice* iodevice)
             yr |= (Recorddata.at(i * 4 + 3) << 8) & 0xFF00;
             Ylffti[i] = yl;
             Yrffti[i] = yr;
-            ylvector.append(yl);
-            yrvector.append(yr);
+            Pointl.append({Xtime.at(i),(double)yl});
+            Pointr.append({Xtime.at(i),(double)yr});
         }
         fftw_execute_dft_r2c(Plan,Ylffti,Ylffto);
         fftw_execute_dft_r2c(Plan,Yrffti,Yrffto);
-        Calrealdata(Intcount / 2,Ylffto,Ylfftro,&ylfftvector);
-        Calrealdata(Intcount / 2,Yrffto,Yrfftro,&yrfftvector);
-        Resultdbv = SuperM->Caldbv(Ylffti,Intcount,Updatefigureparameter->at(2),Maxval) + "," + SuperM->Caldbv(Yrffti,Intcount,Updatefigureparameter->at(2),Maxval) + "(dbv)";
-        Frequencyl = SuperM->Calfreq(Ylffti,Intcount,Inputsamplerate);
-        Frequencyr = SuperM->Calfreq(Yrffti,Intcount,Inputsamplerate);
+        Calrealdata(Intcount / 2,Ylffto,Ylfftro,&Pointlfft);
+        Calrealdata(Intcount / 2,Yrffto,Yrfftro,&Pointrfft);
+        Resultdbv = Multimedia->Caldbv(Ylffti,Intcount,Updatefigureparameter->at(2),Maxval) + "," + Multimedia->Caldbv(Yrffti,Intcount,Updatefigureparameter->at(2),Maxval) + "(dbv)";
+        Frequencyl = Multimedia->Calfreq(Ylffti,Intcount,Inputsamplerate);
+        Frequencyr = Multimedia->Calfreq(Yrffti,Intcount,Inputsamplerate);
         Resultfrequency = QString::number(Frequencyl,'f',3) + "," + QString::number(Frequencyr,'f',3) + "(hz)";
-        Resultthd = SuperM->Calthd(Frequencyl,Ylfftro,Inputsamplerate,Intcount,Updatefigureparameter->at(1)) + "," + SuperM->Calthd(Frequencyr,Yrfftro,Inputsamplerate,Intcount,Updatefigureparameter->at(1)) + "(thd)";
+        Resultthd = Multimedia->Calthd(Frequencyl,Ylfftro,Inputsamplerate,Intcount,Updatefigureparameter->at(1)) + "," + Multimedia->Calthd(Frequencyr,Yrfftro,Inputsamplerate,Intcount,Updatefigureparameter->at(1)) + "(thd)";
         emit Signalua(Resultdbv,Resultfrequency,Resultthd);
-        Updatefiga(ylvector,yrvector,ylfftvector,yrfftvector);
-        Timeplot->replot(QCustomPlot::rpQueuedReplot);
-        Fftplot->replot(QCustomPlot::rpQueuedReplot);
     }
 }
 
 /*  cal double channel data;*/
 
-void UpdateFigure::Calrealdata(int count,fftw_complex* complex,double* yreal,QVector<double>* y)
+void UpdateFigure::Calrealdata(int count,fftw_complex* complex,double* yreal,QVector<QPointF>* point)
 {
     double temp = 0;
     for (int i = 0;i < count;i++)
     {
         temp = sqrt(complex[i][0] * complex[i][0] + complex[i][1] * complex[i][1]) / count / Maxval;
         yreal[i] = temp;
-        y->append(20 * log10(temp));
+        point->append({Xfft.at(i),20 * log10(temp)});
     }
 }
 
@@ -1023,36 +1017,6 @@ bool UpdateFigure::Read(QIODevice* iodevice,QByteArray *data)
 }
 
 /*  read data from inputdevice;*/
-
-void UpdateFigure::Updatefiga(QVector<double> yl,QVector<double> yr,QVector<double> ylfft,QVector<double> yrfft)
-{
-    Timeplot->graph(0)->setData(Xtime,yl);
-    Timeplot->graph(1)->setData(Xtime,yr);
-    Fftplot->graph(0)->setData(Xfft,ylfft);
-    Fftplot->graph(1)->setData(Xfft,yrfft);
-    if(Updatefigureparameter->at(0))
-    {
-        Timeplot->rescaleAxes();
-        Fftplot->xAxis->setRange(Frequencyl - Autorange,Frequencyl + Autorange);
-        Fftplot->yAxis->rescale(true);
-    }
-}
-
-/*  update figurea;*/
-
-void UpdateFigure::Updatefigb(QVector<double> yl,QVector<double> ylfft)
-{
-    Timeplot->graph(0)->setData(Xtime,yl);
-    Fftplot->graph(0)->setData(Xfft,ylfft);
-    if(Updatefigureparameter->at(0))
-    {
-        Timeplot->rescaleAxes();
-        Fftplot->xAxis->setRange(Frequencyl - Autorange,Frequencyl + Autorange);
-        Fftplot->yAxis->rescale(true);
-    }
-}
-
-/*  update figureb;*/
 
 void UpdateFigure::Emitresult()
 {

@@ -1,12 +1,13 @@
 #ifndef _WASAPIBOX__H
 #define _WASAPIBOX__H
+#define _WASAPIBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
-#include "__superplot__/_superplot_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__formatdialog__/_formatdialog_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
+#include "__superchartview__/_superchartview_.h"
 #include "__supertabwidget__/_supertabwidget_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
@@ -15,9 +16,7 @@
 #include "__module__/_moduleb_.h"
 #include "__module__/_modulec_.h"
 #include "__superfftw__/fftw3.h"
-#include "_wasapibox__global.h"
 
-/**************interface****************/
 class _WASAPIBOX__EXPORT Interface
 {
 public:
@@ -31,6 +30,7 @@ class WasapiBox : public SuperTab
     Q_OBJECT
 
 public:
+
     WasapiBox(
             QWidget *parent = nullptr);
 
@@ -38,7 +38,7 @@ public:
 
 private:
 
-    SuperMultiMedia *SuperM                     = nullptr;
+    SuperMultiMedia *Multimedia                 = nullptr;
     SuperLogger *Logger                         = nullptr;
     ModuleA *Modulea                            = nullptr;
     ModuleB *Moduleb                            = nullptr;
@@ -60,11 +60,11 @@ private:
     int Maxval                                  = 0;
     int Volume                                  = 0;
     QVector<int> Updatefigureparameter          = {1,0,0,4,0,268435456,1800};//autoplot,thddegree,dbv,analysis status,limitmode,maxsize,maxlength;
-    SuperPlot* Timefigwidget                    = nullptr;
-    SuperPlot* Fftfigwidget                     = nullptr;
+    SuperChartView* Timechartview               = nullptr;
+    SuperChartView* Fftchartview                = nullptr;
     QAudioFormat Format                         = {};
-    PlayWav *Threadpw                           = nullptr;
-    PlaySignal *Threadps                        = nullptr;
+    SuperPlayWav *Threadpw                      = nullptr;
+    SuperPlaySignal *Threadps                   = nullptr;
     UpdateFigure *Threaduf                      = nullptr;
     QStringList Listoutputname                  = {};
     QStringList Listoutputnumber                = {};
@@ -224,25 +224,29 @@ public:
     UpdateFigure(
             QByteArray *allrecorddata,
             QAudioSource *audiosource,
-            SuperPlot* timefigwidget,
-            SuperPlot* fftfigwidget,
             QVector<int> *updatefigureparameter);
 
     ~UpdateFigure();
 
     void run();
 
+public:
+
+    int Maxinputchannel                         = 0;
+    QVector<QPointF> Pointl                     = {};
+    QVector<QPointF> Pointr                     = {};
+    QVector<QPointF> Pointlfft                  = {};
+    QVector<QPointF> Pointrfft                  = {};
+
 private:
 
-    SuperCore *SuperC                           = nullptr;
-    SuperMultiMedia *SuperM                     = nullptr;
+    SuperCore *Core                             = nullptr;
+    SuperMultiMedia *Multimedia                 = nullptr;
     QAudioSource *Audiosource                   = nullptr;
     int Buffersize                              = 0;
-    SuperPlot *Timeplot                         = nullptr;
-    SuperPlot *Fftplot                          = nullptr;
     QVector<int> *Updatefigureparameter         = nullptr;
-    QVector <double> Xtime                      = {};
-    QVector <double> Xfft                       = {};
+    QVector<double> Xtime                       = {};
+    QVector<double> Xfft                        = {};
     double *Ylffti                              = nullptr;
     fftw_complex *Ylffto                        = nullptr;
     double *Yrffti                              = nullptr;
@@ -250,7 +254,6 @@ private:
     double *Ylfftro                             = nullptr;
     double *Yrfftro                             = nullptr;
     fftw_plan Plan                              = {};
-    int Maxinputchannel                         = 0;
     int Inputsamplerate                         = 0;
     int Samplecount                             = 0;
     int Intcount                                = 0;
@@ -289,21 +292,11 @@ private slots:
             QIODevice* iodevice,
             QByteArray *data);
 
-    void Updatefiga(
-            QVector<double> yl,
-            QVector<double> yr,
-            QVector<double> ylfft,
-            QVector<double> yrfft);
-
-    void Updatefigb(
-            QVector<double> yl,
-            QVector<double> ylfft);
-
     void Calrealdata(
             int count,
             fftw_complex* complex,
             double* yreal,
-            QVector<double> *y);
+            QVector<QPointF> *point);
 
     void Emitresult();
 

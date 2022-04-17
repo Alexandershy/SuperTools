@@ -3,7 +3,7 @@
 SuperMultiMedia::SuperMultiMedia(QObject *parent)
     : QObject(parent)
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
 SuperMultiMedia::~SuperMultiMedia()
@@ -244,7 +244,7 @@ void SuperMultiMedia::Cal16bitsdata(int channels,int channel,QVector<double> *ve
         y |= (wavfiledata->at(i * 2 * channels + 1 + channel * 2) << 8) & 0xFF00;
         vectory->append(double(y));
     }
-    vectorx->append(SuperC->Linspace(0,double(wavfiledatacount) / samplerate,vectory->count()));
+    vectorx->append(Core->Linspace(0,double(wavfiledatacount) / samplerate,vectory->count()));
 }
 
 /*  cal channel int16 data;*/
@@ -263,7 +263,7 @@ QString SuperMultiMedia::Caldbv(double* y,int intcount,int mode,int maxval)
     }
     else
     {
-        double max = SuperC->Getdoublearraymaxvalue(y,intcount) / maxval;
+        double max = Core->Getdoublearraymaxvalue(y,intcount) / maxval;
         if(max <= 0)
         {
             return "0";
@@ -330,8 +330,8 @@ double SuperMultiMedia::Calfreq(double* y,int inicount,int samplerate)
             }
             else
             {
-                freqa = SuperC->Getqvectormeanvalue(&sampleperroundpos,sampleperroundpos.count());
-                freqb = SuperC->Getqvectormeanvalue(&sampleperroundneg,sampleperroundneg.count());
+                freqa = Core->Getqvectormeanvalue(&sampleperroundpos,sampleperroundpos.count());
+                freqb = Core->Getqvectormeanvalue(&sampleperroundneg,sampleperroundneg.count());
                 return samplerate / (freqa + freqb);
             }
         }

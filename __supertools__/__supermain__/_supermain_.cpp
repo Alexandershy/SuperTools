@@ -1,5 +1,11 @@
 #include "_supermain_.h"
 
+#ifdef Q_OS_WIN
+const char *Supertabsymbol      = "?Loadplugin@Interface@@QEAAPEAVSuperTab@@XZ";
+#else
+const char *Supertabsymbol      = "_ZN9Interface10LoadpluginEv";
+#endif
+
 SuperMain::SuperMain(QWidget *parent,QString setting)
     : SuperTabWidget(parent)
 {

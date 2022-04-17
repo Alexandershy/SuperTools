@@ -107,7 +107,7 @@ void SuperWindow::Init()
 
 void SuperWindow::Objectinit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
     Title = new SuperTitle(this);
     Timer = new QTimer(this);
     connect(Title->Minisizebutton,      &QPushButton::clicked,  this,&SuperWindow::Minimized);
@@ -126,17 +126,17 @@ void SuperWindow::Objectinit()
 
 void SuperWindow::Colorinit()
 {
-    QStringList rgbbackgroundcolor = SuperC->Readonlyfile(Backgroundcolorpath).split(",");
-    QStringList rgbfontcolor = SuperC->Readonlyfile(Fontcolorpath).split(",");
+    QStringList rgbbackgroundcolor = Core->Readonlyfile(Backgroundcolorpath).split(",");
+    QStringList rgbfontcolor = Core->Readonlyfile(Fontcolorpath).split(",");
     if(rgbbackgroundcolor.count() >= 3 && rgbfontcolor.count() >= 3)
     {
         Backgroundcolor.setRgb(rgbbackgroundcolor.at(0).toInt(),rgbbackgroundcolor.at(1).toInt(),rgbbackgroundcolor.at(2).toInt());
         Fontcolor.setRgb(rgbfontcolor.at(0).toInt(),rgbfontcolor.at(1).toInt(),rgbfontcolor.at(2).toInt());
         Concolor.setRgb(255 - rgbbackgroundcolor.at(0).toInt(),255 - rgbbackgroundcolor.at(1).toInt(),255 - rgbbackgroundcolor.at(2).toInt());
     }
-    Strrgbbackgroundcolor = "rgb(" + SuperC->Rgbcolor(&Backgroundcolor) + ")";
-    Strrgbfontcolor = "rgb(" + SuperC->Rgbcolor(&Fontcolor) + ")";
-    Strrgbconcolor = "rgb(" + SuperC->Rgbcolor(&Concolor) + ")";
+    Strrgbbackgroundcolor = "rgb(" + Core->Rgbcolor(&Backgroundcolor) + ")";
+    Strrgbfontcolor = "rgb(" + Core->Rgbcolor(&Fontcolor) + ")";
+    Strrgbconcolor = "rgb(" + Core->Rgbcolor(&Concolor) + ")";
 }
 
 /*  if rgb file exist,use color saved,else use default color;*/
@@ -346,11 +346,11 @@ void SuperWindow::Callmenu()
 {
     if(Functionenable)
     {
-        Supermenu->exec(SuperC->Widgetleftbottompoint(Title));
+        Supermenu->exec(Core->Widgetleftbottompoint(Title));
     }
     else
     {
-        Themes->exec(SuperC->Widgetleftbottompoint(Title));
+        Themes->exec(Core->Widgetleftbottompoint(Title));
     }
 }
 
@@ -359,7 +359,7 @@ void SuperWindow::Callmenu()
 void SuperWindow::Setframetheme()
 {
     bool boola = false;
-    QString stringindex = SuperC->Readonlyfile(Themepath);
+    QString stringindex = Core->Readonlyfile(Themepath);
     stringindex.toInt(&boola);
     if(boola)
     {
@@ -407,7 +407,7 @@ void SuperWindow::Enablethemesapi(bool boola,bool boolb,bool boolc,bool boold,QS
     Actioncolor->setChecked(boolb);
     Actionheartofiron->setChecked(boolc);
     Actiongoertek->setChecked(boold);
-    SuperC->Writeonlyfile(Themepath,theme);
+    Core->Writeonlyfile(Themepath,theme);
 }
 
 /*  set tabwidget background color;*/
@@ -415,7 +415,7 @@ void SuperWindow::Enablethemesapi(bool boola,bool boolb,bool boolc,bool boold,QS
 void SuperWindow::Setoriginaltheme()
 {
     Enablethemesapi(true,false,false,false,"0");
-    SuperC->Replacefile(":/__supericon__/_originaltitle_.png",Localtitlepath);
+    Core->Replacefile(":/__supericon__/_originaltitle_.png",Localtitlepath);
     Backgroundcolor.setRgb(16,81,142);
     Fontcolor.setRgb(255,255,255);
     Setwidgettheme();
@@ -433,7 +433,7 @@ void SuperWindow::Selectcolortheme()
 void SuperWindow::Setcolor(QColor color)
 {
     Backgroundcolor = color;
-    SuperC->Writeonlyfile(Backgroundcolorpath,SuperC->Rgbcolor(&Backgroundcolor));
+    Core->Writeonlyfile(Backgroundcolorpath,Core->Rgbcolor(&Backgroundcolor));
     if(Backgroundcolor.red() + Backgroundcolor.green() + Backgroundcolor.blue() > 380)
     {
         Fontcolor.setRgb(0,0,0);
@@ -442,7 +442,7 @@ void SuperWindow::Setcolor(QColor color)
     {
         Fontcolor.setRgb(255,255,255);
     }
-    SuperC->Writeonlyfile(Fontcolorpath,SuperC->Rgbcolor(&Fontcolor));
+    Core->Writeonlyfile(Fontcolorpath,Core->Rgbcolor(&Fontcolor));
     Setcolortheme();
 }
 
@@ -451,9 +451,9 @@ void SuperWindow::Setcolor(QColor color)
 void SuperWindow::Setcolortheme()
 {
     Enablethemesapi(false,true,false,false,"1");
-    QStringList backgroundrgb = SuperC->Readonlyfile(Backgroundcolorpath).split(",");
-    QStringList fontrgb = SuperC->Readonlyfile(Fontcolorpath).split(",");
-    SuperC->Replacefile(":/__supericon__/_colortitle_.png",Localtitlepath);
+    QStringList backgroundrgb = Core->Readonlyfile(Backgroundcolorpath).split(",");
+    QStringList fontrgb = Core->Readonlyfile(Fontcolorpath).split(",");
+    Core->Replacefile(":/__supericon__/_colortitle_.png",Localtitlepath);
     if(backgroundrgb.count() >= 3 && fontrgb.count() >= 3)
     {
         Backgroundcolor.setRgb(backgroundrgb.at(0).toInt(),backgroundrgb.at(1).toInt(),backgroundrgb.at(2).toInt());
@@ -467,7 +467,7 @@ void SuperWindow::Setcolortheme()
 void SuperWindow::Setheartofirontheme()
 {
     Enablethemesapi(false,false,true,false,"2");
-    SuperC->Replacefile(":/__supericon__/_heartofirontitle_.png",Localtitlepath);
+    Core->Replacefile(":/__supericon__/_heartofirontitle_.png",Localtitlepath);
     Backgroundcolor.setRgb(121,35,32);
     Fontcolor.setRgb(255,255,255);
     Setwidgettheme();
@@ -478,7 +478,7 @@ void SuperWindow::Setheartofirontheme()
 void SuperWindow::Setgoertektheme()
 {
     Enablethemesapi(false,false,false,true,"3");
-    SuperC->Replacefile(":/__supericon__/_goertektitle_.png",Localtitlepath);
+    Core->Replacefile(":/__supericon__/_goertektitle_.png",Localtitlepath);
     Backgroundcolor.setRgb(69,86,17);
     Fontcolor.setRgb(255,255,255);
     Setwidgettheme();
@@ -488,13 +488,13 @@ void SuperWindow::Setgoertektheme()
 
 void SuperWindow::Setwidgettheme()
 {
-    Strrgbbackgroundcolor = "rgb(" + SuperC->Rgbcolor(&Backgroundcolor) + ")";
-    Strrgbfontcolor = "rgb(" + SuperC->Rgbcolor(&Fontcolor) + ")";
+    Strrgbbackgroundcolor = "rgb(" + Core->Rgbcolor(&Backgroundcolor) + ")";
+    Strrgbfontcolor = "rgb(" + Core->Rgbcolor(&Fontcolor) + ")";
     setStyleSheet("QGroupBox{border:1px solid " + Strrgbbackgroundcolor + "}");
     Title->setStyleSheet("QFrame#SuperTitleui{border-image:url(" + Localtitlepath + ");background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
     Title->Setsourcecolor(Strrgbbackgroundcolor);
-    SuperC->Writeonlyfile(Backgroundcolorpath,SuperC->Rgbcolor(&Backgroundcolor));
-    SuperC->Writeonlyfile(Fontcolorpath,SuperC->Rgbcolor(&Fontcolor));
+    Core->Writeonlyfile(Backgroundcolorpath,Core->Rgbcolor(&Backgroundcolor));
+    Core->Writeonlyfile(Fontcolorpath,Core->Rgbcolor(&Fontcolor));
     Updatesvgfile();
 }
 
@@ -532,7 +532,7 @@ void SuperWindow::Addframefunction()
 {
     Functionenable = true;
     Supermenu = new QMenu(this);
-    SuperC->Addmenu(Supermenu,Themes,"Themes");
+    Core->Addmenu(Supermenu,Themes,"Themes");
     Enablemaxisize();
 }
 
@@ -540,7 +540,7 @@ void SuperWindow::Addframefunction()
 
 void SuperWindow::Addmenu(QMenu *menu,QString titlename,bool addseparator)
 {
-    SuperC->Addmenu(Supermenu,menu,titlename);
+    Core->Addmenu(Supermenu,menu,titlename);
     if(addseparator)
     {
         Supermenu->addSeparator();

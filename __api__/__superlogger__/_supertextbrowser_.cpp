@@ -24,7 +24,7 @@ void SuperTextBrowser::Init()
 
 void SuperTextBrowser::Parameterinit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
     setContextMenuPolicy(Qt::CustomContextMenu);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -40,7 +40,7 @@ void SuperTextBrowser::Parameterinit()
 void SuperTextBrowser::Appendtextinit()
 {
     QString texttemp = Widget->objectName();
-    QString text = SuperC->Allwordlower(texttemp);
+    QString text = Core->Allwordlower(texttemp);
     append("here will display " + text + " textbrowser logs!!!");
 }
 

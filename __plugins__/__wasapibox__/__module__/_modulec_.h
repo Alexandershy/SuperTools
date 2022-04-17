@@ -1,7 +1,7 @@
 #ifndef _MODULEC__H
 #define _MODULEC__H
 
-#include "__module__/_modulec__ui_.h"
+#include "ui__modulec_.h"
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

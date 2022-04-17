@@ -18,7 +18,7 @@ class _SUPERWINDOW__EXPORT SuperWindow : public QWidget
 
 public:
 
-    SuperCore *SuperC               = nullptr;
+    SuperCore *Core                 = nullptr;
     QLayout *Pluginlayout           = nullptr;
     QColor Backgroundcolor          = {16,81,142};
     QColor Fontcolor                = Qt::black;

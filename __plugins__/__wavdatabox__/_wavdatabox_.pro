@@ -1,6 +1,6 @@
 QT += widgets\
       multimedia\
-      printsupport
+      charts
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += core5compat
 
@@ -23,6 +23,7 @@ HEADERS += \
     __datadialog__/_databox_.h \
     __datadialog__/_datadialog_.h \
     __module__/_modulea_.h \
+    __superchartview__/_superchartview_.h \
     __supercore__/_supercore_.h \
     __superfftw__/fftw3.h \
     __superfiledialog__/_superfiledialog_.h \

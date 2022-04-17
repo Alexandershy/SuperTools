@@ -23,7 +23,7 @@ void SuperLineEdit::Init()
 
 void SuperLineEdit::Objectinit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
 /*  object init;*/
@@ -42,6 +42,6 @@ void SuperLineEdit::Parameterinit()
 void SuperLineEdit::Appendtextinit()
 {
     QString texttemp = Widget->objectName();
-    QString text = SuperC->Allwordlower(texttemp);
+    QString text = Core->Allwordlower(texttemp);
     setText("here will display " + text + " programe run logs!!!");
 }

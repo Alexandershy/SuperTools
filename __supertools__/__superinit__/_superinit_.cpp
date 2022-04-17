@@ -44,7 +44,7 @@ void SuperInit::Creatfolder()
     SuperC->Creatfolder("./__depycache__/__cache__/__setting__");
     SuperC->Creatfolder("./__depycache__/__cache__/__textbrowser__");
     SuperC->Creatfolder("./__readme__");
-    SuperC->Creatfolder("./__readme__/__device__");
+    SuperC->Creatfolder("./__readme__/__plugins__");
 }
 
 /*  creat folder for save any files;*/
@@ -66,11 +66,11 @@ void SuperInit::Creatfile()
 
 void SuperInit::Creatmodulefiles()
 {
-    QDir dir("./__plugins__/__device__/","*.");
+    QDir dir("./__plugins__/","*.dll");
     QStringList files = dir.entryList();
     for(int i = 0;i < files.count();i++)
     {
-        SuperC->Creatfile("./__readme__/__device__/" + files.at(i).split("box").at(0) + "_.pdf");
+        SuperC->Creatfile("./__readme__/__plugins__/" + files.at(i).split("box").at(0) + "_.pdf");
     }
 }
 

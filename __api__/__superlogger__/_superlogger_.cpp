@@ -23,7 +23,7 @@ void SuperLogger::Init()
 
 void SuperLogger::Objectinit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
     Textbrowser = new SuperTextBrowser(Widget);
     Lineedit = new SuperLineEdit(Widget);
     connect(Textbrowser->Clearbrowser,&QAction::triggered,this,&SuperLogger::Cleartextbrowser);
@@ -49,7 +49,7 @@ void SuperLogger::Displaylog(QString direction, QString strtlog, QString strllog
     Textbrowser->append(strtlog);
     Lineedit->setText(strllog);
     Textbrowser->moveCursor(Textbrowser->textCursor().End);
-    SuperC->Appendfile(Filepath + daytime + " _" + SuperC->Allwordlower(Widget->objectName()) + "_.txt",strtlog + "\n");
+    Core->Appendfile(Filepath + daytime + " _" + Core->Allwordlower(Widget->objectName()) + "_.txt",strtlog + "\n");
 }
 
 /*  display logs on textbrowser editline and append to log.txt, enable clear button;*/
@@ -74,7 +74,7 @@ void SuperLogger::Cleartextbrowser()
 {
     Textbrowser->clear();
     Lineedit->setText("Cleartextbrowser function run completed");
-    Textbrowser->append("here will display " + SuperC->Allwordlower(Widget->objectName()) + " textbrowser logs!!!");
+    Textbrowser->append("here will display " + Core->Allwordlower(Widget->objectName()) + " textbrowser logs!!!");
 }
 
 /*  clear logs on textbrowser and set init states;*/
@@ -103,7 +103,7 @@ void SuperLogger::Transfercodecs()
 
 void SuperLogger::Openfilepath()
 {
-    SuperC->Openpath(Filepath);
+    Core->Openpath(Filepath);
 }
 
 /*  retransfer codec;*/

@@ -34,7 +34,7 @@ public slots:
 
 private:
 
-    SuperCore *SuperC           = nullptr;
+    SuperCore *Core             = nullptr;
     QMenu *Menu                 = nullptr;
     QWidget *Widget             = nullptr;
     QAction *Copy               = nullptr;

@@ -3,7 +3,7 @@
 SuperProgressBarDialog::SuperProgressBarDialog(QWidget *parent)
     : SuperWindow(parent)
 {
-    Settitle("Progressbar running...");
+    Settitle("SuperProgressBarDialog");
     setWindowModality(Qt::ApplicationModal);
     Disableclose();
     Disablemaxisize();

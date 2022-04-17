@@ -1,7 +1,7 @@
 #ifndef _FORMATBOX__H
 #define _FORMATBOX__H
 
-#include "_formatbox__ui.h"
+#include "ui__formatbox_.h"
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

@@ -1,7 +1,7 @@
 #ifndef _MODULEB__H
 #define _MODULEB__H
 
-#include "__module__/_moduleb__ui_.h"
+#include "ui__moduleb_.h"
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

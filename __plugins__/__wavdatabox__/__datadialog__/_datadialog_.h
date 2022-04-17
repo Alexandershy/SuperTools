@@ -4,8 +4,8 @@
 #include "__superprogressbardialog__/_superprogressbardialog_.h"
 #include "__supermultimedia__/_supermultimedia_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
+#include "__superchartview__/_superchartview_.h"
 #include "__superwindow__/_superwindow_.h"
-#include "__superplot__/_superplot_.h"
 #include "__superfftw__/fftw3.h"
 #include "_databox_.h"
 #include <QAudioOutput>
@@ -29,7 +29,7 @@ public:
 private:
 
     QCPDataSelection Selection;
-    SuperMultiMedia *SuperM                             = nullptr;
+    SuperMultiMedia *Multimedia                         = nullptr;
     DataBox *Plugin                                     = nullptr;
     SuperProgressBarDialog *Progressbardialog           = nullptr;
     QCustomPlot *Fftcanvas                              = nullptr;

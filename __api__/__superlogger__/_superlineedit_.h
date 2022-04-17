@@ -18,7 +18,7 @@ public:
 private:
 
     QWidget *Widget     = nullptr;
-    SuperCore *SuperC   = nullptr;
+    SuperCore *Core     = nullptr;
 
 private slots:
 

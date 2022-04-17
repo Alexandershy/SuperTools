@@ -28,8 +28,7 @@ public slots:
 
 private:
 
-    SuperCore *SuperC                   = nullptr;
-    SuperMultiMedia *SuperM             = nullptr;
+    SuperMultiMedia *Multimedia         = nullptr;
     QString Qinfilename                 = "";
     QString Qoutfilename                = "";
     QByteArray Infilenamebyte           = "";
