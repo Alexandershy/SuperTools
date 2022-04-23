@@ -46,12 +46,6 @@ private:
     SuperTabWidget *Tabwidget                   = nullptr;
     QList<QWidget*> Outputwidgetlist            = {};
     QList<QWidget*> Inputwidgetlist             = {};
-    QColor Backgroundcolor                      = Qt::red;
-    QColor Fontcolor                            = Qt::black;
-    QColor Concolor                             = Qt::white;
-    QString Strrgbbackgroundcolor               = "";
-    QString Strrgbfontcolor                     = "";
-    QString Strrgbconcolor                      = "";
     QString Temppath                            = "./__depycache__/__wasapi__/";
     QString Currentpath                         = "./__depycache__/__wasapi__/";
     QFile *File                                 = nullptr;
@@ -94,8 +88,6 @@ private slots:
     void Objectinit();
 
     void Parameterinit();
-
-    void Colorinit();
 
     void Enablerefreshdevicebutton();
 

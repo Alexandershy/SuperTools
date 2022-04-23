@@ -1,9 +1,9 @@
 #include "_superfinddialog_.h"
 
-SuperFindDialog::SuperFindDialog(QWidget *parent,QTextBrowser *textbrowser)
+SuperFindDialog::SuperFindDialog(QWidget *parent,QTextEdit *textedit)
     :SuperWindow(parent)
 {
-    Textbrowser = textbrowser;
+    Textedit = textedit;
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
     Disablemaxisize();
@@ -70,9 +70,9 @@ void SuperFindDialog::Highlightpalette(QWidget *widget)
 void SuperFindDialog::Findnexttext()
 {
     QString text = Plugin->ui->comboBox->currentText();
-    if(Textbrowser->find(text))
+    if(Textedit->find(text))
     {
-        Highlightpalette(Textbrowser);
+        Highlightpalette(Textedit);
     }
     else
     {
@@ -87,9 +87,9 @@ void SuperFindDialog::Findnexttext()
 void SuperFindDialog::Findlasttext()
 {
     QString text = Plugin->ui->comboBox->currentText();
-    if(Textbrowser->find(text,QTextDocument::FindBackward))
+    if(Textedit->find(text,QTextDocument::FindBackward))
     {
-        Highlightpalette(Textbrowser);
+        Highlightpalette(Textedit);
     }
     else
     {
@@ -103,14 +103,14 @@ void SuperFindDialog::Findlasttext()
 
 void SuperFindDialog::Movetostart()
 {
-    Textbrowser->moveCursor(Textbrowser->textCursor().Start);
+    Textedit->moveCursor(Textedit->textCursor().Start);
 }
 
 /*  move text cursor to start;*/
 
 void SuperFindDialog::Movetoend()
 {
-    Textbrowser->moveCursor(Textbrowser->textCursor().End);
+    Textedit->moveCursor(Textedit->textCursor().End);
 }
 
 /*  move text cursor to end;*/

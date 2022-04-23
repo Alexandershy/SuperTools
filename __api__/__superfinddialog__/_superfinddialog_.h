@@ -15,14 +15,14 @@ public:
 
     SuperFindDialog(
         QWidget *parent = nullptr,
-        QTextBrowser* textbrowser = nullptr);
+         QTextEdit* textedit = nullptr);
 
     ~SuperFindDialog();
 
 private:
 
     SuperFindDialogui *Plugin   = nullptr;
-    QTextBrowser *Textbrowser   = nullptr;
+    QTextEdit *Textedit         = nullptr;
 
 private slots:
 

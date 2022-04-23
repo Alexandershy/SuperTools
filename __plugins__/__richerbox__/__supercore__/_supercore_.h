@@ -1,6 +1,6 @@
-
-#ifndef SUPERCORE_H
-#define SUPERCORE_H
+#ifndef _SUPERCORE__H
+#define _SUPERCORE__H
+#define _SUPERCORE__EXPORT Q_DECL_EXPORT
 
 #include <QCryptographicHash>
 #include <QFileIconProvider>
@@ -15,7 +15,7 @@
 #include <QMenu>
 #include <QDir>
 
-class SuperCore : public QObject
+class _SUPERCORE__EXPORT SuperCore : public QObject
 {
     Q_OBJECT
 
@@ -151,6 +151,14 @@ public slots:
         int intsize,
         double mean);
 
+    /*  QPointF */
+
+    QPointF Getqvectormaxpointf(
+        QVector<QPointF> *qvectorpf,int intsize);
+
+    QPointF Getqvectorminpointf(
+        QVector<QPointF> *qvectorpf,int intsize);
+
     /*  doublearray */
 
     double Getdoublearraymaxvalue(
@@ -229,4 +237,4 @@ public slots:
 
 };
 
-#endif // SUPERCORE_H
+#endif // _SUPERCORE__H

@@ -14,26 +14,32 @@ SuperChartView::~SuperChartView()
 void SuperChartView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
-    if(Plotmode)
-    {
-        emit Signalca(Plotmode);
-        Plotmode = 0;
-    }
-    else
-    {
-        emit Signalca(Plotmode);
-        Plotmode = 1;
-    }
+    Setplotmode(!Plotmode);
+    emit Signalca(Plotmode);
 }
 
 /*  rewrite double click event;*/
 
 void SuperChartView::mousePressEvent(QMouseEvent *event)
 {
+    Pressed = true;
     if(Mousemode)
     {
         Point = event->globalPosition();
-        Pressed = true;
+    }
+    else
+    {
+        if(event->button() == Qt::LeftButton)
+        {
+            Point = event->pos();
+            Rubberband->setGeometry(Point.x(),Point.y(),0,0);
+            Rubberband->show();
+            Recordstartpoint(Point);
+        }
+        else
+        {
+            Deselectallpoint();
+        }
     }
 }
 
@@ -41,12 +47,24 @@ void SuperChartView::mousePressEvent(QMouseEvent *event)
 
 void SuperChartView::mouseMoveEvent(QMouseEvent *event)
 {
-    if(Pressed && Mousemode)
+    if(Pressed)
     {
-        int dx = Point.x() - event->globalPosition().x();
-        int dy = event->globalPosition().y() - Point.y();
-        Point = event->globalPosition();
-        Chart->scroll(dx,dy);
+        switch(Mousemode)
+        {
+            case 0:
+            {
+                Rubberband->setGeometry(QRect(Point.toPoint(),event->pos()).normalized());
+                break;
+            }
+            case 1:
+            {
+                int dx = Point.x() - event->globalPosition().x();
+                int dy = event->globalPosition().y() - Point.y();
+                Point = event->globalPosition();
+                Chart->scroll(dx,dy);
+                break;
+            }
+        }
     }
 }
 
@@ -54,19 +72,36 @@ void SuperChartView::mouseMoveEvent(QMouseEvent *event)
 
 void SuperChartView::mouseReleaseEvent(QMouseEvent *event)
 {
+    Pressed = false;
     if(Mousemode)
     {
         Point = event->globalPosition();
-        Pressed = false;
+    }
+    else
+    {
+        if(event->button() == Qt::LeftButton)
+        {
+            Point = event->pos();
+            Selectpoints(Point);
+            Rubberband->hide();
+        }
     }
 }
 
 /*  move to global pos;*/
 
+void SuperChartView::wheelEvent(QWheelEvent *event)
+{
+    Q_UNUSED(event);
+}
+
+/*  override wheel event;*/
+
 void SuperChartView::Init()
 {
     Objectinit();
     Parameterinit();
+    Setdragmode();
 }
 
 /*  init;*/
@@ -74,15 +109,17 @@ void SuperChartView::Init()
 void SuperChartView::Objectinit()
 {
     Chart = chart();
+    Core = new SuperCore(this);
     Xaxis = new QValueAxis(this);
     Yaxis = new QValueAxis(this);
-    Core = new SuperCore(this);
+    Rubberband = new QRubberBand(QRubberBand::Rectangle,this);
 }
 
 /*  object init;*/
 
 void SuperChartView::Parameterinit()
 {
+    Core->Colorinit(&Backgroundcolor,&Fontcolor,&Concolor,&Strbackgroundcolor,&Strfontcolor,&Strconcolor);
     Xaxis->setRange(Initmin,Initmax);
     Yaxis->setRange(Initmin,Initmax);
     Chart->legend()->hide();
@@ -99,11 +136,20 @@ void SuperChartView::Addseries(int seriesnumber)
     for(int i = 0;i < seriesnumber;i++)
     {
         Lineseriesvector.append(new QLineSeries(this));
+        connect(Lineseriesvector.at(i),&QLineSeries::pointsReplaced,this,&SuperChartView::Deselectallpoint);
         Chart->addSeries(Lineseriesvector.at(i));
         Lineseriesvector.at(i)->attachAxis(Xaxis);
         Lineseriesvector.at(i)->attachAxis(Yaxis);
         Minvector.append({Initmin,Initmin});
         Maxvector.append({Initmax,Initmax});
+        if(i)
+        {
+            Lineseriesvector.at(i)->setPen(QPen(Concolor,1,Qt::SolidLine));
+        }
+        else
+        {
+            Lineseriesvector.at(i)->setPen(QPen(Backgroundcolor,1,Qt::SolidLine));
+        }
     }
 }
 
@@ -163,5 +209,58 @@ void SuperChartView::Disablewheel()
 }
 
 /*  disable wheel;*/
+
+void SuperChartView::Setplotmode(bool boola)
+{
+    Plotmode = boola;
+}
+
+/*  set auto plot or not;*/
+
+void SuperChartView::Recordstartpoint(QPointF point)
+{
+    if(Lineseriesvector.count())
+    {
+        Valuepoint = Chart->mapToValue(point,Lineseriesvector.at(0));
+    }
+}
+
+/*  record start point;*/
+
+void SuperChartView::Selectpoints(QPointF point)
+{
+    int linecount = Lineseriesvector.count();
+    if(linecount)
+    {
+        QVector<int> pointvector = {};
+        QPointF endpoint = Chart->mapToValue(point,Lineseriesvector.at(0));
+        QVector<QPointF> valuevector = {Valuepoint,endpoint};
+        QPointF pointmax = Core->Getqvectormaxpointf(&valuevector,valuevector.count());
+        QPointF pointmin = Core->Getqvectorminpointf(&valuevector,valuevector.count());
+        for(int i = pointmin.x();i < pointmax.x();i++)
+        {
+            pointvector.append(i);
+        }
+        for(int i = 0;i < linecount;i++)
+        {
+            Lineseriesvector.at(i)->selectPoints(pointvector);
+        }
+    }
+}
+
+/*  select points function;*/
+
+void SuperChartView::Deselectallpoint()
+{
+    int linecount = Lineseriesvector.count();
+    for(int i = 0;i < linecount;i++)
+    {
+        Lineseriesvector.at(i)->deselectAllPoints();
+    }
+}
+
+/*  deselect points function;*/
+
+
 
 

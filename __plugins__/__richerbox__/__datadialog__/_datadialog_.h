@@ -1,7 +1,7 @@
 #ifndef _DATADIALOG__H
 #define _DATADIALOG__H
 
-#include "_databox_.h"
+#include "_datadialogui_.h"
 #include "__superwindow__/_superwindow_.h"
 #include "__superfontdialog__/_superfontdialog_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
@@ -32,7 +32,7 @@ protected:
 
 private:
 
-    DataBox *Plugin                 = nullptr;
+    DataDialogui *Plugin            = nullptr;
     QString Richerfile              = "";
     QString Richerfilepath          = "";
     QString Richerfilename          = "";

@@ -1,24 +1,25 @@
 #ifndef _SUPERFILEMANAGER__H
 #define _SUPERFILEMANAGER__H
+#define _SUPERFILEMANAGER__EXPORT Q_DECL_EXPORT
 
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
 #include "__supercore__/_supercore_.h"
-#include "_superfilemanager__ui_.h"
+#include "ui__superfilemanagerui_.h"
 #include <QScrollBar>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE
-namespace Ui { class SuperFileManager; }
+namespace Ui { class SuperFileManagerui; }
 QT_END_NAMESPACE
 
-class SuperFileManager : public QFrame
+class _SUPERFILEMANAGER__EXPORT SuperFileManager : public QFrame
 {
     Q_OBJECT
 
 public:
 
-    Ui::SuperFileManager *ui        = nullptr;
+    Ui::SuperFileManagerui *ui      = nullptr;
     QStringList Filelist            = {};
     QList<QWidget*> Widgetlist      = {};
     QList<QCheckBox*> Checkboxlist  = {};
@@ -51,7 +52,7 @@ public slots:
 
 private:
 
-    SuperCore *SuperC               = nullptr;
+    SuperCore *Core                 = nullptr;
     QMenu *Filemenu                 = nullptr;
     QAction *Openfile               = nullptr;
     QAction *Openpath               = nullptr;

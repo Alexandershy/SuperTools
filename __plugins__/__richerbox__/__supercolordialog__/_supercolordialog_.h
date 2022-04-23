@@ -1,11 +1,12 @@
 #ifndef _SUPERCOLORDIALOG__H
 #define _SUPERCOLORDIALOG__H
+#define _SUPERCOLORDIALOG__EXPORT Q_DECL_EXPORT
 
-#include "_supercolorbox_.h"
+#include "_supercolordialogui_.h"
 #include "__superwindow__/_superwindow_.h"
 #include <QPalette>
 
-class SuperColorDialog : public SuperWindow
+class _SUPERCOLORDIALOG__EXPORT SuperColorDialog : public SuperWindow
 {
     Q_OBJECT
 
@@ -26,7 +27,7 @@ public slots:
 private:
 
     QColor Sourcecolor                          = "";
-    SuperColorBox *Plugin                       = nullptr;
+    SuperColorDialogui *Plugin                  = nullptr;
     int Rowcounts                               = 8;
     int Columncounts                            = 8;
     int Difference                              = 85;

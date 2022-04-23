@@ -60,5 +60,4 @@ LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\fftw3.lib"
 LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
 
 RESOURCES += \
-    _wasapibox_.qrc \
     _wasapibox_.qrc

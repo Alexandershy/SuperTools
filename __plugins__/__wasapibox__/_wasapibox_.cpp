@@ -29,12 +29,11 @@ void WasapiBox::Init()
 {
     Objectinit();
     Parameterinit();
-    Colorinit();
     Plotinit();
     Audioformat(&Format);
 }
 
-/*  init parameter,color,plot,audioformat;*/
+/*  init parameter,plot,audioformat;*/
 
 void WasapiBox::Objectinit()
 {
@@ -83,13 +82,6 @@ void WasapiBox::Parameterinit()
 }
 
 /*  init widget pointer;*/
-
-void WasapiBox::Colorinit()
-{
-    Core->Colorinit(&Backgroundcolor,&Fontcolor,&Concolor,&Strrgbbackgroundcolor,&Strrgbfontcolor,&Strrgbconcolor);
-}
-
-/*  init color;*/
 
 void WasapiBox::Enablerefreshdevicebutton()
 {
@@ -548,11 +540,8 @@ void WasapiBox::Analysisaudioinit(bool boola,bool boolb)
 void WasapiBox::Plotinit()
 {
     Timechartview->Addseries(2);
-    Timechartview->Lineseriesvector.at(0)->setPen(QPen(Backgroundcolor,1,Qt::SolidLine));
-    Timechartview->Lineseriesvector.at(1)->setPen(QPen(Concolor,1,Qt::SolidLine));
     Fftchartview->Addseries(2);
-    Fftchartview->Lineseriesvector.at(0)->setPen(QPen(Backgroundcolor,1,Qt::SolidLine));
-    Fftchartview->Lineseriesvector.at(1)->setPen(QPen(Concolor,1,Qt::SolidLine));
+    Timechartview->Setselectmode();
 }
 
 /*  figure init;*/
@@ -570,12 +559,16 @@ void WasapiBox::Changeplotmode()
     if(Updatefigureparameter.at(0) == 1)
     {
         Updatefigureparameter[0] = 0;
+        Timechartview->Setplotmode(false);
+        Fftchartview->Setplotmode(false);
         Modulec->ui->checkBox_2->setChecked(false);
         Logger->Displaylog("N","plot display mode changed to manual","Changeplotmode function run completed");
     }
     else
     {
         Updatefigureparameter[0] = 1;
+        Timechartview->Setplotmode(true);
+        Fftchartview->Setplotmode(true);
         Modulec->ui->checkBox_2->setChecked(true);
         Logger->Displaylog("N","plot display mode changed to auto","Changeplotmode function run completed");
     }
@@ -759,23 +752,12 @@ void WasapiBox::Signaluarslot(QString strdbv,QString strfreq,QString strthd)
         Modulec->ui->lineEdit_42->setText(strdbv);
         Modulec->ui->lineEdit_47->setText(strfreq);
         Modulec->ui->lineEdit_49->setText(strthd);
-        switch(Tabwidget->currentIndex())
-        {
-            case 0:
-            {
-                Timechartview->Setdata(0,Threaduf->Pointl);
-                Timechartview->Setdata(1,Threaduf->Pointr);
-                Timechartview->Rescaleaxes();
-                break;
-            }
-            case 1:
-            {
-                Fftchartview->Setdata(0,Threaduf->Pointlfft);
-                Fftchartview->Setdata(1,Threaduf->Pointrfft);
-                Fftchartview->Rescaleaxes();
-                break;
-            }
-        }
+        Timechartview->Setdata(0,Threaduf->Pointl);
+        Timechartview->Setdata(1,Threaduf->Pointr);
+        Fftchartview->Setdata(0,Threaduf->Pointlfft);
+        Fftchartview->Setdata(1,Threaduf->Pointrfft);
+        Timechartview->Rescaleaxes();
+        Fftchartview->Rescaleaxes();
     }
 }
 

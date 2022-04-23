@@ -58,7 +58,7 @@ void DataDialog::Init()
 
 void DataDialog::Objectinit()
 {
-    Plugin = new DataBox(this);
+    Plugin = new DataDialogui(this);
     Pluginlayout->addWidget(Plugin);
     connect(Plugin->ui->pushButton_5,   &QPushButton::clicked,              this,   &DataDialog::Apply);
     connect(Plugin->ui->textEdit_2,     &QTextEdit::textChanged,            this,   &DataDialog::Enableapply);
@@ -105,7 +105,7 @@ void DataDialog::Textinit()
     QFileInfo fileinfo(Richerfile);
     Richerfilepath = fileinfo.absolutePath();
     Richerfilename = fileinfo.completeBaseName();
-    QString filestring = SuperC->Readonlyfile(Richerfile);
+    QString filestring = Core->Readonlyfile(Richerfile);
     Plugin->ui->textEdit_2->setHtml(filestring);
     Plugin->ui->plainTextEdit->setPlainText(filestring);
 }
@@ -135,7 +135,7 @@ void DataDialog::Enableapply()
 void DataDialog::Apply()
 {
     QString filestring = Plugin->ui->textEdit_2->toHtml();
-    SuperC->Writeonlyfile(Richerfile,filestring);
+    Core->Writeonlyfile(Richerfile,filestring);
     Plugin->ui->plainTextEdit->setPlainText(filestring);
     Plugin->ui->pushButton_5->setEnabled(false);
     Savevalue = 0;
@@ -304,7 +304,7 @@ void DataDialog::Underline()
 void DataDialog::Checkcolor(QStringList *fontformat)
 {
     QColor color(Plugin->ui->textEdit_2->textColor());
-    fontformat->append(SuperC->Rgbcolor(&color));
+    fontformat->append(Core->Rgbcolor(&color));
     Plugin->ui->label_2->setPalette(color);
 }
 
@@ -468,7 +468,7 @@ void DataDialog::Insertimage(QString file)
         }
         else
         {
-            SuperC->Creatfolder("./__htmllibary__");
+            Core->Creatfolder("./__htmllibary__");
             QString time = QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz");
             newfile = "__htmllibary__/_" + time + "_.png";
             QFile::copy(file,newfile);
@@ -507,7 +507,7 @@ void DataDialog::Printtopdf()
 
 void DataDialog::Openpath()
 {
-    SuperC->Openpath(Richerfilepath);
+    Core->Openpath(Richerfilepath);
 }
 
 /*  open local folder;*/

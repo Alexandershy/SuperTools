@@ -1,17 +1,18 @@
 #ifndef _SUPERFONTDIALOG__H
 #define _SUPERFONTDIALOG__H
+#define _SUPERFONTDIALOG__EXPORT Q_DECL_EXPORT
 
 #include "__superwindow__/_superwindow_.h"
-#include "_superfontbox_.h"
+#include "_superfontdialogui_.h"
 #include <QFontDatabase>
 
-class SuperFontDialog : public SuperWindow
+class _SUPERFONTDIALOG__EXPORT SuperFontDialog : public SuperWindow
 {
     Q_OBJECT
 
 public:
 
-    SuperFontBox *Plugin = nullptr;
+    SuperFontDialogui *Plugin = nullptr;
 
 public:
 

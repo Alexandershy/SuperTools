@@ -1,5 +1,6 @@
 #ifndef _RICHERBOX__H
 #define _RICHERBOX__H
+#define _RICHERBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
@@ -8,7 +9,6 @@
 #include "__supergroupbox__/_supergroupbox_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__superfilemanager__/_superfilemanager_.h"
-#include "_richerbox__global.h"
 
 /**************interface****************/
 class _RICHERBOX__EXPORT Interface

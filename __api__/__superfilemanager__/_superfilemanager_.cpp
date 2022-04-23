@@ -12,6 +12,7 @@ SuperFileManager::SuperFileManager(QWidget *parent,QLayout *layout,QStringList f
     connect(ui->tableWidget,                    &QTableWidget::itemDoubleClicked,           this,   &SuperFileManager::Clickopen);
     connect(ui->tableWidget,                    &QTableWidget::itemPressed,                 this,   &SuperFileManager::Itemoptions);
     connect(ui->tableWidget->horizontalHeader(),&QHeaderView::customContextMenuRequested,   this,   &SuperFileManager::Tableoptions);
+//    connect(ui->tableWidget->cornerWidget(),                    &QTableWidget::,                 this,   &SuperFileManager::Itemoptions);
     connect(ui->pushButton,                     &QPushButton::clicked,                      this,   &SuperFileManager::Locationfile);
     connect(ui->pushButton_2,                   &QPushButton::clicked,                      this,   &SuperFileManager::Checkfilevaildinit);
     Init();
