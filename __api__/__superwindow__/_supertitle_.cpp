@@ -5,7 +5,7 @@ SuperTitle::SuperTitle(QWidget *parent)
     , ui(new Ui::SuperTitleui)
 {
     ui->setupUi(this);
-    Init();
+    init();
 }
 
 SuperTitle::~SuperTitle()
@@ -15,34 +15,34 @@ SuperTitle::~SuperTitle()
 
 void SuperTitle::mouseDoubleClickEvent(QMouseEvent *)
 {
-    emit Signalsb();
+    emit signalSb();
 }
 
 /*  emit signal for change maxisize or normal;*/
 
 void SuperTitle::enterEvent(QEnterEvent *)
 {
-    emit Signalsa(true);
-    emit Signalsc(Qt::ArrowCursor);
+    emit signalSa(true);
+    emit signalSc(Qt::ArrowCursor);
 }
 
 /*  emit signal for could move;*/
 
 void SuperTitle::leaveEvent(QEvent *)
 {
-    emit Signalsa(false);
+    emit signalSa(false);
 }
 
 /*  emit signal for could not move;*/
 
-void SuperTitle::Init()
+void SuperTitle::init()
 {
-    Objectinit();
+    objectInit();
 }
 
 /*  init;*/
 
-void SuperTitle::Objectinit()
+void SuperTitle::objectInit()
 {
     Minisizebutton = new SuperTitleButton(this);
     Maxisizebutton = new SuperTitleButton(this);
@@ -55,10 +55,10 @@ void SuperTitle::Objectinit()
 
 /*  object init;*/
 
-void SuperTitle::Setsourcecolor(QString rgbcolor)
+void SuperTitle::setSourceColor(QString rgbcolor)
 {
-    Minisizebutton->Setsourcecolor(rgbcolor);
-    Maxisizebutton->Setsourcecolor(rgbcolor);
+    Minisizebutton->setSourceColor(rgbcolor);
+    Maxisizebutton->setSourceColor(rgbcolor);
 }
 
 /*  change title style sheet;*/

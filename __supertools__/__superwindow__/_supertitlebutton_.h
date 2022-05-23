@@ -16,7 +16,7 @@ public:
 
 public slots:
 
-    void Setsourcecolor(
+    void setSourceColor(
         QString rgbcolor);
 
 protected:
@@ -33,15 +33,15 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Sizeinit();
+    void sizeInit();
 
-    void Stylesheetinit();
+    void styleSheetInit();
 
-    void Addbackgroundcolor();
+    void addBackGroundColor();
 
-    void Removebackgroundcolor();
+    void removeBackGroundColor();
 
 };
 

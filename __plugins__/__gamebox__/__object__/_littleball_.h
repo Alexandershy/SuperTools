@@ -32,6 +32,8 @@ public:
 
     ~LittleBall();
 
+public:
+
     QRectF boundingRect() const override;
 
     QPainterPath shape() const override;
@@ -44,7 +46,7 @@ public:
     void advance(
             int phase) override;
 
-    void Movetotarget(
+    void moveToTarget(
             QPointF point);
 
 private:
@@ -63,48 +65,48 @@ private:
     QTimer *Timer               = nullptr;
 
 private slots:
+
     /*  main function;*/
+    void init();
 
-    void Init();
+    void colorInit();
 
-    void Colorinit();
+    void sceneInit();
 
-    void Sceneinit();
+    void timerInit();
 
-    void Timerinit();
+    void speedLimit();
 
-    void Speedlimit();
+    void boundingCheck();
 
-    void Boundingcheck();
+    void changeSpeedy();
 
-    void Changespeedy();
+    void collisionCheck();
 
-    void Collisioncheck();
-
-    QPainterPath Calrepeatcenter(
+    QPainterPath calRepeatCenter(
             QGraphicsItem *Collitem);
 
-    void Collideswithitem(
+    void collidesItem(
             QPainterPath path,
             QGraphicsItem *Collitem);
 
-    void Collidesskate(
+    void collidesSkate(
             QPainterPath path);
 
-    void Firstcollides();
+    void firstCollides();
 
-    void Collidesbrick(
+    void collidesBrick(
             QPainterPath path);
 
-    void Timerxslot();
+    void timerxSlot();
 
-    void Timeryslot();
+    void timerySlot();
 
 signals:
 
-    void Signalba();
+    void signalBa();
 
-    void Signalbb(
+    void signalBb(
             int score);
 };
 

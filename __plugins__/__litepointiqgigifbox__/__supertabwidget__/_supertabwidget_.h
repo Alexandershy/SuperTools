@@ -1,9 +1,10 @@
 #ifndef _SUPERTABWIDGET__H
 #define _SUPERTABWIDGET__H
+#define _SUPERTABWIDGET__EXPORT Q_DECL_EXPORT
 
 #include <QTabWidget>
 
-class SuperTabWidget : public QTabWidget
+class _SUPERTABWIDGET__EXPORT SuperTabWidget : public QTabWidget
 {
     Q_OBJECT
 
@@ -14,11 +15,11 @@ public:
 
     ~SuperTabWidget();
 
-private:
+private slots:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
 };
 

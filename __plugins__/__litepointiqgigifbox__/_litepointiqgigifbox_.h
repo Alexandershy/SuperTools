@@ -1,17 +1,17 @@
 #ifndef _LITEPOINTIQGIGIFBOX__H
 #define _LITEPOINTIQGIGIFBOX__H
+#define _LITEPOINTIQGIGIFBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
-#include "__superplot__/_superplot_.h"
 #include "__superlogger__/_superlogger_.h"
+#include "__superchartview__/_superchartview_.h"
 #include "__supernetwork__/_supernetwork_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
 #include "__pathlossdialog__/_pathlossdialog_.h"
 #include "__routdialog__/_routdialog_.h"
-#include "_litepointiqgigifbox__global.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
+#include "__module__/_litepointiqgigifmodulea_.h"
+#include "__module__/_litepointiqgigifmoduleb_.h"
 #include <QAction>
 #include <QMenu>
 
@@ -36,95 +36,94 @@ public:
 
 private:
 
-    SuperNetwork *SuperN            = nullptr;
-    ModuleA *Modulea                = nullptr;
-    ModuleB *Moduleb                = nullptr;
-    QTcpSocket* Tcpsocket           = nullptr;
-    QString Localtechnology         = "";
-    int Currentconfig               = 0;
-    QStringList Clickconfiglist     = {"",""};
-    QCustomPlot* Canvas             = nullptr;
-    Technology* Technologymenu      = nullptr;
-    PathLossDataMenu* Pldatamenu    = nullptr;
-    RoutDialog* Rout                = nullptr;
-    PathLossDialog* Pathloss        = nullptr;
-    Tcpsocketthread* Threadta       = nullptr;
-    SuperLogger *Logger             = nullptr;
+    SuperNetwork *Network               = nullptr;
+    LitePointIQGigIfModuleA *Modulea    = nullptr;
+    LitePointIQGigIfModuleB *Moduleb    = nullptr;
+    QTcpSocket* Tcpsocket               = nullptr;
+    QString Localtechnology             = "";
+    int Currentconfig                   = 0;
+    QStringList Clickconfiglist         = {"",""};
+    SuperChartView* Chartview           = nullptr;
+    Technology* Technologymenu          = nullptr;
+    PathLossDataMenu* Pldatamenu        = nullptr;
+    RoutDialog* Rout                    = nullptr;
+    PathLossDialog* Pathloss            = nullptr;
+    SuperTcpSocketThread* Threadta      = nullptr;
+    SuperLogger *Logger                 = nullptr;
 
 private slots:
 
     /* main function;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void enableConnectLitePoint();
 
-    void Enableconnectlitepoint();
+    void connectTcpserver();
 
-    void Connecttcpserver();
+    void operatorConnectui();
 
-    void Operatorconnectui();
+    void disconnectTcpserver();
 
-    void Disconnecttcpserver();
+    void operatorDisconnectui();
 
-    void Operatordisconnectui();
-
-    void Litepointwriteapi(
+    void litepointWriteApi(
             QString command);
 
-    void Litepointwaitapi(
+    void litepointWaitApi(
             double timeout);
 
-    QByteArray Litepointreadapi();
+    QByteArray litepointReadApi();
 
-    void Opentechnologymenu();
+    void openTechnologyMenu();
 
-    void Settechnology();
+    void setTechnology();
 
-    void Openroutconfig();
+    void openRoutConfig();
 
-    void Openpathlosseditor();
+    void openPathLossEditor();
 
-    void Refreshpathloss();
+    void refreshPathLoss();
 
-    void Refreshpathlossconfig();
+    void refreshPathLossConfig();
 
-    void Newpathlossconfig();
+    void newPathLossConfig();
 
-    void Refreshpathlossdata();
+    void refreshPathLossData();
 
-    void Savepathlossdata();
+    void savePathLossData();
 
-    void Openpathlossdatamenu();
+    void openPathLossDataMenu();
 
-    void Newpathlossdatarow();
+    void newPathLossDataRow();
 
-    void Deletepathlossdatarow();
+    void deletePathLossDataRow();
 
-    QString Getlocalpathlossdataapi();
+    QString getLocalPathLossDataApi();
 
-    QString Getlocalpathlossfreqapi();
+    QString getLocalPathLossFreqApi();
 
-    void Setlocalpathlossdataapi();
+    void setLocalPathLossDataApi();
 
-    void Sethiddenapi(
+    void setHiddenApi(
             QGroupBox* groupbox);
 
-    void Displayvsasetting();
+    void displayVSASetting();
 
-    void Displaytrigglesetting();
+    void displayTriggleSetting();
 
-    void Displayimpairmentssetting();
+    void displayImpairmentsSetting();
 
-    QString Litepointreadslotapi();
+    QString litepointReadSlotApi();
 
-    void Litepointreadtimeoutslot();
+    void litepointReadTimeoutSlot();
 
-    void Getactivemodulesolt();
+    void getActiveModuleSlot();
 
-    void Refreshconfigslot();
+    void refreshConfigSlot();
 
-    void Refreshpathlossdataslot();
+    void refreshPathLossDataSlot();
 
 };
 
@@ -135,7 +134,6 @@ class Technology : public QMenu
 public:
 
     /*  main function;*/
-
     Technology(
             QWidget *parent = nullptr);
 
@@ -147,15 +145,15 @@ public:
 
 private:
 
-    SuperCore *SuperC = nullptr;
+    SuperCore *Core = nullptr;
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Actioninit();
+    void actionInit();
 
 };
 

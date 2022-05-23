@@ -20,9 +20,9 @@ public:
 
 public slots:
 
-    void Changebasiccolor();
+    void changeBasicColor();
 
-    void Refreshlabelcolor();
+    void refreshLabelColor();
 
 private:
 
@@ -46,25 +46,25 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Colorinit();
+    void colorInit();
 
-    void Refreshrbgcolora(
+    void refreshRgbColora(
         QTableWidgetItem *item);
 
-    void Refreshrbgcolorb(
+    void refreshRgbColorb(
         QColor color);
 
-    void Selectcolor();
+    void selectColor();
 
-    void Refreshsampler();
+    void refreshSampler();
 
 signals:
 
-    void Signalsa(
+    void signalSa(
         QColor color);
 
 };

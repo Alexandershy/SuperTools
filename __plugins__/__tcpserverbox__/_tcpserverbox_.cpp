@@ -10,40 +10,40 @@ SuperTab* Interface::Loadplugin()
 TcpServerBox::TcpServerBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("TcpServerBox");
-    Setgroupbox(2,1);
-    Setstretch({1,99},{100});
-    Init();
+    readMe("TcpServerBox");
+    setGroupBox(2,1);
+    setStretch({1,99},{100});
+    init();
 }
 
 TcpServerBox::~TcpServerBox()
 {
-    Forcedisconnect();
+    forceDisconnect();
 }
 
-void TcpServerBox::Init()
+void TcpServerBox::init()
 {
-    Objectinit();
-    Widgetlistinit();
-    Tempdirinit();
+    objectInit();
+    widgetListInit();
+    tempDirInit();
 }
 
-void TcpServerBox::Objectinit()
+void TcpServerBox::objectInit()
 {
-    SuperN = new SuperNetwork(this);
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
-    Moduleb = new ModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
+    Network = new SuperNetwork(this);
+    Modulea = new TcpServerModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Moduleb = new TcpServerModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
     Logger = new SuperLogger(this,Rightgroupboxlist.at(0)->Insidelayout);
     Tcpserver = new QTcpServer(this);
-    connect(Tcpserver,                  &QTcpServer::newConnection,     this,&TcpServerBox::Newtcpsocket);
-    connect(Modulea->ui->pushButton_2,  &QPushButton::clicked,          this,&TcpServerBox::Getlocalipaddress);
-    connect(Modulea->ui->comboBox,      &QComboBox::currentTextChanged, this,&TcpServerBox::Enablestarttcpserver);
-    connect(Modulea->ui->comboBox_2,    &QComboBox::currentTextChanged, this,&TcpServerBox::Enablestarttcpserver);
-    connect(Modulea->ui->pushButton_3,  &QPushButton::clicked,          this,&TcpServerBox::Starttcpserver);
-    connect(Modulea->ui->pushButton_4,  &QPushButton::clicked,          this,&TcpServerBox::Closetcpserver);
+    connect(Tcpserver,                  &QTcpServer::newConnection,     this,&TcpServerBox::newTcpsocket);
+    connect(Modulea->ui->pushButton_2,  &QPushButton::clicked,          this,&TcpServerBox::getLocalIpAddress);
+    connect(Modulea->ui->comboBox,      &QComboBox::currentTextChanged, this,&TcpServerBox::enableStartTcpserver);
+    connect(Modulea->ui->comboBox_2,    &QComboBox::currentTextChanged, this,&TcpServerBox::enableStartTcpserver);
+    connect(Modulea->ui->pushButton_3,  &QPushButton::clicked,          this,&TcpServerBox::startTcpserver);
+    connect(Modulea->ui->pushButton_4,  &QPushButton::clicked,          this,&TcpServerBox::closeTcpserver);
 }
 
-void TcpServerBox::Widgetlistinit()
+void TcpServerBox::widgetListInit()
 {
     Connectwidgetet     = {Modulea->ui->pushButton_4};
     Connectwidgetef     = {Modulea->ui->comboBox,Modulea->ui->comboBox_2,Modulea->ui->pushButton_2,Modulea->ui->pushButton_3};
@@ -53,35 +53,35 @@ void TcpServerBox::Widgetlistinit()
 
 /*  widget list init;*/
 
-void TcpServerBox::Tempdirinit()
+void TcpServerBox::tempDirInit()
 {
     Dir = new QDir(Tempfilepath);
 }
 
 /*  set temp init dir;*/
 
-void TcpServerBox::Getlocalipaddress()
+void TcpServerBox::getLocalIpAddress()
 {
     Modulea->ui->comboBox->clear();
     Networkinterface = QNetworkInterface::allInterfaces();
     for(int i = 0;i < Networkinterface.count();i++)
     {
         Networkaddressentry = Networkinterface.at(i).addressEntries();
-        SuperN->Getlocalipaddress(&Networkaddressentry,Modulea->ui->comboBox);
+        Network->getLocalIpAddress(&Networkaddressentry,Modulea->ui->comboBox);
     }
     for(int i = 0;i < Modulea->ui->comboBox->count();i++)
     {
-        Logger->Displaylog("N",Modulea->ui->comboBox->itemText(i),"Getlocalipaddress function run completed");
+        Logger->displayLog("N",Modulea->ui->comboBox->itemText(i),"Getlocalipaddress function run completed");
     }
 }
 
 /*  get system ip address to combobox;*/
 
-void TcpServerBox::Enablestarttcpserver()
+void TcpServerBox::enableStartTcpserver()
 {
     bool boola;
     bool boolb;
-    boola = SuperC->Checkiprules(Modulea->ui->comboBox->currentText());
+    boola = Core->checkIpRules(Modulea->ui->comboBox->currentText());
     int port = Modulea->ui->comboBox_2->currentText().toInt(&boolb);
     if(boola == true && boolb == true && port > 100 && port < 65535)
     {
@@ -91,43 +91,43 @@ void TcpServerBox::Enablestarttcpserver()
 
 /*  enable start tcp server button or not;*/
 
-void TcpServerBox::Starttcpserver()
+void TcpServerBox::startTcpserver()
 {
     QHostAddress ipaddress(Modulea->ui->comboBox->currentText());
     Tcpserver->listen(ipaddress,Modulea->ui->comboBox_2->currentText().toInt());
     if(Tcpserver->isListening())
     {
-        SuperC->Enablewidgetlist(&Connectwidgetet,true);
-        SuperC->Enablewidgetlist(&Connectwidgetef,false);
-        Logger->Displaylog("N","server start success","Starttcpserver function run completed");
+        Core->enableWidgetList(&Connectwidgetet,true);
+        Core->enableWidgetList(&Connectwidgetef,false);
+        Logger->displayLog("N","server start success","Starttcpserver function run completed");
     }
     else
     {
-        Logger->Displaylog("N","server start failed","Starttcpserver function run completed");
+        Logger->displayLog("N","server start failed","Starttcpserver function run completed");
     }
 }
 
 /*  start tcp server;*/
 
-void TcpServerBox::Closetcpserver()
+void TcpServerBox::closeTcpserver()
 {
     Tcpserver->close();
-    Forcedisconnect();
+    forceDisconnect();
     if(!Tcpserver->isListening())
     {
-        SuperC->Enablewidgetlist(&Disconnectwidgetet,true);
-        SuperC->Enablewidgetlist(&Disconnectwidgetef,false);
-        Logger->Displaylog("N","server close success","Closetcpserver function run completed");
+        Core->enableWidgetList(&Disconnectwidgetet,true);
+        Core->enableWidgetList(&Disconnectwidgetef,false);
+        Logger->displayLog("N","server close success","Closetcpserver function run completed");
     }
     else
     {
-        Logger->Displaylog("N","server close failed","Closetcpserver function run completed");
+        Logger->displayLog("N","server close failed","Closetcpserver function run completed");
     }
 }
 
 /* close tcp server and tick off all client;*/
 
-void TcpServerBox::Forcedisconnect()
+void TcpServerBox::forceDisconnect()
 {
     QList<int> connectsocket;
     for(int i = 0;i < Moduleb->ui->treeWidget->topLevelItemCount();i++)
@@ -136,59 +136,59 @@ void TcpServerBox::Forcedisconnect()
     }
     for(int j = 0;j < connectsocket.count();j++)
     {
-        SuperN->Disconnecttcpserver(Tcpsocketlist.at(connectsocket.at(j)),1000);
+        Network->disConnectTcpServer(Tcpsocketlist.at(connectsocket.at(j)),1000);
     }
 }
 
 /*  tick off all client;*/
 
-void TcpServerBox::Newtcpsocket()
+void TcpServerBox::newTcpsocket()
 {
     int tcpsocketindex = Tcpsocketlist.count();
     Tcpsocketlist.append(Tcpserver->nextPendingConnection());
     QString ipaddress = Tcpsocketlist.at(tcpsocketindex)->peerAddress().toString();
     int port = Tcpsocketlist.at(tcpsocketindex)->peerPort();
-    Logger->Displaylog("N",ipaddress + "::" + QString::number(port) + " connect success;","Newtcpsocket function run completed");
-    connect(Tcpsocketlist.at(tcpsocketindex),&QTcpSocket::readyRead,this,&TcpServerBox::Receivecommand);
-    connect(Tcpsocketlist.at(tcpsocketindex),&QTcpSocket::disconnected,this,&TcpServerBox::Disconnected);
+    Logger->displayLog("N",ipaddress + "::" + QString::number(port) + " connect success;","Newtcpsocket function run completed");
+    connect(Tcpsocketlist.at(tcpsocketindex),&QTcpSocket::readyRead,this,&TcpServerBox::receiveCommand);
+    connect(Tcpsocketlist.at(tcpsocketindex),&QTcpSocket::disconnected,this,&TcpServerBox::disconnected);
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0,QString::number(tcpsocketindex));
     item->setText(1,ipaddress);
     item->setText(2,QString::number(port));
     Moduleb->ui->treeWidget->addTopLevelItem(item);
-    Writeapi(Tcpsocketlist.at(tcpsocketindex),"<connect superserver success>");
+    writeApi(Tcpsocketlist.at(tcpsocketindex),"<connect superserver success>");
 }
 
 /*  new tcpsocket connected and add it to treewidget;*/
 
-void TcpServerBox::Writeapi(QTcpSocket *tcpsocket,QByteArray serverinfo)
+void TcpServerBox::writeApi(QTcpSocket *tcpsocket,QByteArray serverinfo)
 {
     Modulea->ui->lineEdit_2->setText(serverinfo);
-    SuperN->Writesocket(Modulea->ui->checkBox,Modulea->ui->checkBox,Modulea->ui->checkBox,tcpsocket,Modulea->ui->lineEdit_2);
-    Logger->Displaylog("W",serverinfo,"Writedata function run completed");
+    Network->writeSocket(Modulea->ui->checkBox,Modulea->ui->checkBox,Modulea->ui->checkBox,tcpsocket,Modulea->ui->lineEdit_2);
+    Logger->displayLog("W",serverinfo,"Writedata function run completed");
 }
 
 /*  write to socket api;*/
 
-void TcpServerBox::Receivecommand()
+void TcpServerBox::receiveCommand()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     QByteArray bytes = tcpsocket->readAll();
-    Logger->Displaylog("R",bytes,"Receivebytes function run completed");
-    Operatorcommand(tcpsocket,bytes);
+    Logger->displayLog("R",bytes,"Receivebytes function run completed");
+    operatorCommand(tcpsocket,bytes);
 }
 
 /*  receive command and run;*/
 
-void TcpServerBox::Operatorcommand(QTcpSocket *tcpsocket,QByteArray bytes)
+void TcpServerBox::operatorCommand(QTcpSocket *tcpsocket,QByteArray bytes)
 {
     if(bytes == "help")
     {
         for(int i = 0;i < Commandlist.count();i++)
         {
-            Writeapi(tcpsocket,Commandlist.at(i).toUtf8());
+            writeApi(tcpsocket,Commandlist.at(i).toUtf8());
         }
-        Writeapi(tcpsocket,"\r\nInput index enter mode,such as 1;");
+        writeApi(tcpsocket,"\r\nInput index enter mode,such as 1;");
     }
     else
     {
@@ -201,48 +201,48 @@ void TcpServerBox::Operatorcommand(QTcpSocket *tcpsocket,QByteArray bytes)
             {
                 case 1:
                 {
-                    Writeapi(tcpsocket,"\r\nString to string mode enter success;");
-                    Writeapi(tcpsocket,"Input string return string;");
-                    Writeapi(tcpsocket,"Input exit quit this mode;");
-                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Stringtostring);
-                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receivecommand);
+                    writeApi(tcpsocket,"\r\nString to string mode enter success;");
+                    writeApi(tcpsocket,"Input string return string;");
+                    writeApi(tcpsocket,"Input exit quit this mode;");
+                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::stringToString);
+                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiveCommand);
                     break;
                 }
                 case 2:
                 {
-                    Writeapi(tcpsocket,"\r\nString to hex mode enter success;");
-                    Writeapi(tcpsocket,"Input string return hex;");
-                    Writeapi(tcpsocket,"Input exit quit this mode;");
-                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Stringtohex);
-                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receivecommand);
+                    writeApi(tcpsocket,"\r\nString to hex mode enter success;");
+                    writeApi(tcpsocket,"Input string return hex;");
+                    writeApi(tcpsocket,"Input exit quit this mode;");
+                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::stringToHex);
+                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiveCommand);
                     break;
                 }
                 case 3:
                 {
-                    Writeapi(tcpsocket,"\r\nHex to string mode enter success;");
-                    Writeapi(tcpsocket,"Input hex return string;");
-                    Writeapi(tcpsocket,"Input exit quit this mode;");
-                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Hextostring);
-                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receivecommand);
+                    writeApi(tcpsocket,"\r\nHex to string mode enter success;");
+                    writeApi(tcpsocket,"Input hex return string;");
+                    writeApi(tcpsocket,"Input exit quit this mode;");
+                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::hexTostring);
+                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiveCommand);
                     break;
                 }
                 case 4:
                 {
-                    Writeapi(tcpsocket,"\r\nTransfer file mode enter success;");
-                    Writeapi(tcpsocket,"Input tran name.extensions fileseek filesize transfer file;");
-                    Writeapi(tcpsocket,"Input exit quit this mode;");
-                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receiverfiles);
-                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receivecommand);
+                    writeApi(tcpsocket,"\r\nTransfer file mode enter success;");
+                    writeApi(tcpsocket,"Input tran name.extensions fileseek filesize transfer file;");
+                    writeApi(tcpsocket,"Input exit quit this mode;");
+                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiverFiles);
+                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiveCommand);
                     break;
                 }
                 case 5:
                 {
-                    Writeapi(tcpsocket,"\r\nReceiver file mode enter success;");
-                    Writeapi(tcpsocket,"Input recv find server file list;");
-                    Writeapi(tcpsocket,"Input recv fileindex fileseek filesize receiver file;");
-                    Writeapi(tcpsocket,"Input exit quit this mode;");
-                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Transferfiles);
-                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receivecommand);
+                    writeApi(tcpsocket,"\r\nReceiver file mode enter success;");
+                    writeApi(tcpsocket,"Input recv find server file list;");
+                    writeApi(tcpsocket,"Input recv fileindex fileseek filesize receiver file;");
+                    writeApi(tcpsocket,"Input exit quit this mode;");
+                    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::transferFiles);
+                    disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiveCommand);
                     break;
                 }
             }
@@ -252,7 +252,7 @@ void TcpServerBox::Operatorcommand(QTcpSocket *tcpsocket,QByteArray bytes)
 
 /*  run tcp server command;*/
 
-void TcpServerBox::Disconnected()
+void TcpServerBox::disconnected()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     int port = tcpsocket->peerPort();
@@ -264,102 +264,102 @@ void TcpServerBox::Disconnected()
             delete item;
         }
     }
-    Logger->Displaylog("N","tcpsocket disconnect from server;","Disconnected function run completed");
+    Logger->displayLog("N","tcpsocket disconnect from server;","Disconnected function run completed");
 }
 
 /*  if client disconnected ,run this function;*/
 
-void TcpServerBox::Exitmode(QTcpSocket *tcpsocket)
+void TcpServerBox::exitMode(QTcpSocket *tcpsocket)
 {
-    Writeapi(tcpsocket,Commandlist.at(Commandindex).toUtf8() + " mode exit success");
-    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receivecommand);
+    writeApi(tcpsocket,Commandlist.at(Commandindex).toUtf8() + " mode exit success");
+    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiveCommand);
 }
 
 /*  exit for quit this mode;*/
 
-void TcpServerBox::Stringtostring()
+void TcpServerBox::stringToString()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     QByteArray bytes = tcpsocket->readAll();
-    Logger->Displaylog("R",bytes,"Receivebytes function run completed");
-    Writeapi(tcpsocket,bytes);
-    Stringtostringmode(bytes,tcpsocket);
+    Logger->displayLog("R",bytes,"Receivebytes function run completed");
+    writeApi(tcpsocket,bytes);
+    stringTostringMode(bytes,tcpsocket);
 }
 
 /*  string to string mode;*/
 
-void TcpServerBox::Stringtostringmode(QByteArray bytes,QTcpSocket *tcpsocket)
+void TcpServerBox::stringTostringMode(QByteArray bytes,QTcpSocket *tcpsocket)
 {
     if(bytes == "exit")
     {
-        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Stringtostring);
-        Exitmode(tcpsocket);
+        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&::TcpServerBox::stringToString);
+        exitMode(tcpsocket);
     }
 }
 
 /*  if bytes is exit, quit this mode;*/
 
-void TcpServerBox::Stringtohex()
+void TcpServerBox::stringToHex()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     QByteArray bytes = tcpsocket->readAll();
-    Logger->Displaylog("R",bytes,"Receivebytes function run completed");
-    Writeapi(tcpsocket,bytes.toHex());
-    Stringtohexmode(bytes,tcpsocket);
+    Logger->displayLog("R",bytes,"Receivebytes function run completed");
+    writeApi(tcpsocket,bytes.toHex());
+    stringToHexMode(bytes,tcpsocket);
 }
 
 /*  string to hex mode;*/
 
-void TcpServerBox::Stringtohexmode(QByteArray bytes,QTcpSocket *tcpsocket)
+void TcpServerBox::stringToHexMode(QByteArray bytes,QTcpSocket *tcpsocket)
 {
     if(bytes == "exit")
     {
-        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Stringtohex);
-        Exitmode(tcpsocket);
+        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::stringToHex);
+        exitMode(tcpsocket);
     }
 }
 
 /*  if bytes is exit, quit this mode;*/
 
-void TcpServerBox::Hextostring()
+void TcpServerBox::hexTostring()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     QByteArray bytes = tcpsocket->readAll();
-    Logger->Displaylog("R",bytes,"Receivebytes function run completed");
-    Writeapi(tcpsocket,bytes.fromHex(bytes));
-    Hextostringmode(bytes,tcpsocket);
+    Logger->displayLog("R",bytes,"Receivebytes function run completed");
+    writeApi(tcpsocket,bytes.fromHex(bytes));
+    hexTostringMode(bytes,tcpsocket);
 }
 
 /*  string to hex mode;*/
 
-void TcpServerBox::Hextostringmode(QByteArray bytes,QTcpSocket *tcpsocket)
+void TcpServerBox::hexTostringMode(QByteArray bytes,QTcpSocket *tcpsocket)
 {
     if(bytes == "exit")
     {
-        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Hextostring);
-        Exitmode(tcpsocket);
+        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::hexTostring);
+        exitMode(tcpsocket);
     }
 }
 
 /*  if bytes is exit, quit this mode;*/
 
-void TcpServerBox::Receiverfiles()
+void TcpServerBox::receiverFiles()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     QByteArray bytes = tcpsocket->readAll();
-    Receiverfilesmode(bytes,tcpsocket);
+    receiverFilesMode(bytes,tcpsocket);
 }
 
 /*  receive file mode;*/
 
-void TcpServerBox::Receiverfilesmode(QByteArray bytes,QTcpSocket *tcpsocket)
+void TcpServerBox::receiverFilesMode(QByteArray bytes,QTcpSocket *tcpsocket)
 {
     if(bytes.mid(0,5) == "tran ")
     {
         QStringList fileinfo = QString(bytes).split(" ");
         if(fileinfo.count() == 4)
         {
-            bool boola = SuperC->Checkfilename(fileinfo.at(1));
+            bool boola = Core->checkFileName(fileinfo.at(1));
             bool boolb = false;
             bool boolc = false;
             int fileseek = fileinfo.at(2).toInt(&boolb);
@@ -367,49 +367,49 @@ void TcpServerBox::Receiverfilesmode(QByteArray bytes,QTcpSocket *tcpsocket)
             if(boola && boolb && fileseek >= 0 && boolc)
             {
                 QString filename = "./__depycache__/__tcpserver__/" + fileinfo.at(1);
-                disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receiverfiles);
-                Writeapi(tcpsocket,filename.toUtf8() + " create success;");
+                disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiverFiles);
+                writeApi(tcpsocket,filename.toUtf8() + " create success;");
                 QFile *file = new QFile(filename);
                 file->open(QIODevice::Append);
                 file->seek(fileseek);
                 ReceiverData *threadra = new ReceiverData(file,tcpsocket,filesize);
-                connect(threadra,&ReceiverData::Signalra,this,&TcpServerBox::Signalraslot);
+                connect(threadra,&ReceiverData::signalRa,this,&TcpServerBox::signalRaSlot);
                 connect(threadra,&ReceiverData::finished,threadra,&QObject::deleteLater);
                 threadra->start();
             }
             else
             {
-                Writeapi(tcpsocket,"check filename correctly ,fileseek or filesize could transform to int;");
+                writeApi(tcpsocket,"check filename correctly ,fileseek or filesize could transform to int;");
             }
         }
         else
         {
-            Writeapi(tcpsocket,"command format: \"tran name.extensions fileseek filesize\"");
+            writeApi(tcpsocket,"command format: \"tran name.extensions fileseek filesize\"");
         }
     }
     else if(bytes == "exit")
     {
-        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receiverfiles);
-        Exitmode(tcpsocket);
+        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiverFiles);
+        exitMode(tcpsocket);
     }
 }
 
 /*  input tran name.extensions filesize transfer start file;*/
 
-void TcpServerBox::Transferfiles()
+void TcpServerBox::transferFiles()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     QByteArray bytes = tcpsocket->readAll();
-    Transferfilesmode(bytes,tcpsocket);
+    transferFilesMode(bytes,tcpsocket);
 }
 
 /*  receive file mode;*/
 
-void TcpServerBox::Transferfilesmode(QByteArray bytes,QTcpSocket *tcpsocket)
+void TcpServerBox::transferFilesMode(QByteArray bytes,QTcpSocket *tcpsocket)
 {
     if(bytes.mid(0,5) == "recv ")
     {
-        Getfilepath();
+        getFilePath();
         QStringList fileinfo = QString(bytes).split(" ");
         if(fileinfo.count() == 4)
         {
@@ -422,45 +422,45 @@ void TcpServerBox::Transferfilesmode(QByteArray bytes,QTcpSocket *tcpsocket)
             if(boola == true && fileindex < Fileslist.count() && fileindex >= 0 && boolb == true && fileseek >= 0 && boolc == true && filesize > 0 && filesize < 1024000)
             {
                 QString filename = Tempfilepath + Fileslist.at(fileindex);
-                tcpsocket->write(SuperC->Readbytesint64(filename,fileseek,filesize));
+                tcpsocket->write(Core->readBytesInt64(filename,fileseek,filesize));
             }
             else
             {
-                Writeapi(tcpsocket,"check fileindex or fileseek or filesize correctly;");
+                writeApi(tcpsocket,"check fileindex or fileseek or filesize correctly;");
             }
         }
         else
         {
-            Writeapi(tcpsocket,"command format: \"recv fileindex fileseek filesize\"");
-            Writeapi(tcpsocket,"server file list: ");
+            writeApi(tcpsocket,"command format: \"recv fileindex fileseek filesize\"");
+            writeApi(tcpsocket,"server file list: ");
             for(int i = 0;i < Fileslist.count();i++)
             {
                 QFile file(Tempfilepath + Fileslist.at(i));
-                Writeapi(tcpsocket,"<" + QByteArray::number(i) + "><" + Fileslist.at(i).toUtf8() + "><" + QByteArray::number(file.size()) + ">");
+                writeApi(tcpsocket,"<" + QByteArray::number(i) + "><" + Fileslist.at(i).toUtf8() + "><" + QByteArray::number(file.size()) + ">");
             }
         }
     }
     else if(bytes == "exit")
     {
-        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Transferfiles);
-        Exitmode(tcpsocket);
+        disconnect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::transferFiles);
+        exitMode(tcpsocket);
     }
 }
 
 /*  input recv fileindex fileseek filesize receive file;*/
 
-void TcpServerBox::Getfilepath()
+void TcpServerBox::getFilePath()
 {
     Fileslist = Dir->entryList(QDir::Files | QDir::Readable, QDir::Name);
 }
 
 /*  get fileslist;*/
 
-void TcpServerBox::Signalraslot(QFile *file,QTcpSocket *tcpsocket,QString string)
+void TcpServerBox::signalRaSlot(QFile *file,QTcpSocket *tcpsocket,QString string)
 {
     file->close();
-    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::Receiverfiles);
-    Writeapi(tcpsocket,file->fileName().toUtf8() + string.toUtf8());
+    connect(tcpsocket,&QTcpSocket::readyRead,this,&TcpServerBox::receiverFiles);
+    writeApi(tcpsocket,file->fileName().toUtf8() + string.toUtf8());
 }
 
 /*  write file byte to local file;*/
@@ -477,7 +477,7 @@ ReceiverData::~ReceiverData()
 
 }
 
-void ReceiverData::Initrun()
+void ReceiverData::initRun()
 {
     Sizewrite = 0;
     Timeout = 1000;
@@ -486,7 +486,7 @@ void ReceiverData::Initrun()
 
 void ReceiverData::run()
 {
-    Initrun();
+    initRun();
     while(Size > Sizewrite)
     {
         if(Inittime < Timeout)
@@ -507,13 +507,13 @@ void ReceiverData::run()
         }
         else
         {
-            emit Signalra(File,Tcpsocket," receiver timeout;");
+            emit signalRa(File,Tcpsocket," receiver timeout;");
             break;
         }
     }
     if(Size <= Sizewrite)
     {
-        emit Signalra(File,Tcpsocket," receiver completed;");
+        emit signalRa(File,Tcpsocket," receiver completed;");
     }
 }
 

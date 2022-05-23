@@ -25,6 +25,8 @@ public:
 
     ~LittleSkate();
 
+public:
+
     QRectF boundingRect() const override;
 
     QPainterPath shape() const override;
@@ -37,7 +39,7 @@ public:
     void advance(
             int phase) override;
 
-    void Refreshdirection(
+    void refreshDirection(
             QByteArray direction);
 
 private:
@@ -61,43 +63,44 @@ private:
     int Bonusball           = 0;
 
 private slots:
+
     /*  mainfunction;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void colorInit();
 
-    void Colorinit();
+    void sceneInit();
 
-    void Sceneinit();
+    void timerInit();
 
-    void Timerinit();
+    void boundingCheck();
 
-    void Boundingcheck();
+    void collisionCheck();
 
-    void Collisioncheck();
+    void speedLimit();
 
-    void Speedlimit();
+    void moveLeft();
 
-    void Moveleft();
+    void moveRight();
 
-    void Moveright();
+    void stop();
 
-    void Stop();
-
-    void Timerslot();
+    void timerSlot();
 
     /*  bonus*/
-    void Generateballbonus(
+    void generateBallBonus(
             QGraphicsItem* collitem);
 
-    void Getbonus();
+    void getBonus();
 
 signals:
-    void Signalsa(
+
+    void signalSa(
             double speed);
 
-    void Signalsb(
+    void signalSb(
             QPointF point,
             double speedx,
             double speedy);

@@ -35,20 +35,20 @@ public:
 
 public slots:
 
-    void Disableopen();
+    void disableOpen();
 
-    QString Getcurrentitemtext();
+    QString getCurrentItemText();
 
-    void Enablewidgetlist();
+    void enableWidgetList();
 
-    void Personalization(
+    void personalization(
         QString sourcepath,
         QString text);
 
-    void Setcurrentfile(
+    void setCurrentFile(
         QString filetemp);
 
-    void Checkfilevaildinit();
+    void checkFileVaildInit();
 
 private:
 
@@ -74,70 +74,70 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Objectinit();
+    void objectInit();
 
-    void Addactioninit();
+    void addActionInit();
 
-    void Headerviewinit();
+    void headerViewInit();
 
-    void Loadfilesinit();
+    void loadFilesInit();
 
-    void Importfilesslot();
+    void importFilesSlot();
 
-    void Clearfileinit();
+    void clearFileInit();
 
-    void Cleartreewidget();
+    void clearTreeWidget();
 
-    void Setfiles(
+    void setFiles(
         QStringList filelistinput);
 
-    void Searchfiles(
+    void searchFiles(
         QString text);
 
-    void Itemoptions();
+    void itemOptions();
 
-    void Tableoptions();
+    void tableOptions();
 
-    void Clickopen();
+    void clickOpen();
 
-    void Actionopen();
+    void actionOpen();
 
-    void Openfilepath();
+    void openFilePath();
 
-    bool Openinit();
+    bool openInit();
 
-    void Deletefilesinit();
+    void deleteFilesInit();
 
-    void Deletefiles();
+    void deleteFiles();
 
-    void Resetindex();
+    void resetIndex();
 
-    void Disableopentips();
+    void disableOpenTips();
 
-    void Locationfile();
+    void locationFile();
 
-    void Checkfilevaild();
+    void checkFileVaild();
 
-    void Deleteinvaildfiles();
+    void deleteInvaildFiles();
 
 signals:
 
-    void Signalfa(
+    void signalFa(
         QString direction,
         QString tlogs,
         QString llogs);
 
-    void Signalfb();
+    void signalFb();
 
-    void Signalfc();
+    void signalFc();
 
-    void Signalfd();
+    void signalFd();
 
-    void Signalfe(
+    void signalFe(
         QString file);
 
 };

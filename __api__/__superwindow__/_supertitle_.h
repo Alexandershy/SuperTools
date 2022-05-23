@@ -30,7 +30,7 @@ public:
 
 public slots:
 
-    void Setsourcecolor(
+    void setSourceColor(
         QString rgbcolor);
 
 protected:
@@ -46,18 +46,18 @@ protected:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 signals:
 
-    void Signalsa(
+    void signalSa(
             bool mouseontitle);
 
-    void Signalsb();
+    void signalSb();
 
-    void Signalsc(
+    void signalSc(
         Qt::CursorShape shape);
 
 };

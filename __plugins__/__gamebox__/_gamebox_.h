@@ -1,5 +1,6 @@
 #ifndef _GAMEBOX__H
 #define _GAMEBOX__H
+#define _GAMEBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
@@ -9,8 +10,7 @@
 #include "__supernotedialog__/_supernotedialog_.h"
 #include "__superfilemanager__/_superfilemanager_.h"
 #include "__hitbricks__/_hitbricksdialog_.h"
-#include "__module__/_modulea_.h"
-#include "_gamebox__global.h"
+#include "__module__/_gamemodulea_.h"
 
 /**************interface****************/
 class _GAMEBOX__EXPORT Interface
@@ -32,7 +32,7 @@ public:
 
 private:
 
-    ModuleA *Modulea                = nullptr;
+    GameModuleA *Modulea            = nullptr;
     QString Hitbricks               = "./__depycache__/__game__/_hitbricks_.super";
     QStringList *Gamefilelist       = nullptr;
     SuperLogger *Logger             = nullptr;
@@ -40,18 +40,16 @@ private:
     QString Sourcepath              = "./__depycache__/__game__/";
 
 private slots:
-
     /*  main function;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void parameterInit();
 
-    void Parameterinit();
+    void creatGameFileInit();
 
-    void Creatgamefileinit();
-
-    void Play();
+    void play();
 
 };
 

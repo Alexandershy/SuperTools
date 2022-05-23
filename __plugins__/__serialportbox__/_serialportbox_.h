@@ -1,5 +1,6 @@
 #ifndef _SERIALPORTBOX__H
 #define _SERIALPORTBOX__H
+#define _SERIALPORTBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
@@ -7,9 +8,8 @@
 #include "__supersender__/_supersender_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "_serialportbox__global.h"
+#include "__module__/_serialportmodulea_.h"
+#include "__module__/_serialportmoduleb_.h"
 
 /**************interface****************/
 class _SERIALPORTBOX__EXPORT Interface
@@ -31,15 +31,15 @@ public:
 
 private:
 
-    SuperSerial *SuperS                     = nullptr;
-    ModuleA *Modulea                        = nullptr;
-    ModuleB *Moduleb                        = nullptr;
+    SuperSerial *Serial                     = nullptr;
+    SerialPortModuleA *Modulea              = nullptr;
+    SerialPortModuleB *Moduleb              = nullptr;
     QStringList Serialnamelist              = {};
     QList<QWidget*> Connectwidgetet         = {};
     QList<QWidget*> Connectwidgetef         = {};
     QList<QWidget*> Disconnectwidgetef      = {};
     QList<QWidget*> Disconnectwidgetet      = {};
-    QSerialPort *Serial                     = nullptr;
+    QSerialPort *Serialport                 = nullptr;
     QTimer *Timerca                         = nullptr;
     SuperLogger *Logger                     = nullptr;
     QList<SuperSender*> Senderboxlist       = {};
@@ -50,46 +50,45 @@ private:
 private slots:
 
     /*  main function*/
+    void init();
 
-    void Init();
+    void parameterInit();
 
-    void Parameterinit();
+    void objectInit();
 
-    void Objectinit();
+    void timerInit();
 
-    void Timerinit();
+    void widgetListInit();
 
-    void Widgetlistinit();
+    void getSerialPort();
 
-    void Getserialport();
-
-    void Enablesenderbox(
+    void enableSenderBox(
             bool boola);
 
-    void Connectserialport();
+    void connectSerialPort();
 
-    void Disconnectserialport();
+    void disconnectSerialPort();
 
-    void Enableaddn();
+    void enableAddn();
 
-    void Enableaddr();
+    void enableAddr();
 
-    void Changetypea();
+    void changeTypea();
 
-    void Changetypeb();
+    void changeTypeb();
 
-    bool Enableconnectbutton();
+    bool enableConnectButton();
 
-    void Readyreadslot();
+    void readyReadSlot();
 
-    void Writeapi(
+    void writeApi(
             QLineEdit* lineedit);
 
-    void Recordtext();
+    void recordText();
 
-    void Timercaslot();
+    void timerCaSlot();
 
-    void Changetypeapi(
+    void changeTypeApi(
             QCheckBox* checkboxtype,
             QString strtlog,
             QString strllog,
@@ -97,7 +96,7 @@ private slots:
             bool boolb,
             bool boolc);
 
-    void Adjustsenderbox();
+    void adjustSenderBox();
 
 };
 

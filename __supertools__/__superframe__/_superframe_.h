@@ -29,20 +29,20 @@ private:
 
 private slots:
 
-    void Superinitwindow();
+    void superInitWindow();
 
-    void Supermainwindow(
+    void superMainWindow(
             QString setting);
 
-    void Supersystemtray();
+    void superSystemTray();
 
-    void Superselectcolor();
+    void superSelectColor();
 
-    void Supertimer();
+    void superTimer();
 
-    void Checkstatus();
+    void checkStatus();
 
-    void Quit();
+    void quit();
 
 };
 
@@ -69,11 +69,11 @@ private:
 
 private slots:
 
-    void Writeinit();
+    void writeInit();
 
-    void Objectinit();
+    void objectInit();
 
-    void Timerinit();
+    void timerInit();
 
 };
 

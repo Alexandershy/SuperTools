@@ -5,7 +5,7 @@ LittleSkate::LittleSkate(QGraphicsScene *scene,int colorindex,QTimer *timer)
     Scene = scene;
     Colorindex[0] = colorindex;
     Timer = timer;
-    Init();
+    init();
 
 }
 
@@ -14,29 +14,29 @@ LittleSkate::~LittleSkate()
 
 }
 
-void LittleSkate::Init()
+void LittleSkate::init()
 {
-    Objectinit();
-    Colorinit();
-    Sceneinit();
-    Timerinit();
+    objectInit();
+    colorInit();
+    sceneInit();
+    timerInit();
 }
 
-void LittleSkate::Objectinit()
+void LittleSkate::objectInit()
 {
     SuperC = new SuperCore(this);
 }
 
-void LittleSkate::Colorinit()
+void LittleSkate::colorInit()
 {
-    QStringList backgroundrgb = SuperC->Readonlyfile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini").split(",");
+    QStringList backgroundrgb = SuperC->readOnlyFile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini").split(",");
     Colorlist.append(QColor(backgroundrgb.at(0).toInt(),backgroundrgb.at(1).toInt(),backgroundrgb.at(2).toInt()));
     Colorlist.append(QColor(255 - backgroundrgb.at(0).toInt(),255 - backgroundrgb.at(1).toInt(),255 - backgroundrgb.at(2).toInt()));
 }
 
 /*  color bricks init*/
 
-void LittleSkate::Sceneinit()
+void LittleSkate::sceneInit()
 {
     Scenex = Scene->sceneRect().x();
     Sceney = Scene->sceneRect().y();
@@ -46,10 +46,10 @@ void LittleSkate::Sceneinit()
 
 /*  init scene rect parameters;*/
 
-void LittleSkate::Timerinit()
+void LittleSkate::timerInit()
 {
-    connect(Timer,&QTimer::timeout,this,&LittleSkate::Timerslot);
-    connect(Timer,&QTimer::timeout,this,&LittleSkate::Getbonus);
+    connect(Timer,&QTimer::timeout,this,&LittleSkate::timerSlot);
+    connect(Timer,&QTimer::timeout,this,&LittleSkate::getBonus);
 }
 
 /*  start move thread;*/
@@ -86,13 +86,13 @@ void LittleSkate::advance(int phase)
         return;
     }
     moveBy(Speed,0);
-    Collisioncheck();
-    Boundingcheck();
+    collisionCheck();
+    boundingCheck();
 }
 
 /*  run advance when scene run advance;*/
 
-void LittleSkate::Speedlimit()
+void LittleSkate::speedLimit()
 {
     if(Speed >= Speedlimitx)
     {
@@ -102,34 +102,34 @@ void LittleSkate::Speedlimit()
     {
         Speed = -Speedlimitx;
     }
-    emit Signalsa(Speed);
+    emit signalSa(Speed);
 }
 
 /*  speed limit;*/
 
-void LittleSkate::Collisioncheck()
+void LittleSkate::collisionCheck()
 {
     if(!Scene->collidingItems(this).isEmpty())
     {
         QGraphicsItem* collitem = Scene->collidingItems(this).at(0);
-        Generateballbonus(collitem);
+        generateBallBonus(collitem);
     }
 }
 
 /*  run collision check function;*/
 
-void LittleSkate::Generateballbonus(QGraphicsItem* collitem)
+void LittleSkate::generateBallBonus(QGraphicsItem* collitem)
 {
     if(collitem->boundingRect().width() == 20 && Bonusball >= 50)
     {
-        emit Signalsb(collitem->pos(),Speed,-0.35);
+        emit signalSb(collitem->pos(),Speed,-0.35);
         Bonusball = 0;
     }
 }
 
 /*  generate ball every 10 seconds;*/
 
-void LittleSkate::Boundingcheck()
+void LittleSkate::boundingCheck()
 {
     double Xpos = pos().x();
     double Xwidth = this->boundingRect().width();
@@ -147,26 +147,26 @@ void LittleSkate::Boundingcheck()
 
 /*  generate ball every 10 seconds;*/
 
-void LittleSkate::Timerslot()
+void LittleSkate::timerSlot()
 {
     if(Direction == "Left")
     {
-        Moveleft();
+        moveLeft();
     }
     else if(Direction == "Right")
     {
-        Moveright();
+        moveRight();
     }
     else if(Direction == "Stop")
     {
-        Stop();
+        stop();
     }
-    Speedlimit();
+    speedLimit();
 }
 
 /*  improve or reduce speed;*/
 
-void LittleSkate::Moveleft()
+void LittleSkate::moveLeft()
 {
     if(Speed > 0)
     {
@@ -180,7 +180,7 @@ void LittleSkate::Moveleft()
 
 /*  move left;*/
 
-void LittleSkate::Moveright()
+void LittleSkate::moveRight()
 {
     if(Speed < 0)
     {
@@ -194,7 +194,7 @@ void LittleSkate::Moveright()
 
 /*  move right;*/
 
-void LittleSkate::Stop()
+void LittleSkate::stop()
 {
     if(Speed > 0.6)
     {
@@ -212,14 +212,14 @@ void LittleSkate::Stop()
 
 /*  stop move;*/
 
-void LittleSkate::Refreshdirection(QByteArray direction)
+void LittleSkate::refreshDirection(QByteArray direction)
 {
     Direction = direction;
 }
 
 /*  run keyboard function;*/
 
-void LittleSkate::Getbonus()
+void LittleSkate::getBonus()
 {
     if(Bonusball < 50)
     {

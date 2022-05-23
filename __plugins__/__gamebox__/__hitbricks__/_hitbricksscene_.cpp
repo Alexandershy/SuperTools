@@ -6,14 +6,14 @@ HitBricksScene::HitBricksScene(QGraphicsScene *parent,QGraphicsView* view)
     View = view;
     setSceneRect(0,0,View->width() - 5,View->height() - 5);
     setItemIndexMethod(QGraphicsScene::NoIndex);
-    Init();
+    init();
 }
 
 HitBricksScene::~HitBricksScene()
 {
-    SuperC->Deleteobject(Refreshscene);
-    SuperC->Deleteobject(Onesecond);
-    SuperC->Deleteobject(Itemtimer);
+    Core->deleteObject(Refreshscene);
+    Core->deleteObject(Onesecond);
+    Core->deleteObject(Itemtimer);
     clear();
 }
 
@@ -29,17 +29,17 @@ void HitBricksScene::keyPressEvent(QKeyEvent *event)
         {
             case Qt::Key_W:
             {
-                Movestoppointer(1);
+                moveStopPointer(1);
                 break;
             }
             case Qt::Key_S:
             {
-                Movestoppointer(-1);
+                moveStopPointer(-1);
                 break;
             }
             case Qt::Key_A:
             {
-                Selectyesorquit();
+                selectYesOrQuit();
                 break;
             }
         }
@@ -50,27 +50,27 @@ void HitBricksScene::keyPressEvent(QKeyEvent *event)
         {
             case Qt::Key_L:
             {
-                Skatevector.at(0)->Refreshdirection("Right");
+                Skatevector.at(0)->refreshDirection("Right");
                 break;
             }
             case Qt::Key_J:
             {
-                Skatevector.at(0)->Refreshdirection("Left");
+                Skatevector.at(0)->refreshDirection("Left");
                 break;
             }
             case Qt::Key_S:
             {
-                movebulletpointer(1);
+                moveBulletPointer(1);
                 break;
             }
             case Qt::Key_W:
             {
-                movebulletpointer(-1);
+                moveBulletPointer(-1);
                 break;
             }
             case Qt::Key_A:
             {
-                Firebullets();
+                fireBullets();
                 break;
             }
         }
@@ -86,7 +86,7 @@ void HitBricksScene::keyReleaseEvent(QKeyEvent *event)
         int keyvalue = event->key();
         if(Started == 0)
         {
-            Startplay();
+            startPlay();
         }
         else if(Started == 1)
         {
@@ -94,7 +94,7 @@ void HitBricksScene::keyReleaseEvent(QKeyEvent *event)
             {
                 case Qt::Key_Escape:
                 {
-                    Resume();
+                    resume();
                     break;
                 }
             }
@@ -105,17 +105,17 @@ void HitBricksScene::keyReleaseEvent(QKeyEvent *event)
             {
                 case Qt::Key_L:
                 {
-                    Skatevector.at(0)->Refreshdirection("Stop");
+                    Skatevector.at(0)->refreshDirection("Stop");
                     break;
                 }
                 case Qt::Key_J:
                 {
-                    Skatevector.at(0)->Refreshdirection("Stop");
+                    Skatevector.at(0)->refreshDirection("Stop");
                     break;
                 }
                 case Qt::Key_Escape:
                 {
-                    Stopplayapi("Continues?","Yes","Quit");
+                    stopPlayApi("Continues?","Yes","Quit");
                     break;
                 }
             }
@@ -125,21 +125,21 @@ void HitBricksScene::keyReleaseEvent(QKeyEvent *event)
 
 /*  this scene key release function;*/
 
-void HitBricksScene::Init()
+void HitBricksScene::init()
 {
-    Objectinit();
-    Inittimer();
-    Inittitle =         new LittleText("Hit Bricks V1.01",          Setfont("Microsoft Yahei",true,false,false,false,50),QPointF(sceneRect().width() / 2,sceneRect().height() * 0.3),           false,  {1,1},this,Itemtimer);
-    Inittext =          new LittleText("Press Any Key Continue",    Setfont("Microsoft Yahei",true,false,false,false,15),QPointF(sceneRect().width() / 2,sceneRect().height() * 0.85),          true,   {1,1},this,Itemtimer);
-    Scenemaxfps =       new LittleText("MAXFPS: 000",               Setfont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().x(),sceneRect().y()),                              false,  {0,0},this,Itemtimer);
-    Health =            new LittleText("Health: 00",                Setfont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width(),sceneRect().y()),                          false,  {2,0},this,Itemtimer);
-    Yes =               new LittleText("Yes",                       Setfont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 2,sceneRect().height() / 2 + 50),        false,  {1,1},this,Itemtimer);
-    Quit =              new LittleText("Quit",                      Setfont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 2,sceneRect().height() / 2 + 100),       false,  {1,1},this,Itemtimer);
-    Continuepointer =   new LittleText("👈",                        Setfont("Microsoft Yahei",true,false,false,false,15),QPointF(sceneRect().width() / 2 + 30,sceneRect().height() / 2 + 35),   false,  {0,0},this,Itemtimer);
-    Skatespeed =        new LittleText("SPEED: 0000",               Setfont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() * 3 / 4,sceneRect().y()),                  false,  {1,0},this,Itemtimer);
-    Score =             new LittleText("SCORE: 0000000000",         Setfont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 4,sceneRect().y()),                      false,  {1,0},this,Itemtimer);
-    Countdown =         new LittleText("Level000: 00000",           Setfont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 2,sceneRect().y()),                      false,  {1,0},this,Itemtimer);
-    Endtext =           new LittleText("text",                      Setfont("Microsoft Yahei",true,false,false,false,30),QPointF(sceneRect().width() / 2,sceneRect().height() / 2),             false,  {1,1},this,Itemtimer);
+    objectInit();
+    initTimer();
+    Inittitle =         new LittleText("Hit Bricks V1.01",          setFont("Microsoft Yahei",true,false,false,false,50),QPointF(sceneRect().width() / 2,sceneRect().height() * 0.3),           false,  {1,1},this,Itemtimer);
+    Inittext =          new LittleText("Press Any Key Continue",    setFont("Microsoft Yahei",true,false,false,false,15),QPointF(sceneRect().width() / 2,sceneRect().height() * 0.85),          true,   {1,1},this,Itemtimer);
+    Scenemaxfps =       new LittleText("MAXFPS: 000",               setFont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().x(),sceneRect().y()),                              false,  {0,0},this,Itemtimer);
+    Health =            new LittleText("Health: 00",                setFont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width(),sceneRect().y()),                          false,  {2,0},this,Itemtimer);
+    Yes =               new LittleText("Yes",                       setFont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 2,sceneRect().height() / 2 + 50),        false,  {1,1},this,Itemtimer);
+    Quit =              new LittleText("Quit",                      setFont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 2,sceneRect().height() / 2 + 100),       false,  {1,1},this,Itemtimer);
+    Continuepointer =   new LittleText("👈",                        setFont("Microsoft Yahei",true,false,false,false,15),QPointF(sceneRect().width() / 2 + 30,sceneRect().height() / 2 + 35),   false,  {0,0},this,Itemtimer);
+    Skatespeed =        new LittleText("SPEED: 0000",               setFont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() * 3 / 4,sceneRect().y()),                  false,  {1,0},this,Itemtimer);
+    Score =             new LittleText("SCORE: 0000000000",         setFont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 4,sceneRect().y()),                      false,  {1,0},this,Itemtimer);
+    Countdown =         new LittleText("Level000: 00000",           setFont("Microsoft Yahei",true,false,false,false,10),QPointF(sceneRect().width() / 2,sceneRect().y()),                      false,  {1,0},this,Itemtimer);
+    Endtext =           new LittleText("text",                      setFont("Microsoft Yahei",true,false,false,false,30),QPointF(sceneRect().width() / 2,sceneRect().height() / 2),             false,  {1,1},this,Itemtimer);
     addItem(Inittitle);
     addItem(Inittext);
     addItem(Scenemaxfps);
@@ -147,24 +147,24 @@ void HitBricksScene::Init()
 
 /*  creat init scene;*/
 
-void HitBricksScene::Objectinit()
+void HitBricksScene::objectInit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
 /*  object init;*/
 
-void HitBricksScene::Inittimer()
+void HitBricksScene::initTimer()
 {
     Refreshscene = new QTimer(this);
     Refreshscene->setInterval(2);
     Refreshscene->setTimerType(Qt::PreciseTimer);
     connect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::advance);
-    connect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::Addmaxfps);
+    connect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::addMaxFps);
     Refreshscene->start();
     Onesecond = new QTimer(this);
     Onesecond->setInterval(1000);
-    connect(Onesecond,&QTimer::timeout,this,&HitBricksScene::Resetfps);
+    connect(Onesecond,&QTimer::timeout,this,&HitBricksScene::resetFps);
     Onesecond->start();
     Itemtimer = new QTimer(this);
     Itemtimer->setInterval(100);
@@ -173,7 +173,7 @@ void HitBricksScene::Inittimer()
 
 /*  init scene timer;*/
 
-QFont HitBricksScene::Setfont(QString family,bool bold,bool overline,bool underline,bool italic,int pointsize)
+QFont HitBricksScene::setFont(QString family,bool bold,bool overline,bool underline,bool italic,int pointsize)
 {
     Font.setFamily(family);
     Font.setBold(bold);
@@ -186,194 +186,194 @@ QFont HitBricksScene::Setfont(QString family,bool bold,bool overline,bool underl
 
 /*  set and return this font;*/
 
-void HitBricksScene::Startplay()
+void HitBricksScene::startPlay()
 {
     removeItem(Inittitle);
     removeItem(Inittext);
-    Initobjects();
+    initObjects();
     Started = 2;
 }
 
 /*  set and return this font;*/
 
-void HitBricksScene::Initobjects()
+void HitBricksScene::initObjects()
 {
-    Addtime(1000);
-    connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Reducetime);
+    addTime(1000);
+    connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::reduceTime);
     addItem(Skatespeed);
     addItem(Score);
     addItem(Health);
     addItem(Countdown);
-    Initskatevector();
-    Initballvector();
-    Initbrickvector();
-    Initbulletvector();
+    initSkateVector();
+    initBallVector();
+    initBrickVector();
+    initBulletVector();
 }
 
 /*  creat init object;*/
 
-void HitBricksScene::Initskatevector()
+void HitBricksScene::initSkateVector()
 {
     for(int i = 0;i < Player;i++)
     {
         Skatevector.append(new LittleSkate(this,i % 2,Itemtimer));
         addItem(Skatevector.at(i));
         Skatevector.at(i)->setPos(sceneRect().width() / 2,sceneRect().height() * 0.9);
-        connect(Skatevector.at(i),&LittleSkate::Signalsa,this,&HitBricksScene::Refreshskatespeed);
-        connect(Skatevector.at(i),&LittleSkate::Signalsb,this,&HitBricksScene::Generateball);
+        connect(Skatevector.at(i),&LittleSkate::signalSa,this,&HitBricksScene::refreshSkateSpeed);
+        connect(Skatevector.at(i),&LittleSkate::signalSb,this,&HitBricksScene::generateBall);
     }
 }
 
 /*  creat init skate;*/
 
-void HitBricksScene::Initballvector()
+void HitBricksScene::initBallVector()
 {
-    Addhealth(4);
-    Reducehealth();
+    addHealth(4);
+    reduceHealth();
 }
 
 /*  creat init health and ball;*/
 
-LittleBall* HitBricksScene::Addballbyhealth(int health)
+LittleBall* HitBricksScene::addBallByHealth(int health)
 {
     LittleBall *newball = new LittleBall(this,&Sceneinfolist,health % 7,Itemtimer);
     addItem(newball);
     newball->setPos(sceneRect().width() - 20,sceneRect().y() + 20);
-    connect(newball,&LittleBall::Signalba,this,&HitBricksScene::Reducehealth);
-    connect(newball,&LittleBall::Signalbb,this,&HitBricksScene::Addscore);
+    connect(newball,&LittleBall::signalBa,this,&HitBricksScene::reduceHealth);
+    connect(newball,&LittleBall::signalBb,this,&HitBricksScene::addScore);
     return newball;
 }
 
 /*  creat ball;*/
 
-void HitBricksScene::Initbrickvector()
+void HitBricksScene::initBrickVector()
 {
-    Addbricks(Levelbricks.at(Level));
+    addBricks(Levelbricks.at(Level));
 }
 
 /*  creat init level;*/
 
-void HitBricksScene::Initbulletvector()
+void HitBricksScene::initBulletVector()
 {
-    Bulletpointer = new LittleText("👈",Setfont("Microsoft Yahei",true,false,false,false,8),QPointF(sceneRect().x() + 40,30 + sceneRect().y()),false,{0,0},this,Itemtimer);
+    Bulletpointer = new LittleText("👈",setFont("Microsoft Yahei",true,false,false,false,8),QPointF(sceneRect().x() + 40,30 + sceneRect().y()),false,{0,0},this,Itemtimer);
     addItem(Bulletpointer);
     for(int i = 0;i < Bulletnamevector.count();i++)
     {
-        Bulletvector.append(new LittleText(Bulletnamevector.at(i) + ": 00",Setfont("Microsoft Yahei",true,false,false,false,8),QPointF(sceneRect().x(),30 + sceneRect().y() + 15 * i),false,{0,0},this,Itemtimer));
+        Bulletvector.append(new LittleText(Bulletnamevector.at(i) + ": 00",setFont("Microsoft Yahei",true,false,false,false,8),QPointF(sceneRect().x(),30 + sceneRect().y() + 15 * i),false,{0,0},this,Itemtimer));
         addItem(Bulletvector.at(i));
     }
 }
 
 /*  creat init bulletvector;*/
 
-void HitBricksScene::Addbullet(int value)
+void HitBricksScene::addBullet(int value)
 {
     int bulletindex = Maxfps % Bulletvector.count();
-    Bulletvector.at(bulletindex)->Addvalue(Bulletnamevector.at(bulletindex) + ": ",2,Maxfps % 5 + int(value / 5));
+    Bulletvector.at(bulletindex)->addValue(Bulletnamevector.at(bulletindex) + ": ",2,Maxfps % 5 + int(value / 5));
 }
 
-void HitBricksScene::Addmaxfps()
+void HitBricksScene::addMaxFps()
 {
     Maxfps = Maxfps + 1;
 }
 
 /*  cal fps;*/
 
-void HitBricksScene::Resetfps()
+void HitBricksScene::resetFps()
 {
-    Scenemaxfps->Settext("MAXFPS: " + QString("%1").arg(Maxfps,3, 10, QChar('0')));
+    Scenemaxfps->setText("MAXFPS: " + QString("%1").arg(Maxfps,3, 10, QChar('0')));
     Maxfps = 0;
 }
 
 /*  reset fps value as 0;*/
 
-void HitBricksScene::Refreshskatespeed(double speed)
+void HitBricksScene::refreshSkateSpeed(double speed)
 {
-    Skatespeed->Settext("SPEED: " + QString("%1").arg(int(abs(speed) * 1000),4, 10, QChar('0')));
+    Skatespeed->setText("SPEED: " + QString("%1").arg(int(abs(speed) * 1000),4, 10, QChar('0')));
     Sceneinfolist[0] = QString::number(speed);
 }
 
 /*  display skate speed;*/
 
-void HitBricksScene::Addtime(int time)
+void HitBricksScene::addTime(int time)
 {
-    Countdown->Addvalue("Level" + QString("%1").arg(Level,3,10,QChar('0')) + ": ",5,time);
+    Countdown->addValue("Level" + QString("%1").arg(Level,3,10,QChar('0')) + ": ",5,time);
 }
 
 /*  init countdown time;*/
 
-void HitBricksScene::Reducetime()
+void HitBricksScene::reduceTime()
 {
-    Countdown->Addvalue("Level" + QString("%1").arg(Level,3,10,QChar('0')) + ": ",5,-1);
-    if(Countdown->Getvalue() < 1)
+    Countdown->addValue("Level" + QString("%1").arg(Level,3,10,QChar('0')) + ": ",5,-1);
+    if(Countdown->getValue() < 1)
     {
-        Stopplayapi("Game Over","Retry","Quit");
+        stopPlayApi("Game Over","Retry","Quit");
     }
 }
 
 /*  countdown time by timer;*/
 
-void HitBricksScene::Addscore(int score)
+void HitBricksScene::addScore(int score)
 {
-    Score->Addvalue("SCORE: ",10,score);
+    Score->addValue("SCORE: ",10,score);
 }
 
 /*  add score;*/
 
-void HitBricksScene::Reducehealth()
+void HitBricksScene::reduceHealth()
 {
     Runningball = Runningball - 1;
     if(Runningball == 0)
     {
-        Addhealth(-1);
-        if(Health->Getvalue() > 0)
+        addHealth(-1);
+        if(Health->getValue() > 0)
         {
-            Addballbyhealth(Health->Getvalue())->Speedy[0] = 0.35;
+            addBallByHealth(Health->getValue())->Speedy[0] = 0.35;
             Runningball = Runningball + 1;
         }
         else
         {
-            Stopplayapi("Game Over","Retry","Quit");
+            stopPlayApi("Game Over","Retry","Quit");
         }
     }
 }
 
 /*  if no running ball ,reduce health and new ball at righttop;*/
 
-void HitBricksScene::Stopplayapi(QString texta,QString textb,QString textc)
+void HitBricksScene::stopPlayApi(QString texta,QString textb,QString textc)
 {
-    Endtext->Settext(texta);
-    Yes->Settext(textb);
-    Quit->Settext(textc);
+    Endtext->setText(texta);
+    Yes->setText(textb);
+    Quit->setText(textc);
     addItem(Endtext);
     addItem(Yes);
     addItem(Quit);
     addItem(Continuepointer);
-    disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Reducetime);
+    disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::reduceTime);
     disconnect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::advance);
-    disconnect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::Addmaxfps);
-    disconnect(Onesecond,&QTimer::timeout,this,&HitBricksScene::Resetfps);
+    disconnect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::addMaxFps);
+    disconnect(Onesecond,&QTimer::timeout,this,&HitBricksScene::resetFps);
     Started = 1;
 }
 
 /*  stop play api;*/
 
-void HitBricksScene::Resume()
+void HitBricksScene::resume()
 {
     removeItem(Endtext);
     removeItem(Yes);
     removeItem(Quit);
     removeItem(Continuepointer);
-    connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Reducetime);
+    connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::reduceTime);
     connect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::advance);
-    connect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::Addmaxfps);
-    connect(Onesecond,&QTimer::timeout,this,&HitBricksScene::Resetfps);
+    connect(Refreshscene,&QTimer::timeout,this,&HitBricksScene::addMaxFps);
+    connect(Onesecond,&QTimer::timeout,this,&HitBricksScene::resetFps);
     Started = 2;
 }
 
 /*  resume play;*/
 
-void HitBricksScene::Movestoppointer(int step)
+void HitBricksScene::moveStopPointer(int step)
 {
     QPointF pointa(sceneRect().width() / 2 + 30,sceneRect().height() / 2 + 35);
     QPointF pointb(sceneRect().width() / 2 + 30,sceneRect().height() / 2 + 85);
@@ -389,40 +389,40 @@ void HitBricksScene::Movestoppointer(int step)
 
 /*  move stop pointer;*/
 
-void HitBricksScene::Selectyesorquit()
+void HitBricksScene::selectYesOrQuit()
 {
-    if(Continuepointer->pos().y() < sceneRect().height() / 2 + 60 && Endtext->Gettext() == "Continues?")
+    if(Continuepointer->pos().y() < sceneRect().height() / 2 + 60 && Endtext->getText() == "Continues?")
     {
-        Resume();
+        resume();
     }
-    else if(Continuepointer->pos().y() < sceneRect().height() / 2 + 60 && Endtext->Gettext() == "Endless level?")
+    else if(Continuepointer->pos().y() < sceneRect().height() / 2 + 60 && Endtext->getText() == "Endless level?")
     {
-        Resume();
-        Addhealth(1);
-        Addendlessbricks();
-        Addscore(1000);
-        Addtime(1000);
+        resume();
+        addHealth(1);
+        addEndlessBricks();
+        addScore(1000);
+        addTime(1000);
         Endless = true;
     }
-    else if(Continuepointer->pos().y() < sceneRect().height() / 2 + 60 && Endtext->Gettext() == "Game Over")
+    else if(Continuepointer->pos().y() < sceneRect().height() / 2 + 60 && Endtext->getText() == "Game Over")
     {
-        Resume();
-        Retry();
+        resume();
+        retry();
     }
     else
     {
-        emit Signalsa();
+        emit signalSa();
     }
 }
 
 /*  select yes or quit;*/
 
-void HitBricksScene::Levelupanimationa()
+void HitBricksScene::levelupAnimationa()
 {
     Scenespeed = Scenespeed + 1;
     if(Scenespeed == 3)
     {
-        Endtext->Settext("Level" + QString::number(Level) + " Clear");
+        Endtext->setText("Level" + QString::number(Level) + " Clear");
         addItem(Endtext);
         Level = Level + 1;
     }
@@ -432,14 +432,14 @@ void HitBricksScene::Levelupanimationa()
     }
     else if(Scenespeed >= 10)
     {
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Levelupanimationa);
-        connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Levelupanimationb);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::levelupAnimationa);
+        connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::levelupAnimationb);
     }
 }
 
 /*  enter next level animation step a;*/
 
-void HitBricksScene::Levelupanimationb()
+void HitBricksScene::levelupAnimationb()
 {
     if(Scenespeed > 2)
     {
@@ -448,56 +448,56 @@ void HitBricksScene::Levelupanimationb()
     }
     else if(Scenespeed == 2)
     {
-        Levelup();
+        levelup();
     }
 }
 
 /*  enter next level animation step b;*/
 
-void HitBricksScene::Levelup()
+void HitBricksScene::levelup()
 {
-    disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Levelupanimationb);
+    disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::levelupAnimationb);
     removeItem(Endtext);
-    Addhealth(1);
-    Addscore(1000);
-    Addtime(1000);
-    Addbullet(Level);
+    addHealth(1);
+    addScore(1000);
+    addTime(1000);
+    addBullet(Level);
     if(Level + 1 <= Levelbricks.count())
     {
-        Addbricks(Levelbricks.at(Level));
+        addBricks(Levelbricks.at(Level));
     }
     else
     {
-        Addendlessbricks();
+        addEndlessBricks();
     }
 }
 
 /*  run level up function;*/
 
-void HitBricksScene::Retry()
+void HitBricksScene::retry()
 {
-    if(Health->Getvalue() == 0)
+    if(Health->getValue() == 0)
     {
-       Addhealth(4);
+       addHealth(4);
     }
-    if(Countdown->Getvalue() == 0)
+    if(Countdown->getValue() == 0)
     {
-        Addtime(1000);
+        addTime(1000);
     }
     Runningball = 1;
-    Reducehealth();
+    reduceHealth();
 }
 
 /*  add game over reason little text value;*/
 
-void HitBricksScene::Addhealth(int health)
+void HitBricksScene::addHealth(int health)
 {
-    Health->Addvalue("Health: ",2,health);
+    Health->addValue("Health: ",2,health);
 }
 
 /*  add health;*/
 
-void HitBricksScene::Addbricks(QVector<QVector<int>> leveltemp)
+void HitBricksScene::addBricks(QVector<QVector<int>> leveltemp)
 {
     Brickvector.clear();
     Brickitemnumber = 0;
@@ -518,8 +518,8 @@ void HitBricksScene::Addbricks(QVector<QVector<int>> leveltemp)
                 int count = Brickvector.count();
                 Brickvector.append(new LittleBrick(this,colorindex,Itemtimer));
                 addItem(Brickvector.at(count));
-                connect(Brickvector.at(count),&LittleBrick::Signalba,this,&HitBricksScene::Checkhasbricks);
-                connect(Brickvector.at(count),&LittleBrick::Signalbb,this,&HitBricksScene::Addscore);
+                connect(Brickvector.at(count),&LittleBrick::signalBa,this,&HitBricksScene::checkHasBricks);
+                connect(Brickvector.at(count),&LittleBrick::signalBb,this,&HitBricksScene::addScore);
                 Brickvector.at(count)->setPos(firstposx + distancex * j,firstposy + distancey * i);
                 Brickitemnumber = Brickitemnumber + 1;
             }
@@ -529,33 +529,33 @@ void HitBricksScene::Addbricks(QVector<QVector<int>> leveltemp)
 
 /*  add bricks;*/
 
-void HitBricksScene::Checkhasbricks(QPointF point)
+void HitBricksScene::checkHasBricks(QPointF point)
 {
     Brickitemnumber = Brickitemnumber - 1;
-    Generatebonus(point);
+    generateBonus(point);
     if(Brickitemnumber == 0)
     {
         if(Endless == false)
         {
             if(Level + 1 >= Levelbricks.count())
             {
-                Stopplayapi("Endless level?","Yes","Quit");
+                stopPlayApi("Endless level?","Yes","Quit");
             }
             else
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Levelupanimationa);
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::levelupAnimationa);
             }
         }
         else
         {
-            connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Levelupanimationa);
+            connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::levelupAnimationa);
         }
     }
 }
 
 /*  check has bricks;*/
 
-void HitBricksScene::Addendlessbricks()
+void HitBricksScene::addEndlessBricks()
 {
     int time = QDateTime::currentDateTime().toString("zzz").toInt();
     QVector<int> rowtemp = {};
@@ -572,39 +572,39 @@ void HitBricksScene::Addendlessbricks()
             endlesstemp[a].append((time + a + j) % 9);
         }
     }
-    Addbricks(endlesstemp);
+    addBricks(endlesstemp);
 }
 
 /*  add endless bricks;*/
 
-void HitBricksScene::Generatebonus(QPointF point)
+void HitBricksScene::generateBonus(QPointF point)
 {
     int time = QDateTime::currentDateTime().toString("zzz").toInt();
     if(time % 10 > 8)
     {
-        LittleText *bonus = new LittleText(Bulletnamevector.at(time % Bulletnamevector.count()),Setfont("Microsoft Yahei",true,false,false,false,25),point,true,{0,0},this,Itemtimer);
-        connect(bonus,&LittleText::Signalta,this,&HitBricksScene::Getbonus);
-        bonus->Setbonus(true);
+        LittleText *bonus = new LittleText(Bulletnamevector.at(time % Bulletnamevector.count()),setFont("Microsoft Yahei",true,false,false,false,25),point,true,{0,0},this,Itemtimer);
+        connect(bonus,&LittleText::signalTa,this,&HitBricksScene::getBonus);
+        bonus->setBonus(true);
         addItem(bonus);
     }
 }
 
 /*  10% chance generate bonus when brick deleted;*/
 
-void HitBricksScene::Getbonus(QString text)
+void HitBricksScene::getBonus(QString text)
 {
     for(int i = 0;i < Bulletnamevector.count();i++)
     {
         if(text == Bulletnamevector.at(i))
         {
-            Bulletvector.at(i)->Addvalue(text + ": ",2,1);
+            Bulletvector.at(i)->addValue(text + ": ",2,1);
         }
     }
 }
 
 /*  get bonus;*/
 
-LittleBall* HitBricksScene::Generateball(QPointF point,double speedx,double speedy)
+LittleBall* HitBricksScene::generateBall(QPointF point,double speedx,double speedy)
 {
     int x = point.x();
     LittleBall *gball = new LittleBall(this,&Sceneinfolist,x % 7,Itemtimer);
@@ -613,14 +613,14 @@ LittleBall* HitBricksScene::Generateball(QPointF point,double speedx,double spee
     gball->Speedx[0] = speedx;
     gball->Speedy[0] = speedy;
     Runningball = Runningball + 1;
-    connect(gball,&LittleBall::Signalba,this,&HitBricksScene::Reducehealth);
-    connect(gball,&LittleBall::Signalbb,this,&HitBricksScene::Addscore);
+    connect(gball,&LittleBall::signalBa,this,&HitBricksScene::reduceHealth);
+    connect(gball,&LittleBall::signalBb,this,&HitBricksScene::addScore);
     return gball;
 }
 
 /*  generate little ball api;*/
 
-void HitBricksScene::movebulletpointer(int step)
+void HitBricksScene::moveBulletPointer(int step)
 {
     Bulletpointerpos = (Bulletpointerpos + step) % Bulletnamevector.count();
     if(Bulletpointerpos < 0)
@@ -633,65 +633,65 @@ void HitBricksScene::movebulletpointer(int step)
 
 /*  change bullet;*/
 
-void HitBricksScene::Firebullets()
+void HitBricksScene::fireBullets()
 {
-    if(Bulletvector.at(Bulletpointerpos)->Getvalue() > 0 && Bulletready == 10)
+    if(Bulletvector.at(Bulletpointerpos)->getValue() > 0 && Bulletready == 10)
     {
         QString bulletname = Bulletnamevector.at(Bulletpointerpos);
-        Bulletvector.at(Bulletpointerpos)->Addvalue(bulletname + ": ",2,-1);
+        Bulletvector.at(Bulletpointerpos)->addValue(bulletname + ": ",2,-1);
         switch (Bulletpointerpos)
         {
             case 0:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Cbullets);
-                Cbullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::cBullets);
+                cBullets();
                 break;
             }
             case 1:
             {
-                Dbullets();
+                dBullets();
                 break;
             }
             case 2:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Fbullets);
-                Fbullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::fBullets);
+                fBullets();
                 break;
             }
             case 3:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Gbullets);
-                Gbullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::gBullets);
+                gBullets();
                 break;
             }
             case 4:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Hbullets);
-                Hbullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::hBullets);
+                hBullets();
                 break;
             }
             case 5:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Ibullets);
-                Ibullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::iBullets);
+                iBullets();
                 break;
             }
             case 6:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Lbullets);
-                Lbullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::lBullets);
+                lBullets();
                 break;
             }
             case 7:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Rbullets);
-                Rbullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::rBullets);
+                rBullets();
                 break;
             }
             case 8:
             {
-                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Sbullets);
-                Sbullets();
+                connect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::sBullets);
+                sBullets();
                 break;
             }
         }
@@ -700,12 +700,12 @@ void HitBricksScene::Firebullets()
 
 /*  fire bullet;*/
 
-void HitBricksScene::Cbullets()
+void HitBricksScene::cBullets()
 {
     Bulletready = Bulletready - 1;
     int time = QDateTime::currentDateTime().toString("zzz").toInt();
     QPoint point(Skatevector.at(0)->pos().x() + 45,Skatevector.at(0)->pos().y() - 20);
-    Balltempvector.append(Generateball(point,sin(time),-0.05));
+    Balltempvector.append(generateBall(point,sin(time),-0.05));
     if(Bulletready == 0)
     {
         QPointF point(sceneRect().x() + sceneRect().width() / 2,sceneRect().y() + sceneRect().height() / 2);
@@ -721,9 +721,9 @@ void HitBricksScene::Cbullets()
         }
         for(int j = 0;j < Balltempvector.count();j++)
         {
-            Balltempvector.at(j)->Movetotarget(point);
+            Balltempvector.at(j)->moveToTarget(point);
         }
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Cbullets);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::cBullets);
         Balltempvector.clear();
         Bulletready = 10;
     }
@@ -731,39 +731,39 @@ void HitBricksScene::Cbullets()
 
 /*  c class bullet;*/
 
-void HitBricksScene::Dbullets()
+void HitBricksScene::dBullets()
 {
     double distancex = sceneRect().width()  / Bulletready;
     for(int i = 0;i < Bulletready - 1;i++)
     {
         QPointF point(distancex + sceneRect().x() + distancex * i - 10,sceneRect().height() * 0.85);
-        Generateball(point,0.8 - 0.2 * i,-1);
+        generateBall(point,0.8 - 0.2 * i,-1);
     }
 }
 
 /*  d class bullet;*/
 
-void HitBricksScene::Fbullets()
+void HitBricksScene::fBullets()
 {
     Bulletready = Bulletready - 1;
     double distancex = sceneRect().width()  / 10;
     QPointF point(sceneRect().x() + distancex * Bulletready - 10,sceneRect().height() * 0.85);
-    Generateball(point,0,-1);
+    generateBall(point,0,-1);
     if(Bulletready == 1)
     {
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Fbullets);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::fBullets);
         Bulletready = 10;
     }
 }
 /*  f class bullet;*/
 
-void HitBricksScene::Gbullets()
+void HitBricksScene::gBullets()
 {
     Bulletready = Bulletready - 1;
     if(Bulletready == 9)
     {
         QPoint point(Skatevector.at(0)->pos().x() + 45,Skatevector.at(0)->pos().y() - 20);
-        Balltempvector.append(Generateball(point,0,-1));
+        Balltempvector.append(generateBall(point,0,-1));
     }
     else if(Bulletready == 0 && !Balltempvector.isEmpty())
     {
@@ -771,9 +771,9 @@ void HitBricksScene::Gbullets()
         int time = QDateTime::currentDateTime().toString("zzz").toInt();
         for(int i = 0;i < 10;i++)
         {
-            Generateball(Balltempvector.at(0)->pos(),sin(i + time),-abs(sin(i - time)));
+            generateBall(Balltempvector.at(0)->pos(),sin(i + time),-abs(sin(i - time)));
         }
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Gbullets);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::gBullets);
         Bulletready = 10;
         Balltempvector.clear();
     }
@@ -781,21 +781,21 @@ void HitBricksScene::Gbullets()
 
 /*  g class bullet;*/
 
-void HitBricksScene::Hbullets()
+void HitBricksScene::hBullets()
 {
     QPoint point(Skatevector.at(0)->pos().x() + 45,Skatevector.at(0)->pos().y() - 20);
-    Generateball(point,0,-1);
+    generateBall(point,0,-1);
     Bulletready = Bulletready - 1;
     if(Bulletready == 0)
     {
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Hbullets);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::hBullets);
         Bulletready = 10;
     }
 }
 
 /*  h class bullet;*/
 
-void HitBricksScene::Ibullets()
+void HitBricksScene::iBullets()
 {
     Bulletready = Bulletready - 1;
     if(Bulletready == 9)
@@ -805,11 +805,11 @@ void HitBricksScene::Ibullets()
         {
             QPoint pointa(Skatevector.at(0)->pos().x() + 20 * i,Skatevector.at(0)->pos().y() - 40 - 20 * (sin(temp * i)));
             QPoint pointb(Skatevector.at(0)->pos().x() + 20 * i,Skatevector.at(0)->pos().y() - 20 - 20 * (sin(temp * i)));
-            Balltempvector.append(Generateball(pointa,-0.1 + 0.04 * i,-0.1));
-            Balltempvector.append(Generateball(pointb,-0.1 + 0.04 * i,-0.1));
+            Balltempvector.append(generateBall(pointa,-0.1 + 0.04 * i,-0.1));
+            Balltempvector.append(generateBall(pointb,-0.1 + 0.04 * i,-0.1));
         }
-        Balltempvector.append(Generateball({Skatevector.at(0)->pos().x() + 20 * 5,Skatevector.at(0)->pos().y() - 40 - 20 * (sin(temp * 5))},0.1,-0.1));
-        Balltempvector.append(Generateball({Skatevector.at(0)->pos().x() + 20 * 5,Skatevector.at(0)->pos().y() - 20 - 20 * (sin(temp * 5))},0.1,-0.1));
+        Balltempvector.append(generateBall({Skatevector.at(0)->pos().x() + 20 * 5,Skatevector.at(0)->pos().y() - 40 - 20 * (sin(temp * 5))},0.1,-0.1));
+        Balltempvector.append(generateBall({Skatevector.at(0)->pos().x() + 20 * 5,Skatevector.at(0)->pos().y() - 20 - 20 * (sin(temp * 5))},0.1,-0.1));
     }
     else if(Bulletready == 0)
     {
@@ -817,7 +817,7 @@ void HitBricksScene::Ibullets()
         {
             Balltempvector.at(i)->Speedy[0] = -1;
         }
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Ibullets);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::iBullets);
         Balltempvector.clear();
         Bulletready = 10;
     }
@@ -825,22 +825,22 @@ void HitBricksScene::Ibullets()
 
 /*  i class bullet;*/
 
-void HitBricksScene::Lbullets()
+void HitBricksScene::lBullets()
 {
     Bulletready = Bulletready - 1;
     if(Bulletready == 9)
     {
         QPoint point(Skatevector.at(0)->pos().x() + 45,Skatevector.at(0)->pos().y() - 20);
-        Balltempvector.append(Generateball(point,0,-0.7));
+        Balltempvector.append(generateBall(point,0,-0.7));
     }
     else if(Bulletready < 9 && Bulletready > 0)
     {
         int time = QDateTime::currentDateTime().toString("zzz").toInt();
-        Generateball(Balltempvector.at(0)->pos(),sin(time),-abs(sin(time)));
+        generateBall(Balltempvector.at(0)->pos(),sin(time),-abs(sin(time)));
     }
     else
     {
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Lbullets);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::lBullets);
         Balltempvector.clear();
         Bulletready = 10;
     }
@@ -848,14 +848,14 @@ void HitBricksScene::Lbullets()
 
 /*  l class bullet;*/
 
-void HitBricksScene::Rbullets()
+void HitBricksScene::rBullets()
 {
     Bulletready = Bulletready - 1;
     if(Bulletready == 9)
     {
         QPoint point(Skatevector.at(0)->pos().x() + 45,Skatevector.at(0)->pos().y() - 20);
-        Balltempvector.append(Generateball(point,0.5,0));
-        Balltempvector.append(Generateball(point,-0.5,0));
+        Balltempvector.append(generateBall(point,0.5,0));
+        Balltempvector.append(generateBall(point,-0.5,0));
     }
     else if(Bulletready == 0 && !Balltempvector.isEmpty())
     {
@@ -864,10 +864,10 @@ void HitBricksScene::Rbullets()
         int time = QDateTime::currentDateTime().toString("zzz").toInt();
         for(int i = 0;i < 6;i++)
         {
-            Generateball(Balltempvector.at(0)->pos(),sin(i + time),-abs(sin(i - time)));
-            Generateball(Balltempvector.at(1)->pos(),sin(i + time),-abs(sin(i - time)));
+            generateBall(Balltempvector.at(0)->pos(),sin(i + time),-abs(sin(i - time)));
+            generateBall(Balltempvector.at(1)->pos(),sin(i + time),-abs(sin(i - time)));
         }
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Rbullets);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::rBullets);
         Bulletready = 10;
         Balltempvector.clear();
     }
@@ -875,7 +875,7 @@ void HitBricksScene::Rbullets()
 
 /*  r class bullet;*/
 
-void HitBricksScene::Sbullets()
+void HitBricksScene::sBullets()
 {
     Bulletready = Bulletready - 1;
     QPoint point(Skatevector.at(0)->pos().x() + 45,Skatevector.at(0)->pos().y() - 20);
@@ -884,7 +884,7 @@ void HitBricksScene::Sbullets()
         int time = QDateTime::currentDateTime().toString("zzz").toInt();
         for(int i = 0;i < 5;i++)
         {
-            Generateball(point,sin(i + time),-abs(sin(i - time)));
+            generateBall(point,sin(i + time),-abs(sin(i - time)));
         }
     }
     else if(Bulletready == 7)
@@ -892,13 +892,13 @@ void HitBricksScene::Sbullets()
         int time = QDateTime::currentDateTime().toString("zzz").toInt();
         for(int i = 0;i < 3;i++)
         {
-            Generateball(point,sin(i + time),-abs(sin(i - time)));
+            generateBall(point,sin(i + time),-abs(sin(i - time)));
         }
     }
     else if(Bulletready == 5)
     {
-        Generateball(point,0,-1);
-        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::Sbullets);
+        generateBall(point,0,-1);
+        disconnect(Itemtimer,&QTimer::timeout,this,&HitBricksScene::sBullets);
         Bulletready = 10;
     }
 }

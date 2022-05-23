@@ -7,7 +7,6 @@ start _geminiapi_.bat
 start _relayapi_.bat
 start _ledanalyserapi_.bat
 start _litepointiqgigifapi_.bat
-start _resuperapi_.bat
 start _richerapi_.bat
 start _scannerapi_.bat
 start _serialportapi_.bat

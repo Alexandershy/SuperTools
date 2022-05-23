@@ -5,9 +5,9 @@ AudioFormatDialog::AudioFormatDialog(QWidget *parent)
 {
     setWindowModality(Qt::ApplicationModal);
     setAttribute(Qt::WA_DeleteOnClose);
-    Settitle("convert dialog");
-    Disablemaxisize();
-    Init();
+    setTitle("convert dialog");
+    disableMaxisize();
+    init();
 }
 
 AudioFormatDialog::~AudioFormatDialog()
@@ -15,37 +15,37 @@ AudioFormatDialog::~AudioFormatDialog()
 
 }
 
-void AudioFormatDialog::Init()
+void AudioFormatDialog::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void AudioFormatDialog::Objectinit()
+void AudioFormatDialog::objectInit()
 {
-    Plugin = new AudioFormatBox(this);
+    Plugin = new AudioFormatDialogui(this);
     Pluginlayout->addWidget(Plugin);
-    connect(Plugin->ui->pushButton,     &QPushButton::clicked,      this,&AudioFormatDialog::Convert);
-    connect(Plugin->ui->comboBox,       &QComboBox::textActivated,  this,&AudioFormatDialog::Convertmode);
+    connect(Plugin->ui->pushButton,     &QPushButton::clicked,      this,&AudioFormatDialog::convert);
+    connect(Plugin->ui->comboBox,       &QComboBox::textActivated,  this,&AudioFormatDialog::convertMode);
 }
 
-void AudioFormatDialog::Convert()
+void AudioFormatDialog::convert()
 {
     if(Plugin->ui->checkBox->isChecked())
     {
-        emit Signalab(0);
+        emit signalAb(0);
     }
     else
     {
-        emit Signalab(1);
+        emit signalAb(1);
     }
     deleteLater();
 }
 
 /*  emit signal convert mpeg file;*/
 
-void AudioFormatDialog::Convertmode()
+void AudioFormatDialog::convertMode()
 {
-    emit Signalaa(Plugin->ui->comboBox->currentIndex());
+    emit signalAa(Plugin->ui->comboBox->currentIndex());
 }
 
 /*  emit convert mode id;*/

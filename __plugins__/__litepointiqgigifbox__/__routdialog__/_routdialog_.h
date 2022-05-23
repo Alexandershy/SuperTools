@@ -1,7 +1,7 @@
 #ifndef _ROUTDIALOG__H
 #define _ROUTDIALOG__H
 
-#include "_routbox_.h"
+#include "_routdialogui_.h"
 #include "__superwindow__/_superwindow_.h"
 
 class RoutDialog : public SuperWindow
@@ -10,7 +10,7 @@ class RoutDialog : public SuperWindow
 
 public:
 
-    RoutBox *Plugin = nullptr;
+    RoutDialogui *Plugin = nullptr;
 
 public:
 
@@ -21,9 +21,9 @@ public:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 };
 

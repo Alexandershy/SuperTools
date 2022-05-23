@@ -5,11 +5,11 @@ SuperFileDialog::SuperFileDialog(QWidget *parent,QString folderpath,QStringList 
 {
     Foldersourcepath = folderpath;
     Filterlist = filterlist;
-    Disablemaxisize();
+    disableMaxisize();
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle("SuperFileDialog");
-    Init();
+    setTitle("SuperFileDialog");
+    init();
 }
 
 SuperFileDialog::~SuperFileDialog()
@@ -17,18 +17,18 @@ SuperFileDialog::~SuperFileDialog()
     delete Dir;
 }
 
-void SuperFileDialog::Init()
+void SuperFileDialog::init()
 {
-    Objectinit();
-    Dirinit();
-    Systemmodelinit();
-    Menuinit();
-    Iconinit();
-    Locationpathinit();
-    Quickaccessinit();
+    objectInit();
+    dirInit();
+    systemModelInit();
+    menuInit();
+    iconInit();
+    locationPathInit();
+    quickAccessInit();
 }
 
-void SuperFileDialog::Objectinit()
+void SuperFileDialog::objectInit()
 {
     Plugin = new SuperFileDialogui(this);
     Pluginlayout->addWidget(Plugin);
@@ -40,26 +40,26 @@ void SuperFileDialog::Objectinit()
     Plugin->ui->tableWidget->verticalHeader()->setHidden(true);
     Plugin->ui->comboBox_3->addItems(Filterlist);
     Plugin->ui->lineEdit->setFocus();
-    connect(Plugin->ui->treeView,       &QTreeView::clicked,                this,&SuperFileDialog::Transfermodelindex);
-    connect(Plugin->ui->treeWidget,     &QTreeWidget::clicked,              this,&SuperFileDialog::Refreshquickaccessfolder);
-    connect(Plugin->ui->treeWidget,     &QTreeWidget::pressed,              this,&SuperFileDialog::Exectreemenu);
-    connect(Plugin->ui->comboBox,       &QComboBox::textActivated,          this,&SuperFileDialog::Refreshfolder);
-    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::Getfilelist);
-    connect(Plugin->ui->tableWidget,    &QTableWidget::itemPressed,         this,&SuperFileDialog::Execfilemenu);
-    connect(Plugin->ui->tableWidget,    &QTableWidget::itemSelectionChanged,this,&SuperFileDialog::Enableselectfilebutton);
-    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::Getfilelist);
-    connect(Plugin->ui->pushButton,     &QPushButton::clicked,              this,&SuperFileDialog::Checkfolder);
+    connect(Plugin->ui->treeView,       &QTreeView::clicked,                this,&SuperFileDialog::transferModelIndex);
+    connect(Plugin->ui->treeWidget,     &QTreeWidget::clicked,              this,&SuperFileDialog::refreshQuickAccessFolder);
+    connect(Plugin->ui->treeWidget,     &QTreeWidget::pressed,              this,&SuperFileDialog::execTreeMenu);
+    connect(Plugin->ui->comboBox,       &QComboBox::textActivated,          this,&SuperFileDialog::refreshFolder);
+    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::getFileList);
+    connect(Plugin->ui->tableWidget,    &QTableWidget::itemPressed,         this,&SuperFileDialog::execFileMenu);
+    connect(Plugin->ui->tableWidget,    &QTableWidget::itemSelectionChanged,this,&SuperFileDialog::enableSelectFileButton);
+    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::getFileList);
+    connect(Plugin->ui->pushButton,     &QPushButton::clicked,              this,&SuperFileDialog::checkFolder);
     connect(Plugin->ui->pushButton_3,   &QPushButton::clicked,              this,&SuperFileDialog::close);
-    connect(Plugin->ui->pushButton_4,   &QPushButton::clicked,              this,&SuperFileDialog::Cdupfolder);
-    connect(Plugin->ui->pushButton_5,   &QPushButton::clicked,              this,&SuperFileDialog::Creatnewfolder);
-    connect(Plugin->ui->pushButton_6,   &QPushButton::clicked,              this,&SuperFileDialog::Addtoquickaccess);
-    connect(Plugin->ui->pushButton_7,   &QPushButton::clicked,              this,&SuperFileDialog::Changefileiconmode);
-    connect(Plugin->ui->lineEdit,       &QLineEdit::textChanged,            this,&SuperFileDialog::Searchfile);
+    connect(Plugin->ui->pushButton_4,   &QPushButton::clicked,              this,&SuperFileDialog::cdUpFolder);
+    connect(Plugin->ui->pushButton_5,   &QPushButton::clicked,              this,&SuperFileDialog::creatNewFolder);
+    connect(Plugin->ui->pushButton_6,   &QPushButton::clicked,              this,&SuperFileDialog::addToQuickAccess);
+    connect(Plugin->ui->pushButton_7,   &QPushButton::clicked,              this,&SuperFileDialog::changeFileIconMode);
+    connect(Plugin->ui->lineEdit,       &QLineEdit::textChanged,            this,&SuperFileDialog::searchFile);
 }
 
 /*  creat object and connect its slot;*/
 
-void SuperFileDialog::Dirinit()
+void SuperFileDialog::dirInit()
 {
     Dir = new QDir(Foldersourcepath);
     if(!Dir->exists())
@@ -70,13 +70,13 @@ void SuperFileDialog::Dirinit()
 
 /*  check parameter correctly;*/
 
-void SuperFileDialog::Systemmodelinit()
+void SuperFileDialog::systemModelInit()
 {
     Filesystemmodel = new SuperFileSystemModel(this);
     Plugin->ui->treeView->setModel(Filesystemmodel);
     Plugin->ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     Plugin->ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    Expandmodelfolder(Dir);
+    expandModelFolder(Dir);
     for(int i = 1;i < Filesystemmodel->columnCount();i++)
     {
         Plugin->ui->treeView->hideColumn(i);
@@ -85,21 +85,21 @@ void SuperFileDialog::Systemmodelinit()
 
 /*  tree system model init;*/
 
-void SuperFileDialog::Menuinit()
+void SuperFileDialog::menuInit()
 {
     Filemenu = new QMenu(this);
     Selectfile = new QAction(Filemenu);
     Openfile = new QAction(Filemenu);
     Openpath = new QAction(Filemenu);
     Deletefile = new QAction(Filemenu);
-    connect(Selectfile, &QAction::triggered,this,&SuperFileDialog::Getfilelist);
-    connect(Openfile,   &QAction::triggered,this,&SuperFileDialog::Openfiles);
-    connect(Openpath,   &QAction::triggered,this,&SuperFileDialog::Openpaths);
-    connect(Deletefile, &QAction::triggered,this,&SuperFileDialog::Delete);
-    Core->Addaction(Filemenu,Selectfile,"select file","Selectfile");
-    Core->Addaction(Filemenu,Openfile,"open file","Openfile");
-    Core->Addaction(Filemenu,Openpath,"open path","Openpath");
-    Core->Addaction(Filemenu,Deletefile,"delete file","Deletefile");
+    connect(Selectfile, &QAction::triggered,this,&SuperFileDialog::getFileList);
+    connect(Openfile,   &QAction::triggered,this,&SuperFileDialog::openFiles);
+    connect(Openpath,   &QAction::triggered,this,&SuperFileDialog::openPaths);
+    connect(Deletefile, &QAction::triggered,this,&SuperFileDialog::deleteitem);
+    Core->addAction(Filemenu,Selectfile,"select file","Selectfile");
+    Core->addAction(Filemenu,Openfile,"open file","Openfile");
+    Core->addAction(Filemenu,Openpath,"open path","Openpath");
+    Core->addAction(Filemenu,Deletefile,"delete file","Deletefile");
     Selectfile->setIcon(QIcon(":/__supericon__/_open_.svg"));
     Openfile->setIcon(QIcon(":/__supericon__/_edit_.svg"));
     Openpath->setIcon(QIcon(":/__supericon__/_openpath_.svg"));
@@ -107,17 +107,17 @@ void SuperFileDialog::Menuinit()
     Treemenu = new QMenu(this);
     Openfolder = new QAction(Treemenu);
     Unpin = new QAction(Treemenu);
-    connect(Openfolder, &QAction::triggered,this,&SuperFileDialog::Refreshquickaccessfolder);
-    connect(Unpin,      &QAction::triggered,this,&SuperFileDialog::Deletequickaccess);
-    Core->Addaction(Treemenu,Openfolder,"Open folder","Openfolder");
-    Core->Addaction(Treemenu,Unpin,"Unpin folder","Unpinfolder");
+    connect(Openfolder, &QAction::triggered,this,&SuperFileDialog::refreshQuickAccessFolder);
+    connect(Unpin,      &QAction::triggered,this,&SuperFileDialog::deleteQuickAccess);
+    Core->addAction(Treemenu,Openfolder,"Open folder","Openfolder");
+    Core->addAction(Treemenu,Unpin,"Unpin folder","Unpinfolder");
     Openfolder->setIcon(QIcon(":/__supericon__/_open_.svg"));
     Unpin->setIcon(QIcon(":/__supericon__/_unlock_.svg"));
 }
 
 /*  menu init;*/
 
-void SuperFileDialog::Iconinit()
+void SuperFileDialog::iconInit()
 {
     Plugin->ui->pushButton->setIcon(QIcon(":/__supericon__/_reset_.svg"));
     Plugin->ui->pushButton_4->setIcon(QIcon(":/__supericon__/_backward_.svg"));
@@ -125,14 +125,14 @@ void SuperFileDialog::Iconinit()
     Plugin->ui->pushButton_6->setIcon(QIcon(":/__supericon__/_lock_.svg"));
     Plugin->ui->pushButton_7->setIcon(QIcon(":/__supericon__/_picture_.svg"));
     Plugin->ui->comboBox->addItem(Dir->absolutePath());
-    Refreshfolder(Dir->absolutePath());
+    refreshFolder(Dir->absolutePath());
 }
 
 /*  set widget icon;*/
 
-void SuperFileDialog::Locationpathinit()
+void SuperFileDialog::locationPathInit()
 {
-    QStringList locationpathlist = Core->Readonlyfile(Locationpath).split("<split>");
+    QStringList locationpathlist = Core->readOnlyFile(Locationpath).split("<split>");
     for(int i = 0;i < locationpathlist.count();i++)
     {
         QFileInfo fileinfo(locationpathlist.at(i));
@@ -150,21 +150,21 @@ void SuperFileDialog::Locationpathinit()
 
 /*  add location path;*/
 
-void SuperFileDialog::Quickaccessinit()
+void SuperFileDialog::quickAccessInit()
 {
-    Treewidgetadditemapi(QStandardPaths::DesktopLocation);
-    Treewidgetadditemapi(QStandardPaths::DocumentsLocation);
-    Treewidgetadditemapi(QStandardPaths::MusicLocation);
-    Treewidgetadditemapi(QStandardPaths::PicturesLocation);
-    Treewidgetadditemapi(QStandardPaths::DownloadLocation);
-    Treewidgetadditemapi(QStandardPaths::MoviesLocation);
+    treeWidgetAddItemApi(QStandardPaths::DesktopLocation);
+    treeWidgetAddItemApi(QStandardPaths::DocumentsLocation);
+    treeWidgetAddItemApi(QStandardPaths::MusicLocation);
+    treeWidgetAddItemApi(QStandardPaths::PicturesLocation);
+    treeWidgetAddItemApi(QStandardPaths::DownloadLocation);
+    treeWidgetAddItemApi(QStandardPaths::MoviesLocation);
 }
 
 /*  add quick access path;*/
 
-void SuperFileDialog::Treewidgetadditemapi(QStandardPaths::StandardLocation path)
+void SuperFileDialog::treeWidgetAddItemApi(QStandardPaths::StandardLocation path)
 {
-    QStringList locationpathlist = Core->Readonlyfile(Locationpath).split("<split>");
+    QStringList locationpathlist = Core->readOnlyFile(Locationpath).split("<split>");
     QStringList locationpath = QStandardPaths::standardLocations(path);
     for(int i = 0;i < locationpath.count();i++)
     {
@@ -176,41 +176,41 @@ void SuperFileDialog::Treewidgetadditemapi(QStandardPaths::StandardLocation path
             item->setText(1,fileinfo.absoluteFilePath());
             item->setIcon(0,Iconprovider.icon(fileinfo));
             Plugin->ui->treeWidget->addTopLevelItem(item);
-            Core->Appendfile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
+            Core->appendFile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
         }
     }
 }
 
 /*  add path api;*/
 
-void SuperFileDialog::Transfermodelindex(QModelIndex index)
+void SuperFileDialog::transferModelIndex(QModelIndex index)
 {
     QString filepath = Filesystemmodel->filePath(index);
     Plugin->ui->comboBox->insertItem(0,filepath);
     Plugin->ui->comboBox->setCurrentIndex(0);
-    Refreshfolder(filepath);
+    refreshFolder(filepath);
 }
 
 /*  transfer model index to string path;*/
 
-void SuperFileDialog::Checkfolder()
+void SuperFileDialog::checkFolder()
 {
-    Refreshfolder(Plugin->ui->comboBox->currentText());
+    refreshFolder(Plugin->ui->comboBox->currentText());
 }
 
 /*  refresh folder no parameter;*/
 
-void SuperFileDialog::Refreshquickaccessfolder()
+void SuperFileDialog::refreshQuickAccessFolder()
 {
     QString pathtemp = Plugin->ui->treeWidget->currentItem()->text(1);
     Plugin->ui->comboBox->insertItem(0,pathtemp);
     Plugin->ui->comboBox->setCurrentIndex(0);
-    Refreshfolder(pathtemp);
+    refreshFolder(pathtemp);
 }
 
 /*  refresh quick access folder;*/
 
-void SuperFileDialog::Refreshfolder(QString folderpath)
+void SuperFileDialog::refreshFolder(QString folderpath)
 {
     Dir->setPath(folderpath);
     if(Dir->exists())
@@ -221,17 +221,17 @@ void SuperFileDialog::Refreshfolder(QString folderpath)
         Allfileinfolist.append(Folderinfolist);
         Allfileinfolist.append(Fileinfolist);
         Rowcounts = Folderinfolist.count() + Fileinfolist.count();
-        Core->Settablewidgetitem(Rowcounts,Columncounts,Fileiconmode,Plugin->ui->tableWidget);
+        Core->setTableWidgetItem(Rowcounts,Columncounts,Fileiconmode,Plugin->ui->tableWidget);
         switch (Fileiconmode)
         {
             case 32:
             {
-                Fileinfomode();
+                fileInfoMode();
                 break;
             }
             case 48:
             {
-                Filepicturemode();
+                filePictureMode();
                 break;
             }
         }
@@ -240,13 +240,13 @@ void SuperFileDialog::Refreshfolder(QString folderpath)
     {
         Dir->setPath(QDir::currentPath());
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,folderpath + " is not exist;");
-        notedialog->Messageinit();
+        notedialog->messageInit();
     }
 }
 
 /*  refresh current folders' files;*/
 
-void SuperFileDialog::Fileinfomode()
+void SuperFileDialog::fileInfoMode()
 {
     Plugin->ui->tableWidget->setHorizontalHeaderLabels(Fileinfoheader);
     for(int i = 0;i < Folderinfolist.count();i++)
@@ -268,7 +268,7 @@ void SuperFileDialog::Fileinfomode()
 
 /*  add file as info mode;*/
 
-void SuperFileDialog::Filepicturemode()
+void SuperFileDialog::filePictureMode()
 {
     Plugin->ui->tableWidget->setHorizontalHeaderLabels(Filepictureheader);
     int versize = Plugin->ui->tableWidget->verticalHeader()->minimumSectionSize();
@@ -307,21 +307,21 @@ void SuperFileDialog::Filepicturemode()
 
 /*  add file as picture mode;*/
 
-void SuperFileDialog::Setsinglefile()
+void SuperFileDialog::setSingleFile()
 {
     Dialogmode = 1;
     Plugin->ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::Getfilelist);
-    disconnect(Plugin->ui->pushButton_2,&QPushButton::clicked,              this,&SuperFileDialog::Getfilelist);
-    disconnect(Selectfile,              &QAction::triggered,                this,&SuperFileDialog::Getfilelist);
-    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::Getfile);
-    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::Getfile);
-    connect(Selectfile,                 &QAction::triggered,                this,&SuperFileDialog::Getfile);
+    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::getFileList);
+    disconnect(Plugin->ui->pushButton_2,&QPushButton::clicked,              this,&SuperFileDialog::getFileList);
+    disconnect(Selectfile,              &QAction::triggered,                this,&SuperFileDialog::getFileList);
+    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::getFile);
+    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::getFile);
+    connect(Selectfile,                 &QAction::triggered,                this,&SuperFileDialog::getFile);
 }
 
 /*  set table select mode as single;*/
 
-void SuperFileDialog::Setsavefile()
+void SuperFileDialog::setSaveFile()
 {
     Dialogmode = 2;
     Plugin->ui->comboBox_2->setEnabled(true);
@@ -329,110 +329,110 @@ void SuperFileDialog::Setsavefile()
     Plugin->ui->comboBox_2->setFocus();
     Plugin->ui->pushButton_2->setText("Save");
     Plugin->ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemSelectionChanged,this,&SuperFileDialog::Enableselectfilebutton);
-    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::Getfilelist);
-    disconnect(Plugin->ui->pushButton_2,&QPushButton::clicked,              this,&SuperFileDialog::Getfilelist);
-    disconnect(Selectfile,              &QAction::triggered,                this,&SuperFileDialog::Getfilelist);
-    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::Getfilesavemode);
-    connect(Selectfile,                 &QAction::triggered,                this,&SuperFileDialog::Getfilesavemode);
-    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::Savefile);
-    connect(Plugin->ui->comboBox_2,     &QComboBox::currentTextChanged,     this,&SuperFileDialog::Enablesavefilebutton);
+    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemSelectionChanged,this,&SuperFileDialog::enableSelectFileButton);
+    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::getFileList);
+    disconnect(Plugin->ui->pushButton_2,&QPushButton::clicked,              this,&SuperFileDialog::getFileList);
+    disconnect(Selectfile,              &QAction::triggered,                this,&SuperFileDialog::getFileList);
+    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::getFileSaveMode);
+    connect(Selectfile,                 &QAction::triggered,                this,&SuperFileDialog::getFileSaveMode);
+    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::saveFile);
+    connect(Plugin->ui->comboBox_2,     &QComboBox::currentTextChanged,     this,&SuperFileDialog::enableSaveFileButton);
 }
 
 /*  set save file mode;*/
 
-void SuperFileDialog::Setsavefolder()
+void SuperFileDialog::setSaveFolder()
 {
     Dialogmode = 3;
     Plugin->ui->pushButton_2->setEnabled(true);
     Plugin->ui->pushButton_2->setText("Current Folder");
     Plugin->ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemSelectionChanged,this,&SuperFileDialog::Enableselectfilebutton);
-    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::Getfilelist);
-    disconnect(Plugin->ui->pushButton_2,&QPushButton::clicked,              this,&SuperFileDialog::Getfilelist);
-    disconnect(Selectfile,              &QAction::triggered,                this,&SuperFileDialog::Getfilelist);
-    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::Getfoldersavemode);
-    connect(Selectfile,                 &QAction::triggered,                this,&SuperFileDialog::Getfoldersavemode);
-    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::Savefolder);
-    connect(Plugin->ui->comboBox_2,     &QComboBox::currentTextChanged,     this,&SuperFileDialog::Enablesavefilebutton);
+    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemSelectionChanged,this,&SuperFileDialog::enableSelectFileButton);
+    disconnect(Plugin->ui->tableWidget, &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::getFileList);
+    disconnect(Plugin->ui->pushButton_2,&QPushButton::clicked,              this,&SuperFileDialog::getFileList);
+    disconnect(Selectfile,              &QAction::triggered,                this,&SuperFileDialog::getFileList);
+    connect(Plugin->ui->tableWidget,    &QTableWidget::itemDoubleClicked,   this,&SuperFileDialog::getFolderSaveMode);
+    connect(Selectfile,                 &QAction::triggered,                this,&SuperFileDialog::getFolderSaveMode);
+    connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,              this,&SuperFileDialog::saveFolder);
+    connect(Plugin->ui->comboBox_2,     &QComboBox::currentTextChanged,     this,&SuperFileDialog::enableSaveFileButton);
 }
 
 /*  set save folder mode;*/
 
-void SuperFileDialog::Getfile()
+void SuperFileDialog::getFile()
 {
     QList<QTableWidgetItem*> itemlist = Plugin->ui->tableWidget->selectedItems();
     int currentrow = itemlist.at(0)->row();
     if(Allfileinfolist.at(currentrow).isFile())
     {
         QString filetemp = Allfileinfolist.at(currentrow).absoluteFilePath();
-        emit Signalfb(filetemp);
+        emit signalFb(filetemp);
     }
     else
     {
         Plugin->ui->comboBox->insertItem(0,Allfileinfolist.at(currentrow).absoluteFilePath());
         Plugin->ui->comboBox->setCurrentIndex(0);
-        Refreshfolder(Plugin->ui->comboBox->currentText());
+        refreshFolder(Plugin->ui->comboBox->currentText());
     }
 }
 
 /*  get single file;*/
 
-void SuperFileDialog::Getfilesavemode()
+void SuperFileDialog::getFileSaveMode()
 {
     int currentrow = Plugin->ui->tableWidget->currentItem()->row();
     if(Allfileinfolist.at(currentrow).isFile())
     {
-        Savefile();
+        saveFile();
     }
     else
     {
         Plugin->ui->comboBox->insertItem(0,Allfileinfolist.at(currentrow).absoluteFilePath());
         Plugin->ui->comboBox->setCurrentIndex(0);
-        Refreshfolder(Plugin->ui->comboBox->currentText());
+        refreshFolder(Plugin->ui->comboBox->currentText());
     }
 }
 
 /*  get single file;*/
 
-void SuperFileDialog::Savefile()
+void SuperFileDialog::saveFile()
 {
     QString filesuffixtemp = Plugin->ui->comboBox_3->currentText().split("*").at(1);
     QString filenametemp = Plugin->ui->comboBox_2->currentText().split(filesuffixtemp).at(0);
-    QString file = Core->Fixfilepath(Dir->absolutePath()) + filenametemp + filesuffixtemp;
-    if(Checkrepeatfile(filenametemp,filesuffixtemp))
+    QString file = Core->fixFilePath(Dir->absolutePath()) + filenametemp + filesuffixtemp;
+    if(checkRepeatFile(filenametemp,filesuffixtemp))
     {
-        emit Signalfb(file);
+        emit signalFb(file);
     }
 }
 
 /*  save single file;*/
 
-void SuperFileDialog::Getfoldersavemode()
+void SuperFileDialog::getFolderSaveMode()
 {
     int currentrow = Plugin->ui->tableWidget->currentItem()->row();
     if(Allfileinfolist.at(currentrow).isFile())
     {
-        Savefolder();
+        saveFolder();
     }
     else
     {
         Plugin->ui->comboBox->insertItem(0,Allfileinfolist.at(currentrow).absoluteFilePath());
         Plugin->ui->comboBox->setCurrentIndex(0);
-        Refreshfolder(Plugin->ui->comboBox->currentText());
+        refreshFolder(Plugin->ui->comboBox->currentText());
     }
 }
 
 /*  get single folder;*/
 
-void SuperFileDialog::Savefolder()
+void SuperFileDialog::saveFolder()
 {
-    emit Signalfb(Core->Fixfilepath(Dir->absolutePath()));
+    emit signalFb(Core->fixFilePath(Dir->absolutePath()));
 }
 
 /*  save single folder;*/
 
-bool SuperFileDialog::Checkrepeatfile(QString filename,QString filesuffix)
+bool SuperFileDialog::checkRepeatFile(QString filename,QString filesuffix)
 {
     for(int i = 0;i < Allfileinfolist.count();i++)
     {
@@ -440,8 +440,8 @@ bool SuperFileDialog::Checkrepeatfile(QString filename,QString filesuffix)
         {
             Currentfileindex = i;
             SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"replace with " + filename + filesuffix + " ?");
-            connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileDialog::Replacefile);
-            notedialog->Messageinit();
+            connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileDialog::replaceFile);
+            notedialog->messageInit();
             return false;
         }
     }
@@ -450,7 +450,7 @@ bool SuperFileDialog::Checkrepeatfile(QString filename,QString filesuffix)
 
 /*  check current folder repeat files;*/
 
-void SuperFileDialog::Getfilelist()
+void SuperFileDialog::getFileList()
 {
     QStringList filestringlisttemp;
     QStringList folderstringlisttemp;
@@ -479,19 +479,19 @@ void SuperFileDialog::Getfilelist()
     }
     if(!fileinfolistemp.isEmpty())
     {
-        emit Signalfc(filestringlisttemp);
+        emit signalFc(filestringlisttemp);
     }
     else if(!folderstringlisttemp.isEmpty())
     {
         Plugin->ui->comboBox->insertItem(0,folderstringlisttemp.at(0));
         Plugin->ui->comboBox->setCurrentIndex(0);
-        Refreshfolder(Plugin->ui->comboBox->currentText());
+        refreshFolder(Plugin->ui->comboBox->currentText());
     }
 }
 
 /*  get file list;*/
 
-void SuperFileDialog::Enableselectfilebutton()
+void SuperFileDialog::enableSelectFileButton()
 {
     if(Plugin->ui->tableWidget->selectedItems().isEmpty())
     {
@@ -505,7 +505,7 @@ void SuperFileDialog::Enableselectfilebutton()
 
 /*  enable open button or not;*/
 
-void SuperFileDialog::Enablesavefilebutton()
+void SuperFileDialog::enableSaveFileButton()
 {
     if(Plugin->ui->comboBox_2->currentText().isEmpty())
     {
@@ -519,17 +519,17 @@ void SuperFileDialog::Enablesavefilebutton()
 
 /*  enable open button or not;*/
 
-void SuperFileDialog::Cdupfolder()
+void SuperFileDialog::cdUpFolder()
 {
     Dir->cdUp();
     Plugin->ui->comboBox->insertItem(0,Dir->absolutePath());
     Plugin->ui->comboBox->setCurrentIndex(0);
-    Refreshfolder(Dir->absolutePath());
+    refreshFolder(Dir->absolutePath());
 }
 
 /*  cd up folder;*/
 
-void SuperFileDialog::Execfilemenu()
+void SuperFileDialog::execFileMenu()
 {
     int currentrow = Plugin->ui->tableWidget->currentItem()->row();
     if(Allfileinfolist.at(currentrow).isFile())
@@ -558,7 +558,7 @@ void SuperFileDialog::Execfilemenu()
 
 /*  exec filemenu;*/
 
-void SuperFileDialog::Exectreemenu()
+void SuperFileDialog::execTreeMenu()
 {
     if(qApp->mouseButtons() == Qt::RightButton)
     {
@@ -568,7 +568,7 @@ void SuperFileDialog::Exectreemenu()
 
 /*  exec treemenu;*/
 
-void SuperFileDialog::Openfiles()
+void SuperFileDialog::openFiles()
 {
     int currentrow = Plugin->ui->tableWidget->currentItem()->row();
     QString filepath = Allfileinfolist.at(currentrow).absoluteFilePath();
@@ -577,39 +577,39 @@ void SuperFileDialog::Openfiles()
     if(!boola)
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"open " + filename + " failed;/nclick ok open path;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileDialog::Openpaths);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileDialog::openPaths);
+        notedialog->messageInit();
     }
 }
 
 /*  exec filemenu;*/
 
-void SuperFileDialog::Openpaths()
+void SuperFileDialog::openPaths()
 {
-    Core->Openpath(Dir->absolutePath());
+    Core->openPath(Dir->absolutePath());
 }
 
 /*  exec filemenu;*/
 
-void SuperFileDialog::Replacefile()
+void SuperFileDialog::replaceFile()
 {
     QString file = Allfileinfolist.at(Currentfileindex).absoluteFilePath();
     bool boola = QFile::remove(file);
     if(boola)
     {
-        emit Signalfb(file);
+        emit signalFb(file);
     }
     else
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"replace file failed;\nclick ok open path;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileDialog::Openpaths);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileDialog::openPaths);
+        notedialog->messageInit();
     }
 }
 
 /*  replace file;*/
 
-void SuperFileDialog::Creatnewfolder()
+void SuperFileDialog::creatNewFolder()
 {
     int i = 0;
     bool boola = Dir->mkdir("New folder");
@@ -618,12 +618,12 @@ void SuperFileDialog::Creatnewfolder()
         i = i + 1;
         boola = Dir->mkdir("New folder " + QString::number(i));
     }
-    Refreshfolder(Dir->absolutePath());
+    refreshFolder(Dir->absolutePath());
 }
 
 /*  creat new folder;*/
 
-void SuperFileDialog::Delete()
+void SuperFileDialog::deleteitem()
 {
     int currentrow = Plugin->ui->tableWidget->currentItem()->row();
     if(Allfileinfolist.at(currentrow).isFile())
@@ -631,13 +631,13 @@ void SuperFileDialog::Delete()
         bool boola = QFile::remove(Allfileinfolist.at(currentrow).absoluteFilePath());
         if(boola)
         {
-            Refreshfolder(Plugin->ui->comboBox->currentText());
+            refreshFolder(Plugin->ui->comboBox->currentText());
         }
         else
         {
             SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"delete file failed;\nclick ok open path;");
-            connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileDialog::Openpaths);
-            notedialog->Messageinit();
+            connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileDialog::openPaths);
+            notedialog->messageInit();
         }
     }
     else if(Allfileinfolist.at(currentrow).isDir())
@@ -646,20 +646,20 @@ void SuperFileDialog::Delete()
         bool boola = dir.removeRecursively();
         if(boola)
         {
-            Refreshfolder(Plugin->ui->comboBox->currentText());
+            refreshFolder(Plugin->ui->comboBox->currentText());
         }
         else
         {
             SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"delete folder failed;\nclick ok open path;");
-            connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileDialog::Openpaths);
-            notedialog->Messageinit();
+            connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileDialog::openPaths);
+            notedialog->messageInit();
         }
     }
 }
 
 /*  delete file or folder;*/
 
-void SuperFileDialog::Searchfile(QString text)
+void SuperFileDialog::searchFile(QString text)
 {
     if(text.isEmpty())
     {
@@ -694,10 +694,10 @@ void SuperFileDialog::Searchfile(QString text)
 
 /*  search file or folder;*/
 
-void SuperFileDialog::Addtoquickaccess()
+void SuperFileDialog::addToQuickAccess()
 {
     QFileInfo fileinfo(Dir->path());
-    QStringList locationpathlist = Core->Readonlyfile(Locationpath).split("<split>");
+    QStringList locationpathlist = Core->readOnlyFile(Locationpath).split("<split>");
     if(!locationpathlist.contains(fileinfo.absoluteFilePath()))
     {
         QTreeWidgetItem *item = new QTreeWidgetItem(Plugin->ui->treeWidget);
@@ -705,13 +705,13 @@ void SuperFileDialog::Addtoquickaccess()
         item->setText(1,fileinfo.absoluteFilePath());
         item->setIcon(0,Iconprovider.icon(fileinfo));
         Plugin->ui->treeWidget->addTopLevelItem(item);
-        Core->Appendfile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
+        Core->appendFile(Locationpath,fileinfo.absoluteFilePath() + "<split>");
     }
 }
 
 /*  add current folder path to quick access;*/
 
-void SuperFileDialog::Changefileiconmode()
+void SuperFileDialog::changeFileIconMode()
 {
     if(Fileiconmode == 32)
     {
@@ -723,37 +723,37 @@ void SuperFileDialog::Changefileiconmode()
         Fileiconmode = 32;
         Plugin->ui->pushButton_7->setIcon(QIcon(":/__supericon__/_picture_.svg"));
     }
-    Checkfolder();
+    checkFolder();
 }
 
 /*  change file icon mode;*/
 
-void SuperFileDialog::Deletequickaccess()
+void SuperFileDialog::deleteQuickAccess()
 {
     delete Plugin->ui->treeWidget->currentItem();
-    Core->Writeonlyfile(Locationpath,"");
+    Core->writeOnlyFile(Locationpath,"");
     for(int i = 0;i < Plugin->ui->treeWidget->topLevelItemCount();i++)
     {
-        Core->Appendfile(Locationpath,Plugin->ui->treeWidget->topLevelItem(i)->text(1) + "<split>");
+        Core->appendFile(Locationpath,Plugin->ui->treeWidget->topLevelItem(i)->text(1) + "<split>");
     }
 }
 
 /*  remove current folder path from quick access;*/
 
-void SuperFileDialog::Expandmodelfolder(QDir *dir)
+void SuperFileDialog::expandModelFolder(QDir *dir)
 {
     QStringList absolutefilepathlist = {};
     QDir newdir(dir->absolutePath());
     for(int i = 0;newdir.cdUp();i++)
     {
-        absolutefilepathlist.insert(0,Core->Fixfilepath(newdir.absolutePath()));
+        absolutefilepathlist.insert(0,Core->fixFilePath(newdir.absolutePath()));
     }
-    absolutefilepathlist.append(Core->Fixfilepath(dir->absolutePath()));
+    absolutefilepathlist.append(Core->fixFilePath(dir->absolutePath()));
     for(int i = 0;i < absolutefilepathlist.count();i++)
     {
         Plugin->ui->treeView->expand(Filesystemmodel->index(absolutefilepathlist.at(i)));
     }
-    Plugin->ui->treeView->setCurrentIndex(Filesystemmodel->index(Core->Getlistlastmember(&absolutefilepathlist)));
+    Plugin->ui->treeView->setCurrentIndex(Filesystemmodel->index(Core->getListLastMember(&absolutefilepathlist)));
 }
 
 /*  expand current folder path by treeview;*/

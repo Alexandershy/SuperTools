@@ -1,14 +1,14 @@
 #ifndef _LEDANALYSERBOX__H
 #define _LEDANALYSERBOX__H
+#define _LEDANALYSERBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__superserial__/_superserial_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
-#include "_ledanalyserbox__global.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
+#include "__module__/_ledanalysermodulea_.h"
+#include "__module__/_ledanalysermoduleb_.h"
 #include <QTimer>
 
 /**************interface****************/
@@ -33,9 +33,9 @@ public:
 
 private:
 
-    SuperSerial *SuperS             = nullptr;
-    ModuleA *Modulea                = nullptr;
-    ModuleB *Moduleb                = nullptr;
+    SuperSerial *Serial             = nullptr;
+    LedAnalyserModuleA *Modulea     = nullptr;
+    LedAnalyserModuleB *Moduleb     = nullptr;
     int Channels                    = 0;
     QString Model                   = "";
     QString Function                = "";
@@ -50,86 +50,85 @@ private:
     QStringList Systemcommandlist   = {"null","help","getversion","getHW","getSerial"};
     QStringList Channelrule         = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"};
     QStringList Channellist         = {};
-    QSerialPort *Serial             = nullptr;
+    QSerialPort *Serialport         = nullptr;
     QTimer *Timerca                 = nullptr;
     Analysisled *Threadaa           = nullptr;
-    ScanSerialPort *Threadsa        = nullptr;
-    SerialThread *Threadta          = nullptr;
-    SerialThread *Threadtb          = nullptr;
+    SuperScanSerial *Threadsa       = nullptr;
+    SuperSerialThread *Threadta     = nullptr;
+    SuperSerialThread *Threadtb     = nullptr;
     SuperLogger *Logger             = nullptr;
 
 private slots:
 
     /*main function;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void timerInit();
 
-    void Timerinit();
+    void widgetListInit();
 
-    void Widgetlistinit();
+    void selectLedAnalyserInfo();
 
-    void Selectledanalyserinfo();
+    void resetFunction();
 
-    void Resetfunction();
+    void ledAnalyserInfo();
 
-    void Ledanalyserinfo();
+    void enableLedAnalyserFunction();
 
-    void Enableledanalyserfunction();
+    void getSerialPort();
 
-    void Getserialport();
+    void connectSerialPort();
 
-    void Connectserialport();
+    bool enableConnectButton();
 
-    bool Enableconnectbutton();
+    void enableScanPortButton();
 
-    void Enablescanportbutton();
+    void disconnectSerialPort();
 
-    void Disconnectserialport();
+    void enablePwm();
 
-    void Enablepwm();
+    void startDisplayValue();
 
-    void Startdisplayvalue();
+    QString setCommandLineEdit();
 
-    QString Setcommandlineedit();
+    void stopDisplayValue();
 
-    void Stopdisplayvalue();
-
-    void ledanalysercommandapi(
+    void ledAnalyserCommandApi(
             QString strcommand);
 
-    void Systemcommand();
+    void systemCommand();
 
-    void Scanledport();
+    void scanLedPort();
 
-    QStringList Processresult(
+    QStringList processResult(
             QString strresult);
 
-    QStringList Checkboxenabled();
+    QStringList checkBoxEnabled();
 
-    void Resetlabelvalue();
+    void resetLabelValue();
 
-    void Timercaslot();
+    void timerCaSlot();
 
-    void Signalttaslot();
+    void signalTtaSlot();
 
-    void Signaltfaslot();
+    void signalTfaSlot();
 
-    void Signalttbslot();
+    void signalTtbSlot();
 
-    void Signaltfbslot();
+    void signalTfbSlot();
 
-    void Signalaaslot(
+    void signalAaSlot(
             int counts);
 
-    void Signalabslot(
+    void signalAbSlot(
             int counts);
 
-    void Signalsbslot(
+    void signalSbSlot(
             QString strcommand);
 
-    void Signalscslot();
+    void signalScSlot();
 
 };
 
@@ -148,13 +147,12 @@ public:
 private slots:
 
     /*main function;*/
-
     void run();
 
 private:
 
-    SuperSerial SuperS;
-    QSerialPort *Serial         = nullptr;
+    SuperSerial *Serial         = nullptr;
+    QSerialPort *Serialport     = nullptr;
     double Timeout              = 0;
     double Inittime             = 0;
     int BytesAvailable          = 0;
@@ -163,15 +161,15 @@ private:
 
 signals:
 
-    void Signalaa(
+    void signalAa(
             int counts);
 
-    void Signalab(
+    void signalAb(
             int counts);
 
-    void Signalac();
+    void signalAc();
 
-    void Signalad();
+    void signalAd();
 };
 
 #endif // _LEDANALYSERBOX__H

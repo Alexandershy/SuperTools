@@ -8,14 +8,14 @@ SuperFileManager::SuperFileManager(QWidget *parent,QLayout *layout,QStringList f
     Layout = layout;
     Filesplit = filesplit;
     ui->setupUi(this);
-    connect(ui->lineEdit,                       &QLineEdit::textChanged,                    this,   &SuperFileManager::Searchfiles);
-    connect(ui->tableWidget,                    &QTableWidget::itemDoubleClicked,           this,   &SuperFileManager::Clickopen);
-    connect(ui->tableWidget,                    &QTableWidget::itemPressed,                 this,   &SuperFileManager::Itemoptions);
-    connect(ui->tableWidget->horizontalHeader(),&QHeaderView::customContextMenuRequested,   this,   &SuperFileManager::Tableoptions);
-//    connect(ui->tableWidget->cornerWidget(),                    &QTableWidget::,                 this,   &SuperFileManager::Itemoptions);
-    connect(ui->pushButton,                     &QPushButton::clicked,                      this,   &SuperFileManager::Locationfile);
-    connect(ui->pushButton_2,                   &QPushButton::clicked,                      this,   &SuperFileManager::Checkfilevaildinit);
-    Init();
+    connect(ui->lineEdit,                       &QLineEdit::textChanged,                    this,   &SuperFileManager::searchFiles);
+    connect(ui->tableWidget,                    &QTableWidget::itemDoubleClicked,           this,   &SuperFileManager::clickOpen);
+    connect(ui->tableWidget,                    &QTableWidget::itemPressed,                 this,   &SuperFileManager::itemOptions);
+    connect(ui->tableWidget->horizontalHeader(),&QHeaderView::customContextMenuRequested,   this,   &SuperFileManager::tableOptions);
+    connect(ui->tableWidget,                    &QTableWidget::customContextMenuRequested,  this,   &SuperFileManager::tableOptions);
+    connect(ui->pushButton,                     &QPushButton::clicked,                      this,   &SuperFileManager::locationFile);
+    connect(ui->pushButton_2,                   &QPushButton::clicked,                      this,   &SuperFileManager::checkFileVaildInit);
+    init();
 }
 
 SuperFileManager::~SuperFileManager()
@@ -23,32 +23,32 @@ SuperFileManager::~SuperFileManager()
 
 }
 
-void SuperFileManager::Init()
+void SuperFileManager::init()
 {
-    Parameterinit();
-    Objectinit();
-    Addactioninit();
-    Loadfilesinit();
+    parameterInit();
+    objectInit();
+    addActionInit();
+    loadFilesInit();
 }
 
 /*  treewidget init;*/
 
-void SuperFileManager::Parameterinit()
+void SuperFileManager::parameterInit()
 {
-    Headerviewinit();
+    headerViewInit();
     Layout->addWidget(this);
     ui->pushButton->setIcon(QIcon(":/__supericon__/_location_.svg"));
     ui->pushButton_2->setIcon(QIcon(":/__supericon__/_check_.svg"));
-    Cachesetting = "./__depycache__/__" + Core->Allwordlower(Widget->objectName()).split("box").at(0) + "__/_defaultsetting_.ini";
-    Core->Creatfolder("./__depycache__/__" + Core->Allwordlower(Widget->objectName()).split("box").at(0) + "__");
-    Core->Creatfile(Cachesetting);
+    Cachesetting = "./__depycache__/__" + Core->allWordLower(Widget->objectName()).split("box").at(0) + "__/_defaultsetting_.ini";
+    Core->creatFolder("./__depycache__/__" + Core->allWordLower(Widget->objectName()).split("box").at(0) + "__");
+    Core->creatFile(Cachesetting);
     Widgetlist.append(ui->pushButton);
     Widgetlist.append(ui->pushButton_2);
 }
 
 /*  parameter init;*/
 
-void SuperFileManager::Headerviewinit()
+void SuperFileManager::headerViewInit()
 {
     if(Filelist.isEmpty())
     {
@@ -66,7 +66,7 @@ void SuperFileManager::Headerviewinit()
 
 /*  header view init;*/
 
-void SuperFileManager::Objectinit()
+void SuperFileManager::objectInit()
 {
     Core = new SuperCore(this);
     Filemenu = new QMenu(this);
@@ -76,56 +76,56 @@ void SuperFileManager::Objectinit()
     Deletefile = new QAction(QIcon(":/__supericon__/_delete_.svg"),"",Filemenu);
     Importfiles = new QAction(QIcon(":/__supericon__/_insert_.svg"),"",Tablemenu);
     Deleteallfiles = new QAction(QIcon(":/__supericon__/_delete2_.svg"),"",Tablemenu);
-    connect(Openfile,       &QAction::triggered,this,&SuperFileManager::Actionopen);
-    connect(Openpath,       &QAction::triggered,this,&SuperFileManager::Openfilepath);
-    connect(Deletefile,     &QAction::triggered,this,&SuperFileManager::Deletefilesinit);
-    connect(Importfiles,    &QAction::triggered,this,&SuperFileManager::Importfilesslot);
-    connect(Deleteallfiles, &QAction::triggered,this,&SuperFileManager::Clearfileinit);
+    connect(Openfile,       &QAction::triggered,this,&SuperFileManager::actionOpen);
+    connect(Openpath,       &QAction::triggered,this,&SuperFileManager::openFilePath);
+    connect(Deletefile,     &QAction::triggered,this,&SuperFileManager::deleteFilesInit);
+    connect(Importfiles,    &QAction::triggered,this,&SuperFileManager::importFilesSlot);
+    connect(Deleteallfiles, &QAction::triggered,this,&SuperFileManager::clearFileInit);
 }
 
 /*  object init;*/
 
-void SuperFileManager::Addactioninit()
+void SuperFileManager::addActionInit()
 {
-    Core->Addaction(Filemenu,Openfile,"Open File","Openfile");
-    Core->Addaction(Filemenu,Openpath,"Open Path","Openpath");
+    Core->addAction(Filemenu,Openfile,"Open File","Openfile");
+    Core->addAction(Filemenu,Openpath,"Open Path","Openpath");
     Filemenu->addSeparator();
-    Core->Addaction(Filemenu,Deletefile,"Delete File","Deletefile");
-    Core->Addaction(Tablemenu,Importfiles,"Import Super Files","ImportFiles");
+    Core->addAction(Filemenu,Deletefile,"Delete File","Deletefile");
+    Core->addAction(Tablemenu,Importfiles,"Import Super Files","ImportFiles");
     Tablemenu->addSeparator();
-    Core->Addaction(Tablemenu,Deleteallfiles,"Delete All Files","DeleteAllFiles");
+    Core->addAction(Tablemenu,Deleteallfiles,"Delete All Files","DeleteAllFiles");
 }
 
 /*  add action init;*/
 
-void SuperFileManager::Loadfilesinit()
+void SuperFileManager::loadFilesInit()
 {
-    QString filelisttemp = Core->Readonlyfile(Cachesetting);
+    QString filelisttemp = Core->readOnlyFile(Cachesetting);
     if(!filelisttemp.isEmpty())
     {
-        Setfiles(filelisttemp.split(Split));
+        setFiles(filelisttemp.split(Split));
     }
     else
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"no found file list,\nclick ok open filedialog select;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileManager::Importfilesslot);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileManager::importFilesSlot);
+        notedialog->messageInit();
     }
 }
 
 /*  super load files;*/
 
-void SuperFileManager::Importfilesslot()
+void SuperFileManager::importFilesSlot()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,Sourcepath,Filesplit);
-    connect(filedialog,&SuperFileDialog::Signalfc,this,         &SuperFileManager::Setfiles);
-    connect(filedialog,&SuperFileDialog::Signalfc,filedialog,   &QObject::deleteLater);
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFc,this,         &SuperFileManager::setFiles);
+    connect(filedialog,&SuperFileDialog::signalFc,filedialog,   &QObject::deleteLater);
+    filedialog->show();
 }
 
 /*  exec superfiledialog and select files;*/
 
-void SuperFileManager::Setfiles(QStringList filelistinput)
+void SuperFileManager::setFiles(QStringList filelistinput)
 {
     for(int i = 0;i < filelistinput.count();i++)
     {
@@ -133,50 +133,50 @@ void SuperFileManager::Setfiles(QStringList filelistinput)
         if(!Filelist.contains(file))
         {
             Filelist.append(file);
-            emit Signalfa("N",file + " add completed","Selectfilesapi function run completed");
+            emit signalFa("N",file + " add completed","Selectfilesapi function run completed");
         }
     }
-    Core->Settablewidgetitem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
-    Headerviewinit();
+    Core->setTableWidgetItem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
+    headerViewInit();
     for(int i = 0;i < Filelist.count();i++)
     {
         QFileInfo fileinfo(Filelist.at(i));
         ui->tableWidget->item(i,0)->setText(QString("%1").arg(i,4,10,QChar('0')));
         ui->tableWidget->item(i,1)->setIcon(Iconprovider.icon(fileinfo));
         ui->tableWidget->item(i,1)->setText(fileinfo.completeBaseName() + "." + fileinfo.suffix());
-        ui->tableWidget->item(i,2)->setText(Core->Fixfilepath(fileinfo.absolutePath()));
+        ui->tableWidget->item(i,2)->setText(Core->fixFilePath(fileinfo.absolutePath()));
         ui->tableWidget->item(i,3)->setText(QString::number(fileinfo.size()) + " bits");
     }
-    Core->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
-    Setcurrentfile(Core->Getlistlastmember(&filelistinput));
-    Enablewidgetlist();
+    Core->writeOnlyFileList(Cachesetting,&Filelist,Split,false);
+    setCurrentFile(Core->getListLastMember(&filelistinput));
+    enableWidgetList();
 }
 
 /*  set files and record as setting;*/
 
-void SuperFileManager::Clearfileinit()
+void SuperFileManager::clearFileInit()
 {
     SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"sure to clear all files ?");
-    connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileManager::Cleartreewidget);
-    notedialog->Messageinit();
+    connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileManager::clearTreeWidget);
+    notedialog->messageInit();
 }
 
 /*  clear treewidget items;*/
 
-void SuperFileManager::Cleartreewidget()
+void SuperFileManager::clearTreeWidget()
 {
     Filelist.clear();
-    Enablewidgetlist();
-    Core->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
-    Core->Settablewidgetitem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
+    enableWidgetList();
+    Core->writeOnlyFileList(Cachesetting,&Filelist,Split,false);
+    Core->setTableWidgetItem(Filelist.count(),Fileinfoheader.count(),24,ui->tableWidget);
     ui->tableWidget->setHorizontalHeaderLabels(Fileinfoheader);
-    emit Signalfa("N","all file delete completed","Cleantreewidget function run completed");
-    emit Signalfb();
+    emit signalFa("N","all file delete completed","Cleantreewidget function run completed");
+    emit signalFb();
 }
 
 /*  clear treewidget;*/
 
-void SuperFileManager::Searchfiles(QString text)
+void SuperFileManager::searchFiles(QString text)
 {
     if(!text.isEmpty())
     {
@@ -205,7 +205,7 @@ void SuperFileManager::Searchfiles(QString text)
 
 /*  search files;*/
 
-void SuperFileManager::Itemoptions()
+void SuperFileManager::itemOptions()
 {
     if(qApp->mouseButtons() == Qt::RightButton)
     {
@@ -215,44 +215,49 @@ void SuperFileManager::Itemoptions()
 
 /*  exec item menu;*/
 
-void SuperFileManager::Tableoptions()
+void SuperFileManager::tableOptions()
 {
-    Tablemenu->exec(QCursor::pos());
+    QPoint point = QCursor::pos();
+    QModelIndex index = ui->tableWidget->indexAt(point);
+    if(!index.isValid())
+    {
+        Tablemenu->exec(point);
+    }
 }
 
 /*  exec table menu;*/
 
-void SuperFileManager::Clickopen()
+void SuperFileManager::clickOpen()
 {
-    if(Openinit())
+    if(openInit())
     {
-        emit Signalfc();
+        emit signalFc();
     }
 }
 
 /*  click open file;*/
 
-void SuperFileManager::Actionopen()
+void SuperFileManager::actionOpen()
 {
-    if(Openinit())
+    if(openInit())
     {
-        emit Signalfd();
+        emit signalFd();
     }
 }
 
 /*  action open file;*/
 
-void SuperFileManager::Openfilepath()
+void SuperFileManager::openFilePath()
 {
     int row = ui->tableWidget->currentRow();
-    Core->Openpath(ui->tableWidget->item(row,2)->text());
+    Core->openPath(ui->tableWidget->item(row,2)->text());
 }
 
 /*  open file path*/
 
-bool SuperFileManager::Openinit()
+bool SuperFileManager::openInit()
 {
-    QString file = Getcurrentitemtext();
+    QString file = getCurrentItemText();
     QFileInfo fileinfo(file);
     if(fileinfo.exists())
     {
@@ -261,15 +266,15 @@ bool SuperFileManager::Openinit()
     else
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,file + " is not exists,\nclick ok delete invalid file;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileManager::Deletefiles);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileManager::deleteFiles);
+        notedialog->messageInit();
         return false;
     }
 }
 
 /*  action open file;*/
 
-void SuperFileManager::Enablewidgetlist()
+void SuperFileManager::enableWidgetList()
 {
     bool boola = Filelist.isEmpty();
     Deleteallfiles->setEnabled(!boola);
@@ -288,31 +293,31 @@ void SuperFileManager::Enablewidgetlist()
 
 /*  is enable widget button or not;*/
 
-void SuperFileManager::Deletefilesinit()
+void SuperFileManager::deleteFilesInit()
 {
     int row = ui->tableWidget->currentRow();
     SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"sure to delete " + ui->tableWidget->item(row,1)->text() + " ?");
-    connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileManager::Deletefiles);
-    notedialog->Messageinit();
+    connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileManager::deleteFiles);
+    notedialog->messageInit();
 }
 
 /*  delete files init;*/
 
-void SuperFileManager::Deletefiles()
+void SuperFileManager::deleteFiles()
 {
-    QString filedelete = Getcurrentitemtext();
+    QString filedelete = getCurrentItemText();
     Filelist.removeOne(filedelete);
     ui->tableWidget->removeRow(ui->tableWidget->currentRow());
-    Core->Writeonlyfilelist(Cachesetting,&Filelist,Split,false);
-    Enablewidgetlist();
-    Resetindex();
-    emit Signalfa("N",filedelete + " has been delete from filemanager;","Checkfilevaild function run completed;");
-    emit Signalfe(filedelete);
+    Core->writeOnlyFileList(Cachesetting,&Filelist,Split,false);
+    enableWidgetList();
+    resetIndex();
+    emit signalFa("N",filedelete + " has been delete from filemanager;","Checkfilevaild function run completed;");
+    emit signalFe(filedelete);
 }
 
 /*  delete files;*/
 
-void SuperFileManager::Resetindex()
+void SuperFileManager::resetIndex()
 {
     for(int i = 0;i < Filelist.count();i++)
     {
@@ -322,26 +327,26 @@ void SuperFileManager::Resetindex()
 
 /*  reset index;*/
 
-void SuperFileManager::Disableopen()
+void SuperFileManager::disableOpen()
 {
-    disconnect(Openfile,&QAction::triggered,this,&SuperFileManager::Actionopen);
-    disconnect(ui->tableWidget,&QTableWidget::itemDoubleClicked,this,&SuperFileManager::Clickopen);
-    connect(Openfile,&QAction::triggered,this,&SuperFileManager::Disableopentips);
-    connect(ui->tableWidget,&QTableWidget::itemDoubleClicked,this,&SuperFileManager::Disableopentips);
+    disconnect(Openfile,&QAction::triggered,this,&SuperFileManager::actionOpen);
+    disconnect(ui->tableWidget,&QTableWidget::itemDoubleClicked,this,&SuperFileManager::clickOpen);
+    connect(Openfile,&QAction::triggered,this,&SuperFileManager::disableOpenTips);
+    connect(ui->tableWidget,&QTableWidget::itemDoubleClicked,this,&SuperFileManager::disableOpenTips);
 }
 
 /*  disable click open files;*/
 
-void SuperFileManager::Disableopentips()
+void SuperFileManager::disableOpenTips()
 {
-    QString file = Getcurrentitemtext();
+    QString file = getCurrentItemText();
     SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"error: " + file + " can not open!;");
-    notedialog->Messageinit();
+    notedialog->messageInit();
 }
 
 /*  disable tips;*/
 
-QString SuperFileManager::Getcurrentitemtext()
+QString SuperFileManager::getCurrentItemText()
 {
     int row = ui->tableWidget->currentRow();
     return ui->tableWidget->item(row,2)->text() + ui->tableWidget->item(row,1)->text();
@@ -349,7 +354,7 @@ QString SuperFileManager::Getcurrentitemtext()
 
 /*  get item text;*/
 
-void SuperFileManager::Personalization(QString sourcepath,QString text)
+void SuperFileManager::personalization(QString sourcepath,QString text)
 {
     Filesuffix = text;
     Sourcepath = sourcepath;
@@ -359,7 +364,7 @@ void SuperFileManager::Personalization(QString sourcepath,QString text)
 
 /*  make this personalizaton;*/
 
-void SuperFileManager::Locationfile()
+void SuperFileManager::locationFile()
 {
     int index = 0;
     if(Filetemp.isEmpty())
@@ -368,11 +373,11 @@ void SuperFileManager::Locationfile()
     }
     else
     {
-        index = Core->Findlistmember(&Filelist,Filetemp);
+        index = Core->findListMember(&Filelist,Filetemp);
         if(index == -1)
         {
             SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"error: " + Filetemp + " can not determined!;");
-            notedialog->Messageinit();
+            notedialog->messageInit();
             return;
         }
     }
@@ -383,15 +388,15 @@ void SuperFileManager::Locationfile()
 
 /*  location current file;*/
 
-void SuperFileManager::Setcurrentfile(QString filetemp)
+void SuperFileManager::setCurrentFile(QString filetemp)
 {
     Filetemp = filetemp;
-    Locationfile();
+    locationFile();
 }
 
 /*  set current file temp;*/
 
-void SuperFileManager::Checkfilevaildinit()
+void SuperFileManager::checkFileVaildInit()
 {
     Invaildfilelist.clear();
     for(int i = 0;i < Filelist.count();i++)
@@ -404,39 +409,39 @@ void SuperFileManager::Checkfilevaildinit()
     }
     if(!Filelist.isEmpty())
     {
-        Checkfilevaild();
+        checkFileVaild();
     }
 }
 
 /*  check file vaild or not init;*/
 
-void SuperFileManager::Checkfilevaild()
+void SuperFileManager::checkFileVaild()
 {
     if(!Invaildfilelist.isEmpty())
     {
-        emit Signalfa("N","invaild filelist: ","Checkfilevaild function run completed;");
+        emit signalFa("N","invaild filelist: ","Checkfilevaild function run completed;");
         for(int i = 0;i < Invaildfilelist.count();i++)
         {
-            emit Signalfa("N",Filelist.at(Invaildfilelist.at(i)),"Checkfilevaild function run completed;");
+            emit signalFa("N",Filelist.at(Invaildfilelist.at(i)),"Checkfilevaild function run completed;");
         }
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"invaild file display on logger;\nclick ok remove invaild files;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFileManager::Deleteinvaildfiles);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFileManager::deleteInvaildFiles);
+        notedialog->messageInit();
     }
     else
     {
-        emit Signalfa("N","all " + Core->Firstwordlower(Filesuffix) + " files are vaild;","Checkfilevaild function run completed;");
+        emit signalFa("N","all " + Core->firstWordLower(Filesuffix) + " files are vaild;","Checkfilevaild function run completed;");
     }
 }
 
 /*  check file vaild or not;*/
 
-void SuperFileManager::Deleteinvaildfiles()
+void SuperFileManager::deleteInvaildFiles()
 {
     for(int i = Invaildfilelist.count();i > 0;i--)
     {
         ui->tableWidget->setCurrentItem(ui->tableWidget->item(Invaildfilelist.at(i - 1),0));
-        Deletefiles();
+        deleteFiles();
     }
 }
 

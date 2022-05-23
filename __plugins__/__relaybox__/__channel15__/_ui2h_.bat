@@ -1,1 +1,0 @@
-uic -o _channel15__ui_.h _channel15_.ui

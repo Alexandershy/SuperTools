@@ -44,10 +44,10 @@ int main(int argc, char *argv[])
     }
     else if(sharedmemory.create(1))
     {
-        app.setApplicationVersion("V6.22.0423.S054.A126");
+        app.setApplicationVersion("V6.22.0523.S056.A128");
         QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
         SuperFrame *frame = new SuperFrame(nullptr);
-        frame->Show();
+        frame->show();
     }
     return app.exec();
 }

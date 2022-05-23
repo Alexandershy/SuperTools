@@ -1,24 +1,25 @@
 #ifndef _SUPERFILEMANAGER__H
 #define _SUPERFILEMANAGER__H
+#define _SUPERFILEMANAGER__EXPORT Q_DECL_EXPORT
 
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
 #include "__supercore__/_supercore_.h"
-#include "_superfilemanager__ui_.h"
+#include "ui__superfilemanagerui_.h"
 #include <QScrollBar>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE
-namespace Ui { class SuperFileManager; }
+namespace Ui { class SuperFileManagerui; }
 QT_END_NAMESPACE
 
-class SuperFileManager : public QFrame
+class _SUPERFILEMANAGER__EXPORT SuperFileManager : public QFrame
 {
     Q_OBJECT
 
 public:
 
-    Ui::SuperFileManager *ui        = nullptr;
+    Ui::SuperFileManagerui *ui      = nullptr;
     QStringList Filelist            = {};
     QList<QWidget*> Widgetlist      = {};
     QList<QCheckBox*> Checkboxlist  = {};
@@ -34,24 +35,24 @@ public:
 
 public slots:
 
-    void Disableopen();
+    void disableOpen();
 
-    QString Getcurrentitemtext();
+    QString getCurrentItemText();
 
-    void Enablewidgetlist();
+    void enableWidgetList();
 
-    void Personalization(
+    void personalization(
         QString sourcepath,
         QString text);
 
-    void Setcurrentfile(
+    void setCurrentFile(
         QString filetemp);
 
-    void Checkfilevaildinit();
+    void checkFileVaildInit();
 
 private:
 
-    SuperCore *SuperC               = nullptr;
+    SuperCore *Core                 = nullptr;
     QMenu *Filemenu                 = nullptr;
     QAction *Openfile               = nullptr;
     QAction *Openpath               = nullptr;
@@ -73,70 +74,70 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Objectinit();
+    void objectInit();
 
-    void Addactioninit();
+    void addActionInit();
 
-    void Headerviewinit();
+    void headerViewInit();
 
-    void Loadfilesinit();
+    void loadFilesInit();
 
-    void Importfilesslot();
+    void importFilesSlot();
 
-    void Clearfileinit();
+    void clearFileInit();
 
-    void Cleartreewidget();
+    void clearTreeWidget();
 
-    void Setfiles(
+    void setFiles(
         QStringList filelistinput);
 
-    void Searchfiles(
+    void searchFiles(
         QString text);
 
-    void Itemoptions();
+    void itemOptions();
 
-    void Tableoptions();
+    void tableOptions();
 
-    void Clickopen();
+    void clickOpen();
 
-    void Actionopen();
+    void actionOpen();
 
-    void Openfilepath();
+    void openFilePath();
 
-    bool Openinit();
+    bool openInit();
 
-    void Deletefilesinit();
+    void deleteFilesInit();
 
-    void Deletefiles();
+    void deleteFiles();
 
-    void Resetindex();
+    void resetIndex();
 
-    void Disableopentips();
+    void disableOpenTips();
 
-    void Locationfile();
+    void locationFile();
 
-    void Checkfilevaild();
+    void checkFileVaild();
 
-    void Deleteinvaildfiles();
+    void deleteInvaildFiles();
 
 signals:
 
-    void Signalfa(
+    void signalFa(
         QString direction,
         QString tlogs,
         QString llogs);
 
-    void Signalfb();
+    void signalFb();
 
-    void Signalfc();
+    void signalFc();
 
-    void Signalfd();
+    void signalFd();
 
-    void Signalfe(
+    void signalFe(
         QString file);
 
 };

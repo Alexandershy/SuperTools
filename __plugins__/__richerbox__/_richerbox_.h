@@ -4,7 +4,7 @@
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
-#include "__datadialog__/_datadialog_.h"
+#include "__datadialog__/_richerdatadialog_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
@@ -37,13 +37,13 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Open();
+    void open();
 
 };
 

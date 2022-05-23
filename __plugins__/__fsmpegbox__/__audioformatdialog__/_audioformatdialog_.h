@@ -2,7 +2,7 @@
 #define _AUDIOFORMATDIALOG__H
 
 #include "__superwindow__/_superwindow_.h"
-#include "_audioformatbox_.h"
+#include "_audioformatdialogui_.h"
 
 class AudioFormatDialog : public SuperWindow
 {
@@ -17,24 +17,24 @@ public:
 
 private:
 
-    AudioFormatBox *Plugin      = nullptr;
+    AudioFormatDialogui *Plugin      = nullptr;
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Convert();
+    void convert();
 
-    void Convertmode();
+    void convertMode();
 
 signals:
 
-    void Signalaa(
+    void signalAa(
             int formatindex);
 
-    void Signalab(
+    void signalAb(
             int convertpath);
 
 };

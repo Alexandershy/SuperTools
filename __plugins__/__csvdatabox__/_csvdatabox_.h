@@ -1,16 +1,16 @@
 #ifndef _CSVDATABOX__H
 #define _CSVDATABOX__H
+#define _CSVDATABOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
-#include "__datadialog__/_datadialog_.h"
+#include "__datadialog__/_csvdatadialog_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__superfilemanager__/_superfilemanager_.h"
 #include "__superprogressbardialog__/_superprogressbardialog_.h"
-#include "__module__/_modulea_.h"
-#include "_csvdatabox__global.h"
+#include "__module__/_csvdatamodulea_.h"
 #include <QThread>
 
 /**************interface****************/
@@ -35,7 +35,7 @@ public:
 
 private:
 
-    ModuleA *Modulea                            = nullptr;
+    CsvDataModuleA *Modulea                     = nullptr;
     SuperProgressBarDialog *Progressbardialog   = nullptr;
     QStringList *Csvfilelist                    = nullptr;
     QString Processtime                         = "";
@@ -48,26 +48,25 @@ private:
 private slots:
 
     /*  main function*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void parameterInit();
 
-    void Parameterinit();
+    void threadInit();
 
-    void Threadinit();
+    void enableProcessButton();
 
-    void Enableprocessbutton();
+    void open();
 
-    void Open();
+    void checkCurrentFunction();
 
-    void Checkcurrentfunction();
+    void process();
 
-    void Process();
+    void signalpbSlot();
 
-    void Signalpbslot();
-
-    void Setprogressbar(
+    void setProgressBar(
             int progressbarvalue,
             QString message);
 };
@@ -79,7 +78,6 @@ class ProcessData : public QThread
 public:
 
     /*main function;*/
-
     ProcessData(
             QCheckBox* checkboxa,
             QCheckBox* checkboxb,
@@ -92,22 +90,22 @@ public slots:
 
     void run();
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 private slots:
 
-    void Mergecsvfiledata();
+    void mergeCsvFileData();
 
-    void Removeduplicateitem(
+    void removeDuplicateItem(
             QStringList *csvfilelist);
 
-    void Openpath();
+    void openPath();
 
 private:
 
-    SuperCore *SuperC               = nullptr;
+    SuperCore *Core                 = nullptr;
     QCheckBox *Checkboxa            = nullptr;
     QCheckBox *Checkboxb            = nullptr;
     QCheckBox *Checkboxc            = nullptr;
@@ -117,14 +115,14 @@ private:
 
 signals:
 
-    void Signalpa(
+    void signalPa(
             QString direction,
             QString strtlog,
             QString strllog);
 
-    void Signalpb();
+    void signalPb();
 
-    void Signalpc(
+    void signalPc(
             int progressbarvalue,
             QString message);
 

@@ -1,1 +1,0 @@
-uic -o _supernotebox__ui_.h _supernotebox_.ui

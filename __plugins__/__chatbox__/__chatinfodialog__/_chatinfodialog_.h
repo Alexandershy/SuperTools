@@ -3,7 +3,7 @@
 
 #include "__superwindow__/_superwindow_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
-#include "_chatinfobox_.h"
+#include "_chatinfodialogui_.h"
 
 class ChatInfoDialog : public SuperWindow
 {
@@ -19,22 +19,22 @@ public:
 
 private:
 
-    ChatInfoBox *Plugin = nullptr;
-    QLineEdit *Lineedit = nullptr;
-    QString Userfolder = "";
-    QString Userpicture = "";
+    ChatInfoDialogui *Plugin    = nullptr;
+    QLineEdit *Lineedit         = nullptr;
+    QString Userfolder          = "";
+    QString Userpicture         = "";
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Profileinit();
+    void profileInit();
 
-    void Selectprofile();
+    void selectProfile();
 
-    void Changeprofile(
+    void changeProfile(
             QString profile);
 };
 

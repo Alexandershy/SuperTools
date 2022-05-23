@@ -10,10 +10,10 @@ SuperTab* Interface::Loadplugin()
 DemoBox::DemoBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("DemoBox");
-    Setgroupbox(3,1);
-    Setstretch({1,1,99},{100});
-    Init();
+    readMe("DemoBox");
+    setGroupBox(3,1);
+    setStretch({1,1,99},{100});
+    init();
 }
 
 DemoBox::~DemoBox()
@@ -21,52 +21,52 @@ DemoBox::~DemoBox()
 
 }
 
-void DemoBox::Init()
+void DemoBox::init()
 {
-    Objectinit();
-    Parameterinit();
+    objectInit();
+    parameterInit();
 }
 
-void DemoBox::Objectinit()
+void DemoBox::objectInit()
 {
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
-    Moduleb = new ModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
+    Modulea = new DemoModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Moduleb = new DemoModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
     Filemanager = new SuperFileManager(this,Leftgroupboxlist.at(2)->Insidelayout,{"*.csv"});
     Logger = new SuperLogger(this,Rightgroupboxlist.at(0)->Insidelayout);
-    connect(Moduleb->ui->pushButton,    &QPushButton::clicked,this,&DemoBox::Selectsnfile);
-    connect(Filemanager,                &SuperFileManager::Signalfa,Logger, &SuperLogger::Displaylog);
-    connect(Moduleb->ui->pushButton_3,  &QPushButton::clicked,      this,   &DemoBox::Process);
+    connect(Moduleb->ui->pushButton,    &QPushButton::clicked,      this,   &DemoBox::selectSnFile);
+    connect(Filemanager,                &SuperFileManager::signalFa,Logger, &SuperLogger::displayLog);
+    connect(Moduleb->ui->pushButton_3,  &QPushButton::clicked,      this,   &DemoBox::process);
 }
 
-void DemoBox::Parameterinit()
+void DemoBox::parameterInit()
 {
     Demofilelist = &Filemanager->Filelist;
     Filemanager->Widgetlist.append(Moduleb->ui->pushButton_3);
-    Filemanager->Enablewidgetlist();
-    Filemanager->Personalization("","Csv");
-    Filemanager->Checkfilevaildinit();
+    Filemanager->enableWidgetList();
+    Filemanager->personalization("","Csv");
+    Filemanager->checkFileVaildInit();
 }
 
 /*  parameter init;*/
 
-void DemoBox::Selectsnfile()
+void DemoBox::selectSnFile()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./",{"*.csv"});
-    connect(filedialog,&SuperFileDialog::Signalfb,this,         &DemoBox::Displaysnfile);
-    connect(filedialog,&SuperFileDialog::Signalfb,filedialog,   &QObject::deleteLater);
-    filedialog->Setsinglefile();
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFb,this,         &DemoBox::displaySnFile);
+    connect(filedialog,&SuperFileDialog::signalFb,filedialog,   &QObject::deleteLater);
+    filedialog->setSingleFile();
+    filedialog->show();
 }
 
-void DemoBox::Displaysnfile(QString text)
+void DemoBox::displaySnFile(QString text)
 {
     Moduleb->ui->lineEdit->setText(text);
 }
 
-void DemoBox::Process()
+void DemoBox::process()
 {
-    SuperC->Creatfile(Democachefile);
-    QString text = SuperC->Readonlyfile(Moduleb->ui->lineEdit->text());
+    Core->creatFile(Democachefile);
+    QString text = Core->readOnlyFile(Moduleb->ui->lineEdit->text());
     QFile file(Moduleb->ui->lineEdit->text());
     if(file.exists())
     {
@@ -77,8 +77,8 @@ void DemoBox::Process()
             if(result.contains("AUP"))
             {
                 QString sntemp = "AUP" + result.split('\r').at(0).split("AUP").at(1);
-                Logger->Displaylog("N",sntemp,"processing...");
-                Processcsvfile(sntemp);
+                Logger->displayLog("N",sntemp,"processing...");
+                processCsvFile(sntemp);
             }
         }
         file.close();
@@ -86,11 +86,11 @@ void DemoBox::Process()
     else
     {
         SuperNoteDialog *messagebox = new SuperNoteDialog(nullptr,Moduleb->ui->lineEdit->text() + " is not exists;");
-        messagebox->Messageinit();
+        messagebox->messageInit();
     }
 }
 
-void DemoBox::Processcsvfile(QString serialnumber)
+void DemoBox::processCsvFile(QString serialnumber)
 {
     int sncounttemp = 0;
     for(int i = 0;i < Demofilelist->count();i++)
@@ -102,14 +102,14 @@ void DemoBox::Processcsvfile(QString serialnumber)
             QString result = file.readLine();
             if(result.contains(serialnumber))
             {
-                SuperC->Appendfile(Democachefile,result);
+                Core->appendFile(Democachefile,result);
                 sncounttemp = sncounttemp + 1;
             }
         }
     }
     if(!sncounttemp)
     {
-        SuperC->Appendfile(Democachefile,serialnumber + " has not found\r\n");
-        Logger->Displaylog("N",serialnumber + " has not found;","processing...");
+        Core->appendFile(Democachefile,serialnumber + " has not found\r\n");
+        Logger->displayLog("N",serialnumber + " has not found;","processing...");
     }
 }

@@ -16,13 +16,15 @@ public:
 
     ~ChatBubble();
 
-    void Adjustwidth();
+public slots:
 
-    void Adjustheight();
+    void adjustWidth();
+
+    void adjustHeight();
 
 private slots:
 
-    void Init();
+    void init();
 
 private:
 

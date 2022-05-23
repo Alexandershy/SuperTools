@@ -5,16 +5,16 @@
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superlogger__/_superlogger_.h"
-#include "__formatdialog__/_formatdialog_.h"
+#include "__formatdialog__/_wasapiformatdialog_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
 #include "__superchartview__/_superchartview_.h"
 #include "__supertabwidget__/_supertabwidget_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__supermultimedia__/_supermultimedia_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "__module__/_modulec_.h"
+#include "__module__/_wasapimodulea_.h"
+#include "__module__/_wasapimoduleb_.h"
+#include "__module__/_wasapimodulec_.h"
 #include "__superfftw__/fftw3.h"
 
 class _WASAPIBOX__EXPORT Interface
@@ -40,9 +40,9 @@ private:
 
     SuperMultiMedia *Multimedia                 = nullptr;
     SuperLogger *Logger                         = nullptr;
-    ModuleA *Modulea                            = nullptr;
-    ModuleB *Moduleb                            = nullptr;
-    ModuleC *Modulec                            = nullptr;
+    WasapiModuleA *Modulea                      = nullptr;
+    WasapiModuleB *Moduleb                      = nullptr;
+    WasapiModuleC *Modulec                      = nullptr;
     SuperTabWidget *Tabwidget                   = nullptr;
     QList<QWidget*> Outputwidgetlist            = {};
     QList<QWidget*> Inputwidgetlist             = {};
@@ -83,127 +83,127 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Enablerefreshdevicebutton();
+    void enableRefreshDeviceButton();
 
-    void Refreshdevices();
+    void refreshDevices();
 
-    void Refreshoutputnumber();
+    void refreshOutputNumber();
 
-    void Addoutputchannel();
+    void addOutputChannel();
 
-    void Refreshinputnumber();
+    void refreshInputNumber();
 
-    void Refreshdevicesinit();
+    void refreshDevicesInit();
 
-    void Setaudioformat();
+    void setAudioFormat();
 
-    void Audioformat(
+    void audioFormat(
             QAudioFormat* format);
 
-    void Refreshaudioformatapi(
+    void refreshAudioFormatApi(
             QAudioFormat *format,
             int intsamplerate,
             int bits,
             int intchannelcount,
             QString straudioname);
 
-    void Refreshoutputparameter(
+    void refreshOutputParameter(
             int samplerate,
             int bits,
             int channels);
 
-    void Refreshinputparameter(
+    void refreshInputParameter(
             int samplerate,
             int bits,
             int channels);
 
-    void Enablewidget(
+    void enableWidget(
             QStringList listname,
             QList<QWidget*> *widgetlist);
 
-    void Selectwavfile();
+    void selectWavFile();
 
-    void Setwavfile(
+    void setWavFile(
             QString file);
 
-    void Playaudio();
+    void playAudio();
 
-    void Playwavinit();
+    void playWavInit();
 
-    void Playsignalinit();
+    void playSignalInit();
 
-    void Setplaymode();
+    void setPlayMode();
 
-    void Stopplayaudio();
+    void stopPlayAudio();
 
-    QByteArray Sinewave(
+    QByteArray sineWave(
             double sampletime,
             double amplitude,
             int frequency);
 
-    void Displaygeneratemode();
+    void displayGenerateMode();
 
-    void Displayamplitude();
+    void displayAmplitude();
 
-    void Displayfrequency();
+    void displayFrequency();
 
-    void Displaytime();
+    void displayTime();
 
-    QByteArray Signalwave();
+    QByteArray signalWave();
 
-    void Analysisaudio();
+    void analysisAudio();
 
-    void Analysisaudioinit(
+    void analysisAudioInit(
             bool boola,
             bool boolb);
 
-    void Plotinit();
+    void plotInit();
 
-    void Stopanalysisaudio();
+    void stopAnalysisAudio();
 
-    void Changeplotmode();
+    void changePlotMode();
 
-    void Changelimitmode();
+    void changeLimitMode();
 
-    void Changelimit();
+    void changeLimit();
 
-    void Changedbvmode();
+    void changeDbvMode();
 
-    void Changethddegree();
+    void changeThdDegree();
 
-    void Generatewavfileinit();
+    void generateWavFileInit();
 
-    void Generatewavfile(
+    void generateWavFile(
             QString wavfilepath);
 
-    void Openrecordpath();
+    void openRecordPath();
 
-    void Opengeneratepath();
+    void openGeneratePath();
 
-    void Signalpwaslot();
+    void signalPwaSlot();
 
-    void Signalpwbslot(
+    void signalPwbSlot(
             QString status);
 
-    void Signalpwslotapi();
+    void signalPwSlotApi();
 
-    void Signalspslot();
+    void signalspSlot();
 
-    void Signaluarslot(
+    void signalUarSlot(
             QString strdbv,
             QString strfreq,
             QString strthd);
 
-    void Signalubrslot(
+    void signalUbrSlot(
             QString text);
 
-    void Savewavfile();
+    void saveWavFile();
 
 };
 
@@ -219,6 +219,8 @@ public:
             QVector<int> *updatefigureparameter);
 
     ~UpdateFigure();
+
+public:
 
     void run();
 
@@ -263,46 +265,46 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Recordaduioinit();
+    void recordAudioInit();
 
-    void Recording(
+    void recording(
             QIODevice* iodevice,
             QAudioSource* audiosource);
 
-    void Caldata(
+    void calData(
             QIODevice* iodevice);
 
-    void Analysischannela(
+    void analysisChannela(
             QIODevice* iodevice);
 
-    void Analysischannelb(
+    void analysisChannelb(
             QIODevice* iodevice);
 
-    bool Read(
+    bool read(
             QIODevice* iodevice,
             QByteArray *data);
 
-    void Calrealdata(
+    void calRealData(
             int count,
             fftw_complex* complex,
             double* yreal,
             QVector<QPointF> *point);
 
-    void Emitresult();
+    void emitResult();
 
 signals:
 
-    void Signalua(
+    void signalUa(
             QString,
             QString,
             QString);
 
-    void Signalub(
+    void signalUb(
             QString text);
 
-    void Signaluc();
+    void signalUc();
 
 };
 

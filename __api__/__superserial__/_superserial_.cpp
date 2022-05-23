@@ -13,7 +13,7 @@ SuperSerial::~SuperSerial()
 
 //*************************************************QSerialport*****************************************************//
 
-void SuperSerial::Getserialport(QStringList *listname,QComboBox* comboboxnamelist)
+void SuperSerial::getSerialPort(QStringList *listname,QComboBox* comboboxnamelist)
 {
     QString serialname;
     listname->clear();
@@ -28,7 +28,7 @@ void SuperSerial::Getserialport(QStringList *listname,QComboBox* comboboxnamelis
 
 /*  get windows system serial port name and description, add them to combobox;*/
 
-void SuperSerial::Enableserialcombobox(QStringList *namelist,QComboBox *comboboxnamelist,QComboBox* comboboxbaudrate)
+void SuperSerial::enableSerialComboBox(QStringList *namelist,QComboBox *comboboxnamelist,QComboBox* comboboxbaudrate)
 {
     if(namelist->isEmpty())
     {
@@ -44,7 +44,7 @@ void SuperSerial::Enableserialcombobox(QStringList *namelist,QComboBox *combobox
 
 /*  is enable serial port name and baudrate combobox;*/
 
-bool SuperSerial::Enableconnectbutton(QComboBox* comboboxnamelist,QComboBox* comboboxbaudrate,QPushButton* pushbuttonconnect)
+bool SuperSerial::enableConnectButton(QComboBox* comboboxnamelist,QComboBox* comboboxbaudrate,QPushButton* pushbuttonconnect)
 {
     QString serialname = comboboxnamelist->currentText();
     bool result = comboboxbaudrate->currentText().toInt();
@@ -59,7 +59,7 @@ bool SuperSerial::Enableconnectbutton(QComboBox* comboboxnamelist,QComboBox* com
 
 //*  is enable serial port connect button;*/
 
-void SuperSerial::Connectserialport(QSerialPort* seriala,QString strportname,int intbaudrate)
+void SuperSerial::connectSerialPort(QSerialPort* seriala,QString strportname,int intbaudrate)
 {
     seriala->setPortName("\\\\.\\" + strportname);
     seriala->setBaudRate(intbaudrate);
@@ -73,7 +73,7 @@ void SuperSerial::Connectserialport(QSerialPort* seriala,QString strportname,int
 
 /*  connect and set serial port info*/
 
-void SuperSerial::Writeserial(QCheckBox* checkboxstring,QCheckBox* checkboxaddr,QCheckBox* checkboxaddn,QSerialPort* seriala,QLineEdit* lineeditdata)
+void SuperSerial::writeSerial(QCheckBox* checkboxstring,QCheckBox* checkboxaddr,QCheckBox* checkboxaddn,QSerialPort* seriala,QLineEdit* lineeditdata)
 {
     QByteArray data = "";
     if(checkboxstring->isChecked())
@@ -105,7 +105,7 @@ void SuperSerial::Writeserial(QCheckBox* checkboxstring,QCheckBox* checkboxaddr,
 
 /*  serial port write data api,adapted to supertools rules;*/
 
-bool SuperSerial::Checkserialdevice(QSerialPort *serial,QString portname)
+bool SuperSerial::checkSerialDevice(QSerialPort *serial,QString portname)
 {
     if(!serial->isOpen())
     {
@@ -118,7 +118,7 @@ bool SuperSerial::Checkserialdevice(QSerialPort *serial,QString portname)
         {
             serialnamelist.append(info.description() + " " + info.portName());
         }
-        if(Core->Findlistmember(&serialnamelist,portname) >= 0)
+        if(Core->findListMember(&serialnamelist,portname) >= 0)
         {
             return true;
         }
@@ -131,7 +131,7 @@ bool SuperSerial::Checkserialdevice(QSerialPort *serial,QString portname)
 
 /*  check serial port exist or not;*/
 
-QByteArray SuperSerial::Readdatastream(QSerialPort* serial,QCheckBox* checkboxstring)
+QByteArray SuperSerial::readDataStream(QSerialPort* serial,QCheckBox* checkboxstring)
 {
     if(checkboxstring->isChecked())
     {
@@ -145,7 +145,7 @@ QByteArray SuperSerial::Readdatastream(QSerialPort* serial,QCheckBox* checkboxst
 
 /*  receive stream data api;*/
 
-void SuperSerial::Closeserial(QSerialPort* seriala)
+void SuperSerial::closeSerial(QSerialPort* seriala)
 {
     if(seriala->isOpen())
     {
@@ -173,17 +173,17 @@ SuperScanSerial::~SuperScanSerial()
 
 }
 
-void SuperScanSerial::Init()
+void SuperScanSerial::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void SuperScanSerial::Objectinit()
+void SuperScanSerial::objectInit()
 {
     Serial = new SuperSerial(this);
 }
 
-void SuperScanSerial::Initrun()
+void SuperScanSerial::initRun()
 {
     Realportlist.clear();
     Listname.clear();
@@ -199,52 +199,52 @@ void SuperScanSerial::Initrun()
 
 void SuperScanSerial::run()
 {
-    Initrun();
+    initRun();
     foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
     {
         Listname.append(info.portName());
-        emit Signalsa("N","add " + info.portName() + " completed","ScanSerialPort function running...");
+        emit signalSa("N","add " + info.portName() + " completed","ScanSerialPort function running...");
     }
     if(Listname.isEmpty())
     {
-        emit Signalsa("N","have not found serial port","ScanSerialPort function run completed");
+        emit signalSa("N","have not found serial port","ScanSerialPort function run completed");
     }
     else
     {
-        emit Signalsa("N","all serial port add completed","ScanSerialPort function running...");
-        Connectserialport();
+        emit signalSa("N","all serial port add completed","ScanSerialPort function running...");
+        connectSerialPort();
     }
     for(int i = 0;i < Realportlist.count();i++)
     {
         Realportstringb = Realportstringb + Realportlist.at(i) + " ";
         Realportstringa = Realportstringb;
     }
-    emit Signalsa("N",Realportstringa + "is the " + Widget->objectName(),Realportstringa + "is the " + Widget->objectName());
-    emit Signalsc();
+    emit signalSa("N",Realportstringa + "is the " + Widget->objectName(),Realportstringa + "is the " + Widget->objectName());
+    emit signalSc();
 }
 
 /*  from windows serial port scan this serial device;*/
 
-void SuperScanSerial::Connectserialport()
+void SuperScanSerial::connectSerialPort()
 {
     for(int i = 0;i < Listname.count();i++)
     {
-        Serial->Connectserialport(Serialport,Listname[i],Baudrate);
+        Serial->connectSerialPort(Serialport,Listname[i],Baudrate);
         if(Serialport->isOpen())
         {
-            emit Signalsa("N","connect " + Listname[i] + " completed...","connectserialport function run completed");
-            Communicatewithserialporta(Listname[i]);
+            emit signalSa("N","connect " + Listname[i] + " completed...","connectserialport function run completed");
+            communicateWithSerialPorta(Listname[i]);
         }
         else
         {
-            emit Signalsa("N","connect " + Listname[i] + " failed...","connectserialport function run completed");
+            emit signalSa("N","connect " + Listname[i] + " failed...","connectserialport function run completed");
         }
     }
 }
 
 /*  connect with serial port;*/
 
-void SuperScanSerial::Waitforbytes()
+void SuperScanSerial::waitForBytes()
 {
     while(Inittime < Timeout)
     {
@@ -258,7 +258,7 @@ void SuperScanSerial::Waitforbytes()
         }
         else if(Bytesavailable == bytesAvailable && Bytesavailable != 0)
         {
-            Result = Serial->Readdatastream(Serialport,Checkboxstring);
+            Result = Serial->readDataStream(Serialport,Checkboxstring);
             Inittime = 0;
             break;
         }
@@ -271,41 +271,41 @@ void SuperScanSerial::Waitforbytes()
     }
 }
 
-void SuperScanSerial::Communicatewithserialporta(QString strport)
+void SuperScanSerial::communicateWithSerialPorta(QString strport)
 {
-    emit Signalsa("N","try communicate with " + strport,"Communicatewithserialport function running...");
-    emit Signalsb(Commanda);
-    Waitforbytes();
-    emit Signalsa("W",Lineedita->text(),"Communicatewithserialport function running...");
-    emit Signalsa("R",Result,"Communicatewithserialport function running...");
+    emit signalSa("N","try communicate with " + strport,"Communicatewithserialport function running...");
+    emit signalSb(Commanda);
+    waitForBytes();
+    emit signalSa("W",Lineedita->text(),"Communicatewithserialport function running...");
+    emit signalSa("R",Result,"Communicatewithserialport function running...");
     if(!Result.contains("serial port receive time out") && Result.contains(Strbackvaluea))
     {
-        emit Signalsa("N","first command write and receive backvalue success","Communicatewithserialport function running...");
-        Communicatewithserialportb(strport);
+        emit signalSa("N","first command write and receive backvalue success","Communicatewithserialport function running...");
+        communicateWithSerialPortb(strport);
     }
     else
     {
         Serialport->close();
-        emit Signalsa("N",strport + " is not " + Widget->objectName(),"Communicatewithserialport function completed");
+        emit signalSa("N",strport + " is not " + Widget->objectName(),"Communicatewithserialport function completed");
     }
 }
 
 /*  Communicate with serialporta;*/
 
-void SuperScanSerial::Communicatewithserialportb(QString strport)
+void SuperScanSerial::communicateWithSerialPortb(QString strport)
 {
-    emit Signalsb(Commandb);
-    Waitforbytes();
-    emit Signalsa("W",Lineedita->text(),"Communicatewithserialport function running...");
-    emit Signalsa("R",Result,"Communicatewithserialport function running...");
+    emit signalSb(Commandb);
+    waitForBytes();
+    emit signalSa("W",Lineedita->text(),"Communicatewithserialport function running...");
+    emit signalSa("R",Result,"Communicatewithserialport function running...");
     if(!Result.contains("serial port receive time out") && Result.contains(Strbackvalueb))
     {
-        emit Signalsa("N","second command write and receive backvalue success",strport + " is " + Widget->objectName());
+        emit signalSa("N","second command write and receive backvalue success",strport + " is " + Widget->objectName());
         Realportlist.append(strport);
     }
     else
     {
-        emit Signalsa("N","the " + strport + " is not " + Widget->objectName(),"Communicatewithserialport function completed");
+        emit signalSa("N","the " + strport + " is not " + Widget->objectName(),"Communicatewithserialport function completed");
     }
     Serialport->close();
 }
@@ -318,7 +318,7 @@ SuperSerialThread::SuperSerialThread(QSerialPort *serialport,double timeout)
     Inittimeout = timeout;
 }
 
-void SuperSerialThread::Init()
+void SuperSerialThread::init()
 {
     Inittime = 0;
     Timeout = Inittimeout;
@@ -329,7 +329,7 @@ void SuperSerialThread::Init()
 
 void SuperSerialThread::run()
 {
-    Init();
+    init();
     while(Inittime < Timeout)
     {
         QThread::msleep(50);
@@ -342,12 +342,12 @@ void SuperSerialThread::run()
         }
         else if(Bytesavailable == bytesAvailable && Bytesavailable != 0)
         {
-            emit Signaltt();
+            emit signalTt();
             break;
         }
         else if(Inittime >= Timeout)
         {
-            emit Signaltf();
+            emit signalTf();
             break;
         }
     }

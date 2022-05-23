@@ -27,14 +27,14 @@ public:
 
 public slots:
 
-    void Addaction(
+    void addAction(
             QAction *action,
             QString text,
             QString objectname);
 
 private:
 
-    SuperCore *SuperC           = nullptr;
+    SuperCore *Core             = nullptr;
     QMenu *Menu                 = nullptr;
     QWidget *Widget             = nullptr;
     QAction *Copy               = nullptr;
@@ -43,17 +43,17 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Appendtextinit();
+    void appendTextInit();
 
-    void Appendactioninit();
+    void appendActionInit();
 
-    void Menushowinit();
+    void menuShowInit();
 
-    void Menushow();
+    void menuShow();
 
 };
 

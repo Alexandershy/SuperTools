@@ -1,7 +1,7 @@
 #ifndef _CHATSHAREDIALOG__H
 #define _CHATSHAREDIALOG__H
 
-#include "_chatsharebox_.h"
+#include "_chatsharedialogui_.h"
 #include "__superwindow__/_superwindow_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include <QDesktopServices>
@@ -21,11 +21,13 @@ public:
 
     ~ChatShareDialog();
 
-    void Refreshsharedfiles();
+public slots:
+
+    void refreshSharedFiles();
 
 private:
 
-    ChatShareBox *Plugin            = nullptr;
+    ChatShareDialogui *Plugin       = nullptr;
     QLineEdit *Lineedit             = nullptr;
     GetFileInfoThread *Threadga     = nullptr;
     QString Localuser               = "";
@@ -38,41 +40,41 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Checkuserinit();
+    void checkUserInit();
 
-    void Openitemoptions();
+    void openItemOptions();
 
-    void Selectsharedfiles();
+    void selectSharedFiles();
 
-    void Addsharedfiles(
+    void addSharedFiles(
             QStringList filelist);
 
-    void Appendtolocal(
+    void appendToLocal(
             QStringList *fileinfo);
 
-    void Refreshsharedfilesslot(
+    void refreshSharedFilesSlot(
             QStringList fileinfotemp);
 
-    void Cancelsharedfiles();
+    void cancelSharedFiles();
 
-    void Writetolocal();
+    void writeToLocal();
 
-    void Downloadfiles();
+    void downloadFiles();
 
-    void Selectdownloadpath();
+    void selectDownloadPath();
 
-    void Downloadfilesas(
+    void downloadFilesAs(
             QString folder);
 
-    void Opencontactfolder();
+    void openContactFolder();
 
 signals:
 
-    void Signalca(
+    void signalCa(
             int fileindex,
             QString filepath);
 
@@ -98,13 +100,13 @@ public slots:
 
     void run();
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 private:
 
-    SuperCore *SuperC       = nullptr;
+    SuperCore *Core         = nullptr;
     QString Sharedfilepath  = "";
     int Columncount         = 0;
     QString Shared          = "";
@@ -114,7 +116,7 @@ private:
 
 signals:
 
-    void Signalga(
+    void signalGa(
             QStringList fileinfotemp);
 
 };

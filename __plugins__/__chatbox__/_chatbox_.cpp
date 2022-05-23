@@ -10,10 +10,10 @@ SuperTab* Interface::Loadplugin()
 ChatBox::ChatBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("ChatBox");
-    Setgroupbox(2,2);
-    Setstretch({1,99},{99,1});
-    Init();
+    readMe("ChatBox");
+    setGroupBox(2,2);
+    setStretch({1,99},{99,1});
+    init();
 }
 
 ChatBox::~ChatBox()
@@ -23,36 +23,36 @@ ChatBox::~ChatBox()
 
 void ChatBox::resizeEvent(QResizeEvent *)
 {
-    emit Signalca();
+    emit signalCa();
 }
 
-void ChatBox::Init()
+void ChatBox::init()
 {
-    Moduleinit();
-    Userinit();
-    Clientinit();
-    Serverinit();
+    moduleInit();
+    userInit();
+    clientInit();
+    serverInit();
 }
 
-void ChatBox::Moduleinit()
+void ChatBox::moduleInit()
 {
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
-    Moduleb = new ModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
-    Modulec = new ModuleC(this,Rightgroupboxlist.at(0)->Insidelayout);
-    Moduled = new ModuleD(this,Rightgroupboxlist.at(1)->Insidelayout);
-    connect(Modulea->ui->pushButton_3,                       &QPushButton::clicked,              this,&ChatBox::Getcontacts);
-    connect(Modulea->ui->pushButton_10,                      &QPushButton::clicked,              this,&ChatBox::Openprofile);
-    connect(Modulea->ui->pushButton,                         &QPushButton::clicked,              this,&ChatBox::Opensharedfiles);
-    connect(Moduleb->ui->treeWidget,                         &QTreeWidget::itemPressed,          this,&ChatBox::Opencontacts);
-    connect(Modulec->ui->scrollArea->verticalScrollBar(),    &QAbstractSlider::rangeChanged,     this,&ChatBox::Movetobottom);
-    connect(Moduled->ui->pushButton_5,                       &QPushButton::clicked,              this,&ChatBox::Opencontactsshared);
-    connect(Moduled->ui->pushButton_4,                       &QPushButton::clicked,              this,&ChatBox::Getchatanwser);
-    connect(Moduled->ui->textEdit,                           &QTextEdit::textChanged,            this,&ChatBox::Enablesendbutton);
+    Modulea = new ChatModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Moduleb = new ChatModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
+    Modulec = new ChatModuleC(this,Rightgroupboxlist.at(0)->Insidelayout);
+    Moduled = new ChatModuleD(this,Rightgroupboxlist.at(1)->Insidelayout);
+    connect(Modulea->ui->pushButton_3,                       &QPushButton::clicked,              this,&ChatBox::getContacts);
+    connect(Modulea->ui->pushButton_10,                      &QPushButton::clicked,              this,&ChatBox::openProfile);
+    connect(Modulea->ui->pushButton,                         &QPushButton::clicked,              this,&ChatBox::openSharedFiles);
+    connect(Moduleb->ui->treeWidget,                         &QTreeWidget::itemPressed,          this,&ChatBox::openContacts);
+    connect(Modulec->ui->scrollArea->verticalScrollBar(),    &QAbstractSlider::rangeChanged,     this,&ChatBox::moveToBottom);
+    connect(Moduled->ui->pushButton_5,                       &QPushButton::clicked,              this,&ChatBox::openContactsShared);
+    connect(Moduled->ui->pushButton_4,                       &QPushButton::clicked,              this,&ChatBox::getChatAnwser);
+    connect(Moduled->ui->textEdit,                           &QTextEdit::textChanged,            this,&ChatBox::enableSendButton);
 }
 
 /*  module init;*/
 
-void ChatBox::Userinit()
+void ChatBox::userInit()
 {
     Username = QDir::home().dirName() + " " + QHostInfo::localHostName();
     Userfolder = "./__depycache__/__chat__/__" + Username + "__/";
@@ -64,7 +64,7 @@ void ChatBox::Userinit()
 
 /*  set user init;*/
 
-void ChatBox::Clientinit()
+void ChatBox::clientInit()
 {
     Timerca             = new QTimer(this);
     Timercb             = new QTimer(this);
@@ -78,20 +78,20 @@ void ChatBox::Clientinit()
     Timerca->setInterval(1000);
     Udppackclient->bind(37061,QAbstractSocket::ShareAddress);
     Udpchatclient->bind(37064,QAbstractSocket::ShareAddress);
-    connect(Progressbardialog,  &SuperProgressBarDialog::Signalpa,  this,&ChatBox::Getfilebytestop);
-    connect(Timerca,            &QTimer::timeout,                   this,&ChatBox::Getcontactsfslot);
-    connect(Timercb,            &QTimer::timeout,                   this,&ChatBox::Getchatanwserfslot);
-    connect(Udppackclient,      &QUdpSocket::readyRead,             this,&ChatBox::Getcontactstslot);
-    connect(Tcpfileinfoclient,  &QTcpSocket::readyRead,             this,&ChatBox::Getfileinfoslot);
+    connect(Progressbardialog,  &SuperProgressBarDialog::signalPa,  this,&ChatBox::getFileByteStop);
+    connect(Timerca,            &QTimer::timeout,                   this,&ChatBox::getContactsfSlot);
+    connect(Timercb,            &QTimer::timeout,                   this,&ChatBox::getChatAnwserfSlot);
+    connect(Udppackclient,      &QUdpSocket::readyRead,             this,&ChatBox::getContactstSlot);
+    connect(Tcpfileinfoclient,  &QTcpSocket::readyRead,             this,&ChatBox::getFileInfoSlot);
     //connect(Tcpfileinfoclient,  &QTcpSocket::disconnected,        this,&ChatBox::Getfileinfoslot);
-    connect(Tcpfilebyteclient,  &QTcpSocket::readyRead,             this,&ChatBox::Getfilebyteslot);
-    connect(Tcpfilebyteclient,  &QTcpSocket::disconnected,          this,&ChatBox::Getfilebyteend);
-    connect(Udpchatclient,      &QUdpSocket::readyRead,             this,&ChatBox::Getchatanwsertslot);
+    connect(Tcpfilebyteclient,  &QTcpSocket::readyRead,             this,&ChatBox::getFileByteSlot);
+    connect(Tcpfilebyteclient,  &QTcpSocket::disconnected,          this,&ChatBox::getFileByteEnd);
+    connect(Udpchatclient,      &QUdpSocket::readyRead,             this,&ChatBox::getChatAnwsertSlot);
 }
 
 /*  set client init;*/
 
-void ChatBox::Serverinit()
+void ChatBox::serverInit()
 {
     Udppackserver       = new QUdpSocket(this);
     Tcpfileinfoserver   = new QTcpServer(this);
@@ -101,30 +101,30 @@ void ChatBox::Serverinit()
     Tcpfileinfoserver->listen(Udppackserver->localAddress(),37072);
     Tcpfilebyteserver->listen(Udppackserver->localAddress(),37073);
     Udpchatserver->bind(37074,QAbstractSocket::ShareAddress);
-    connect(Udppackserver,&QUdpSocket::readyRead,this,&ChatBox::Returncontacts);
-    connect(Tcpfileinfoserver,&QTcpServer::newConnection,this,&ChatBox::Newfileinfotcpsocket);
-    connect(Tcpfilebyteserver,&QTcpServer::newConnection,this,&ChatBox::Newfilebytetcpsocket);
-    connect(Udpchatserver,&QUdpSocket::readyRead, this,&ChatBox::Returnchatanwser);
+    connect(Udppackserver,      &QUdpSocket::readyRead,     this,&ChatBox::returnContacts);
+    connect(Tcpfileinfoserver,  &QTcpServer::newConnection, this,&ChatBox::newFileInfoTcpsocket);
+    connect(Tcpfilebyteserver,  &QTcpServer::newConnection, this,&ChatBox::newFileByteTcpsocket);
+    connect(Udpchatserver,      &QUdpSocket::readyRead,     this,&ChatBox::returnChatAnwser);
 }
 
 /*  set server init;*/
 
-void ChatBox::Openprofile()
+void ChatBox::openProfile()
 {
-    Infodialog->Show();
+    Infodialog->show();
 }
 
 /*  edit your profile;*/
 
-void ChatBox::Opensharedfiles()
+void ChatBox::openSharedFiles()
 {
     ChatShareDialog *usersharedialog = new ChatShareDialog(nullptr,Modulea->ui->lineEdit);
-    usersharedialog->Show();
+    usersharedialog->show();
 }
 
 /*  edit your shared files;*/
 
-void ChatBox::Getcontacts()
+void ChatBox::getContacts()
 {
     Moduleb->ui->treeWidget->clear();
     Udppackclient->writeDatagram("supertools<split>contacts",QHostAddress::Broadcast,37071);
@@ -135,7 +135,7 @@ void ChatBox::Getcontacts()
 
 /*  broadcast supertools for get online device info;*/
 
-void ChatBox::Getcontactstslot()
+void ChatBox::getContactstSlot()
 {
     QNetworkDatagram datagram = Udppackclient->receiveDatagram();
     QByteArray info = datagram.data();
@@ -146,13 +146,13 @@ void ChatBox::Getcontactstslot()
         item->setText(1,datagram.senderAddress().toString());
         item->setText(2,QString(info).split("<split>").at(1));
         Moduleb->ui->treeWidget->addTopLevelItem(item);
-        Getcontactsfslot();
+        getContactsfSlot();
     }
 }
 
 /*  anwser device has online and local time;*/
 
-void ChatBox::Getcontactsfslot()
+void ChatBox::getContactsfSlot()
 {
     if(Modulea->ui->pushButton_3->isEnabled() == false)
     {
@@ -163,29 +163,29 @@ void ChatBox::Getcontactsfslot()
 
 /*  client have not receive any server anwser;*/
 
-void ChatBox::Opencontacts()
+void ChatBox::openContacts()
 {
-    SuperC->Deleteallitemsoflayout(Modulec->ui->verticalLayout_9);
+    Core->deleteAllItemsOfLayout(Modulec->ui->verticalLayout_9);
     Contactsname = Moduleb->ui->treeWidget->currentItem()->text(0);
     Contactsfolder = "./__depycache__/__chat__/__" + Contactsname + "__/";
     Hostaddress.setAddress(Moduleb->ui->treeWidget->currentItem()->text(1).split("ffff:").at(1).split("%").at(0));
     Modulec->ui->lineEdit_2->setText(Contactsname);
     Moduled->ui->pushButton_5->setEnabled(true);
-    Downloadsharedfiles(-1,Contactsfolder);
-    Addcontactsmessagerecord();
+    downloadSharedFiles(-1,Contactsfolder);
+    addContactsMessageRecord();
 }
 
 /*  open contacts and get his profile and file shared;*/
 
-void ChatBox::Addcontactsmessagerecord()
+void ChatBox::addContactsMessageRecord()
 {
     QString datatime = QDateTime::currentDateTime().toString("yyyyMMdd");
-    SuperC->Creatfolder(Contactsfolder);
+    Core->creatFolder(Contactsfolder);
     Messagerecorded = Contactsfolder + "_" + datatime + "_.txt";
     QFile file(Messagerecorded);
     if(file.exists())
     {
-        QStringList messagelist = SuperC->Readonlyfile(file.fileName()).split(":\r\n<messagesplits>\r\n");
+        QStringList messagelist = Core->readOnlyFile(file.fileName()).split(":\r\n<messagesplits>\r\n");
         QString selfsplitchar = Modulea->ui->lineEdit->text() + " self:\r\n";
         QString othersplitchar = Contactsname + " other:\r\n";
         for(int i = 0;i < messagelist.count();i++)
@@ -194,80 +194,80 @@ void ChatBox::Addcontactsmessagerecord()
             if(message.contains(othersplitchar))
             {
                 Chatter *chatter = new Chatter(Modulec->ui->scrollArea,"other",Contactsname,message.split(othersplitchar).at(1));
-                connect(this,&ChatBox::Signalca,chatter,&Chatter::Adjustsize);
+                connect(this,&ChatBox::signalCa,chatter,&Chatter::adjustSize);
                 Modulec->ui->verticalLayout_9->addWidget(chatter);
             }
             else if(messagelist.at(i).contains(selfsplitchar))
             {
                 Chatter *chatter = new Chatter(Modulec->ui->scrollArea,"self",Modulea->ui->lineEdit->text(),messagelist.at(i).split(selfsplitchar).at(1));
-                connect(this,&ChatBox::Signalca,chatter,&Chatter::Adjustsize);
+                connect(this,&ChatBox::signalCa,chatter,&Chatter::adjustSize);
                 Modulec->ui->verticalLayout_9->addWidget(chatter);
             }
         }
     }
     else
     {
-        SuperC->Creatfile(Messagerecorded);
+        Core->creatFile(Messagerecorded);
     }
 }
 
 /*  add today's chatter with contacts;*/
 
-void ChatBox::Getfileinfo(QByteArray fileindex)
+void ChatBox::getFileInfo(QByteArray fileindex)
 {
-    SuperN->Connecttcpserver(Tcpfileinfoclient,Moduleb->ui->treeWidget->currentItem()->text(1).split("ffff:").at(1).split("%").at(0),37072,1000);
+    Network->connectTcpServer(Tcpfileinfoclient,Moduleb->ui->treeWidget->currentItem()->text(1).split("ffff:").at(1).split("%").at(0),37072,1000);
     if(Tcpfileinfoclient->state() == QTcpSocket::ConnectedState)
     {
         QByteArray command = fileindex + "<split>";
         command.resize(128);
         Tcpfileinfoclient->write(command);
-        Progressbardialog->Settitle("Receive " + Contactsname + " profileing...");
-        Progressbardialog->Setvaluemessage(0,"(1/2)check fileinfo...");
-        Progressbardialog->Show();
+        Progressbardialog->setTitle("Receive " + Contactsname + " profileing...");
+        Progressbardialog->setValueMessage(0,"(1/2)check fileinfo...");
+        Progressbardialog->show();
     }
     else
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"connect server error;\ntry again;");
-        notedialog->Messageinit();
+        notedialog->messageInit();
     }
 }
 
 /*  send command to get file's info;*/
 
-void ChatBox::Getfileinfoslot()
+void ChatBox::getFileInfoSlot()
 {
     if(Tcpfileinfoclient->bytesAvailable() == 512)
     {
         QStringList fileinfolist = QString(Tcpfileinfoclient->readAll()).split("<split>");
         Tranfilepath = Contactsfolder + fileinfolist.at(1);
         Tranfilehash = fileinfolist.at(4);
-        SuperN->Disconnecttcpserver(Tcpfileinfoclient,1000);
-        if(Replacefile(Tranfilepath,fileinfolist.at(2),Tranfilehash))
+        Network->disConnectTcpServer(Tcpfileinfoclient,1000);
+        if(replaceFile(Tranfilepath,fileinfolist.at(2),Tranfilehash))
         {
-            SuperC->Creatfile(Tranfilepath);
-            Progressbardialog->Setvaluemessage(0,"(1/2)receive fileinfo success");
-            SuperN->Connecttcpserver(Tcpfilebyteclient,Moduleb->ui->treeWidget->currentItem()->text(1).split("ffff:").at(1).split("%").at(0),37073,1000);
+            Core->creatFile(Tranfilepath);
+            Progressbardialog->setValueMessage(0,"(1/2)receive fileinfo success");
+            Network->connectTcpServer(Tcpfilebyteclient,Moduleb->ui->treeWidget->currentItem()->text(1).split("ffff:").at(1).split("%").at(0),37073,1000);
             Tranendmessage = "Get " + Tranfilepath  + " interrupt;";
-            Getfilebyte();
+            getFileByte();
         }
         else
         {
-            Copytotargetpath();
-            Progressbardialog->Setvaluemessage(100,"(2/2)check fileinfo success");
+            copyToTargetPath();
+            Progressbardialog->setValueMessage(100,"(2/2)check fileinfo success");
         }
     }
 }
 
 /*  analysis file's info,include name,size,birthtime,1mbit hash,available;*/
 
-bool ChatBox::Replacefile(QString filename,QString filesize,QString filehash)
+bool ChatBox::replaceFile(QString filename,QString filesize,QString filehash)
 {
     bool boola = false;
     QFileInfo file(filename);
     Tranfilesize = filesize.toULongLong(&boola);
     if(file.exists())
     {
-        if((file.size() != Tranfilesize || SuperC->Getfilehash(filename) != filehash.toUtf8()) && boola == true)
+        if((file.size() != Tranfilesize || Core->getFileHash(filename) != filehash.toUtf8()) && boola == true)
         {
             QFile::remove(filename);
             return true;
@@ -279,7 +279,7 @@ bool ChatBox::Replacefile(QString filename,QString filesize,QString filehash)
 
 /*  check file exist or changed and return result;*/
 
-void ChatBox::Getfilebyte()
+void ChatBox::getFileByte()
 {
     if(Tranfilesize - Tranwritecompletedsize >= Trandatasize)
     {
@@ -297,41 +297,41 @@ void ChatBox::Getfilebyte()
     else
     {
         Tranendmessage = "Get " + Tranfilepath  + " completed;";
-        Getfilebytestop();
+        getFileByteStop();
     }
 }
 
 /*  send command to get file bytes;*/
 
-void ChatBox::Getfilebytestop()
+void ChatBox::getFileByteStop()
 {
-    SuperN->Disconnecttcpserver(Tcpfilebyteclient,1000);
+    Network->disConnectTcpServer(Tcpfilebyteclient,1000);
 }
 
 /*  stop get file bytes;*/
 
-void ChatBox::Getfilebyteend()
+void ChatBox::getFileByteEnd()
 {
     if(Fileindexreceiving >= 0)
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,Tranendmessage);
-        notedialog->Messageinit();
+        notedialog->messageInit();
     }
-    SuperC->Appendbytes(Tranfilepath,Trandata);
+    Core->appendBytes(Tranfilepath,Trandata);
     Tranwritecompletedsize = 0;
     Trandata.clear();
     Trandatasize = 1024000;
-    Copytotargetpath();
-    Progressbardialog->Setvaluemessage(100,"(2/2)" + Tranendmessage);
-    emit Signalcb();
+    copyToTargetPath();
+    Progressbardialog->setValueMessage(100,"(2/2)" + Tranendmessage);
+    emit signalCb();
 }
 
 /*  receive file bytes end,write bytes to local file;*/
 
-void ChatBox::Copytotargetpath()
+void ChatBox::copyToTargetPath()
 {
     QStringList filepathlist = Tranfilepath.split("/");
-    QString newtargetpath = Targetfolder + SuperC->Getlistlastmember(&filepathlist);
+    QString newtargetpath = Targetfolder + Core->getListLastMember(&filepathlist);
     if(Tranfilepath != newtargetpath)
     {
         QFile::remove(newtargetpath);
@@ -341,46 +341,46 @@ void ChatBox::Copytotargetpath()
 
 /*  download to new target path;*/
 
-void ChatBox::Getfilebyteslot()
+void ChatBox::getFileByteSlot()
 {
     if(Tcpfilebyteclient->bytesAvailable() == Trandatasize)
     {
         QByteArray data = Tcpfilebyteclient->readAll();
         Trandata.append(data);
         Tranwritecompletedsize = Tranwritecompletedsize + data.size();
-        Progressbardialog->Setvaluemessage(double(Tranwritecompletedsize) / Tranfilesize * 99,"(2/2)receive file byte...");
-        Getfilebyte();
+        Progressbardialog->setValueMessage(double(Tranwritecompletedsize) / Tranfilesize * 99,"(2/2)receive file byte...");
+        getFileByte();
     }
     else if(Trandata.size() > Trandatasize * 100)
     {
-        SuperC->Appendbytes(Tranfilepath,Trandata);
+        Core->appendBytes(Tranfilepath,Trandata);
         Trandata.clear();
     }
 }
 
 /*  receive file bytes and save as cache;*/
 
-void ChatBox::Opencontactsshared()
+void ChatBox::openContactsShared()
 {
-    Downloadsharedfiles(-2,Contactsfolder);
+    downloadSharedFiles(-2,Contactsfolder);
     ChatShareDialog *contactssharedialog = new ChatShareDialog(nullptr,Modulec->ui->lineEdit_2);
-    connect(contactssharedialog,&ChatShareDialog::Signalca,this,&ChatBox::Downloadsharedfiles);
-    connect(this,&ChatBox::Signalcb,contactssharedialog,&ChatShareDialog::Refreshsharedfiles);
-    contactssharedialog->Show();
+    connect(contactssharedialog,&ChatShareDialog::signalCa,this,&ChatBox::downloadSharedFiles);
+    connect(this,&ChatBox::signalCb,contactssharedialog,&ChatShareDialog::refreshSharedFiles);
+    contactssharedialog->show();
 }
 
 /*  open contacts and get its profile and file shared;*/
 
-void ChatBox::Downloadsharedfiles(int fileindex,QString path)
+void ChatBox::downloadSharedFiles(int fileindex,QString path)
 {
     Targetfolder = path;
     Fileindexreceiving = fileindex;
-    Getfileinfo(QByteArray::number(Fileindexreceiving));
+    getFileInfo(QByteArray::number(Fileindexreceiving));
 }
 
 /*  download files' api;*/
 
-void ChatBox::Enablesendbutton()
+void ChatBox::enableSendButton()
 {
     if(Moduled->ui->textEdit->toPlainText().isEmpty() || Hostaddress.isNull())
     {
@@ -394,7 +394,7 @@ void ChatBox::Enablesendbutton()
 
 /*  enable send button or not;*/
 
-void ChatBox::Getchatanwser()
+void ChatBox::getChatAnwser()
 {
     Moduled->ui->pushButton_4->setText("message sending");
     Udpchatclient->writeDatagram(Modulea->ui->lineEdit->text().toUtf8() + "<namesplit>" + Moduled->ui->textEdit->toHtml().toUtf8(),Hostaddress,37074);
@@ -403,14 +403,14 @@ void ChatBox::Getchatanwser()
 
 /*  send message to contacts and command for anwser;*/
 
-void ChatBox::Movetobottom()
+void ChatBox::moveToBottom()
 {
     Modulec->ui->scrollArea->verticalScrollBar()->setValue(Modulec->ui->scrollArea->verticalScrollBar()->maximum());
 }
 
 /*  scroll area move to bottom when send message;*/
 
-void ChatBox::Getchatanwsertslot()
+void ChatBox::getChatAnwsertSlot()
 {
     QNetworkDatagram datagram = Udpchatclient->receiveDatagram();
     QByteArray info = datagram.data();
@@ -419,9 +419,9 @@ void ChatBox::Getchatanwsertslot()
         Timercb->stop();
         Moduled->ui->pushButton_4->setText("Send");
         QString message = Moduled->ui->textEdit->toHtml();
-        SuperC->Appendfile(Messagerecorded,Modulea->ui->lineEdit->text() + " self:\r\n" + message + ":\r\n<messagesplits>\r\n");
+        Core->appendFile(Messagerecorded,Modulea->ui->lineEdit->text() + " self:\r\n" + message + ":\r\n<messagesplits>\r\n");
         Chatter *chatter = new Chatter(Modulec->ui->scrollArea,"self",Modulea->ui->lineEdit->text(),message);
-        connect(this,&ChatBox::Signalca,chatter,&Chatter::Adjustsize);
+        connect(this,&ChatBox::signalCa,chatter,&Chatter::adjustSize);
         Modulec->ui->verticalLayout_9->addWidget(chatter);
         Moduled->ui->textEdit->clear();
     }
@@ -429,7 +429,7 @@ void ChatBox::Getchatanwsertslot()
 
 /*  receive contacts anwser and record message to local;*/
 
-void ChatBox::Getchatanwserfslot()
+void ChatBox::getChatAnwserfSlot()
 {
     Timercb->stop();
     Moduled->ui->pushButton_4->setText("Resend");
@@ -439,23 +439,23 @@ void ChatBox::Getchatanwserfslot()
 
 //***************************************************Server*********************************************************//
 
-void ChatBox::Newfileinfotcpsocket()
+void ChatBox::newFileInfoTcpsocket()
 {
     QTcpSocket *fileinfosocket = Tcpfileinfoserver->nextPendingConnection();
-    connect(fileinfosocket,&QTcpSocket::readyRead,this,&ChatBox::Returnfileinfo);
+    connect(fileinfosocket,&QTcpSocket::readyRead,this,&ChatBox::returnFileInfo);
 }
 
 /*  new tcpsocket has connected,connect its slot;*/
 
-void ChatBox::Newfilebytetcpsocket()
+void ChatBox::newFileByteTcpsocket()
 {
     QTcpSocket *filebytesocket = Tcpfilebyteserver->nextPendingConnection();
-    connect(filebytesocket,&QTcpSocket::readyRead,this,&ChatBox::Returnfilebyte);
+    connect(filebytesocket,&QTcpSocket::readyRead,this,&ChatBox::returnFileByte);
 }
 
 /*  new tcpsocket has connected,connect its slot;*/
 
-void ChatBox::Returncontacts()
+void ChatBox::returnContacts()
 {
     QNetworkDatagram datagram = Udppackserver->receiveDatagram();
     if(datagram.data() == "supertools<split>contacts")
@@ -467,7 +467,7 @@ void ChatBox::Returncontacts()
 
 /*  anwser device has online and local time;*/
 
-void ChatBox::Returnfileinfo()
+void ChatBox::returnFileInfo()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     if(tcpsocket->bytesAvailable() == 128)
@@ -479,23 +479,23 @@ void ChatBox::Returnfileinfo()
         {
             case -1:
             {
-                SuperC->Getfileinfobyte(Userprofile,&fileinfo);
+                Core->getFileInfoByte(Userprofile,&fileinfo);
                 fileinfo.resize(512);
                 tcpsocket->write(fileinfo);
                 break;
             }
             case -2:
             {
-                SuperC->Getfileinfobyte(Usersharedfile,&fileinfo);
+                Core->getFileInfoByte(Usersharedfile,&fileinfo);
                 fileinfo.resize(512);
                 tcpsocket->write(fileinfo);
                 break;
             }
             default:
             {
-                Fileinfolist = SuperC->Readonlyfile(Usersharedfile).split("\r\n");
+                Fileinfolist = Core->readOnlyFile(Usersharedfile).split("\r\n");
                 QString filename = Fileinfolist.at(fileindex).split("<split>").at(0) + Fileinfolist.at(fileindex).split("<split>").at(1);
-                SuperC->Getfileinfobyte(filename,&fileinfo);
+                Core->getFileInfoByte(filename,&fileinfo);
                 fileinfo.resize(512);
                 tcpsocket->write(fileinfo);
             }
@@ -505,7 +505,7 @@ void ChatBox::Returnfileinfo()
 
 /*  return file's info;*/
 
-void ChatBox::Returnfilebyte()
+void ChatBox::returnFileByte()
 {
     QTcpSocket *tcpsocket = (QTcpSocket*)sender();
     if(tcpsocket->bytesAvailable() == 128)
@@ -518,20 +518,20 @@ void ChatBox::Returnfilebyte()
         {
             case -1:
             {
-                QByteArray filedata = SuperC->Readbytesint64(Userprofile,fileseek,datasize);
+                QByteArray filedata = Core->readBytesInt64(Userprofile,fileseek,datasize);
                 tcpsocket->write(filedata);
                 break;
             }
             case -2:
             {
-                QByteArray filedata = SuperC->Readbytesint64(Usersharedfile,fileseek,datasize);
+                QByteArray filedata = Core->readBytesInt64(Usersharedfile,fileseek,datasize);
                 tcpsocket->write(filedata);
                 break;
             }
             default:
             {
                 QString filepath = Fileinfolist.at(fileindex).split("<split>").at(0) + Fileinfolist.at(fileindex).split("<split>").at(1);
-                QByteArray filedata = SuperC->Readbytesint64(filepath,fileseek,datasize);
+                QByteArray filedata = Core->readBytesInt64(filepath,fileseek,datasize);
                 tcpsocket->write(filedata);
             }
         }
@@ -540,7 +540,7 @@ void ChatBox::Returnfilebyte()
 
 /*  return file's bytes;*/
 
-void ChatBox::Returnchatanwser()
+void ChatBox::returnChatAnwser()
 {
     QNetworkDatagram datagram = Udpchatserver->receiveDatagram();
     QStringList messageinfo = QString(datagram.data()).split("<namesplit>");
@@ -550,15 +550,15 @@ void ChatBox::Returnchatanwser()
         QString message = messageinfo.at(1);
         QString messagefolder = "./__depycache__/__chat__/__" + username + "__";
         QString messagerecorded = messagefolder + "/_" + QDateTime::currentDateTime().toString("yyyyMMdd") + "_.txt";
-        SuperC->Creatfolder(messagefolder);
-        SuperC->Appendfile(messagerecorded,username + " other:\r\n" + message + ":\r\n<messagesplits>\r\n");
+        Core->creatFolder(messagefolder);
+        Core->appendFile(messagerecorded,username + " other:\r\n" + message + ":\r\n<messagesplits>\r\n");
         Modulec->ui->comboBox->insertItem(0,"a message from " + username);
         Modulec->ui->comboBox->setCurrentIndex(0);
         Udpchatserver->writeDatagram("OK",datagram.senderAddress(),37064);
         if(username == Contactsname)
         {
             Chatter *chatter = new Chatter(Modulec->ui->scrollArea,"other",Contactsname,message);
-            connect(this,&ChatBox::Signalca,chatter,&Chatter::Adjustsize);
+            connect(this,&ChatBox::signalCa,chatter,&Chatter::adjustSize);
             Modulec->ui->verticalLayout_9->addWidget(chatter);
         }
     }

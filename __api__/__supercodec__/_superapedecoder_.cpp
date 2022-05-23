@@ -37,7 +37,7 @@ SuperApeDecoder::SuperApeDecoder(QObject *parent,QString infilename,QString outf
     Infilename = Infilenamebyte.data();
     Outfilenamebyte = outfilename.toUtf8();
     Outfilename = Outfilenamebyte.data();
-    Init();
+    init();
 }
 
 SuperApeDecoder::~SuperApeDecoder()
@@ -47,47 +47,47 @@ SuperApeDecoder::~SuperApeDecoder()
     delete Buffer;
 }
 
-void SuperApeDecoder::Init()
+void SuperApeDecoder::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void SuperApeDecoder::Objectinit()
+void SuperApeDecoder::objectInit()
 {
     Multimedia = new SuperMultiMedia(this);
     Timer = new QTimer();
     Timer->setInterval(100);
-    connect(Timer,&QTimer::timeout,this,&SuperApeDecoder::Returnprogress);
+    connect(Timer,&QTimer::timeout,this,&SuperApeDecoder::returnProgress);
     Timer->start();
 }
 
 void SuperApeDecoder::run()
 {   
-    Getapefileinfo();
-    Writewavfile();
-    Rewritewavfile();
+    getApeFileInfo();
+    writeWavFile();
+    rewriteWavFile();
 }
 
-void SuperApeDecoder::Getapefileinfo()
+void SuperApeDecoder::getApeFileInfo()
 {
     Apedecoder = c_APEDecompress_Create(Infilename,&Errorcode);
     if(Errorcode == 0 && Apedecoder)
     {
-        Bits = c_APEDecompress_GetInfo(Apedecoder,APE_INFO_BITS_PER_SAMPLE,0,0);
-        Samplerate = c_APEDecompress_GetInfo(Apedecoder,APE::APE_INFO_SAMPLE_RATE,0,0);
-        Channels = c_APEDecompress_GetInfo(Apedecoder,APE_INFO_CHANNELS,0,0);
-        Wavlength = c_APEDecompress_GetInfo(Apedecoder,APE_INFO_WAV_TOTAL_BYTES,0,0);
+        Bits = c_APEDecompress_GetInfo(Apedecoder,APE::IAPEDecompress::APE_INFO_BITS_PER_SAMPLE,0,0);
+        Samplerate = c_APEDecompress_GetInfo(Apedecoder,APE::IAPEDecompress::APE_INFO_SAMPLE_RATE,0,0);
+        Channels = c_APEDecompress_GetInfo(Apedecoder,APE::IAPEDecompress::APE_INFO_CHANNELS,0,0);
+        Wavlength = c_APEDecompress_GetInfo(Apedecoder,APE::IAPEDecompress::APE_INFO_WAV_TOTAL_BYTES,0,0);
     }
 }
 
 /*  get ape file info;*/
 
-void SuperApeDecoder::Writewavfile()
+void SuperApeDecoder::writeWavFile()
 {
     FILE *file;
-    APE::int64 nBlockAlign = c_APEDecompress_GetInfo(Apedecoder,APE_INFO_BLOCK_ALIGN, 0, 0);
+    APE::int64 nBlockAlign = c_APEDecompress_GetInfo(Apedecoder,APE::IAPEDecompress::APE_INFO_BLOCK_ALIGN, 0, 0);
     Buffer = new char [size_t(1024 * nBlockAlign)];
-    APE::int64 nTotalBlocks = c_APEDecompress_GetInfo(Apedecoder,APE::APE_DECOMPRESS_TOTAL_BLOCKS, 0, 0);
+    APE::int64 nTotalBlocks = c_APEDecompress_GetInfo(Apedecoder,APE::IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS, 0, 0);
     APE::int64 nBlocksRetrieved = 1;
     APE::int64 nTotalBlocksRetrieved = 0;
     unsigned int nChecksum = 0;
@@ -108,7 +108,7 @@ void SuperApeDecoder::Writewavfile()
 
 /*  ape source code;*/
 
-void SuperApeDecoder::Rewritewavfile()
+void SuperApeDecoder::rewriteWavFile()
 {
     QFile file(Qoutfilename);
     if(file.exists())
@@ -117,16 +117,16 @@ void SuperApeDecoder::Rewritewavfile()
         QByteArray bytes = file.readAll();
         file.close();
         file.remove();
-        Multimedia->Writewavfile(Qoutfilename,Wavlength,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
+        Multimedia->writeWavFile(Qoutfilename,Wavlength,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
     }
 }
 
 /*  add wav header;*/
 
-void SuperApeDecoder::Returnprogress()
+void SuperApeDecoder::returnProgress()
 {
     if(Progress < 100)
     {
-        emit Signalaa(Progress);
+        emit signalAa(Progress);
     }
 }

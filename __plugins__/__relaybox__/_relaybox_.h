@@ -1,5 +1,6 @@
 #ifndef _RELAYBOX__H
 #define _RELAYBOX__H
+#define _RELAYBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
@@ -10,10 +11,9 @@
 #include "__superlogger__/_superlogger_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "__module__/_modulec_.h"
-#include "_relaybox__global.h"
+#include "__module__/_relaymodulea_.h"
+#include "__module__/_relaymoduleb_.h"
+#include "__module__/_relaymodulec_.h"
 #include <QProgressBar>
 #include <QTimer>
 
@@ -37,11 +37,11 @@ public:
 
 private:
 
-    SuperSerial *SuperS                         = nullptr;
-    QSerialPort *Serial                         = nullptr;
-    ModuleA *Modulea                            = nullptr;
-    ModuleB *Moduleb                            = nullptr;
-    ModuleC *Modulec                            = nullptr;
+    SuperSerial *Serial                         = nullptr;
+    QSerialPort *Serialport                     = nullptr;
+    RelayModuleA *Modulea                       = nullptr;
+    RelayModuleB *Moduleb                       = nullptr;
+    RelayModuleC *Modulec                       = nullptr;
     QTimer *Timerca                             = nullptr;
     QStringList Serialnamelist                  = {};
     QStringList *Gtkrelayclosecommand           = nullptr;
@@ -59,8 +59,8 @@ private:
     QList<QLineEdit*> *Lineeditlist             = nullptr;
     Channel15 *Channel15relay                   = nullptr;
     Channel34 *Channel34relay                   = nullptr;
-    ScanSerialPort *Threadsa                    = nullptr;
-    SerialThread *Threadta                      = nullptr;
+    SuperScanSerial *Threadsa                   = nullptr;
+    SuperSerialThread *Threadta                 = nullptr;
     QFileInfo Fileinfo                          = {};
     QString Defaultsettingpath                  = "./__depycache__/__gtkrelay__/_defaultsetting_.ini";
     SuperLogger *Logger                         = nullptr;
@@ -68,73 +68,72 @@ private:
 private slots:
 
     /*  main function*/
+    void init();
 
-    void Init();
+    void timerInit();
 
-    void Timerinit();
+    void widgetListInit();
 
-    void Widgetlistinit();
+    void objectInit();
 
-    void Objectinit();
+    void getSerialPort();
 
-    void Getserialport();
+    bool enableConnectButton();
 
-    bool Enableconnectbutton();
+    void enableScanPortButton();
 
-    void Enablescanportbutton();
+    void connectSerialPort();
 
-    void Connectserialport();
+    void disconnectSerialPort();
 
-    void Disconnectserialport();
-
-    void Enablelineeditlist(
+    void enableLineEditList(
             QList<QLineEdit*>* lineeditlist,
             bool boola);
 
-    void Resetallchannel();
+    void resetAllChannel();
 
-    void Closeallchannel();
+    void closeAllChannel();
 
-    void Openselectchannel();
+    void openSelectChannel();
 
-    void Closeselectchannel();
+    void closeSelectChannel();
 
-    void Enablerelaybutton();
+    void enableRelayButton();
 
-    QString Checkselectchannel();
+    QString checkSelectChannel();
 
-    void Scanrelayport();
+    void scanRelayPort();
 
-    void Selectrelaymodel();
+    void selectRelayModel();
 
-    void Timercaslot();
+    void timerCaSlot();
 
-    void Signalsbslot(
+    void signalSbSlot(
             QString strcommand);
 
-    void Signalscslot();
+    void signalScSlot();
 
-    void Readyreadslot();
+    void readyReadSlot();
 
-    void Readtimeoutslot();
+    void readTimeoutSlot();
 
-    void Writecommand(
+    void writeCommand(
             QString strcommand);
 
-    void Opreateallchannel(
+    void opreateAllChannel(
             QStringList *listcommand);
 
-    void Opreateselectchannel(
+    void opreateSelectChannel(
             QStringList *listcommand);
 
-    void Operatorprogressbar(
+    void operatorProgressBar(
             QString backvalue,
             QStringList *backvaluelist,
             int intlight);
 
-    void Selectsetting();
+    void selectSetting();
 
-    void Setsetting(
+    void setSetting(
             QString file);
 
 };

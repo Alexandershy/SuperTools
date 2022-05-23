@@ -1,14 +1,14 @@
 #ifndef _SCANNERBOX__H
 #define _SCANNERBOX__H
+#define _SCANNERBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superserial__/_superserial_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "_scannerbox__global.h"
+#include "__module__/_scannermodulea_.h"
+#include "__module__/_scannermoduleb_.h"
 #include <QTimer>
 
 /**************interface****************/
@@ -26,15 +26,16 @@ class ScannerBox : public SuperTab
 
 public:
 
-    ScannerBox(QWidget *parent = nullptr);
+    ScannerBox(
+        QWidget *parent = nullptr);
 
     ~ScannerBox();
 
 private:
 
-    SuperSerial *SuperS                 = nullptr;
-    ModuleA *Modulea                    = nullptr;
-    ModuleB *Moduleb                    = nullptr;
+    SuperSerial *Serial                 = nullptr;
+    ScannerModuleA *Modulea             = nullptr;
+    ScannerModuleB *Moduleb             = nullptr;
     QList<QWidget*> Connectwidgetet     = {};
     QList<QWidget*> Connectwidgetef     = {};
     QList<QWidget*> Disconnectwidgetet  = {};
@@ -51,7 +52,7 @@ private:
     QPixmap Pixmap                      = {};
     int Slidermaxvalue                  = 0;
     QSize Labelsize                     = {0,0};
-    QSerialPort *Serial                 = nullptr;
+    QSerialPort *Serialport             = nullptr;
     QTimer *Timerca                     = nullptr;
     QTimer *Timercb                     = nullptr;
     ScanPort *Threadsa                  = nullptr;
@@ -60,56 +61,55 @@ private:
 private slots:
 
     /*  main function*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void timerInit();
 
-    void Timerinit();
+    void widgetListInit();
 
-    void Widgetlistinit();
+    void pictureInit();
 
-    void Pictureinit();
+    void functionInit();
 
-    void Functioninit();
+    void sliderInit();
 
-    void Sliderinit();
+    void getSerialPort();
 
-    void Getserialport();
+    bool enableConnectButton();
 
-    bool Enableconnectbutton();
+    void connectSerialPort();
 
-    void Connectserialport();
+    void disconnectSerialPort();
 
-    void Disconnectserialport();
+    void openScanner();
 
-    void Openscanner();
+    void closeScanner();
 
-    void Closescanner();
+    void scanScannerPort();
 
-    void Scanscannerport();
-
-    void Displayscanner(
+    void displayScanner(
             bool boola,
             QString strpicturepath,
             QStringList Scanneritem);
 
-    void Displayscannerpicture();
+    void displayScannerPicture();
 
-    void Displayfunction(
+    void displayFunction(
             QString strpicturepath);
 
-    void Displayscannerfunction();
+    void displayScannerFunction();
 
-    void Timercaslot();
+    void timerCaSlot();
 
-    void Timercbslot();
+    void timerCbSlot();
 
-    void Signalsbsolt();
+    void signalSbSlot();
 
-    void Readyreadslot();
+    void readyReadSlot();
 
-    void Changepicturesize();
+    void changePictureSize();
 
 };
 
@@ -131,24 +131,23 @@ public slots:
 private slots:
 
     /*  main function*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void initRun();
 
-    void Initrun();
+    void connectSerialPort();
 
-    void Connectserialport();
+    void receiveData();
 
-    void Receivedata();
-
-    void Releaseobject(
-            QVector <QSerialPort*> *Seriallist);
+    void releaseObject(
+            QVector <QSerialPort*> *seriallist);
 
 private:
 
-    SuperSerial *SuperS                 = nullptr;
-    QSerialPort* Serial                 = nullptr;
+    SuperSerial *Serial                 = nullptr;
+    QSerialPort* Serialport             = nullptr;
     int Baudrate                        = 0;
     QString Serialportname              = "no device ";
     QStringList Listname                = {};
@@ -157,12 +156,12 @@ private:
 
 signals:
 
-    void Signalsa(
+    void signalSa(
             QString direction,
             QString strtlog,
             QString strllog);
 
-    void Signalsb();
+    void signalSb();
 
 };
 

@@ -1,15 +1,14 @@
 #include "_superinit_.h"
-#include "ui__superinit_.h"
 
 SuperInit::SuperInit(QWidget *parent)
     : QFrame(parent),
       ui(new Ui::SuperInit)
 {
     ui->setupUi(this);
-    connect(ui->Default_SuperSetting,   &QPushButton::clicked,      this,&SuperInit::Default);
-    connect(ui->SuperSetting_Select,    &QPushButton::clicked,      this,&SuperInit::Selectini);
-    connect(ui->Local_SuperSetting,     &QPushButton::clicked,      this,&SuperInit::Local);
-    Init();
+    connect(ui->Default_SuperSetting,   &QPushButton::clicked,      this,&SuperInit::defaultSetting);
+    connect(ui->SuperSetting_Select,    &QPushButton::clicked,      this,&SuperInit::selectIni);
+    connect(ui->Local_SuperSetting,     &QPushButton::clicked,      this,&SuperInit::local);
+    init();
 }
 
 SuperInit::~SuperInit()
@@ -17,111 +16,110 @@ SuperInit::~SuperInit()
     delete ui;
 }
 
-void SuperInit::Init()
+void SuperInit::init()
 {
-    Objectinit();
-    Creatfolder();
-    Creatfile();
-    Readmeinit();
+    objectInit();
+    creatFolder();
+    creatFile();
+    readmeInit();
 }
 
 /*  init function for this object creat;*/
 
-void SuperInit::Objectinit()
+void SuperInit::objectInit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
 /*  object init;*/
 
-void SuperInit::Creatfolder()
+void SuperInit::creatFolder()
 {
-    SuperC->Creatfolder("./__depycache__");
-    SuperC->Creatfolder("./__depycache__/__cache__");
-    SuperC->Creatfolder("./__depycache__/__cache__/__bat__");
-    SuperC->Creatfolder("./__depycache__/__cache__/__ini__");
-    SuperC->Creatfolder("./__depycache__/__cache__/__picture__");
-    SuperC->Creatfolder("./__depycache__/__cache__/__setting__");
-    SuperC->Creatfolder("./__depycache__/__cache__/__textbrowser__");
-    SuperC->Creatfolder("./__readme__");
-    SuperC->Creatfolder("./__readme__/__plugins__");
+    Core->creatFolder("./__depycache__");
+    Core->creatFolder("./__depycache__/__cache__");
+    Core->creatFolder("./__depycache__/__cache__/__bat__");
+    Core->creatFolder("./__depycache__/__cache__/__ini__");
+    Core->creatFolder("./__depycache__/__cache__/__picture__");
+    Core->creatFolder("./__depycache__/__cache__/__setting__");
+    Core->creatFolder("./__depycache__/__cache__/__textbrowser__");
+    Core->creatFolder("./__readme__");
+    Core->creatFolder("./__readme__/__plugins__");
 }
 
 /*  creat folder for save any files;*/
 
-void SuperInit::Creatfile()
+void SuperInit::creatFile()
 {
-    SuperC->Creatfile("./__depycache__/__cache__/__ini__/_theme_.ini");
-    SuperC->Creatfile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini");
-    SuperC->Creatfile("./__depycache__/__cache__/__ini__/_fontcolor_.ini");
-    SuperC->Creatfile("./__depycache__/__cache__/__ini__/_quickaccess_.ini");
-    SuperC->Creatfile("./__depycache__/__cache__/__ini__/_openedstatus_.ini");
-    SuperC->Creatfile("." + Defaultsetting);
-    SuperC->Replacefile(":/__supericon__/_localtitle_.png","./__depycache__/__cache__/__picture__/_localtitle_.png");
-    //SuperC->Replacefile(":/__supericon__/_supertools_.ico","./__depycache__/__cache__/__picture__/_supertools_.ico");
-    Creatmodulefiles();
+    Core->creatFile("./__depycache__/__cache__/__ini__/_theme_.ini");
+    Core->creatFile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini");
+    Core->creatFile("./__depycache__/__cache__/__ini__/_fontcolor_.ini");
+    Core->creatFile("./__depycache__/__cache__/__ini__/_quickaccess_.ini");
+    Core->creatFile("./__depycache__/__cache__/__ini__/_openedstatus_.ini");
+    Core->creatFile("." + Defaultsetting);
+    Core->replaceFile(":/__supericon__/_localtitle_.png","./__depycache__/__cache__/__picture__/_localtitle_.png");
+    creatModuleFiles();
 }
 
 /*  creat file for use;*/
 
-void SuperInit::Creatmodulefiles()
+void SuperInit::creatModuleFiles()
 {
     QDir dir("./__plugins__/","*.dll");
     QStringList files = dir.entryList();
     for(int i = 0;i < files.count();i++)
     {
-        SuperC->Creatfile("./__readme__/__plugins__/" + files.at(i).split("box").at(0) + "_.pdf");
+        Core->creatFile("./__readme__/__plugins__/" + files.at(i).split("box").at(0) + "_.pdf");
     }
 }
 
 /*  creat super module files for import module;*/
 
-void SuperInit::Readmeinit()
+void SuperInit::readmeInit()
 {
-    SuperC->Replacefile(":/pdf/_supertools_.pdf","./__readme__/_supertools_.pdf");
-    SuperC->Replacefile(":/pdf/_superapi_.pdf","./__readme__/_superapi_.pdf");
+    Core->replaceFile(":/pdf/_supertools_.pdf","./__readme__/_supertools_.pdf");
+    Core->replaceFile(":/pdf/_superapi_.pdf","./__readme__/_superapi_.pdf");
 }
 
-void SuperInit::Default()
+void SuperInit::defaultSetting()
 {
     QString file = "." + Defaultsetting;
-    QString defaultbox = SuperC->Readonlyfile(file);
+    QString defaultbox = Core->readOnlyFile(file);
     if(defaultbox.isEmpty())
     {
-        SuperC->Writeonlyfile(file, "_serialport_ = 1\n");
+        Core->writeOnlyFile(file, "_serialport_ = 1\n");
     }
     ui->SuperSetting_Edit->setText(qApp->applicationDirPath() + Defaultsetting);
     ui->Default_SuperSetting->setEnabled(false);
-    Entermainframe();
+    enterMainFrame();
 }
 
 /*  creat default file and write init plugin, run Entermainframe function;*/
 
-void SuperInit::Entermainframe()
+void SuperInit::enterMainFrame()
 {
     QString setting = ui->SuperSetting_Edit->text();
-    QString data = SuperC->Readonlyfile(setting);
+    QString data = Core->readOnlyFile(setting);
     if(data.contains("_") && data.contains("=") && data.contains("1"))
     {
         qApp->setQuitOnLastWindowClosed(false);
-        emit Signalia(ui->SuperSetting_Edit->text());
+        emit signalIa(ui->SuperSetting_Edit->text());
     }
 }
 
 /*  set dont close app when last window close,save select ini file path,load _frame_.dll;*/
 
-void SuperInit::Selectini()
+void SuperInit::selectIni()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./__depycache__/__cache__/__setting__/",{"*.ini"});
-    connect(filedialog,&SuperFileDialog::Signalfb,this,         &SuperInit::Setinifile);
-    connect(filedialog,&SuperFileDialog::Signalfb,filedialog,   &QObject::deleteLater);
-    filedialog->Setsinglefile();
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFb,this,         &SuperInit::setIniFile);
+    connect(filedialog,&SuperFileDialog::signalFb,filedialog,   &QObject::deleteLater);
+    filedialog->setSingleFile();
+    filedialog->show();
 }
 
 /*  select ini file;*/
 
-void SuperInit::Setinifile(QString file)
+void SuperInit::setIniFile(QString file)
 {
     ui->Default_SuperSetting->setEnabled(false);
     ui->Local_SuperSetting->setEnabled(true);
@@ -131,9 +129,9 @@ void SuperInit::Setinifile(QString file)
 
 /*  set ini file;*/
 
-void SuperInit::Local()
+void SuperInit::local()
 {
-    Entermainframe();
+    enterMainFrame();
 }
 
 /*  run entermainframe function by local ini file;*/

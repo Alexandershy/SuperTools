@@ -3,7 +3,7 @@
 SuperFileSystemModel::SuperFileSystemModel(QObject *parent)
     : QFileSystemModel(parent)
 {
-    Init();
+    init();
 }
 
 SuperFileSystemModel::~SuperFileSystemModel()
@@ -11,14 +11,14 @@ SuperFileSystemModel::~SuperFileSystemModel()
 
 }
 
-void SuperFileSystemModel::Init()
+void SuperFileSystemModel::init()
 {
-    Parameterinit();
+    parameterInit();
 }
 
 /*  file system model init;*/
 
-void SuperFileSystemModel::Parameterinit()
+void SuperFileSystemModel::parameterInit()
 {
     setRootPath(QDir::currentPath());
     setFilter(QDir::Drives | QDir::Dirs | QDir::NoDotAndDotDot);

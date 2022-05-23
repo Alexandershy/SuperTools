@@ -6,7 +6,7 @@ LittleBrick::LittleBrick(QGraphicsScene *scene,int colorindex,QTimer* timer)
     Sourcecolorindex = colorindex;
     Colorindex[0] = colorindex;
     Timer = timer;
-    Init();
+    init();
 }
 
 LittleBrick::~LittleBrick()
@@ -14,13 +14,13 @@ LittleBrick::~LittleBrick()
 
 }
 
-void LittleBrick::Init()
+void LittleBrick::init()
 {
-    Colorinit();
-    Timerinit();
+    colorInit();
+    timerInit();
 }
 
-void LittleBrick::Colorinit()
+void LittleBrick::colorInit()
 {
     Colorlist.append(Qt::red);
     Colorlist.append(Qt::red);
@@ -35,9 +35,9 @@ void LittleBrick::Colorinit()
 
 /*  color bricks init*/
 
-void LittleBrick::Timerinit()
+void LittleBrick::timerInit()
 {
-    connect(Timer,&QTimer::timeout,this,&LittleBrick::Timerslot);
+    connect(Timer,&QTimer::timeout,this,&LittleBrick::timerSlot);
 }
 
 /*  connect timer for update painter;*/
@@ -81,21 +81,21 @@ void LittleBrick::advance(int phase)
             if(collitems.at(i)->boundingRect().width() == 20 && Colorindex.at(0) > 0)
             {
                 Colorindex[0] = Colorindex.at(0) - 1;
-                emit Signalbb(5);
+                emit signalBb(5);
             }
         }
     }
     else if(Colorindex.at(0) == 0)
     {
-        emit Signalba(pos());
-        emit Signalbb(10);
+        emit signalBa(pos());
+        emit signalBb(10);
         delete this;
     }
 }
 
 /*  run advance when scene run advance;*/
 
-void LittleBrick::Timerslot()
+void LittleBrick::timerSlot()
 {
     if(Colorindex.at(0) < Sourcecolorindex)
     {

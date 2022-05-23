@@ -22,7 +22,7 @@
 #ifndef GRABBAG__PICTURE_H
 #define GRABBAG__PICTURE_H
 
-#include "__supercodec__/__flac__/FLAC/metadata.h"
+#include "FLAC/metadata.h"
 
 #ifdef __cplusplus
 extern "C" {

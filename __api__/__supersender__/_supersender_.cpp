@@ -7,10 +7,10 @@ SuperSender::SuperSender(QWidget *parent,QLayout *layout)
     Widget = parent;
     Layout = layout;
     ui->setupUi(this);
-    connect(ui->lineEdit,   &QLineEdit::textChanged,    this,&SuperSender::Enablesendbutton);
-    connect(ui->pushButton, &QPushButton::clicked,      this,&SuperSender::Send);
-    connect(ui->checkBox,   &QCheckBox::stateChanged,   this,&SuperSender::Enablespinbox);
-    Init();
+    connect(ui->lineEdit,   &QLineEdit::textChanged,    this,&SuperSender::enableSendButton);
+    connect(ui->pushButton, &QPushButton::clicked,      this,&SuperSender::send);
+    connect(ui->checkBox,   &QCheckBox::stateChanged,   this,&SuperSender::enableSpinBox);
+    init();
 }
 
 SuperSender::~SuperSender()
@@ -18,13 +18,13 @@ SuperSender::~SuperSender()
     delete ui;
 }
 
-void SuperSender::Init()
+void SuperSender::init()
 {
-    Parameterinit();
-    Objectinit();
+    parameterInit();
+    objectInit();
 }
 
-void SuperSender::Parameterinit()
+void SuperSender::parameterInit()
 {
     Index = Layout->count();
     Layout->addWidget(this);
@@ -32,40 +32,40 @@ void SuperSender::Parameterinit()
     Lineedit = ui->lineEdit;
 }
 
-void SuperSender::Objectinit()
+void SuperSender::objectInit()
 {
     Timer = new QTimer(this);
-    connect(Timer,&QTimer::timeout,this,&SuperSender::Sendtext);
+    connect(Timer,&QTimer::timeout,this,&SuperSender::sendText);
 }
 
-void SuperSender::Enablesendbutton(QString text)
+void SuperSender::enableSendButton(QString text)
 {
     ui->pushButton->setEnabled(!text.isEmpty());
     if(text.contains(Spliter))
     {
         ui->lineEdit->clear();
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"can not input " + Spliter + ";");
-        notedialog->Hideleftbutton();
-        notedialog->Messageinit();
+        notedialog->hideLeftButton();
+        notedialog->messageInit();
     }
     else
     {
-        emit Signalsb();
+        emit signalSb();
     }
 }
 
 /*  enable send button or not;*/
 
-void SuperSender::Sendtext()
+void SuperSender::sendText()
 {
-    emit Signalsa(ui->lineEdit);
+    emit signalSa(ui->lineEdit);
 }
 
 /*  send text;*/
 
-void SuperSender::Send()
+void SuperSender::send()
 {
-    Sendtext();
+    sendText();
     if(ui->checkBox->isChecked())
     {
         ui->pushButton->setEnabled(false);
@@ -77,7 +77,7 @@ void SuperSender::Send()
 
 /*  send text;*/
 
-void SuperSender::Enablespinbox()
+void SuperSender::enableSpinBox()
 {
     if(ui->checkBox->isChecked())
     {
@@ -96,23 +96,23 @@ void SuperSender::Enablespinbox()
 
 /*  enable spin box or not;*/
 
-void SuperSender::Enable()
+void SuperSender::enable()
 {
     ui->lineEdit->setEnabled(true);
     ui->checkBox->setEnabled(true);
-    Enablesendbutton(ui->lineEdit->text());
-    Enablespinbox();
+    enableSendButton(ui->lineEdit->text());
+    enableSpinBox();
 }
 
 /*  enable super senderbox;*/
 
-void SuperSender::Disable()
+void SuperSender::disable()
 {
     ui->lineEdit->setEnabled(false);
     ui->checkBox->setEnabled(false);
     ui->checkBox->setChecked(false);
-    Enablesendbutton("");
-    Enablespinbox();
+    enableSendButton("");
+    enableSpinBox();
 }
 
 /*  enable super senderbox;*/

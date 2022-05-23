@@ -14,8 +14,8 @@ SuperMain::SuperMain(QWidget *parent,QString setting)
     setTabsClosable(true);
     setMouseTracking(true);
     setMinimumSize(800,550);
-    connect(this,&QTabWidget::tabCloseRequested,this,&SuperMain::Openclosetabbox);
-    Init();
+    connect(this,&QTabWidget::tabCloseRequested,this,&SuperMain::openCloseTabBox);
+    init();
 }
 
 SuperMain::~SuperMain()
@@ -31,22 +31,22 @@ void SuperMain::keyPressEvent(QKeyEvent *event)
         {
             case Qt::Key_S:
             {
-                Save();
+                save();
                 break;
             }
             case Qt::Key_L:
             {
-                Loadplugin();
+                loadPlugin();
                 break;
             }
             case Qt::Key_O:
             {
-                Opencachepath();
+                openCachePath();
                 break;
             }
             case Qt::Key_P:
             {
-                Openclosetabbox(currentIndex());
+                openCloseTabBox(currentIndex());
                 break;
             }
         }
@@ -55,23 +55,23 @@ void SuperMain::keyPressEvent(QKeyEvent *event)
 
 void SuperMain::enterEvent(QEnterEvent *)
 {
-    emit Signalmc(Qt::ArrowCursor);
+    emit signalMc(Qt::ArrowCursor);
 }
 
 /*  mouse enter;*/
 
-void SuperMain::Init()
+void SuperMain::init()
 {
-    Objectinit();
-    Actioninit();
-    Importsetting(Setting);
+    objectInit();
+    actionInit();
+    importSetting(Setting);
 }
 
 /*  main init;*/
 
-void SuperMain::Objectinit()
+void SuperMain::objectInit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
     Load = new QMenu(this);
     Help = new QMenu(this);
     Config = new QMenu(this);
@@ -82,7 +82,7 @@ void SuperMain::Objectinit()
 
 /*  object init;*/
 
-void SuperMain::Actioninit()
+void SuperMain::actionInit()
 {
     Actionplugin = new QAction(QIcon(":/__supericon__/_plugin_.svg"),"Plugin",Load);
     Actionsetting = new QAction(QIcon(":/__supericon__/_setting_.svg"),"Setting",Load);
@@ -95,15 +95,15 @@ void SuperMain::Actioninit()
     Actionsuperapi = new QAction(QIcon(":/__supericon__/_superapi_.svg"),"Superapi",Help);
     Actionquit = new QAction(QIcon(":/__supericon__/_quit_.svg"),"Quit",this);
     Actionchangelanguage->setEnabled(false);
-    connect(Actionsetting,          &QAction::triggered,    this,&SuperMain::Loadsetting);
-    connect(Actionplugin,           &QAction::triggered,    this,&SuperMain::Loadplugin);
-    connect(Actionsave,             &QAction::triggered,    this,&SuperMain::Save);
-    connect(Actionsaveas,           &QAction::triggered,    this,&SuperMain::Saveas);
-    connect(Actionquit,             &QAction::triggered,    this,&SuperMain::Closeevent);
-    connect(Actionopencachepath,    &QAction::triggered,    this,&SuperMain::Opencachepath);
-    connect(Actionversion,          &QAction::triggered,    this,&SuperMain::Checkversion);
-    connect(Actionreadme,           &QAction::triggered,    this,&SuperMain::Readme);
-    connect(Actionsuperapi,         &QAction::triggered,    this,&SuperMain::Superapi);
+    connect(Actionsetting,          &QAction::triggered,    this,&SuperMain::loadSetting);
+    connect(Actionplugin,           &QAction::triggered,    this,&SuperMain::loadPlugin);
+    connect(Actionsave,             &QAction::triggered,    this,&SuperMain::save);
+    connect(Actionsaveas,           &QAction::triggered,    this,&SuperMain::saveAs);
+    connect(Actionquit,             &QAction::triggered,    this,&SuperMain::close);
+    connect(Actionopencachepath,    &QAction::triggered,    this,&SuperMain::openCachePath);
+    connect(Actionversion,          &QAction::triggered,    this,&SuperMain::checkVersion);
+    connect(Actionreadme,           &QAction::triggered,    this,&SuperMain::readme);
+    connect(Actionsuperapi,         &QAction::triggered,    this,&SuperMain::superApi);
     Load->addAction(Actionplugin);
     Load->addAction(Actionsetting);
     Config->addAction(Actionchangelanguage);
@@ -115,28 +115,28 @@ void SuperMain::Actioninit()
 
 /*  action init;*/
 
-void SuperMain::Loadsetting()
+void SuperMain::loadSetting()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./__depycache__/__cache__/__setting__/",{"*.ini"});
-    connect(filedialog,&SuperFileDialog::Signalfb,this,         &SuperMain::Importsetting);
-    connect(filedialog,&SuperFileDialog::Signalfb,filedialog,   &QObject::deleteLater);
-    filedialog->Setsinglefile();
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFb,this,         &SuperMain::importSetting);
+    connect(filedialog,&SuperFileDialog::signalFb,filedialog,   &QObject::deleteLater);
+    filedialog->setSingleFile();
+    filedialog->show();
 }
 
 /*  open windows resource manager and select ini fils, run Importsetting function;*/
 
-void SuperMain::Loadplugin()
+void SuperMain::loadPlugin()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./__readme__/__plugins__/",{"*.pdf"});
-    connect(filedialog,&SuperFileDialog::Signalfc,this,         &SuperMain::Importplugins);
-    connect(filedialog,&SuperFileDialog::Signalfc,filedialog,   &QObject::deleteLater);
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFc,this,         &SuperMain::importPlugins);
+    connect(filedialog,&SuperFileDialog::signalFc,filedialog,   &QObject::deleteLater);
+    filedialog->show();
 }
 
 /*  open windows resource manager and select pdf files, run Importplugin function;*/
 
-void SuperMain::Importplugins(QStringList listpdf)
+void SuperMain::importPlugins(QStringList listpdf)
 {
     QStringList templist = {};
     QStringList listpdfpath = {};
@@ -146,20 +146,20 @@ void SuperMain::Importplugins(QStringList listpdf)
         for(int i = 0;i < listpdf.count() ; i++)
         {
             listpdfpath = listpdf.at(i).split("/");
-            templist.append(SuperC->Getlistlastmember(&listpdfpath).split(".").at(0) + " = 1\n");
+            templist.append(Core->getListLastMember(&listpdfpath).split(".").at(0) + " = 1\n");
         }
     }
-    SuperC->Creatfile(cacheini);
-    SuperC->Writeonlyfilelist(cacheini,&templist,"",true);
-    Importsetting(cacheini);
+    Core->creatFile(cacheini);
+    Core->writeOnlyFileList(cacheini,&templist,"",true);
+    importSetting(cacheini);
     QFile::remove(cacheini);
 }
 
 /*  before import plugin,check pdf files is broken, write pdf names to ini file,and run Importsetting function;*/
 
-void SuperMain::Importsetting(QString strini)
+void SuperMain::importSetting(QString strini)
 {
-    QString plugin = SuperC->Readonlyfile(strini);
+    QString plugin = Core->readOnlyFile(strini);
     QStringList fileimport = plugin.split("\n");
     int fileimportcount = fileimport.count();
     for(int i = 0;i < fileimportcount;i++)
@@ -171,14 +171,14 @@ void SuperMain::Importsetting(QString strini)
             {
                 QString filename = fileimport[i].split('_')[1];
                 QString dllname = "_" + filename + "box_";
-                QString tabname = SuperC->Firstwordupper(filename);
-                Addtabapi(dllname,tabname,filename);
+                QString tabname = Core->firstWordUpper(filename);
+                addTabApi(dllname,tabname,filename);
             }
             else
             {
                 SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"load plugin error;");
-                notedialog->Hideleftbutton();
-                notedialog->Messageinit();
+                notedialog->hideLeftButton();
+                notedialog->messageInit();
             }
         }
     }
@@ -186,48 +186,48 @@ void SuperMain::Importsetting(QString strini)
 
 /*  read setting from ini file,and run Addtabapi function;*/
 
-void SuperMain::Addtabapi(QString strdllname,QString strtabname,QString strobjname)
+void SuperMain::addTabApi(QString strdllname,QString strtabname,QString strobjname)
 {
     QLibrary library("./__plugins__/" + strdllname);
     if(library.isLoaded())
     {
         Tab = (Groupboxfun)library.resolve(Supertabsymbol);
-        Addtab(strtabname, Tab(),strobjname);
+        addTab(strtabname, Tab(),strobjname);
     }
     else if(library.load())
     {
         Tab = (Groupboxfun)library.resolve(Supertabsymbol);
-        Addtab(strtabname, Tab(),strobjname);
+        addTab(strtabname, Tab(),strobjname);
     }
     else
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,library.errorString());
-        notedialog->Hideleftbutton();
-        notedialog->Messageinit();
+        notedialog->hideLeftButton();
+        notedialog->messageInit();
     }
 }
 
 /*  load dll,run Addtab function,if not found that dll,eject a message box;*/
 
-void SuperMain::Addtab(QString strtabname,QWidget* widget,QString strobjname)
+void SuperMain::addTab(QString strtabname,QWidget* widget,QString strobjname)
 {
     int tabcount = count();
-    if(SuperC->Findlistmember(&Tabnamelist,strobjname) == -1)
+    if(Core->findListMember(&Tabnamelist,strobjname) == -1)
     {
-        addTab(widget,strtabname);
+        QTabWidget::addTab(widget,strtabname);
         setCurrentIndex(tabcount);
         Tabnamelist.append(strobjname);
     }
     else
     {
         delete widget;
-        Showtab(&Tabnamelist,strobjname);
+        showTab(&Tabnamelist,strobjname);
     }
 }
 
 /*  creat a new tab to Tab_Init,and show it,if object name has repeated,run Showtab function;*/
 
-void SuperMain::Showtab(QStringList *listobjname,QString strobjname)
+void SuperMain::showTab(QStringList *listobjname,QString strobjname)
 {
     for(int i = 0;i < listobjname->count();i++)
     {
@@ -240,98 +240,98 @@ void SuperMain::Showtab(QStringList *listobjname,QString strobjname)
 
 /*  show tab by objectname*/
 
-void SuperMain::Save()
+void SuperMain::save()
 {
-    Savesetting(Setting);
+    saveSetting(Setting);
 }
 
 /*  run Savesetting and eject notedialog;*/
 
-void SuperMain::Savesetting(QString strtitle)
+void SuperMain::saveSetting(QString strtitle)
 {
     QStringList listobjname = {};
     for(int i = 0;i < count();i++)
     {
         listobjname.append("_" + Tabnamelist.at(i) + "_ = 1\n");
     }
-    SuperC->Writeonlyfilelist(strtitle,&listobjname,"",true);
-    QStringList savedsetting = SuperC->Readonlyfile(strtitle).split("\n");
+    Core->writeOnlyFileList(strtitle,&listobjname,"",true);
+    QStringList savedsetting = Core->readOnlyFile(strtitle).split("\n");
     for(int i = 0;i < count();i++)
     {
         if(!savedsetting.at(i).contains(Tabnamelist.at(i)) || !savedsetting.at(i).contains(" = 1"))
         {
             SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"Save Error!!");
-            notedialog->Hideleftbutton();
-            notedialog->Messageinit();
+            notedialog->hideLeftButton();
+            notedialog->messageInit();
             return;
         }
     }
     SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"Save Success!!");
-    notedialog->Hideleftbutton();
-    notedialog->Messageinit();
+    notedialog->hideLeftButton();
+    notedialog->messageInit();
 }
 
 /*  add tab objectname to ini file;*/
 
-void SuperMain::Saveas()
+void SuperMain::saveAs()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./__depycache__/__cache__/__setting__/",{"*.ini"});
-    connect(filedialog,&SuperFileDialog::Signalfb,this,         &SuperMain::Savesetting);
-    connect(filedialog,&SuperFileDialog::Signalfb,filedialog,   &QObject::deleteLater);
-    filedialog->Setsavefile();
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFb,this,         &SuperMain::saveSetting);
+    connect(filedialog,&SuperFileDialog::signalFb,filedialog,   &QObject::deleteLater);
+    filedialog->setSaveFile();
+    filedialog->show();
 }
 
 /*  write tab objectname to a new ini file;*/
 
-void SuperMain::Opencachepath()
+void SuperMain::openCachePath()
 {
     QString dirpath = "./__depycache__/__" + Tabnamelist.at(currentIndex()) + "__";
     QDir dir(dirpath);
     if(dir.exists())
     {
-        SuperC->Openpath(dirpath);
+        Core->openPath(dirpath);
     }
     else
     {
-        SuperC->Openpath("./__depycache__");
+        Core->openPath("./__depycache__");
     }
 }
 
 /*  open folder;*/
 
-void SuperMain::Checkversion()
+void SuperMain::checkVersion()
 {
-    emit Signalma("./__readme__/_supertools_.pdf");
+    emit signalMa("./__readme__/_supertools_.pdf");
 }
 
 /*  display version;*/
 
-void SuperMain::Readme()
+void SuperMain::readme()
 {
-    emit Signalma("./__readme__/__plugins__/_" + Tabnamelist.at(currentIndex()) + "_.pdf");
+    emit signalMa("./__readme__/__plugins__/_" + Tabnamelist.at(currentIndex()) + "_.pdf");
 }
 
 /*  open and view readme;*/
 
-void SuperMain::Superapi()
+void SuperMain::superApi()
 {
-    emit Signalma("./__readme__/_superapi_.pdf");
+    emit signalMa("./__readme__/_superapi_.pdf");
 }
 
 /*  open and view super api;*/
 
-void SuperMain::Openclosetabbox(int intindex)
+void SuperMain::openCloseTabBox(int intindex)
 {
     setCurrentIndex(intindex);
     SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"sure to close " + Tabnamelist.at(intindex) + "?");
-    connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperMain::Closetab);
-    notedialog->Messageinit();
+    connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperMain::closeTab);
+    notedialog->messageInit();
 }
 
 /*  show close tab first,eject notedialog;*/
 
-void SuperMain::Closetab()
+void SuperMain::closeTab()
 {
     if(count() > 1)
     {
@@ -341,25 +341,25 @@ void SuperMain::Closetab()
     else if(count() == 1)
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"can not close the last tab;");
-        notedialog->Hideleftbutton();
-        notedialog->Messageinit();
+        notedialog->hideLeftButton();
+        notedialog->messageInit();
     }
 }
 
 /*  close current tab,can not close the last tab;*/
 
-void SuperMain::Closeevent()
+void SuperMain::close()
 {
     SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"you sure to quit?");
-    connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperMain::Signalmb);
-    notedialog->Messageinit();
+    connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperMain::signalMb);
+    notedialog->messageInit();
 }
 
 /*  eject message box when close app;*/
 
-void SuperMain::Setfocus()
+void SuperMain::setFocus()
 {
-    setFocus();
+    QWidget::setFocus();
 }
 
 /*  set focus;*/

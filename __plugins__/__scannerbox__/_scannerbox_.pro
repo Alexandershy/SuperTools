@@ -13,32 +13,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    __module__/_modulea_.cpp \
-    __module__/_moduleb_.cpp \
-    __supercore__/_supercore_.cpp \
-    __supergroupbox__/_supergroupbox_.cpp \
-    __superlogger__/_superlineedit_.cpp \
-    __superlogger__/_superlogger_.cpp \
-    __superlogger__/_supertextbrowser_.cpp \
-    __superserial__/_superserial_.cpp \
-    __supertab__/_supertab_.cpp \
+    __module__/_scannermodulea_.cpp \
+    __module__/_scannermoduleb_.cpp \
     _scannerbox_.cpp
 
 HEADERS += \
-    __module__/_modulea_.h \
-    __module__/_modulea__ui_.h \
-    __module__/_moduleb_.h \
-    __module__/_moduleb__ui_.h \
+    __module__/_scannermodulea_.h \
+    __module__/_scannermoduleb_.h \
     __supercore__/_supercore_.h \
     __supergroupbox__/_supergroupbox_.h \
-    __superlogger__/_superlineedit_.h \
     __superlogger__/_superlogger_.h \
-    __superlogger__/_supertextbrowser_.h \
     __superserial__/_superserial_.h \
     __supertab__/_supertab_.h \
-    __supertab__/_supertab__ui_.h \
-    _scannerbox_.h \
-    _scannerbox__global.h
+    _scannerbox_.h
 
 # Default rules for deployment.
 unix {
@@ -47,15 +34,15 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    __module__/_modulea_.ui \
-    __module__/_moduleb_.ui \
-    __supertab__/_supertab_.ui
+    __module__/_scannermodulea_.ui \
+    __module__/_scannermoduleb_.ui \
+    __supertab__/_supertabui_.ui
 
 DISTFILES += \
-    __module__/_ui2h_.bat \
-    __supertab__/_ui2h_.bat \
     _scannerbox_.html \
     _scannerbox_.pdf
 
 RESOURCES += \
     _scannerbox_.qrc
+
+LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"

@@ -6,66 +6,66 @@ ChatShareDialog::ChatShareDialog(QWidget *parent,QLineEdit *lineedit)
     Lineedit = lineedit;
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle(Lineedit->text() + "'s file shared");
-    Init();
+    setTitle(Lineedit->text() + "'s file shared");
+    init();
 }
 
 ChatShareDialog::~ChatShareDialog()
 {
-    SuperC->Closethread(Threadga);
+    Core->closeThread(Threadga);
 }
 
-void ChatShareDialog::Init()
+void ChatShareDialog::init()
 {
-    Objectinit();
-    Checkuserinit();
-    Refreshsharedfiles();
+    objectInit();
+    checkUserInit();
+    refreshSharedFiles();
 }
 
-void ChatShareDialog::Objectinit()
+void ChatShareDialog::objectInit()
 {
     Localuser = QDir::home().dirName() + " " + QHostInfo::localHostName();
     Sharedfolder = "./__depycache__/__chat__/__" + Lineedit->text() + "__/";
     Targetpath = Sharedfolder + "_targetpath_.txt";
     Sharedfilepath = Sharedfolder + "_filesshared_.txt";
-    SuperC->Creatfile(Sharedfilepath);
-    Plugin = new ChatShareBox(this);
+    Core->creatFile(Sharedfilepath);
+    Plugin = new ChatShareDialogui(this);
     Threadga = new GetFileInfoThread(Sharedfilepath,Plugin->ui->treeWidget->columnCount(),Lineedit->text(),Localuser,&Fileslist,Sharedfolder);
     Pluginlayout->addWidget(Plugin);
     Plugin->ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     Plugin->ui->treeWidget->header()->setStretchLastSection(false);
-    connect(Plugin->Cancelshared,   &QAction::triggered,            this,&ChatShareDialog::Cancelsharedfiles);
-    connect(Plugin->Downloadfile,   &QAction::triggered,            this,&ChatShareDialog::Downloadfiles);
-    connect(Plugin->Downloadfileas, &QAction::triggered,            this,&ChatShareDialog::Selectdownloadpath);
-    connect(Plugin->Openpath,       &QAction::triggered,            this,&ChatShareDialog::Opencontactfolder);
-    connect(Plugin->ui->treeWidget, &QTreeWidget::itemPressed,      this,&ChatShareDialog::Openitemoptions);
-    connect(Threadga,               &GetFileInfoThread::Signalga,   this,&ChatShareDialog::Refreshsharedfilesslot);
-    connect(Threadga,               &GetFileInfoThread::finished,   this,&ChatShareDialog::Writetolocal);
+    connect(Plugin->Cancelshared,   &QAction::triggered,            this,&ChatShareDialog::cancelSharedFiles);
+    connect(Plugin->Downloadfile,   &QAction::triggered,            this,&ChatShareDialog::downloadFiles);
+    connect(Plugin->Downloadfileas, &QAction::triggered,            this,&ChatShareDialog::selectDownloadPath);
+    connect(Plugin->Openpath,       &QAction::triggered,            this,&ChatShareDialog::openContactFolder);
+    connect(Plugin->ui->treeWidget, &QTreeWidget::itemPressed,      this,&ChatShareDialog::openItemOptions);
+    connect(Threadga,               &GetFileInfoThread::signalGa,   this,&ChatShareDialog::refreshSharedFilesSlot);
+    connect(Threadga,               &GetFileInfoThread::finished,   this,&ChatShareDialog::writeToLocal);
 }
 
 /*  creat plugin box,thread and connect its slot;*/
 
-void ChatShareDialog::Checkuserinit()
+void ChatShareDialog::checkUserInit()
 {
     if(Lineedit->text() == Localuser)
     {
-        connect(Plugin->ui->pushButton, &QPushButton::clicked,      this,&ChatShareDialog::Selectsharedfiles);
-        SuperC->Addaction(Plugin->Itemoptions,Plugin->Cancelshared,"Cancel Shared","Cancel Shared");
-        SuperC->Addaction(Plugin->Itemoptions,Plugin->Openpath,"Open path","Open path");
+        connect(Plugin->ui->pushButton, &QPushButton::clicked,this,&ChatShareDialog::selectSharedFiles);
+        Core->addAction(Plugin->Itemoptions,Plugin->Cancelshared,"Cancel Shared","Cancel Shared");
+        Core->addAction(Plugin->Itemoptions,Plugin->Openpath,"Open path","Open path");
     }
     else
     {
         Plugin->ui->pushButton->setText("Refresh Files");
-        connect(Plugin->ui->pushButton, &QPushButton::clicked,      this,&ChatShareDialog::Refreshsharedfiles);
-        SuperC->Addaction(Plugin->Itemoptions,Plugin->Downloadfile,"Download file","Download file");
-        SuperC->Addaction(Plugin->Itemoptions,Plugin->Downloadfileas,"Download file as","Download file as");
-        SuperC->Addaction(Plugin->Itemoptions,Plugin->Openpath,"Open path","Open path");
+        connect(Plugin->ui->pushButton, &QPushButton::clicked,      this,&ChatShareDialog::refreshSharedFiles);
+        Core->addAction(Plugin->Itemoptions,Plugin->Downloadfile,"Download file","Download file");
+        Core->addAction(Plugin->Itemoptions,Plugin->Downloadfileas,"Download file as","Download file as");
+        Core->addAction(Plugin->Itemoptions,Plugin->Openpath,"Open path","Open path");
     }
 }
 
 /*  change button's function by user name;*/
 
-void ChatShareDialog::Openitemoptions()
+void ChatShareDialog::openItemOptions()
 {
     if(qApp->mouseButtons() == Qt::RightButton)
     {
@@ -75,17 +75,17 @@ void ChatShareDialog::Openitemoptions()
 
 /*  exec menu;*/
 
-void ChatShareDialog::Selectsharedfiles()
+void ChatShareDialog::selectSharedFiles()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./",{});
-    connect(filedialog,&SuperFileDialog::Signalfc,this,         &ChatShareDialog::Addsharedfiles);
-    connect(filedialog,&SuperFileDialog::Signalfc,filedialog,   &QObject::deleteLater);
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFc,this,         &ChatShareDialog::addSharedFiles);
+    connect(filedialog,&SuperFileDialog::signalFc,filedialog,   &QObject::deleteLater);
+    filedialog->show();
 }
 
 /*  select shared files;*/
 
-void ChatShareDialog::Addsharedfiles(QStringList fileslist)
+void ChatShareDialog::addSharedFiles(QStringList fileslist)
 {
     for(int i = 0;i < fileslist.count();i++)
     {
@@ -94,47 +94,47 @@ void ChatShareDialog::Addsharedfiles(QStringList fileslist)
         {
             QFileInfo fileinfo(file);
             Fileslist.append(file);
-            SuperC->Getfileinfolist(file,&Fileinfotemp);
+            Core->getFileInfoList(file,&Fileinfotemp);
             QTreeWidgetItem *item = new QTreeWidgetItem(Plugin->ui->treeWidget,Fileinfotemp);
             item->setIcon(0,Iconprovider.icon(fileinfo));
             Plugin->ui->treeWidget->addTopLevelItem(item);
             Plugin->ui->treeWidget->header()->setStretchLastSection(false);
         }
     }
-    Writetolocal();
+    writeToLocal();
 }
 
 /*  open file dialog and select file or files;*/
 
-void ChatShareDialog::Appendtolocal(QStringList *fileinfo)
+void ChatShareDialog::appendToLocal(QStringList *fileinfo)
 {
     for(int i = 0;i < fileinfo->count();i++)
     {
         if(fileinfo->count() - 1 != i)
         {
-            SuperC->Appendfile(Sharedfilepath,fileinfo->at(i) + "<split>");
+            Core->appendFile(Sharedfilepath,fileinfo->at(i) + "<split>");
         }
         else
         {
-            SuperC->Appendfile(Sharedfilepath,fileinfo->at(i));
-            SuperC->Appendfile(Sharedfilepath,"\r\n");
+            Core->appendFile(Sharedfilepath,fileinfo->at(i));
+            Core->appendFile(Sharedfilepath,"\r\n");
         }
     }
 }
 
 /*  add split char by fileinfo position,include <split>,"\r\n";*/
 
-void ChatShareDialog::Refreshsharedfiles()
+void ChatShareDialog::refreshSharedFiles()
 {
     Fileslist.clear();
     Plugin->ui->treeWidget->clear();
     Threadga->start();
-    emit Signalca(-2,Sharedfolder);
+    emit signalCa(-2,Sharedfolder);
 }
 
 /*  refresh shared files;*/
 
-void ChatShareDialog::Refreshsharedfilesslot(QStringList fileinfotemp)
+void ChatShareDialog::refreshSharedFilesSlot(QStringList fileinfotemp)
 {
     QFileInfo fileinfo(fileinfotemp.at(0) + fileinfotemp.at(1));
     QTreeWidgetItem *item = new QTreeWidgetItem(Plugin->ui->treeWidget,fileinfotemp);
@@ -144,75 +144,75 @@ void ChatShareDialog::Refreshsharedfilesslot(QStringList fileinfotemp)
 
 /*  refresh shared files slot;*/
 
-void ChatShareDialog::Cancelsharedfiles()
+void ChatShareDialog::cancelSharedFiles()
 {
     Fileslist.remove(Plugin->ui->treeWidget->currentIndex().row());
     delete Plugin->ui->treeWidget->currentItem();
-    Writetolocal();
+    writeToLocal();
 }
 
 /*  cancel shared file;*/
 
-void ChatShareDialog::Writetolocal()
+void ChatShareDialog::writeToLocal()
 {
     if(Lineedit->text() == Localuser)
     {
-        SuperC->Writeonlyfile(Sharedfilepath,"");
+        Core->writeOnlyFile(Sharedfilepath,"");
         for(int i = 0;i < Fileslist.count();i++)
         {
-            SuperC->Getfileinfolist(Fileslist.at(i),&Fileinfotemp);
-            Appendtolocal(&Fileinfotemp);
+            Core->getFileInfoList(Fileslist.at(i),&Fileinfotemp);
+            appendToLocal(&Fileinfotemp);
         }
     }
 }
 
 /*  clear sharedfile,append treewidget info to sharedfile;*/
 
-void ChatShareDialog::Downloadfiles()
+void ChatShareDialog::downloadFiles()
 {
     QString path = Plugin->ui->treeWidget->currentItem()->text(0);
     if(path == "unavailable")
     {
         path = Sharedfolder;
     }
-    emit Signalca(Plugin->ui->treeWidget->currentIndex().row(),path);
+    emit signalCa(Plugin->ui->treeWidget->currentIndex().row(),path);
 }
 
 /*  emit file index for download file;*/
 
-void ChatShareDialog::Selectdownloadpath()
+void ChatShareDialog::selectDownloadPath()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./",{});
-    connect(filedialog,&SuperFileDialog::Signalfb,this,         &ChatShareDialog::Downloadfilesas);
-    connect(filedialog,&SuperFileDialog::Signalfb,filedialog,   &QObject::deleteLater);
-    filedialog->Setsavefolder();
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFb,this,         &ChatShareDialog::downloadFiles);
+    connect(filedialog,&SuperFileDialog::signalFb,filedialog,   &QObject::deleteLater);
+    filedialog->setSaveFolder();
+    filedialog->show();
 }
 
 /*  select download path;*/
 
-void ChatShareDialog::Downloadfilesas(QString folder)
+void ChatShareDialog::downloadFilesAs(QString folder)
 {
     if(!folder.isEmpty())
     {
-        emit Signalca(Plugin->ui->treeWidget->currentIndex().row(),folder);
+        emit signalCa(Plugin->ui->treeWidget->currentIndex().row(),folder);
     }
 }
 
 /*  emit file index and path for download file;*/
 
-void ChatShareDialog::Opencontactfolder()
+void ChatShareDialog::openContactFolder()
 {
     QString filepath = Plugin->ui->treeWidget->currentItem()->text(0);
     QString filename = Plugin->ui->treeWidget->currentItem()->text(1);
     QString filesize = Plugin->ui->treeWidget->currentItem()->text(2);
     if(filesize == "unavailable")
     {
-        SuperC->Openpath(Sharedfolder);
+        Core->openPath(Sharedfolder);
     }
     else
     {
-        SuperC->Openpath(filepath.split(filename).at(0));
+        Core->openPath(filepath.split(filename).at(0));
     }
 }
 
@@ -226,27 +226,27 @@ GetFileInfoThread::GetFileInfoThread(QString sharedfilepath,int columncount,QStr
     User = user;
     Fileslist = fileslist;
     Sharedfolder = sharedfolder;
-    Init();
+    init();
 }
 
 GetFileInfoThread::~GetFileInfoThread()
 {
-    delete SuperC;
+
 }
 
-void GetFileInfoThread::Init()
+void GetFileInfoThread::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void GetFileInfoThread::Objectinit()
+void GetFileInfoThread::objectInit()
 {
-    SuperC = new SuperCore();
+    Core = new SuperCore(this);
 }
 
 void GetFileInfoThread::run()
 {
-    QString sharedfilesinfo = SuperC->Readonlyfile(Sharedfilepath);
+    QString sharedfilesinfo = Core->readOnlyFile(Sharedfilepath);
     QStringList sharedfileslist = sharedfilesinfo.split("\r\n");
     for(int i = 0;i < sharedfileslist.count();i++)
     {
@@ -257,16 +257,16 @@ void GetFileInfoThread::run()
             QStringList fileinfotemp;
             if(Shared == User)
             {
-                filename = SuperC->Fixfilepath(fileinfolist.at(0)) + fileinfolist.at(1);
-                SuperC->Getfileinfolist(filename,&fileinfotemp);
+                filename = Core->fixFilePath(fileinfolist.at(0)) + fileinfolist.at(1);
+                Core->getFileInfoList(filename,&fileinfotemp);
                 Fileslist->append(filename);
             }
             else
             {
                 filename = Sharedfolder + fileinfolist.at(1);
-                SuperC->Getfileinfolist(filename,&fileinfotemp);
+                Core->getFileInfoList(filename,&fileinfotemp);
             }
-            emit Signalga(fileinfotemp);
+            emit signalGa(fileinfotemp);
         }
     }
 }

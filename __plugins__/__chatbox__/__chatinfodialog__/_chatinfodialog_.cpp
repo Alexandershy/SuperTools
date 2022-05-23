@@ -5,9 +5,9 @@ ChatInfoDialog::ChatInfoDialog(QWidget *parent,QLineEdit *lineedit)
 {
     Lineedit = lineedit;
     setWindowModality(Qt::ApplicationModal);
-    Disablemaxisize();
-    Settitle("Profile");
-    Init();
+    disableMaxisize();
+    setTitle("Profile");
+    init();
 }
 
 ChatInfoDialog::~ChatInfoDialog()
@@ -15,28 +15,28 @@ ChatInfoDialog::~ChatInfoDialog()
 
 }
 
-void ChatInfoDialog::Init()
+void ChatInfoDialog::init()
 {
-    Objectinit();
-    Profileinit();
+    objectInit();
+    profileInit();
 }
 
-void ChatInfoDialog::Objectinit()
+void ChatInfoDialog::objectInit()
 {
-    Plugin = new ChatInfoBox(this);
+    Plugin = new ChatInfoDialogui(this);
     Pluginlayout->addWidget(Plugin);
-    connect(Plugin->ui->pushButton,&QPushButton::clicked,this,&ChatInfoDialog::Selectprofile);
+    connect(Plugin->ui->pushButton,&QPushButton::clicked,this,&ChatInfoDialog::selectProfile);
 }
 
 /*  creat object and connect slot;*/
 
-void ChatInfoDialog::Profileinit()
+void ChatInfoDialog::profileInit()
 {
     Userfolder = "./__depycache__/__chat__/__" + Lineedit->text() + "__/";
     Userpicture = Userfolder + "_user_.png";
     if(!QFile::exists(Userpicture))
     {
-        SuperC->Creatfolder(Userfolder);
+        Core->creatFolder(Userfolder);
         QFile::copy(":/__supericon__/_superwizard_.png",Userpicture);
     }
     QPixmap pixmap(Userpicture);
@@ -47,25 +47,25 @@ void ChatInfoDialog::Profileinit()
 
 /*  set label pixmap user _user_.png;*/
 
-void ChatInfoDialog::Selectprofile()
+void ChatInfoDialog::selectProfile()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./__readme__/__module__/",{"*.png"});
-    connect(filedialog,&SuperFileDialog::Signalfb,this,         &ChatInfoDialog::Changeprofile);
-    connect(filedialog,&SuperFileDialog::Signalfb,filedialog,   &QObject::deleteLater);
-    filedialog->Setsinglefile();
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFb,this,         &ChatInfoDialog::changeProfile);
+    connect(filedialog,&SuperFileDialog::signalFb,filedialog,   &QObject::deleteLater);
+    filedialog->setSingleFile();
+    filedialog->show();
 }
 
 /*  select profile files;*/
 
-void ChatInfoDialog::Changeprofile(QString file)
+void ChatInfoDialog::changeProfile(QString file)
 {
     if(!file.isEmpty())
     {
         QFile::setPermissions(Userpicture,QFile::ReadOther | QFile::WriteOther);
         QFile::remove(Userpicture);
         QFile::copy(file,Userpicture);
-        Profileinit();
+        profileInit();
     }
 }
 

@@ -3,11 +3,11 @@
 HitBricksDialog::HitBricksDialog(QWidget *parent)
     : SuperWindow(parent)
 {
-    Disablemaxisize();
-    Settitle("Hit Bricks V1.01");
+    disableMaxisize();
+    setTitle("Hit Bricks V1.01");
     setWindowModality(Qt::ApplicationModal);
     setAttribute(Qt::WA_DeleteOnClose);
-    Init();
+    init();
 }
 
 HitBricksDialog::~HitBricksDialog()
@@ -15,23 +15,23 @@ HitBricksDialog::~HitBricksDialog()
 
 }
 
-void HitBricksDialog::Init()
+void HitBricksDialog::init()
 {
-    Objectinit();
-    Backgroundinit();
+    objectInit();
+    backgroundInit();
 }
 
-void HitBricksDialog::Objectinit()
+void HitBricksDialog::objectInit()
 {
-    Plugin = new HitBricksBox(this);
+    Plugin = new HitBricksDialogui(this);
     Pluginlayout->addWidget(Plugin);
-    connect(this,&HitBricksDialog::Signalwa,this,&HitBricksDialog::Setfocus);
-    connect(this,&HitBricksDialog::Signalwd,this,&HitBricksDialog::Addsceneinit);
+    connect(this,&HitBricksDialog::signalWa,this,&HitBricksDialog::setFocus);
+    connect(this,&HitBricksDialog::signalWd,this,&HitBricksDialog::addSceneInit);
 }
 
 /*  creat object and set focus;*/
 
-void HitBricksDialog::Backgroundinit()
+void HitBricksDialog::backgroundInit()
 {
     Plugin->ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     Plugin->ui->graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
@@ -39,14 +39,14 @@ void HitBricksDialog::Backgroundinit()
 
 /*  set antialiasing and minimal update mode;*/
 
-void HitBricksDialog::Setfocus()
+void HitBricksDialog::setFocus()
 {
     Plugin->ui->graphicsView->setFocus();
 }
 
 /*  set focus;*/
 
-void HitBricksDialog::Addsceneinit()
+void HitBricksDialog::addSceneInit()
 {
     Mainscene = new HitBricksScene(nullptr,Plugin->ui->graphicsView);
     Plugin->ui->graphicsView->setScene(Mainscene);

@@ -26,24 +26,24 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Enablenextbutton();
+    void enableNextButton();
 
-    void Highlightpalette(
+    void highLightPalette(
             QWidget *widget);
 
-    void Findnexttext();
+    void findNextText();
 
-    void Findlasttext();
+    void findLastText();
 
-    void Movetostart();
+    void moveToStart();
 
-    void Movetoend();
+    void moveToEnd();
 
 };
 

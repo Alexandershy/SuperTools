@@ -9,7 +9,7 @@ Chatter::Chatter(QWidget *parent,QString role,QString username,QString message)
     Username = username;
     Message = message;
     ui->setupUi(this);
-    Init();
+    init();
 }
 
 Chatter::~Chatter()
@@ -17,14 +17,14 @@ Chatter::~Chatter()
     delete ui;
 }
 
-void Chatter::Init()
+void Chatter::init()
 {
-    Objectinit();
-    Setplaceinit();
-    Timerinit();
+    objectInit();
+    setPlaceInit();
+    timerInit();
 }
 
-void Chatter::Objectinit()
+void Chatter::objectInit()
 {
     User = new ChatUser(this,Role,Username);
     Bubble = new ChatBubble(Parent,Message);
@@ -32,7 +32,7 @@ void Chatter::Objectinit()
 
 /*  chatters' user and bubble init;*/
 
-void Chatter::Setplaceinit()
+void Chatter::setPlaceInit()
 {
     if(Role == "self")
     {
@@ -56,21 +56,21 @@ void Chatter::Setplaceinit()
 
 /*  set align left or right by user kind;*/
 
-void Chatter::Timerinit()
+void Chatter::timerInit()
 {
     Timer = new QTimer(this);
     Timer->setInterval(100);
-    connect(Timer,&QTimer::timeout,Bubble,&ChatBubble::Adjustheight);
+    connect(Timer,&QTimer::timeout,Bubble,&ChatBubble::adjustHeight);
     connect(Timer,&QTimer::timeout,Timer,&QObject::deleteLater);
     Timer->start();
 }
 
 /*  delay 100ms adjust height;*/
 
-void Chatter::Adjustsize()
+void Chatter::adjustSize()
 {
-    Bubble->Adjustwidth();
-    Bubble->Adjustheight();
+    Bubble->adjustWidth();
+    Bubble->adjustHeight();
 }
 
 /*  adjust width and height;*/

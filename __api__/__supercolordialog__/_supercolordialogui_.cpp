@@ -5,7 +5,7 @@ SuperColorDialogui::SuperColorDialogui(QWidget *parent)
     , ui(new Ui::SuperColorDialogui)
 {
     ui->setupUi(this);
-    Init();
+    init();
 }
 
 SuperColorDialogui::~SuperColorDialogui()
@@ -13,12 +13,12 @@ SuperColorDialogui::~SuperColorDialogui()
     delete ui;
 }
 
-void SuperColorDialogui::Init()
+void SuperColorDialogui::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void SuperColorDialogui::Objectinit()
+void SuperColorDialogui::objectInit()
 {
     Painter = new SuperPainter(this,ui->verticalLayout_3);
 }

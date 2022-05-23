@@ -1,5 +1,6 @@
 #ifndef _CHATBOX__H
 #define _CHATBOX__H
+#define _CHATBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
@@ -11,11 +12,10 @@
 #include "__chatsharedialog__/_chatsharedialog_.h"
 #include "__superprogressbardialog__/_superprogressbardialog_.h"
 #include "__chatter__/_chatter_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "__module__/_modulec_.h"
-#include "__module__/_moduled_.h"
-#include "_chatbox__global.h"
+#include "__module__/_chatmodulea_.h"
+#include "__module__/_chatmoduleb_.h"
+#include "__module__/_chatmodulec_.h"
+#include "__module__/_chatmoduled_.h"
 #include <QTimer>
 #include <QDir>
 
@@ -43,11 +43,11 @@ protected:
 
 private:
 
-    SuperNetwork *SuperN                        = nullptr;
-    ModuleA *Modulea                            = nullptr;
-    ModuleB *Moduleb                            = nullptr;
-    ModuleC *Modulec                            = nullptr;
-    ModuleD *Moduled                            = nullptr;
+    SuperNetwork *Network                       = nullptr;
+    ChatModuleA *Modulea                        = nullptr;
+    ChatModuleB *Moduleb                        = nullptr;
+    ChatModuleC *Modulec                        = nullptr;
+    ChatModuleD *Moduled                        = nullptr;
     QUdpSocket *Udppackclient                   = nullptr;
     QTcpSocket *Tcpfileinfoclient               = nullptr;
     QTcpSocket *Tcpfilebyteclient               = nullptr;
@@ -72,65 +72,65 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Moduleinit();
+    void moduleInit();
 
-    void Clientinit();
+    void clientInit();
 
-    void Serverinit();
+    void serverInit();
 
-    void Userinit();
+    void userInit();
 
-    void Openprofile();
+    void openProfile();
 
-    void Opensharedfiles();
+    void openSharedFiles();
 
-    void Getcontacts();
+    void getContacts();
 
-    void Getcontactstslot();
+    void getContactstSlot();
 
-    void Getcontactsfslot();
+    void getContactsfSlot();
 
-    void Opencontacts();
+    void openContacts();
 
-    void Addcontactsmessagerecord();
+    void addContactsMessageRecord();
 
-    void Getfileinfo(
+    void getFileInfo(
             QByteArray fileindex);
 
-    void Getfilebytestop();
+    void getFileByteStop();
 
-    void Getfilebyteend();
+    void getFileByteEnd();
 
-    void Copytotargetpath();
+    void copyToTargetPath();
 
-    void Getfileinfoslot();
+    void getFileInfoSlot();
 
-    bool Replacefile(
+    bool replaceFile(
             QString filename,
             QString filesize,
             QString filehash);
 
-    void Getfilebyte();
+    void getFileByte();
 
-    void Getfilebyteslot();
+    void getFileByteSlot();
 
-    void Opencontactsshared();
+    void openContactsShared();
 
-    void Downloadsharedfiles(
+    void downloadSharedFiles(
             int fileindex,
             QString path);
 
-    void Enablesendbutton();
+    void enableSendButton();
 
-    void Getchatanwser();
+    void getChatAnwser();
 
-    void Movetobottom();
+    void moveToBottom();
 
-    void Getchatanwsertslot();
+    void getChatAnwsertSlot();
 
-    void Getchatanwserfslot();
+    void getChatAnwserfSlot();
 
 //***************************************************Server*********************************************************//
 
@@ -149,23 +149,23 @@ private:
 
 private slots:
 
-    void Newfileinfotcpsocket();
+    void newFileInfoTcpsocket();
 
-    void Newfilebytetcpsocket();
+    void newFileByteTcpsocket();
 
-    void Returncontacts();
+    void returnContacts();
 
-    void Returnfileinfo();
+    void returnFileInfo();
 
-    void Returnfilebyte();
+    void returnFileByte();
 
-    void Returnchatanwser();
+    void returnChatAnwser();
 
 signals:
 
-    void Signalca();
+    void signalCa();
 
-    void Signalcb();
+    void signalCb();
 };
 
 

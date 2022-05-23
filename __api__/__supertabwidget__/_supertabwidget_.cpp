@@ -3,7 +3,7 @@
 SuperTabWidget::SuperTabWidget(QWidget *parent)
     : QTabWidget(parent)
 {
-    Init();
+    init();
 }
 
 SuperTabWidget::~SuperTabWidget()
@@ -11,14 +11,14 @@ SuperTabWidget::~SuperTabWidget()
 
 }
 
-void SuperTabWidget::Init()
+void SuperTabWidget::init()
 {
-    Parameterinit();
+    parameterInit();
 }
 
 /*  tab init;*/
 
-void SuperTabWidget::Parameterinit()
+void SuperTabWidget::parameterInit()
 {
     setStyleSheet("QTabWidget::pane{border-style:none;background: white}");
 }

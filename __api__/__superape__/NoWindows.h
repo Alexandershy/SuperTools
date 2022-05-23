@@ -1,5 +1,7 @@
 #pragma once
 
+#include "All.h"
+
 #if !defined(PLATFORM_WINDOWS)
 
 // we treat bool as a global type, so don't declare it in the namespace

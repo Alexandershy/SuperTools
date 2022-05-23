@@ -18,7 +18,7 @@ SuperMp3Decoder::SuperMp3Decoder(QObject *parent,QString infilename,QString outf
     Infilename = Infilenamebyte.data();
     Outfilenamebyte = outfilename.toUtf8();
     Outfilename = Outfilenamebyte.data();
-    Init();
+    init();
 }
 
 SuperMp3Decoder::~SuperMp3Decoder()
@@ -30,32 +30,32 @@ SuperMp3Decoder::~SuperMp3Decoder()
     delete Timer;
 }
 
-void SuperMp3Decoder::Init()
+void SuperMp3Decoder::init()
 {
-    Objectinit();
+    objectInit();
     mpg123_init();
     mpg123_decoders();
-    Outfileinit();
-    Decoderinit();
+    outfileInit();
+    decoderInit();
 }
 
-void SuperMp3Decoder::Objectinit()
+void SuperMp3Decoder::objectInit()
 {
     Multimedia = new SuperMultiMedia(this);
     Timer = new QTimer();
     Timer->setInterval(100);
-    connect(Timer,&QTimer::timeout,this,&SuperMp3Decoder::Returnprogress);
+    connect(Timer,&QTimer::timeout,this,&SuperMp3Decoder::returnProgress);
     Timer->start();
 }
 
-void SuperMp3Decoder::Outfileinit()
+void SuperMp3Decoder::outfileInit()
 {
     QFileInfo fileinfo(Qinfilename);
     Filesize = fileinfo.size();
     fopen_s(&File,Outfilename,"wb");
 }
 
-void SuperMp3Decoder::Decoderinit()
+void SuperMp3Decoder::decoderInit()
 {
     Mp3handle = mpg123_new(NULL, &Errorcode);
     Errorcode = mpg123_open(Mp3handle,Infilename);
@@ -66,11 +66,11 @@ void SuperMp3Decoder::Decoderinit()
 
 void SuperMp3Decoder::run()
 {
-    Decode();
-    Writeaswavfile();
+    decode();
+    writeWavFile();
 }
 
-void SuperMp3Decoder::Decode()
+void SuperMp3Decoder::decode()
 {
     while(true)
     {
@@ -88,7 +88,7 @@ void SuperMp3Decoder::Decode()
     }
 }
 
-void SuperMp3Decoder::Writeaswavfile()
+void SuperMp3Decoder::writeWavFile()
 {
     QFile file(Qoutfilename);
     if(file.exists())
@@ -98,11 +98,11 @@ void SuperMp3Decoder::Writeaswavfile()
         int64_t filesize = file.size();
         file.close();
         file.remove();
-        Multimedia->Writewavfile(Qoutfilename,filesize,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
+        Multimedia->writeWavFile(Qoutfilename,filesize,Channels,Samplerate,Channels * Samplerate * 2,Channels * 2,bytes);
     }
 }
 
-void SuperMp3Decoder::Returnprogress()
+void SuperMp3Decoder::returnProgress()
 {
     int progress = 100 * double(Dframesize) / Filesize;
     if(progress < 100)

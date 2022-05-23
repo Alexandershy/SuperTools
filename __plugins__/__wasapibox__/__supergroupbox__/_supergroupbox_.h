@@ -23,7 +23,7 @@ public:
 
 public slots:
 
-    void Addwidget(
+    void addWidget(
         QWidget *widget);
 
 private:
@@ -32,11 +32,11 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectTnit();
 
-    void Parameterinit();
+    void parameterInit();
 
 };
 

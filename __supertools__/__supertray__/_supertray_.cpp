@@ -3,13 +3,13 @@
 SuperTray::SuperTray(QWidget *parent)
     : QSystemTrayIcon(parent)
 {
-    connect(Regedit,        &QAction::triggered,        this,&SuperTray::Openregedit);
-    connect(Taskmanager,    &QAction::triggered,        this,&SuperTray::Opentaskmanager);
-    connect(Computermanager,&QAction::triggered,        this,&SuperTray::Opencomputermanager);
-    connect(Network,        &QAction::triggered,        this,&SuperTray::Opennetwork);
-    connect(Quit,           &QAction::triggered,        this,&SuperTray::Closeevent);
-    connect(this,           &QSystemTrayIcon::activated,this,&SuperTray::Trayclick);
-    Init();
+    connect(Regedit,        &QAction::triggered,        this,&SuperTray::openRegedit);
+    connect(Taskmanager,    &QAction::triggered,        this,&SuperTray::openTaskManager);
+    connect(Computermanager,&QAction::triggered,        this,&SuperTray::openComputerManager);
+    connect(Network,        &QAction::triggered,        this,&SuperTray::openNetwork);
+    connect(Quit,           &QAction::triggered,        this,&SuperTray::close);
+    connect(this,           &QSystemTrayIcon::activated,this,&SuperTray::trayClick);
+    init();
 }
 
 SuperTray::~SuperTray()
@@ -17,23 +17,23 @@ SuperTray::~SuperTray()
     delete Menu;
 }
 
-void SuperTray::Init()
+void SuperTray::init()
 {
-    Objectinit();
-    Parameterinit();
-    Actioninit();
+    objectInit();
+    parameterInit();
+    actionInit();
 }
 
 /*  system tray init,new action to menu and add function;*/
 
-void SuperTray::Objectinit()
+void SuperTray::objectInit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
 /*  object init;*/
 
-void SuperTray::Parameterinit()
+void SuperTray::parameterInit()
 {
     setContextMenu(Menu);
     setToolTip("SuperTools");
@@ -43,19 +43,19 @@ void SuperTray::Parameterinit()
 
 /*  object init;*/
 
-void SuperTray::Actioninit()
+void SuperTray::actionInit()
 {
-    Addactioninfo(Regedit,"regedit",":/__supericon__/_regedit_.png");
-    Addactioninfo(Taskmanager,"taskmanager",":/__supericon__/_taskmanager_.png");
-    Addactioninfo(Computermanager,"computermanager",":/__supericon__/_computermanager_.png");
-    Addactioninfo(Network,"network",":/__supericon__/_network_.svg");
+    addActionInfo(Regedit,"regedit",":/__supericon__/_regedit_.png");
+    addActionInfo(Taskmanager,"taskmanager",":/__supericon__/_taskmanager_.png");
+    addActionInfo(Computermanager,"computermanager",":/__supericon__/_computermanager_.png");
+    addActionInfo(Network,"network",":/__supericon__/_network_.svg");
     Menu->addSeparator();
-    Addactioninfo(Quit,"quit",":/__supericon__/_quit_.svg");
+    addActionInfo(Quit,"quit",":/__supericon__/_quit_.svg");
 }
 
 /*  action init;*/
 
-void SuperTray::Addactioninfo(QAction *actiona,QString actionname,QString icopath)
+void SuperTray::addActionInfo(QAction *actiona,QString actionname,QString icopath)
 {
     Menu->addAction(actiona);
     actiona->setText(actionname);
@@ -64,35 +64,35 @@ void SuperTray::Addactioninfo(QAction *actiona,QString actionname,QString icopat
 
 /*  creat new action ,set name and add to menu;*/
 
-void SuperTray::Opentaskmanager()
+void SuperTray::openTaskManager()
 {
-    SuperC->Runcommand("./__depycache__/__cache__/__bat__/_taskmgr_.bat","taskmgr.exe");
+    Core->runCommand("./__depycache__/__cache__/__bat__/_taskmgr_.bat","taskmgr.exe");
 }
 
 /*  open windows taskmanager;*/
 
-void SuperTray::Opencomputermanager()
+void SuperTray::openComputerManager()
 {
-    SuperC->Runcommand("./__depycache__/__cache__/__bat__/_compmgmt_.bat","devmgmt.msc");
+    Core->runCommand("./__depycache__/__cache__/__bat__/_compmgmt_.bat","devmgmt.msc");
 }
 
 /*  open windows computer manager;*/
 
-void SuperTray::Openregedit()
+void SuperTray::openRegedit()
 {
-    SuperC->Runcommand("./__depycache__/__cache__/__bat__/_regedit_.bat","regedit.exe");
+    Core->runCommand("./__depycache__/__cache__/__bat__/_regedit_.bat","regedit.exe");
 }
 
 /*  open windows regedit;*/
 
-void SuperTray::Opennetwork()
+void SuperTray::openNetwork()
 {
-    SuperC->Runcommand("./__depycache__/__cache__/__bat__/_network_.bat","ncpa.cpl");
+    Core->runCommand("./__depycache__/__cache__/__bat__/_network_.bat","ncpa.cpl");
 }
 
 /*  Open windows network;*/
 
-void SuperTray::Trayclick(QSystemTrayIcon::ActivationReason reason)
+void SuperTray::trayClick(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick)
     {
@@ -102,12 +102,12 @@ void SuperTray::Trayclick(QSystemTrayIcon::ActivationReason reason)
 
 /*  click or double click show main window;*/
 
-void SuperTray::Closeevent()
+void SuperTray::close()
 {
     emit Signaltb();
     SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"you sure to quit?");
-    connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperTray::Signalta);
-    notedialog->Messageinit();
+    connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperTray::Signalta);
+    notedialog->messageInit();
 }
 
 /*  when close app ,show window first and choose if close;*/

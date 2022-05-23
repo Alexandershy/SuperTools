@@ -1,11 +1,12 @@
 #ifndef _WAVDATABOX__H
 #define _WAVDATABOX__H
-#define _WAVDATABOX__EXPORT
+#define _WAVDATABOX__EXPORT Q_DECL_EXPORT
 
 #define PLAYKEY 179
 #define PLAYNEXT 176
 #define PLAYLAST 177
 
+#include "__datadialog__/_wavdatadialog_.h"
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superhook__/_superhook_.h"
@@ -14,15 +15,14 @@
 #include "__supermultimedia__/_supermultimedia_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__superfilemanager__/_superfilemanager_.h"
-#include "__module__/_modulea_.h"
-#include "__datadialog__/_datadialog_.h"
+#include "__module__/_wavdatamodulea_.h"
 #include <QAudioFormat>
 
 /**************interface****************/
 class _WAVDATABOX__EXPORT Interface
 {
 public:
-    Interface();                                /*  return class wavdatabox new instance pointer;*/
+    SuperTab* Loadplugin();                                /*  return class wasapibox new instance pointer;*/
 };
 
 class WavDataBox : public SuperTab
@@ -38,9 +38,9 @@ public:
 
 private:
 
-    SuperMultiMedia *SuperM                     = nullptr;
+    SuperMultiMedia *Multimedia                 = nullptr;
     SuperFileManager *Filemanager               = nullptr;
-    ModuleA *Modulea                            = nullptr;
+    WavdataModuleA *Modulea                     = nullptr;
     QAudioDevice Deviceinfo                     = {};
     QString Defaultoutputdevice                 = "";
     QString Wavfile                             = "";
@@ -68,69 +68,68 @@ private:
 private slots:
 
     /*  main function;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void parameterInit();
 
-    void Parameterinit();
+    void play();
 
-    void Play();
+    void setPlayWavFile();
 
-    void Setplaywavfile();
+    void playWavFiles();
 
-    void Playwavfiles();
+    void getWavFileFormat();
 
-    void Getwavfileformat();
-
-    void Setdeviceformat(
+    void setDeviceFormat(
             QAudioFormat *format,
             int samplerate,
             int samplesize,
             int channels);
 
-    void Setslidervalue();
+    void setSliderValue();
 
-    void Setwavfilepos();
+    void setWavFilePos();
 
-    void Stop();
+    void stop();
 
-    void Showdatadialog();
+    void showDataDialog();
 
-    void Actionopen();
+    void actionOpen();
 
-    void Disableclicked();
+    void disableClicked();
 
-    void Changeplaymode();
+    void changePlayMode();
 
-    void Changewavfileapi(
+    void changeWavFileApi(
             int direction);
 
-    void Nextwavfile();
+    void nextWavFile();
 
-    void Lastwavfile();
+    void lastWavFile();
 
-    void Clickwavfile();
+    void clickWavFile();
 
-    void Deletefileslot(
+    void deleteFileSlot(
         QString file);
 
-    void Signalwpslotapi();
+    void signalWpSlotApi();
 
-    void Signalwpaslot();
+    void signalWpaSlot();
 
-    void Signalwpbslot(
+    void signalWpbSlot(
             QString status);
 
-    void Signalwpcslot();
+    void signalWpcSlot();
 
-    void Signalcaslot();
+    void signalCaSlot();
 
-    void Nodeviceexist();
+    void nodeviceExist();
 
-    void Enableplaykey();
+    void enablePlayKey();
 
-    void Keypressedevent(
+    void keyPressedEvent(
         int key);
 
 };

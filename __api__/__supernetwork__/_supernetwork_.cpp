@@ -11,7 +11,7 @@ SuperNetwork::~SuperNetwork()
 
 }
 
-void SuperNetwork::Getlocalipaddress(QList<QNetworkAddressEntry> *entry,QComboBox *combobox)
+void SuperNetwork::getLocalIpAddress(QList<QNetworkAddressEntry> *entry,QComboBox *combobox)
 {
     QHostAddress ip;
     combobox->setEnabled(false);
@@ -33,7 +33,7 @@ void SuperNetwork::Getlocalipaddress(QList<QNetworkAddressEntry> *entry,QComboBo
 
 /*  Get network interface ipaddress ,enable combobox or not;*/
 
-void SuperNetwork::Getlocalnetmask(QList<QNetworkAddressEntry> *entry,QComboBox *combobox)
+void SuperNetwork::getLocalNetmask(QList<QNetworkAddressEntry> *entry,QComboBox *combobox)
 {
     QHostAddress netmask;
     combobox->setEnabled(false);
@@ -55,7 +55,7 @@ void SuperNetwork::Getlocalnetmask(QList<QNetworkAddressEntry> *entry,QComboBox 
 
 /*  Get network interface netmask ,enable combobox or not;*/
 
-bool SuperNetwork::Connecttcpserver(QTcpSocket* tcpsocket,QString ipaddress,int portnumber,int timeout)
+bool SuperNetwork::connectTcpServer(QTcpSocket* tcpsocket,QString ipaddress,int portnumber,int timeout)
 {
     tcpsocket->connectToHost(ipaddress,portnumber);
     if(tcpsocket->waitForConnected(timeout))
@@ -65,7 +65,7 @@ bool SuperNetwork::Connecttcpserver(QTcpSocket* tcpsocket,QString ipaddress,int 
     return false;
 }
 
-bool SuperNetwork::Disconnecttcpserver(QTcpSocket* tcpsocket,int timeout)
+bool SuperNetwork::disConnectTcpServer(QTcpSocket* tcpsocket,int timeout)
 {
     tcpsocket->disconnectFromHost();
     if(tcpsocket->state() == QTcpSocket::UnconnectedState || tcpsocket->waitForDisconnected(timeout))
@@ -77,7 +77,7 @@ bool SuperNetwork::Disconnecttcpserver(QTcpSocket* tcpsocket,int timeout)
 
 /*  disconnect from tcp server;*/
 
-void SuperNetwork::Writesocket(QCheckBox* checkboxstring,QCheckBox* checkboxaddr,QCheckBox* checkboxaddn,QTcpSocket* tcpsocket,QLineEdit* lineeditdata)
+void SuperNetwork::writeSocket(QCheckBox* checkboxstring,QCheckBox* checkboxaddr,QCheckBox* checkboxaddn,QTcpSocket* tcpsocket,QLineEdit* lineeditdata)
 {
     QByteArray data = "";
     if(checkboxstring->isChecked())
@@ -109,7 +109,7 @@ void SuperNetwork::Writesocket(QCheckBox* checkboxstring,QCheckBox* checkboxaddr
 
 /*  tcpsocket write data api,adapted to supertools rules;*/
 
-QByteArray SuperNetwork::Readdatastream(QTcpSocket* tcpsocket,QCheckBox* checkboxstring)
+QByteArray SuperNetwork::readDataStream(QTcpSocket* tcpsocket,QCheckBox* checkboxstring)
 {
     if(tcpsocket->state() == QTcpSocket::ConnectedState && checkboxstring->isChecked())
     {
@@ -123,7 +123,7 @@ QByteArray SuperNetwork::Readdatastream(QTcpSocket* tcpsocket,QCheckBox* checkbo
 
 /*  receive tcpsocket stream data api;*/
 
-void SuperNetwork::Closetcpclient(QTcpSocket* tcpsocket)
+void SuperNetwork::closeTcpClient(QTcpSocket* tcpsocket)
 {
     if(tcpsocket->state() == QTcpSocket::ConnectedState)
     {
@@ -162,12 +162,12 @@ void SuperTcpSocketThread::run()
         }
         else if(Bytesavailable == bytesAvailable && Bytesavailable != 0)
         {
-            emit Signaltt();
+            emit signalTt();
             break;
         }
         else if(Inittime >= Timeout)
         {
-            emit Signaltf();
+            emit signalTf();
             break;
         }
     }

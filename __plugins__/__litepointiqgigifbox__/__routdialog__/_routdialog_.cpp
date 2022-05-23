@@ -3,8 +3,8 @@
 RoutDialog::RoutDialog(QWidget *parent)
     : SuperWindow(parent)
 {
-    Init();
-    Settitle("Rout dialog");
+    init();
+    setTitle("Rout dialog");
 }
 
 RoutDialog::~RoutDialog()
@@ -12,13 +12,13 @@ RoutDialog::~RoutDialog()
 
 }
 
-void RoutDialog::Init()
+void RoutDialog::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void RoutDialog::Objectinit()
+void RoutDialog::objectInit()
 {
-    Plugin = new RoutBox(this);
+    Plugin = new RoutDialogui(this);
     Pluginlayout->addWidget(Plugin);
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "All.h"
+
 namespace APE
 {
 
@@ -43,6 +45,9 @@ public:
 
     // other functions
     virtual int SetEOF() = 0;
+    virtual int SetReadWholeFile() = 0;
+    virtual void SetReadToBuffer() = 0;
+    virtual unsigned char * GetBuffer(int * pnBufferBytes) = 0;
 
     // attributes
     virtual int64 GetPosition() = 0;

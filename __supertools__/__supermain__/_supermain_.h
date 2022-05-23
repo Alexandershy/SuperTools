@@ -17,20 +17,24 @@ class SuperMain : public SuperTabWidget
 
 public:
 
-    SuperMain(
-            QWidget *window = nullptr,
-            QString setting = nullptr);
-
-    ~SuperMain();
-
-    void Setfocus();
-
     QMenu *Load                     = nullptr;
     QMenu *Help                     = nullptr;
     QMenu *Config                   = nullptr;
     QAction *Actionsave             = nullptr;
     QAction *Actionsaveas           = nullptr;
     QAction *Actionquit             = nullptr;
+
+public:
+
+    SuperMain(
+            QWidget *window = nullptr,
+            QString setting = nullptr);
+
+    ~SuperMain();
+
+public slots:
+
+    void setFocus();
 
 protected:
 
@@ -42,7 +46,7 @@ protected:
 
 private:
 
-    SuperCore *SuperC               = nullptr;
+    SuperCore *Core                 = nullptr;
     QString Setting                 = "";
     QStringList Tabnamelist         = {};
     QAction *Actionplugin           = nullptr;
@@ -61,66 +65,66 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Actioninit();
+    void actionInit();
 
-    void Loadsetting();
+    void loadSetting();
 
-    void Loadplugin();
+    void loadPlugin();
 
-    void Importplugins(
+    void importPlugins(
             QStringList listsuper);
 
-    void Importsetting(
+    void importSetting(
             QString strini);
 
-    void Addtabapi(
+    void addTabApi(
             QString strdllname,
             QString strtabname,
             QString strobjname);
 
-    void Addtab(
+    void addTab(
             QString strtabname,
             QWidget* widget,
             QString strobjname);
 
-    void Showtab(
+    void showTab(
             QStringList *listobjname,
             QString strobjname);
 
-    void Save();
+    void save();
 
-    void Savesetting(
+    void saveSetting(
             QString strtitle);
 
-    void Saveas();
+    void saveAs();
 
-    void Opencachepath();
+    void openCachePath();
 
-    void Checkversion();
+    void checkVersion();
 
-    void Readme();
+    void readme();
 
-    void Superapi();
+    void superApi();
 
-    void Openclosetabbox(
+    void openCloseTabBox(
             int intindex);
 
-    void Closetab();
+    void closeTab();
 
-    void Closeevent();
+    void close();
 
 signals:
 
-    void Signalma(
+    void signalMa(
             QString filepath);
 
-    void Signalmb();
+    void signalMb();
 
-    void Signalmc(
+    void signalMc(
         Qt::CursorShape shape);
 
 };

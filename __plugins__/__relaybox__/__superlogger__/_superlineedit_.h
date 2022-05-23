@@ -18,17 +18,17 @@ public:
 private:
 
     QWidget *Widget     = nullptr;
-    SuperCore *SuperC   = nullptr;
+    SuperCore *Core     = nullptr;
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Appendtextinit();
+    void appendTextInit();
 };
 
 

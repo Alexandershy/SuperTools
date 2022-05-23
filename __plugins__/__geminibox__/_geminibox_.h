@@ -1,14 +1,14 @@
 #ifndef _GEMINIBOX__H
 #define _GEMINIBOX__H
+#define _GEMINIBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__superserial__/_superserial_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "_geminibox__global.h"
+#include "__module__/_geminimodulea_.h"
+#include "__module__/_geminimoduleb_.h"
 #include <QTimer>
 
 /**************interface****************/
@@ -31,89 +31,88 @@ public:
 
 private:
 
-    SuperSerial *SuperS                 = nullptr;
-    ModuleA *Modulea                    = nullptr;
-    ModuleB *Moduleb                    = nullptr;
+    SuperSerial *Serial                 = nullptr;
+    GeminiModuleA *Modulea              = nullptr;
+    GeminiModuleB *Moduleb              = nullptr;
     QStringList Serialnamelist          = {};
     QList<QWidget*> Connectwidgetet     = {};
     QList<QWidget*> Connectwidgetef     = {};
     QList<QWidget*> Disconnectwidgetet  = {};
     QList<QWidget*> Disconnectwidgetef  = {};
-    QSerialPort *Serial                 = nullptr;
-    ScanSerialPort *Threadsa            = nullptr;
+    QSerialPort *Serialport             = nullptr;
+    SuperScanSerial *Threadsa           = nullptr;
     QTimer *Timerca                     = nullptr;
-    SerialThread *Threadta              = nullptr;
-    SerialThread *Threadtb              = nullptr;
-    SerialThread *Threadtc              = nullptr;
-    SerialThread *Threadtd              = nullptr;
-    SerialThread *Threadte              = nullptr;
+    SuperSerialThread *Threadta         = nullptr;
+    SuperSerialThread *Threadtb         = nullptr;
+    SuperSerialThread *Threadtc         = nullptr;
+    SuperSerialThread *Threadtd         = nullptr;
+    SuperSerialThread *Threadte         = nullptr;
     SuperLogger *Logger                 = nullptr;
 
 private slots:
 
     /*  main function*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void timerInit();
 
-    void Timerinit();
+    void widgetListInit();
 
-    void Widgetlistinit();
+    void getSerialPort();
 
-    void Getserialport();
+    bool enableConnectButton();
 
-    bool Enableconnectbutton();
+    void connectSerialPort();
 
-    void Connectserialport();
+    void disconnectSerialPort();
 
-    void Disconnectserialport();
-
-    void Geminicommand(
+    void geminiCommand(
             QString strcommand);
 
-    void Help();
+    void help();
 
-    void Checkversion();
+    void checkVersion();
 
-    void Runtxtest();
+    void runTxTest();
 
-    void Startrxtest();
+    void startRxTest();
 
-    void Endrxtest();
+    void endRxTest();
 
-    void Enableruntxtest();
+    void enableRunTxTest();
 
-    void Enablestartrxtest();
+    void enableStartRxTest();
 
-    void Scangeminiport();
+    void scanGeminiPort();
 
-    void Signalsbslot(
+    void signalSbSlot(
             QString strcommand);
 
-    void Signalscslot();
+    void signalScSlot();
 
-    void Timercaslot();
+    void timerCaSlot();
 
-    void Signalttaslot();
+    void signalTtaSlot();
 
-    void Signaltfaslot();
+    void signalTfaSlot();
 
-    void Signalttbslot();
+    void signalTtbSlot();
 
-    void Signaltfbslot();
+    void signalTfbSlot();
 
-    void Signalttcslot();
+    void signalTtcSlot();
 
-    void Signaltfcslot();
+    void signalTfcSlot();
 
-    void Signalttdslot();
+    void signalTtdSlot();
 
-    void Signaltfdslot();
+    void signalTfdSlot();
 
-    void Signaltteslot();
+    void signalTteSlot();
 
-    void Signaltfeslot();
+    void signalTfeSlot();
 
 };
 

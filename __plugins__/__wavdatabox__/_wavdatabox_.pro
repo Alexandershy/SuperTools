@@ -14,15 +14,16 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    __datadialog__/_databox_.cpp \
-    __datadialog__/_datadialog_.cpp \
-    __module__/_modulea_.cpp \
+    __datadialog__/_wavdatadialog_.cpp \
+    __datadialog__/_wavdatadialogui_.cpp \
+    __module__/_wavdatamodulea_.cpp \
     _wavdatabox_.cpp
 
+
 HEADERS += \
-    __datadialog__/_databox_.h \
-    __datadialog__/_datadialog_.h \
-    __module__/_modulea_.h \
+    __datadialog__/_wavdatadialog_.h \
+    __datadialog__/_wavdatadialogui_.h \
+    __module__/_wavdatamodulea_.h \
     __superchartview__/_superchartview_.h \
     __supercore__/_supercore_.h \
     __superfftw__/fftw3.h \
@@ -38,6 +39,7 @@ HEADERS += \
     __superwindow__/_superwindow_.h \
     _wavdatabox_.h
 
+
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
@@ -45,8 +47,8 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    __datadialog__/_databox_.ui \
-    __module__/_modulea_.ui \
+    __datadialog__/_wavdatadialogui_.ui \
+    __module__/_wavdatamodulea_.ui \
     __superfiledialog__/_superfiledialogui_.ui \
     __superfilemanager__/_superfilemanagerui_.ui \
     __supernotedialog__/_supernotedialogui_.ui \
@@ -55,12 +57,14 @@ FORMS += \
     __superwindow__/_supertitleui_.ui \
     __superwindow__/_superwindowui_.ui
 
+
 DISTFILES += \
     _wavdatabox_.html \
     _wavdatabox_.pdf
 
+
 LIBS += -luser32
-LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__x64__\libfftw3-3.lib"
+LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__windows__\fftw3.lib"
 LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
 
 RESOURCES += \

@@ -6,7 +6,7 @@ LittleBall::LittleBall(QGraphicsScene *scene,QStringList *sceneinfolist,int colo
     Sceneinfolist = sceneinfolist;
     Colorindex[0] = colorindex;
     Timer = timer;
-    Init();
+    init();
 }
 
 LittleBall::~LittleBall()
@@ -14,14 +14,14 @@ LittleBall::~LittleBall()
 
 }
 
-void LittleBall::Init()
+void LittleBall::init()
 {
-    Colorinit();
-    Sceneinit();
-    Timerinit();
+    colorInit();
+    sceneInit();
+    timerInit();
 }
 
-void LittleBall::Colorinit()
+void LittleBall::colorInit()
 {
     QColor orange(255,170,0);
     Colorlist.append(Qt::red);
@@ -35,7 +35,7 @@ void LittleBall::Colorinit()
 
 /*  init little ball colorlist;*/
 
-void LittleBall::Sceneinit()
+void LittleBall::sceneInit()
 {
     Scenex = Scene->sceneRect().x();
     Sceney = Scene->sceneRect().y();
@@ -45,10 +45,10 @@ void LittleBall::Sceneinit()
 
 /*  init scene rect parameters;*/
 
-void LittleBall::Timerinit()
+void LittleBall::timerInit()
 {
-    connect(Timer,&QTimer::timeout,this,&LittleBall::Timerxslot);
-    connect(Timer,&QTimer::timeout,this,&LittleBall::Timeryslot);
+    connect(Timer,&QTimer::timeout,this,&LittleBall::timerxSlot);
+    connect(Timer,&QTimer::timeout,this,&LittleBall::timerySlot);
 }
 
 /*  connect timer for little ball run in control speed;*/
@@ -84,15 +84,15 @@ void LittleBall::advance(int phase)
     {
         return;
     }
-    Speedlimit();
+    speedLimit();
     moveBy(Speedx.at(0),Speedy.at(0));
-    Collisioncheck();
-    Boundingcheck();
+    collisionCheck();
+    boundingCheck();
 }
 
 /*  run advance when scene run advance;*/
 
-void LittleBall::Speedlimit()
+void LittleBall::speedLimit()
 {
     double speedx = Speedx.at(0);
     int pnnumber = speedx / abs(speedx);
@@ -104,19 +104,19 @@ void LittleBall::Speedlimit()
 
 /*  set little ball speedx limit;*/
 
-void LittleBall::Collisioncheck()
+void LittleBall::collisionCheck()
 {
     if(!Scene->collidingItems(this).isEmpty())
     {
         QGraphicsItem* Collitem = Scene->collidingItems(this).at(0);
-        QPainterPath path = Calrepeatcenter(Collitem);
-        Collideswithitem(path,Collitem);
+        QPainterPath path = calRepeatCenter(Collitem);
+        collidesItem(path,Collitem);
     }
 }
 
 /*  run little ball collision check;*/
 
-QPainterPath LittleBall::Calrepeatcenter(QGraphicsItem* collitem)
+QPainterPath LittleBall::calRepeatCenter(QGraphicsItem* collitem)
 {
     QPainterPath path;
     QPainterPath temppath = collitem->shape();
@@ -130,26 +130,26 @@ QPainterPath LittleBall::Calrepeatcenter(QGraphicsItem* collitem)
 
 /*  cal collision path center;*/
 
-void LittleBall::Collideswithitem(QPainterPath path,QGraphicsItem* collitem)
+void LittleBall::collidesItem(QPainterPath path,QGraphicsItem* collitem)
 {
     double width = collitem->boundingRect().width();
     if(width == 110)
     {
-        Collidesskate(path);
+        collidesSkate(path);
         Resetbonus = 1;
-        emit Signalbb((Resetbonus + abs(Speedx.at(0)) + abs(Speedy.at(0))) * 5);
+        emit signalBb((Resetbonus + abs(Speedx.at(0)) + abs(Speedy.at(0))) * 5);
     }
     else if(width == 60)
     {
-        Collidesbrick(path);
+        collidesBrick(path);
         Resetbonus = Resetbonus + 1;
-        emit Signalbb((Resetbonus + abs(Speedx.at(0)) + abs(Speedy.at(0))) * 10);
+        emit signalBb((Resetbonus + abs(Speedx.at(0)) + abs(Speedy.at(0))) * 10);
     }
 }
 
 /*  run collides with items function;*/
 
-void LittleBall::Collidesskate(QPainterPath path)
+void LittleBall::collidesSkate(QPainterPath path)
 {
     double x = path.boundingRect().center().x();
     double y = path.boundingRect().center().y();
@@ -167,14 +167,14 @@ void LittleBall::Collidesskate(QPainterPath path)
         Speedy[0] =  -Speedy.at(0);
         if(Resetbonus == 0)
         {
-            Firstcollides();
+            firstCollides();
         }
     }
 }
 
 /*  run collides with skate function;*/
 
-void LittleBall::Firstcollides()
+void LittleBall::firstCollides()
 {
     double time = QDateTime::currentDateTime().toString("zzz").toDouble();
     Speedx[0] = sin(time);
@@ -182,7 +182,7 @@ void LittleBall::Firstcollides()
 
 /*  change speedx when first collides happened;*/
 
-void LittleBall::Collidesbrick(QPainterPath path)
+void LittleBall::collidesBrick(QPainterPath path)
 {
     double x = path.boundingRect().center().x();
     double y = path.boundingRect().center().y();
@@ -199,14 +199,14 @@ void LittleBall::Collidesbrick(QPainterPath path)
         Speedy[0] =  -Speedy.at(0);
         if(Resetbonus == 0)
         {
-            Firstcollides();
+            firstCollides();
         }
     }
 }
 
 /*  run collides with brick function;*/
 
-void LittleBall::Boundingcheck()
+void LittleBall::boundingCheck()
 {
     double Xpos = pos().x();
     double Ypos = pos().y();
@@ -215,12 +215,12 @@ void LittleBall::Boundingcheck()
     if(Xpos < Scenex)
     {
         Speedx[0] = abs(Speedx.at(0));
-        Changespeedy();
+        changeSpeedy();
     }
     else if(Xpos + Xwidth > Scenewidth)
     {
        Speedx[0] = -abs(Speedx.at(0));
-       Changespeedy();
+       changeSpeedy();
     }
     if(Ypos < Sceney)
     {
@@ -228,14 +228,14 @@ void LittleBall::Boundingcheck()
     }
     else if(Ypos + Yheight > Sceneheight)
     {
-        emit Signalba();
+        emit signalBa();
         delete this;
     }
 }
 
 /*  change little ball speed or delete this when arrive scene bounding;*/
 
-void LittleBall::Changespeedy()
+void LittleBall::changeSpeedy()
 {
     if(Speedy.at(0) == 0)
     {
@@ -245,7 +245,7 @@ void LittleBall::Changespeedy()
 
 /*  if speedy is 0,change its speed when bounding check;*/
 
-void LittleBall::Movetotarget(QPointF point)
+void LittleBall::moveToTarget(QPointF point)
 {
     double speedtempx = point.x() - pos().x();
     double speedtempy = point.y() - pos().y();
@@ -267,7 +267,7 @@ void LittleBall::Movetotarget(QPointF point)
 
 /*  cal point and pos distance,and change this speed;*/
 
-void LittleBall::Timerxslot()
+void LittleBall::timerxSlot()
 {
     double speedx = Speedx.at(0);
     if(speedx > 1)
@@ -282,7 +282,7 @@ void LittleBall::Timerxslot()
 
 /*  keep speedx at little than 1*/
 
-void LittleBall::Timeryslot()
+void LittleBall::timerySlot()
 {
     double speed = Speedy.at(0);
     if(speed > 0 && speed < Speedlimity)

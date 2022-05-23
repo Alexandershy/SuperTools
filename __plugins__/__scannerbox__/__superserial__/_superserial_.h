@@ -1,6 +1,8 @@
-
-#ifndef SUPERSERIAL_H
-#define SUPERSERIAL_H
+#ifndef _SUPERSERIAL__H
+#define _SUPERSERIAL__H
+#define _SUPERSERIAL__EXPORT Q_DECL_EXPORT
+#define _SUPERSCANSERIAL__EXPORT Q_DECL_EXPORT
+#define _SUPERSERIALTHREAD__EXPORT Q_DECL_EXPORT
 
 #include "__supercore__/_supercore_.h"
 #include <QSerialPortInfo>
@@ -9,7 +11,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 
-class SuperSerial : QObject
+class _SUPERSERIAL__EXPORT SuperSerial : public QObject
 {
     Q_OBJECT
 
@@ -23,51 +25,50 @@ public:
 public slots:
 
     /*  QSerialport */
-
-    void Getserialport(
+    void getSerialPort(
             QStringList* listname,
             QComboBox* comboboxnamelist);
 
-    void Enableserialcombobox(
+    void enableSerialComboBox(
             QStringList *namelist,
             QComboBox *comboboxnamelist,
             QComboBox* comboboxbaudrate);
 
-    bool Enableconnectbutton(
+    bool enableConnectButton(
             QComboBox* comboboxnamelist,
             QComboBox* comboboxbaudrate,
             QPushButton* pushbuttonconnect);
 
-    void Connectserialport(
+    void connectSerialPort(
             QSerialPort* seriala,
             QString strportname,
             int intbaudrate);
 
-    void Writeserial(
+    void writeSerial(
             QCheckBox* checkboxstring,
             QCheckBox* checkboxaddr,
             QCheckBox* checkboxaddn,
             QSerialPort* seriala,
             QLineEdit* lineeditdata);
 
-    QByteArray Readdatastream(
+    QByteArray readDataStream(
             QSerialPort* serial,
             QCheckBox* checkboxstring);
 
-    bool Checkserialdevice(
+    bool checkSerialDevice(
             QSerialPort* serial,
             QString strportname);
 
-    void Closeserial(
+    void closeSerial(
             QSerialPort* seriala);
 
 private:
 
-    SuperCore *SuperC = nullptr;
+    SuperCore *Core = nullptr;
 
 };
 
-class ScanSerialPort : public QThread
+class _SUPERSCANSERIAL__EXPORT SuperScanSerial : public QThread
 {
     Q_OBJECT
 
@@ -75,9 +76,9 @@ public:
 
     /*main function;*/
 
-    ScanSerialPort(
+    SuperScanSerial(
             QWidget* widget,
-            QSerialPort* seriala,
+            QSerialPort* serialport,
             int baudrate,
             QString commanda,
             QString commandb,
@@ -86,7 +87,7 @@ public:
             QString strbackvaluea,
             QString strbackvalueb);
 
-    ~ScanSerialPort();
+    ~SuperScanSerial();
 
 public slots:
 
@@ -94,27 +95,27 @@ public slots:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Initrun();
+    void initRun();
 
-    void Connectserialport();
+    void connectSerialPort();
 
-    void Waitforbytes();
+    void waitForBytes();
 
-    void Communicatewithserialporta(
+    void communicateWithSerialPorta(
             QString strport);
 
-    void Communicatewithserialportb(
+    void communicateWithSerialPortb(
             QString strport);
 
 private:
 
-    SuperSerial *SuperS         = nullptr;
+    SuperSerial *Serial         = nullptr;
     QStringList Listname        = {};
-    QSerialPort *Seriala        = nullptr;
+    QSerialPort *Serialport     = nullptr;
     int Baudrate                = 0;
     int Timeout                 = 1000;
     int Inittime                = 0;
@@ -133,27 +134,26 @@ private:
 
 signals:
 
-    void Signalsa(
+    void signalSa(
             QString direction,
             QString strtlog,
             QString strllog);
 
-    void Signalsb(
+    void signalSb(
             QString);
 
-    void Signalsc();
+    void signalSc();
 
 };
 
-class SerialThread : public QThread
+class _SUPERSERIALTHREAD__EXPORT SuperSerialThread : public QThread
 {
     Q_OBJECT
 
 public:
 
     /*main function;*/
-
-    SerialThread(
+    SuperSerialThread(
             QSerialPort* serial,
             double timeout);
 
@@ -161,21 +161,21 @@ public slots:
 
     void run();
 
-    void Init();
+    void init();
 
 private:
 
-    QSerialPort* Serial = nullptr;
-    double Inittime     = 0;
-    double Timeout      = 0;
-    double Inittimeout  = 0;
-    int Bytesavailable  = 0;
+    QSerialPort* Serialport = nullptr;
+    double Inittime         = 0;
+    double Timeout          = 0;
+    double Inittimeout      = 0;
+    int Bytesavailable      = 0;
 
 signals:
 
-    void Signaltt();
+    void signalTt();
 
-    void Signaltf();
+    void signalTf();
 
 };
 

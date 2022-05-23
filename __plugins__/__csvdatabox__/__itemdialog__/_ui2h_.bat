@@ -1,1 +1,0 @@
-uic -o _itembox__ui_.h _itembox_.ui

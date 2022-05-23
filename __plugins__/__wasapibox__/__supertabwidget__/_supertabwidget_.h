@@ -15,11 +15,11 @@ public:
 
     ~SuperTabWidget();
 
-private:
+private slots:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
 };
 

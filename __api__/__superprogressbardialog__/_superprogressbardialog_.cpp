@@ -3,13 +3,13 @@
 SuperProgressBarDialog::SuperProgressBarDialog(QWidget *parent)
     : SuperWindow(parent)
 {
-    Settitle("SuperProgressBarDialog");
+    setTitle("SuperProgressBarDialog");
     setWindowModality(Qt::ApplicationModal);
-    Disableclose();
-    Disablemaxisize();
-    Thememenuinit();
-    Addiconfunction();
-    Init();
+    disableClose();
+    disableMaxisize();
+    themeMenuInit();
+    addIconFunction();
+    init();
 }
 
 SuperProgressBarDialog::~SuperProgressBarDialog()
@@ -17,31 +17,31 @@ SuperProgressBarDialog::~SuperProgressBarDialog()
 
 }
 
-void SuperProgressBarDialog::Init()
+void SuperProgressBarDialog::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void SuperProgressBarDialog::Objectinit()
+void SuperProgressBarDialog::objectInit()
 {
     Plugin = new SuperProgressBarDialogui(this);
     Pluginlayout->addWidget(Plugin);
-    connect(this,&SuperProgressBarDialog::Signalpb,this,&SuperProgressBarDialog::hide);
+    connect(this,&SuperProgressBarDialog::signalPb,this,&SuperProgressBarDialog::hide);
     Stop = new QAction("Stop",this);
-    connect(Stop,&QAction::triggered,this,&SuperProgressBarDialog::Stopfunction);
-    Addthemesaction(Stop);
+    connect(Stop,&QAction::triggered,this,&SuperProgressBarDialog::stopFunction);
+    addThemesAction(Stop);
 }
 
 /*  creat object and connect its slot;*/
 
-void SuperProgressBarDialog::Stopfunction()
+void SuperProgressBarDialog::stopFunction()
 {
-    emit Signalpa();
+    emit signalPa();
 }
 
 /*  emit signal for stop current progress;*/
 
-void SuperProgressBarDialog::Setvaluemessage(int value,QString message)
+void SuperProgressBarDialog::setValueMessage(int value,QString message)
 {
     Plugin->ui->progressBar->setValue(value);
     Plugin->ui->label->setText(message);
@@ -49,7 +49,7 @@ void SuperProgressBarDialog::Setvaluemessage(int value,QString message)
     {
         Plugin->ui->progressBar->setValue(0);
         Plugin->ui->label->setText("waitting for message...");
-        emit Signalpb();
+        emit signalPb();
     }
 }
 

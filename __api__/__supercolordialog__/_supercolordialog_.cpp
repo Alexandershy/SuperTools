@@ -4,11 +4,11 @@ SuperColorDialog::SuperColorDialog(QWidget *parent,QColor sourcecolor)
     :SuperWindow(parent)
 {
     Sourcecolor = sourcecolor;
-    Disablemaxisize();
+    disableMaxisize();
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle("SuperColorDialog");
-    Init();
+    setTitle("SuperColorDialog");
+    init();
 }
 
 SuperColorDialog::~SuperColorDialog()
@@ -16,30 +16,30 @@ SuperColorDialog::~SuperColorDialog()
 
 }
 
-void SuperColorDialog::Init()
+void SuperColorDialog::init()
 {
-    Objectinit();
-    Colorinit();
+    objectInit();
+    colorInit();
 }
 
-void SuperColorDialog::Objectinit()
+void SuperColorDialog::objectInit()
 {
     Plugin = new SuperColorDialogui(this);
     Pluginlayout->addWidget(Plugin);
-    connect(Plugin->ui->tableWidget,        &QTableWidget::itemPressed, this,&SuperColorDialog::Refreshrbgcolora);
-    connect(Plugin->ui->pushButton_2,       &QPushButton::clicked,      this,&SuperColorDialog::Selectcolor);
-    connect(Plugin->ui->spinBox,            &QSpinBox::textChanged,     this,&SuperColorDialog::Refreshlabelcolor);
-    connect(Plugin->ui->spinBox_2,          &QSpinBox::textChanged,     this,&SuperColorDialog::Refreshlabelcolor);
-    connect(Plugin->ui->spinBox_3,          &QSpinBox::textChanged,     this,&SuperColorDialog::Refreshlabelcolor);
-    connect(Plugin->ui->horizontalSlider,   &QSlider::sliderReleased,   this,&SuperColorDialog::Refreshsampler);
-    connect(Plugin->Painter,                &SuperPainter::Signalpa,    this,&SuperColorDialog::Refreshrbgcolorb);
-    connect(Plugin->ui->pushButton_3,       &QPushButton::clicked,      this,&SuperColorDialog::Changebasiccolor);
+    connect(Plugin->ui->tableWidget,        &QTableWidget::itemPressed, this,&SuperColorDialog::refreshRgbColora);
+    connect(Plugin->ui->pushButton_2,       &QPushButton::clicked,      this,&SuperColorDialog::selectColor);
+    connect(Plugin->ui->spinBox,            &QSpinBox::textChanged,     this,&SuperColorDialog::refreshLabelColor);
+    connect(Plugin->ui->spinBox_2,          &QSpinBox::textChanged,     this,&SuperColorDialog::refreshLabelColor);
+    connect(Plugin->ui->spinBox_3,          &QSpinBox::textChanged,     this,&SuperColorDialog::refreshLabelColor);
+    connect(Plugin->ui->horizontalSlider,   &QSlider::sliderReleased,   this,&SuperColorDialog::refreshSampler);
+    connect(Plugin->Painter,                &SuperPainter::signalPa,    this,&SuperColorDialog::refreshRgbColorb);
+    connect(Plugin->ui->pushButton_3,       &QPushButton::clicked,      this,&SuperColorDialog::changeBasicColor);
     connect(Plugin->ui->pushButton,         &QPushButton::clicked,      this,&SuperColorDialog::close);
-    connect(this,                           &SuperColorDialog::Signalwd,this,&SuperColorDialog::Changebasiccolor);
-    connect(this,                           &SuperColorDialog::Signalwd,this,&SuperColorDialog::Refreshlabelcolor);
+    connect(this,                           &SuperColorDialog::signalWd,this,&SuperColorDialog::changeBasicColor);
+    connect(this,                           &SuperColorDialog::signalWd,this,&SuperColorDialog::refreshLabelColor);
 }
 
-void SuperColorDialog::Colorinit()
+void SuperColorDialog::colorInit()
 {
     for(int i = 0;i < Rowcounts;i++)
     {
@@ -61,7 +61,7 @@ void SuperColorDialog::Colorinit()
 
 /*  add color to table widget;*/
 
-void SuperColorDialog::Refreshrbgcolora(QTableWidgetItem *item)
+void SuperColorDialog::refreshRgbColora(QTableWidgetItem *item)
 {
     int row = item->row();
     int column = item->column();
@@ -75,7 +75,7 @@ void SuperColorDialog::Refreshrbgcolora(QTableWidgetItem *item)
 
 /*  add rgb to spinbox;*/
 
-void SuperColorDialog::Refreshrbgcolorb(QColor color)
+void SuperColorDialog::refreshRgbColorb(QColor color)
 {
     Plugin->ui->spinBox->setValue(color.red());
     Plugin->ui->spinBox_2->setValue(color.green());
@@ -84,7 +84,7 @@ void SuperColorDialog::Refreshrbgcolorb(QColor color)
 
 /*  add rgb to spinbox;*/
 
-void SuperColorDialog::Refreshlabelcolor()
+void SuperColorDialog::refreshLabelColor()
 {
     int red = Plugin->ui->spinBox->value();
     int green = Plugin->ui->spinBox_2->value();
@@ -96,22 +96,22 @@ void SuperColorDialog::Refreshlabelcolor()
 
 /*  add rgb to spinbox;*/
 
-void SuperColorDialog::Selectcolor()
+void SuperColorDialog::selectColor()
 {
     QColor color(Plugin->ui->spinBox->value(),Plugin->ui->spinBox_2->value(),Plugin->ui->spinBox_3->value());
-    emit Signalsa(color);
+    emit signalSa(color);
 }
 
 /*  select current color;*/
 
-void SuperColorDialog::Refreshsampler()
+void SuperColorDialog::refreshSampler()
 {
-    Plugin->Painter->Repainter(Colorindex,Plugin->ui->horizontalSlider->value());
+    Plugin->Painter->repainter(Colorindex,Plugin->ui->horizontalSlider->value());
 }
 
 /*  refresh sampler;*/
 
-void SuperColorDialog::Changebasiccolor()
+void SuperColorDialog::changeBasicColor()
 {
     QColor color;
     switch (Colorindex)
@@ -138,7 +138,7 @@ void SuperColorDialog::Changebasiccolor()
     QPalette palette = Plugin->ui->pushButton_3->palette();
     palette.setColor(QPalette::ButtonText,color);
     Plugin->ui->pushButton_3->setPalette(palette);
-    Refreshsampler();
+    refreshSampler();
 }
 
 /*  change basic color and refresh sampler;*/

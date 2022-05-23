@@ -62,7 +62,7 @@
 #define FLAC__off_t off_t
 #endif
 
-#if HAVE_INTTYPES_H
+#ifdef HAVE_INTTYPES_H
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #endif
@@ -112,8 +112,12 @@
 #include <sys/utime.h> /* for utime() */
 #endif
 #else
+#if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 200809L)
+#include <fcntl.h>
+#else
 #include <sys/types.h> /* some flavors of BSD (like OS X) require this to get time_t */
 #include <utime.h> /* for utime() */
+#endif
 #endif
 
 #if defined _MSC_VER
@@ -139,12 +143,12 @@
 #ifdef _WIN32
 /* All char* strings are in UTF-8 format. Added to support Unicode files on Windows */
 
-#include "__supercodec__/__flac__/share/win_utf8_io.h"
+#include "share/win_utf8_io.h"
 #define flac_printf printf_utf8
 #define flac_fprintf fprintf_utf8
 #define flac_vfprintf vfprintf_utf8
 
-#include "__supercodec__/__flac__/share/windows_unicode_filenames.h"
+#include "share/windows_unicode_filenames.h"
 #define flac_fopen flac_internal_fopen_utf8
 #define flac_chmod flac_internal_chmod_utf8
 #define flac_utime flac_internal_utime_utf8
@@ -160,11 +164,15 @@
 
 #define flac_fopen fopen
 #define flac_chmod chmod
-#define flac_utime utime
 #define flac_unlink unlink
 #define flac_rename rename
 #define flac_stat stat
 
+#if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 200809L)
+#define flac_utime(a, b) utimensat (AT_FDCWD, a, *b, 0)
+#else
+#define flac_utime utime
+#endif
 #endif
 
 #ifdef _WIN32

@@ -1,12 +1,13 @@
 #ifndef _SUPERLOGGER__H
 #define _SUPERLOGGER__H
+#define _SUPERLOGGER__EXPORT Q_DECL_EXPORT
 
 #include "__supercore__/_supercore_.h"
 #include "_supertextbrowser_.h"
 #include "_superlineedit_.h"
 #include <QTextCodec>
 
-class SuperLogger : public QWidget
+class _SUPERLOGGER__EXPORT SuperLogger : public QWidget
 {
     Q_OBJECT
 
@@ -26,36 +27,36 @@ public:
 
 public slots:
 
-    void Displaylog(
+    void displayLog(
         QString direction,
         QString strllog,
         QString strtlog);
 
-    void Cleartextbrowser();
+    void clearTextBrowser();
 
-    void Addtransfercodec();
+    void addTransferCodec();
 
 private:
 
+    SuperCore *Core     = nullptr;
     QLayout *Layout     = nullptr;
     QWidget *Widget     = nullptr;
-    SuperCore *SuperC   = nullptr;
     QString Filepath    = "./__depycache__/__cache__/__textbrowser__/";
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Addinit();
+    void addInit();
 
-    QString Displaylogdirection(
+    QString displayLogDirection(
         QString direction);
 
-    void Transfercodecs();
+    void transferCodecs();
 
-    void Openfilepath();
+    void openFilePath();
 
 };
 

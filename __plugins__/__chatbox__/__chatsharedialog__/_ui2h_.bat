@@ -1,1 +1,0 @@
-uic -o _chatsharebox__ui_.h _chatsharebox_.ui

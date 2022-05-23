@@ -44,7 +44,7 @@ SuperFlacDecoder::SuperFlacDecoder(QObject *parent,QString infilename,QString ou
     Outfilenamebyte = outfilename.toUtf8();
     Outfilename = Outfilenamebyte.data();
     fopen_s(&Outfile,Outfilename,"wb");
-    Init();
+    init();
 }
 
 SuperFlacDecoder::~SuperFlacDecoder()
@@ -181,35 +181,35 @@ void SuperFlacDecoder::error_callback(const FLAC__StreamDecoder *decoder, FLAC__
     error = FLAC__StreamDecoderErrorStatusString[status];
 }
 
-void SuperFlacDecoder::Init()
+void SuperFlacDecoder::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void SuperFlacDecoder::Objectinit()
+void SuperFlacDecoder::objectInit()
 {
     Timer = new QTimer();
     Timer->setInterval(100);
-    connect(Timer,&QTimer::timeout,this,&SuperFlacDecoder::Returnprogress);
+    connect(Timer,&QTimer::timeout,this,&SuperFlacDecoder::returnProgress);
     Timer->start();
 }
 
 void SuperFlacDecoder::run()
 {
-    Decoderinit();
-    Md5checkinit();
-    Fileinit();
-    Processinit();
+    decoderInit();
+    md5CheckInit();
+    fileInit();
+    processInit();
 }
 
-void SuperFlacDecoder::Decoderinit()
+void SuperFlacDecoder::decoderInit()
 {
     Decoder = FLAC__stream_decoder_new();
 }
 
 /*  creat decoder for flac;*/
 
-void SuperFlacDecoder::Md5checkinit()
+void SuperFlacDecoder::md5CheckInit()
 {
     if(Decoder)
     {
@@ -219,7 +219,7 @@ void SuperFlacDecoder::Md5checkinit()
 
 /*  run md5 check for decoder;*/
 
-void SuperFlacDecoder::Fileinit()
+void SuperFlacDecoder::fileInit()
 {
     if(Flacbool)
     {
@@ -229,23 +229,23 @@ void SuperFlacDecoder::Fileinit()
 
 /*  file decoder init;*/
 
-void SuperFlacDecoder::Processinit()
+void SuperFlacDecoder::processInit()
 {
     if(Initstatus == FLAC__STREAM_DECODER_INIT_STATUS_OK)
     {
         Flacbool = FLAC__stream_decoder_process_until_end_of_stream(Decoder);
     }
-    emit Signalfb(error);
+    emit signalFb(error);
 }
 
 /*  process flac;*/
 
-void SuperFlacDecoder::Returnprogress()
+void SuperFlacDecoder::returnProgress()
 {
     int progress = 100 * double(writesamples) / totalsamples;
     if(progress < 100)
     {
-        emit Signalfa(progress);
+        emit signalFa(progress);
     }
 }
 

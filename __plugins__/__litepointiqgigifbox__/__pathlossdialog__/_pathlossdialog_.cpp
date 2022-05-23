@@ -3,8 +3,8 @@
 PathLossDialog::PathLossDialog(QWidget *parent)
     : SuperWindow(parent)
 {
-    Settitle("Pathloss Editor");
-    Init();
+    setTitle("Pathloss Editor");
+    init();
 }
 
 PathLossDialog::~PathLossDialog()
@@ -12,32 +12,32 @@ PathLossDialog::~PathLossDialog()
 
 }
 
-void PathLossDialog::Init()
+void PathLossDialog::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void PathLossDialog::Objectinit()
+void PathLossDialog::objectInit()
 {
-    Plugin = new PathLossBox(this);
+    Plugin = new PathLossDialogui(this);
     Pluginlayout->addWidget(Plugin);
     Datamenu    = new PathLossDataMenu(this);
     Configmenu  = new PathLossConfigMenu(this);
     Settingmenu = new PathLossSettingMenu(this);
-    connect(Plugin->ui->treeWidget,     &QTableWidget::customContextMenuRequested,  this,&PathLossDialog::Openpathlossconfigmenu);
-    connect(Plugin->ui->tableWidget,    &QTableWidget::customContextMenuRequested,  this,&PathLossDialog::Openpathlossdatamenu);
-    connect(Plugin->ui->tableWidget_2,  &QTreeWidget::customContextMenuRequested,   this,&PathLossDialog::Openpathlosssettingmenu);
-    Datamenu->Creataction();
-    Configmenu->Creataction();
-    Settingmenu->Creataction();
+    connect(Plugin->ui->treeWidget,     &QTableWidget::customContextMenuRequested,  this,&PathLossDialog::openPathLossConfigMenu);
+    connect(Plugin->ui->tableWidget,    &QTableWidget::customContextMenuRequested,  this,&PathLossDialog::openPathLossDataMenu);
+    connect(Plugin->ui->tableWidget_2,  &QTreeWidget::customContextMenuRequested,   this,&PathLossDialog::openPathLossSettingMenu);
+    Datamenu->creatAction();
+    Configmenu->creatAction();
+    Settingmenu->creatAction();
 }
 
-void PathLossDialog::Openpathlossconfigmenu()
+void PathLossDialog::openPathLossConfigMenu()
 {
     Configmenu->exec(QCursor::pos());
 }
 
-void PathLossDialog::Openpathlossdatamenu()
+void PathLossDialog::openPathLossDataMenu()
 {
     if(Plugin->ui->treeWidget->topLevelItemCount() == 0)
     {
@@ -60,7 +60,7 @@ void PathLossDialog::Openpathlossdatamenu()
     Datamenu->exec(QCursor::pos());
 }
 
-void PathLossDialog::Openpathlosssettingmenu()
+void PathLossDialog::openPathLossSettingMenu()
 {
     if(Plugin->ui->tableWidget_2->selectedItems().count() > 0 && Plugin->ui->treeWidget->topLevelItemCount() > 0)
     {
@@ -79,11 +79,11 @@ PathLossDataMenu::PathLossDataMenu(QWidget *parent)
 
 }
 
-void PathLossDataMenu::Creataction()
+void PathLossDataMenu::creatAction()
 {
-    SuperC->Addaction(this,Newrow,"New Row","Newrow");
-    SuperC->Addaction(this,Save,"Save","Save");
-    SuperC->Addaction(this,Deleterow,"Delete Row","Deleterow");
+    Core->addAction(this,Newrow,"New Row","Newrow");
+    Core->addAction(this,Save,"Save","Save");
+    Core->addAction(this,Deleterow,"Delete Row","Deleterow");
 }
 
 PathLossConfigMenu::PathLossConfigMenu(QWidget *parent)
@@ -92,13 +92,13 @@ PathLossConfigMenu::PathLossConfigMenu(QWidget *parent)
 
 }
 
-void PathLossConfigMenu::Creataction()
+void PathLossConfigMenu::creatAction()
 {
-    SuperC->Addaction(this,Newconfig,"New Config","Newconfig");
-    SuperC->Addaction(this,Save,"Save","Save");
-    SuperC->Addaction(this,Deleteconfig,"Delete Config","Deleteconfig");
-    SuperC->Addaction(this,Importcsv,"Import Csv","Importcsv");
-    SuperC->Addaction(this,Exportcsv,"Export Csv","Exportcsv");
+    Core->addAction(this,Newconfig,"New Config","Newconfig");
+    Core->addAction(this,Save,"Save","Save");
+    Core->addAction(this,Deleteconfig,"Delete Config","Deleteconfig");
+    Core->addAction(this,Importcsv,"Import Csv","Importcsv");
+    Core->addAction(this,Exportcsv,"Export Csv","Exportcsv");
 }
 
 PathLossSettingMenu::PathLossSettingMenu(QWidget *parent)
@@ -107,7 +107,7 @@ PathLossSettingMenu::PathLossSettingMenu(QWidget *parent)
 
 }
 
-void PathLossSettingMenu::Creataction()
+void PathLossSettingMenu::creatAction()
 {
-    SuperC->Addaction(this,Apply,"Apply","Apply");
+    Core->addAction(this,Apply,"Apply","Apply");
 }

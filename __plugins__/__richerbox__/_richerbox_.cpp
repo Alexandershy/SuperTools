@@ -10,9 +10,9 @@ SuperTab* Interface::Loadplugin()
 RicherBox::RicherBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("RicherBox");
-    Setgroupbox(1,1);
-    Init();
+    readMe("RicherBox");
+    setGroupBox(1,1);
+    init();
 }
 
 RicherBox::~RicherBox()
@@ -20,40 +20,40 @@ RicherBox::~RicherBox()
 
 }
 
-void RicherBox::Init()
+void RicherBox::init()
 {
-    Objectinit();
-    Parameterinit();
+    objectInit();
+    parameterInit();
 }
 
-void RicherBox::Objectinit()
+void RicherBox::objectInit()
 {
     Logger = new SuperLogger(this,Rightgroupboxlist.at(0)->Insidelayout);
     Filemanager = new SuperFileManager(this,Leftgroupboxlist.at(0)->Insidelayout,{"*.html"});
-    connect(Filemanager,&SuperFileManager::Signalfa,Logger,&SuperLogger::Displaylog);
-    connect(Filemanager,&SuperFileManager::Signalfc,this,&RicherBox::Open);
-    connect(Filemanager,&SuperFileManager::Signalfd,this,&RicherBox::Open);
+    connect(Filemanager,&SuperFileManager::signalFa,Logger,&SuperLogger::displayLog);
+    connect(Filemanager,&SuperFileManager::signalFc,this,&RicherBox::open);
+    connect(Filemanager,&SuperFileManager::signalFd,this,&RicherBox::open);
 }
 
 /*  object init;*/
 
-void RicherBox::Parameterinit()
+void RicherBox::parameterInit()
 {
     Richerfilelist = &Filemanager->Filelist;
-    Filemanager->Enablewidgetlist();
-    Filemanager->Personalization(Sourcepath,"Richer");
-    Filemanager->Checkfilevaildinit();
+    Filemanager->enableWidgetList();
+    Filemanager->personalization(Sourcepath,"Richer");
+    Filemanager->checkFileVaildInit();
 }
 
 /*  parameter init;*/
 
-void RicherBox::Open()
+void RicherBox::open()
 {
-    QString richerfile = Filemanager->Getcurrentitemtext();
-    DataDialog *dialog = new DataDialog(richerfile);
-    Filemanager->Setcurrentfile(richerfile);
-    dialog->Show();
-    Logger->Displaylog("N",richerfile + " opened","Open function run completed");
+    QString richerfile = Filemanager->getCurrentItemText();
+    RicherDataDialog *dialog = new RicherDataDialog(richerfile);
+    Filemanager->setCurrentFile(richerfile);
+    dialog->show();
+    Logger->displayLog("N",richerfile + " opened","Open function run completed");
 }
 
 /*  open csvdata table;*/

@@ -5,7 +5,7 @@ SuperTab::SuperTab(QWidget *parent)
     , ui(new Ui::SuperTabui)
 {
     ui->setupUi(this);
-    Init();
+    init();
 }
 
 SuperTab::~SuperTab()
@@ -13,21 +13,21 @@ SuperTab::~SuperTab()
     delete ui;
 }
 
-void SuperTab::Init()
+void SuperTab::init()
 {
-    Objectinit();
+    objectInit();
 }
 
 /*  tab init;*/
 
-void SuperTab::Objectinit()
+void SuperTab::objectInit()
 {
     Core = new SuperCore(this);
 }
 
 /*  object init;*/
 
-void SuperTab::Setgroupbox(int left,int right)
+void SuperTab::setGroupBox(int left,int right)
 {
     Groupboxcounts.clear();
     Groupboxcounts.append(left);
@@ -44,7 +44,7 @@ void SuperTab::Setgroupbox(int left,int right)
 
 /*  object init;*/
 
-void SuperTab::Setstretch(QList<int> leftstretch,QList<int> rightstretch)
+void SuperTab::setStretch(QList<int> leftstretch,QList<int> rightstretch)
 {
     for(int i = 0;i < Groupboxcounts.at(0);i++)
     {
@@ -58,12 +58,12 @@ void SuperTab::Setstretch(QList<int> leftstretch,QList<int> rightstretch)
 
 /*  set tab stretch;*/
 
-void SuperTab::Readme(QString objectname)
+void SuperTab::readMe(QString objectname)
 {
     setObjectName(objectname);
-    Core->Replacefile(":/pdf/_" + Core->Allwordlower(objectname) + "_.pdf","./__readme__/__plugins__/_" + Core->Allwordlower(objectname).split("box").at(0) + "_.pdf");
-    Core->Creatfolder("__depycache__/__" + Core->Allwordlower(objectname).split("box").at(0) + "__");
-    Core->Creatfile("__depycache__/__" + Core->Allwordlower(objectname).split("box").at(0) + "__/_defaultsetting_.ini");
+    Core->replaceFile(":/pdf/_" + Core->allWordLower(objectname) + "_.pdf","./__readme__/__plugins__/_" + Core->allWordLower(objectname).split("box").at(0) + "_.pdf");
+    Core->creatFolder("__depycache__/__" + Core->allWordLower(objectname).split("box").at(0) + "__");
+    Core->creatFile("__depycache__/__" + Core->allWordLower(objectname).split("box").at(0) + "__/_defaultsetting_.ini");
 }
 
 /*  read me;*/

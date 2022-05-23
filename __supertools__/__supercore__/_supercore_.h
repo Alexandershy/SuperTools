@@ -11,8 +11,8 @@
 #include <QProcess>
 #include <QThread>
 #include <QLayout>
-#include <QUrl>
 #include <QMenu>
+#include <QUrl>
 #include <QDir>
 
 class _SUPERCORE__EXPORT SuperCore : public QObject
@@ -29,171 +29,176 @@ public:
 public slots:
 
     /*  QString */
-
-    QString Firstwordupper(
+    QString firstWordUpper(
         QString str);
 
-    QString Firstwordlower(
+    QString firstWordLower(
         QString str);
 
-    QString Allwordupper(
+    QString allWordUpper(
         QString str);
 
-    QString Allwordlower(
+    QString allWordLower(
         QString str);
 
-    bool Checkiprules(
+    bool checkIpRules(
         QString strip);
 
-    bool Checkfilename(
+    bool checkFileName(
         QString filename);
 
     /*  QStringList */
-
-    QString Getlistlastmember(
+    QString getListLastMember(
         QStringList *list);
 
-    int Findlistmember(
+    int findListMember(
         QStringList *list,
         QString str);
 
     /*  QSystem */
-
-    void Runcommand(
+    void runCommand(
         QString strpath,
         QString strcommand);
 
-    bool Creatfolder(
+    bool creatFolder(
         QString strfolder);
 
-    bool Creatfile(
+    bool creatFile(
         QString strfile);
 
     /*  QFile */
-
-    void Getfileinfolist(
+    void getFileInfoList(
         QString filename,
         QStringList *fileinfo);
 
-    void Getfileinfobyte(
+    void getFileInfoByte(
         QString filename,
         QByteArray *fileinfo);
 
-    QByteArray Getfilehash(
+    QByteArray getFileHash(
         QString filename);
 
-    QString Fixfilepath(
+    QString fixFilePath(
         QString filepath);
 
-    void Writeonlyfile(
+    void writeOnlyFile(
         QString strpath,
         QString strtext);
 
-    void Writeonlyfilelist(
+    void writeOnlyFileList(
         QString strpath,
         QStringList *list,
         QString parameters,
         bool addlast);
 
-    void Writebytes(
+    void writeBytes(
         QString strpath,
         QByteArray bytes);
 
-    void Appendfile(
+    void appendFile(
         QString strpath,
         QString strtext);
 
-    void Appendbytes(
+    void appendBytes(
         QString strpath,
         QByteArray bytes);
 
-    QString Readonlyfile(
+    QString readOnlyFile(
         QString strpath);
 
-    QByteArray Readbytesint64(
+    QByteArray readBytesInt64(
         QString strpath,
         qint64 fileseek,
         qint64 datasize);
 
-    void Replacefile(
+    void replaceFile(
         QString srcfile,
         QString targetfile);
 
-    QString Getfilepath(
+    QString getFilePath(
         QString filepath);
 
     /*  QVector */
-
-    QVector<double> Linspace(
+    QVector<double> linspace(
         double doublemin,
         double doublemax,
         int intnum);
 
-    QVector<double> Arange(
+    QVector<double> arange(
         double doublemin,
         double doublemax,
         double step);
 
-    double Getqvectormaxvalue(
+    int getVectorMaxValue(
+        QVector<int> *qvectord,
+        int intsize);
+
+    int getVectorMinValue(
+        QVector<int> *qvectord,
+        int intsize);
+
+    double getVectorMaxValue(
         QVector<double> *qvectord,
         int intsize);
 
-    double Getqvectorminvalue(
+    double getVectorMinValue(
         QVector<double> *qvectord,
         int intsize);
 
-    double Getqvectormeanvalue(
+    double getVectorMeanValue(
         QVector<double> *qvectord,
         int intsize);
 
-    double Getqvectorstandarddeviation(
+    double getVectorStandardDeviation(
         QVector<double> *qvectord,
         int intsize,
         double mean);
 
+    /*  QPointF */
+    QPointF getVectorMaxPointF(
+        QVector<QPointF> *qvectorpf,int intsize);
+
+    QPointF getVectorMinPointF(
+        QVector<QPointF> *qvectorpf,int intsize);
+
     /*  doublearray */
-
-    double Getdoublearraymaxvalue(
+    double getDoubleArrayMaxValue(
         double* doublearray,
         int intcount);
 
-    double Getdoublearrayminvalue(
+    double getDoubleArrayMinValue(
         double* doublearray,
         int intcount);
 
-    double Getdoublearraymeanvalue(
+    double getDoubleArrayMeanValue(
         double* doublearray,
         int intcount);
 
     /*  QColor*/
-
-    QString Rgbcolor(
+    QString rgbColor(
         QColor *color);
 
     /*  QMenu*/
-
-    void Addmenu(
+    void addMenu(
         QMenu* parent,
         QMenu* menu,
         QString menuname);
 
-    void Addaction(
+    void addAction(
         QMenu* parent,
         QAction* action,
         QString actionname,
         QString objectname);
 
     /*  QTablewidget*/
-
-    void Settablewidgetitem(
+    void setTableWidgetItem(
         int rowcounts,
         int columncounts,
         int height,
         QTableWidget *tablewidget);
 
     /*SuperTools Plugins*/
-
-    void Colorinit(
+    void colorInit(
         QColor *backgroundcolor,
         QColor *fontcolor,
         QColor *concolor,
@@ -201,30 +206,30 @@ public slots:
         QString *strrgbfontcolor,
         QString *strconcolor);
 
-    void Enablewidgetlist(
+    void enableWidgetList(
         QList<QWidget*> *widgetlist,
         bool boola);
 
-    void Checkedwidgetlist(
+    void checkedWidgetList(
         QList<QCheckBox*>* checkboxlist,
         bool boola);
 
-    void Closethread(
+    void closeThread(
         QThread *threada);
 
-    void Deleteobject(
+    void deleteObject(
         QObject* object);
 
-    QPoint Widgetleftbottompoint(
+    QPoint widgetLeftBottomPoint(
         QWidget* widget);
 
-    QPoint Widgetrightbottompoint(
+    QPoint widgetRightBottomPoint(
         QWidget* widget);
 
-    void Openpath(
+    void openPath(
         QString path);
 
-    void Deleteallitemsoflayout(
+    void deleteAllItemsOfLayout(
         QLayout *layout);
 
 };

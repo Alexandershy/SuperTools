@@ -5,7 +5,7 @@
 #include "__superwindow__/_superwindow_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superserial__/_superserial_.h"
-#include "_channel15__ui_.h"
+#include "ui__channel15_.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Channel15; }
@@ -25,13 +25,17 @@ public:
 
     ~Channel15();
 
-    void Setsetting(
+public slots:
+
+    void setSetting(
             QString path);
 
-    void Enablelineedit(
+    void enableLineEdit(
             bool boola);
 
-    ScanSerialPort *Threadsa                = nullptr;
+public:
+
+    SuperScanSerial *Threadsa                = nullptr;
     QList<QWidget*> Connectwidgetet         = {};
     QList<QWidget*> Disconnectwidgetef      = {};
     QList<QProgressBar*> Progressbarlist    = {};
@@ -46,7 +50,7 @@ public:
 private:
 
     Ui::Channel15 *ui                       = nullptr;
-    SuperCore *SuperC                       = nullptr;
+    SuperCore *Core                         = nullptr;
     QWidget *Widget                         = nullptr;
     QSerialPort *Serial                     = nullptr;
     QCheckBox *Checkbox                     = nullptr;
@@ -55,107 +59,108 @@ private:
 
 private slots:
     /*  main function*/
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Widgetlistinit();
+    void widgetListInit();
 
-    void Closechannel1();
+    void closeChannel1();
 
-    void Closechannel2();
+    void closeChannel2();
 
-    void Closechannel3();
+    void closeChannel3();
 
-    void Closechannel4();
+    void closeChannel4();
 
-    void Closechannel5();
+    void closeChannel5();
 
-    void Closechannel6();
+    void closeChannel6();
 
-    void Closechannel7();
+    void closeChannel7();
 
-    void Closechannel8();
+    void closeChannel8();
 
-    void Closechannel9();
+    void closeChannel9();
 
-    void Closechannela();
+    void closeChannela();
 
-    void Closechannelb();
+    void closeChannelb();
 
-    void Closechannelc();
+    void closeChannelc();
 
-    void Closechanneld();
+    void closeChanneld();
 
-    void Closechannele();
+    void closeChannele();
 
-    void Closechannelf();
+    void closeChannelf();
 
-    void Openchannel1();
+    void openChannel1();
 
-    void Openchannel2();
+    void openChannel2();
 
-    void Openchannel3();
+    void openChannel3();
 
-    void Openchannel4();
+    void openChannel4();
 
-    void Openchannel5();
+    void openChannel5();
 
-    void Openchannel6();
+    void openChannel6();
 
-    void Openchannel7();
+    void openChannel7();
 
-    void Openchannel8();
+    void openChannel8();
 
-    void Openchannel9();
+    void openChannel9();
 
-    void Openchannela();
+    void openChannela();
 
-    void Openchannelb();
+    void openChannelb();
 
-    void Openchannelc();
+    void openChannelc();
 
-    void Openchanneld();
+    void openChanneld();
 
-    void Openchannele();
+    void openChannele();
 
-    void Openchannelf();
+    void openChannelf();
 
-    void Emitdisplaylog(
-            QString direction,
-            QString strtlog,
-            QString strllog);
+    void emitDisplayLog(
+        QString direction,
+        QString strtlog,
+        QString strllog);
 
-    void Emitsignalsbslot(
-            QString strcommand);
+    void emitSignalSbSlot(
+        QString strcommand);
 
-    void Emitsignalscslot();
+    void emitSignalScSlot();
 
-    void Emitenablerelaybutton();
+    void emitEnableRelayButton();
 
-    void Savecurrenttext();
+    void saveCurrentText();
 
-    void Checklineedittext(
-            QString text);
+    void checkLineEditText(
+        QString text);
 
-    void Loadsetting();
+    void loadSetting();
+
 
 signals:
 
-    void Signalca(
+    void signalCa(
             QString direction,
             QString strtlog,
             QString strllog);
 
-    void Signalcb(
+    void signalCb(
             QString strcommand);
 
-    void Signalcc();
+    void signalCc();
 
-    void Signalcd(
+    void signalCd(
             QString strcommand);
 
-    void Signalce();
+    void signalCe();
 
 };
 

@@ -5,7 +5,7 @@ SuperLogger::SuperLogger(QWidget *parent,QLayout *layout)
 {
     Widget = parent;
     Layout = layout;
-    Init();
+    init();
 }
 
 SuperLogger::~SuperLogger()
@@ -13,27 +13,27 @@ SuperLogger::~SuperLogger()
 
 }
 
-void SuperLogger::Init()
+void SuperLogger::init()
 {
-    Objectinit();
-    Addinit();
+    objectInit();
+    addInit();
 }
 
 /*  init;*/
 
-void SuperLogger::Objectinit()
+void SuperLogger::objectInit()
 {
     Core = new SuperCore(this);
     Textbrowser = new SuperTextBrowser(Widget);
     Lineedit = new SuperLineEdit(Widget);
-    connect(Textbrowser->Clearbrowser,&QAction::triggered,this,&SuperLogger::Cleartextbrowser);
-    connect(Textbrowser->Transfercodec,&QAction::triggered,this,&SuperLogger::Transfercodecs);
-    connect(Textbrowser->Openfilepath,&QAction::triggered,this,&SuperLogger::Openfilepath);
+    connect(Textbrowser->Clearbrowser,&QAction::triggered,this,&SuperLogger::clearTextBrowser);
+    connect(Textbrowser->Transfercodec,&QAction::triggered,this,&SuperLogger::transferCodecs);
+    connect(Textbrowser->Openfilepath,&QAction::triggered,this,&SuperLogger::openFilePath);
 }
 
 /*  objectinit;*/
 
-void SuperLogger::Addinit()
+void SuperLogger::addInit()
 {
     Layout->addWidget(Textbrowser);
     Layout->addWidget(Lineedit);
@@ -41,20 +41,20 @@ void SuperLogger::Addinit()
 
 /*  addinit;*/
 
-void SuperLogger::Displaylog(QString direction, QString strtlog, QString strllog)
+void SuperLogger::displayLog(QString direction, QString strtlog, QString strllog)
 {
     QString daytime = QDateTime::currentDateTime().toString("yyyyMMdd");
     QString secondtime = QTime::currentTime().toString();
-    strtlog = secondtime + Displaylogdirection(direction) +  strtlog;
+    strtlog = secondtime + displayLogDirection(direction) +  strtlog;
     Textbrowser->append(strtlog);
     Lineedit->setText(strllog);
     Textbrowser->moveCursor(Textbrowser->textCursor().End);
-    Core->Appendfile(Filepath + daytime + " _" + Core->Allwordlower(Widget->objectName()) + "_.txt",strtlog + "\n");
+    Core->appendFile(Filepath + daytime + " _" + Core->allWordLower(Widget->objectName()) + "_.txt",strtlog + "\n");
 }
 
 /*  display logs on textbrowser editline and append to log.txt, enable clear button;*/
 
-QString SuperLogger::Displaylogdirection(QString direction)
+QString SuperLogger::displayLogDirection(QString direction)
 {
     if(direction == "N")
     {
@@ -70,40 +70,40 @@ QString SuperLogger::Displaylogdirection(QString direction)
     }
 }
 
-void SuperLogger::Cleartextbrowser()
+void SuperLogger::clearTextBrowser()
 {
     Textbrowser->clear();
     Lineedit->setText("Cleartextbrowser function run completed");
-    Textbrowser->append("here will display " + Core->Allwordlower(Widget->objectName()) + " textbrowser logs!!!");
+    Textbrowser->append("here will display " + Core->allWordLower(Widget->objectName()) + " textbrowser logs!!!");
 }
 
 /*  clear logs on textbrowser and set init states;*/
 
-void SuperLogger::Addtransfercodec()
+void SuperLogger::addTransferCodec()
 {
     Textbrowser->Enabletransfercodec = true;
 }
 
 /*  enable transfer codec;*/
 
-void SuperLogger::Transfercodecs()
+void SuperLogger::transferCodecs()
 {
     QString text = QTextCodec::codecForName("GBK")->toUnicode(Result);
     if(text.isEmpty())
     {
-        Displaylog("N","need generate new result;","Transfercodecs function run completed");
+        displayLog("N","need generate new result;","Transfercodecs function run completed");
     }
     else
     {
-        Displaylog("R",text,"Transfercodecs function run completed");
+        displayLog("R",text,"Transfercodecs function run completed");
     }
 }
 
 /*  retransfer codec;*/
 
-void SuperLogger::Openfilepath()
+void SuperLogger::openFilePath()
 {
-    Core->Openpath(Filepath);
+    Core->openPath(Filepath);
 }
 
 /*  retransfer codec;*/

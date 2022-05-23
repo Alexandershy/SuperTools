@@ -4,11 +4,11 @@ SuperFontDialog::SuperFontDialog(QWidget *parent,QStringList *fontfamilies)
     :SuperWindow(parent)
 {
     Fontfamilies = fontfamilies;
-    Disablemaxisize();
+    disableMaxisize();
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Settitle("SuperFontDialog");
-    Init();
+    setTitle("SuperFontDialog");
+    init();
 }
 
 SuperFontDialog::~SuperFontDialog()
@@ -16,35 +16,35 @@ SuperFontDialog::~SuperFontDialog()
 
 }
 
-void SuperFontDialog::Init()
+void SuperFontDialog::init()
 {
-    Objectinit();
-    Parameterinit();
-    Fontlistinit();
-    Currentfontinit();
+    objectInit();
+    parameterInit();
+    fontListInit();
+    currentFontInit();
 }
 
-void SuperFontDialog::Objectinit()
+void SuperFontDialog::objectInit()
 {
     Plugin = new SuperFontDialogui(this);
     Pluginlayout->addWidget(Plugin);
     Plugin->ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     Plugin->ui->treeWidget->header()->setStretchLastSection(false);
-    connect(Plugin->ui->treeWidget, &QTreeWidget::itemDoubleClicked,    this,&SuperFontDialog::Sendfont);
-    connect(Plugin->ui->treeWidget, &QTreeWidget::itemPressed,          this,&SuperFontDialog::Previewfont);
-    connect(Plugin->ui->lineEdit,   &QLineEdit::textChanged,            this,&SuperFontDialog::Searchfont);
+    connect(Plugin->ui->treeWidget, &QTreeWidget::itemDoubleClicked,    this,&SuperFontDialog::sendFont);
+    connect(Plugin->ui->treeWidget, &QTreeWidget::itemPressed,          this,&SuperFontDialog::previewFont);
+    connect(Plugin->ui->lineEdit,   &QLineEdit::textChanged,            this,&SuperFontDialog::searchFont);
 }
 
 /*  creat object and connect its slot;*/
 
-void SuperFontDialog::Parameterinit()
+void SuperFontDialog::parameterInit()
 {
     Plugin->ui->lineEdit->setFocus();
 }
 
 /*  parameter init;;*/
 
-void SuperFontDialog::Fontlistinit()
+void SuperFontDialog::fontListInit()
 {
     QStringList fontstringlist = QFontDatabase::families();
     for(int i = 0;i < fontstringlist.count();i++)
@@ -57,7 +57,7 @@ void SuperFontDialog::Fontlistinit()
 
 /*  get families from family database;*/
 
-void SuperFontDialog::Currentfontinit()
+void SuperFontDialog::currentFontInit()
 {
     if(!Fontfamilies->isEmpty())
     {
@@ -68,7 +68,7 @@ void SuperFontDialog::Currentfontinit()
             {
                 Plugin->ui->treeWidget->setCurrentItem(item);
                 Plugin->ui->treeWidget->setTreePosition(i);
-                Previewfont();
+                previewFont();
                 break;
             }
         }
@@ -77,7 +77,7 @@ void SuperFontDialog::Currentfontinit()
 
 /*  find current families and preview it;*/
 
-void SuperFontDialog::Searchfont()
+void SuperFontDialog::searchFont()
 {
     QString fonttemp = Plugin->ui->lineEdit->text();
     if(!fonttemp.isEmpty())
@@ -106,7 +106,7 @@ void SuperFontDialog::Searchfont()
 
 /*  search font by user input families' name;*/
 
-void SuperFontDialog::Previewfont()
+void SuperFontDialog::previewFont()
 {
     QFont font(Plugin->ui->treeWidget->currentItem()->text(0),20,75,false);
     Plugin->ui->label->setFont(font);
@@ -114,10 +114,10 @@ void SuperFontDialog::Previewfont()
 
 /*  display font families at label;*/
 
-void SuperFontDialog::Sendfont()
+void SuperFontDialog::sendFont()
 {
     QStringList fontfamilies(Plugin->ui->treeWidget->currentItem()->text(0));
-    emit Signalfa(fontfamilies);
+    emit signalFa(fontfamilies);
     close();
 }
 

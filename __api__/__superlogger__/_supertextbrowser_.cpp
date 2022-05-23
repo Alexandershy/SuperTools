@@ -4,8 +4,8 @@ SuperTextBrowser::SuperTextBrowser(QWidget *parent)
     : QTextBrowser(parent)
 {
     Widget = parent;
-    connect(this,&QTextBrowser::customContextMenuRequested,this,&SuperTextBrowser::Menushow);
-    Init();
+    connect(this,&QTextBrowser::customContextMenuRequested,this,&SuperTextBrowser::menuShow);
+    init();
 }
 
 SuperTextBrowser::~SuperTextBrowser()
@@ -13,20 +13,20 @@ SuperTextBrowser::~SuperTextBrowser()
 
 }
 
-void SuperTextBrowser::Init()
+void SuperTextBrowser::init()
 {
-    Parameterinit();
-    Appendtextinit();
-    Appendactioninit();
+    parameterInit();
+    appendTextInit();
+    appendActionInit();
 }
 
 /*  textbrowser init;*/
 
-void SuperTextBrowser::Parameterinit()
+void SuperTextBrowser::parameterInit()
 {
     Core = new SuperCore(this);
     setContextMenuPolicy(Qt::CustomContextMenu);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFrameShape(QFrame::NoFrame);
     Menu = createStandardContextMenu();
@@ -37,16 +37,16 @@ void SuperTextBrowser::Parameterinit()
 
 /*  change textbrowser parameter;*/
 
-void SuperTextBrowser::Appendtextinit()
+void SuperTextBrowser::appendTextInit()
 {
     QString texttemp = Widget->objectName();
-    QString text = Core->Allwordlower(texttemp);
+    QString text = Core->allWordLower(texttemp);
     append("here will display " + text + " textbrowser logs!!!");
 }
 
 /*  append textbrowser text init;*/
 
-void SuperTextBrowser::Addaction(QAction *action,QString text,QString objectname)
+void SuperTextBrowser::addAction(QAction *action,QString text,QString objectname)
 {
     Menu->addSeparator();
     Menu->addAction(action);
@@ -56,19 +56,19 @@ void SuperTextBrowser::Addaction(QAction *action,QString text,QString objectname
 
 /*  add action;*/
 
-void SuperTextBrowser::Appendactioninit()
+void SuperTextBrowser::appendActionInit()
 {
     Clearbrowser = new QAction(this);
     Transfercodec = new QAction(this);
     Openfilepath = new QAction(this);
-    Addaction(Clearbrowser,"Clear Browser","ClearBrowser");
-    Addaction(Transfercodec,"Transfer Codec","TransferCodec");
-    Addaction(Openfilepath,"Open Filepath","OpenFilepath");
+    addAction(Clearbrowser,"Clear Browser","ClearBrowser");
+    addAction(Transfercodec,"Transfer Codec","TransferCodec");
+    addAction(Openfilepath,"Open Filepath","OpenFilepath");
 }
 
 /*  add super action;*/
 
-void SuperTextBrowser::Menushowinit()
+void SuperTextBrowser::menuShowInit()
 {
     Copy->setEnabled(!textCursor().selectedText().isEmpty());
     Selectall->setEnabled(!toHtml().isEmpty());
@@ -77,9 +77,9 @@ void SuperTextBrowser::Menushowinit()
 
 /*  menu show init;*/
 
-void SuperTextBrowser::Menushow()
+void SuperTextBrowser::menuShow()
 {
-    Menushowinit();
+    menuShowInit();
     Menu->exec(QCursor::pos());
 }
 

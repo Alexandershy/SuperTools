@@ -7,7 +7,7 @@ QList<int> *SuperHook::Keyvaluelist                     = nullptr;
 SuperHook::SuperHook(QObject *parent)
     : QObject(parent)
 {
-    Keyhook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)Keyhookevent, GetModuleHandle(NULL), 0);
+    Keyhook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)keyHookEvent, GetModuleHandle(NULL), 0);
 }
 
 SuperHook::~SuperHook()
@@ -19,14 +19,14 @@ SuperHook::~SuperHook()
     }
 }
 
-void SuperHook::Setpressedfunction(const std::function<void(int)> function)
+void SuperHook::setPressedFunction(const std::function<void(int)> function)
 {
     Pressedfunction = function;
 }
 
 /*  set pressed function;*/
 
-LRESULT CALLBACK SuperHook::Keyhookevent(int code, WPARAM wparameter, LPARAM lparameter)
+LRESULT CALLBACK SuperHook::keyHookEvent(int code, WPARAM wparameter, LPARAM lparameter)
 {
     if (code < 0)
         return CallNextHookEx(Keyhook, code, wparameter, lparameter);
@@ -44,7 +44,7 @@ LRESULT CALLBACK SuperHook::Keyhookevent(int code, WPARAM wparameter, LPARAM lpa
 
 /*  return result;*/
 
-void SuperHook::Setsourcekeylist(QList<int> *keyvaluelist)
+void SuperHook::setSourceKeyList(QList<int> *keyvaluelist)
 {
     Keyvaluelist = keyvaluelist;
 }

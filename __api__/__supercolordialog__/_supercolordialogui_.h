@@ -27,9 +27,9 @@ public:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 };
 

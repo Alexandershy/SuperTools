@@ -1,16 +1,17 @@
 #ifndef _SUPERNOTEDIALOG__H
 #define _SUPERNOTEDIALOG__H
+#define _SUPERNOTEDIALOG__EXPORT Q_DECL_EXPORT
 
-#include "_supernotebox_.h"
+#include "_supernotedialogui_.h"
 #include "__superwindow__/_superwindow_.h"
 
-class SuperNoteDialog : public SuperWindow
+class _SUPERNOTEDIALOG__EXPORT SuperNoteDialog : public SuperWindow
 {
     Q_OBJECT
 
 public:
 
-    SuperNoteBox *Plugin = nullptr;
+    SuperNoteDialogui *Plugin = nullptr;
 
 public:
 
@@ -22,15 +23,15 @@ public:
 
 public slots:
 
-    void Hidebutton();
+    void hideButton();
 
-    void Hideleftbutton();
+    void hideLeftButton();
 
-    void Hiderightbutton();
+    void hideRightButton();
 
-    void Noteinit();
+    void noteInit();
 
-    void Messageinit();
+    void messageInit();
 
 private:
 
@@ -38,15 +39,15 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 signals:
 
-    void Signalna();
+    void signalNa();
 
-    void Signalnb();
+    void signalNb();
 
 };
 

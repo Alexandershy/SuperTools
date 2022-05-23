@@ -5,7 +5,7 @@ SuperWindow::SuperWindow(QWidget *parent)
     , ui(new Ui::SuperWindowui)
 {
     ui->setupUi(this);
-    Init();
+    init();
     installEventFilter(this);
 }
 
@@ -20,7 +20,7 @@ void SuperWindow::keyPressEvent(QKeyEvent *event)
     {
         case Qt::Key_Escape:
         {
-            Close();
+            close();
             break;
         }
     }
@@ -43,7 +43,7 @@ void SuperWindow::mouseMoveEvent(QMouseEvent *event)
     {
         if(isMaximized())
         {
-            Changemaxicon();
+            changeMaxicon();
             move(Point.x() - Normalgeometry.width() / 2,Point.y() - Title->height() / 2);
         }
         int dx = event->globalPosition().x() - Point.x();
@@ -53,11 +53,11 @@ void SuperWindow::mouseMoveEvent(QMouseEvent *event)
     }
     else if(!isMaximized() && !Pressed)
     {
-        setCursor(Calmouseposition(event));
+        setCursor(calMousePosition(event));
     }
     else if(!isMaximized() && Pressed)
     {
-        Resizebycursor();
+        resizeByCursor();
     }
 }
 
@@ -77,12 +77,12 @@ bool SuperWindow::eventFilter(QObject* object,QEvent *event)
     {
         case QEvent::WindowActivate:
         {
-            emit Signalwa();
+            emit signalWa();
             break;
         }
         case QEvent::WindowDeactivate:
         {
-            emit Signalwc();
+            emit signalWc();
             break;
         }
         default:
@@ -95,53 +95,53 @@ bool SuperWindow::eventFilter(QObject* object,QEvent *event)
 
 /*  use event filter accept window activate event and update title style sheet;*/
 
-void SuperWindow::Init()
+void SuperWindow::init()
 {
-    Objectinit();
-    Colorinit();
-    Parameterinit();
-    Pointerinit();
+    objectInit();
+    colorInit();
+    parameterInit();
+    pointerInit();
 }
 
 /*  class init;*/
 
-void SuperWindow::Objectinit()
+void SuperWindow::objectInit()
 {
     Core = new SuperCore(this);
     Title = new SuperTitle(this);
     Timer = new QTimer(this);
-    connect(Title->Minisizebutton,      &QPushButton::clicked,  this,&SuperWindow::Minimized);
-    connect(Title->Maxisizebutton,      &QPushButton::clicked,  this,&SuperWindow::Changemaxicon);
-    connect(Title->Closebutton,         &QPushButton::clicked,  this,&SuperWindow::Close);
-    connect(Title,                      &SuperTitle::Signalsa,  this,&SuperWindow::Mouseenter);
-    connect(Title,                      &SuperTitle::Signalsb,  this,&SuperWindow::Changemaxicon);
-    connect(Title,                      &SuperTitle::Signalsc,  this,&SuperWindow::setCursor);
-    connect(this,                       &SuperWindow::Signalwa, this,&SuperWindow::Setwidgettheme);
-    connect(this,                       &SuperWindow::Signalwc, this,&SuperWindow::Setdeactivetheme);
-    connect(Timer,                      &QTimer::timeout,       this,&SuperWindow::Signalwd);
+    connect(Title->Minisizebutton,      &QPushButton::clicked,  this,&SuperWindow::minimized);
+    connect(Title->Maxisizebutton,      &QPushButton::clicked,  this,&SuperWindow::changeMaxicon);
+    connect(Title->Closebutton,         &QPushButton::clicked,  this,&SuperWindow::close);
+    connect(Title,                      &SuperTitle::signalSa,  this,&SuperWindow::mouseEnter);
+    connect(Title,                      &SuperTitle::signalSb,  this,&SuperWindow::changeMaxicon);
+    connect(Title,                      &SuperTitle::signalSc,  this,&SuperWindow::setCursor);
+    connect(this,                       &SuperWindow::signalWa, this,&SuperWindow::setWidgetTheme);
+    connect(this,                       &SuperWindow::signalWc, this,&SuperWindow::setDeactiveTheme);
+    connect(Timer,                      &QTimer::timeout,       this,&SuperWindow::signalWd);
     connect(Timer,                      &QTimer::timeout,       Timer,&QTimer::deleteLater);
 }
 
 /*  objectinit;*/
 
-void SuperWindow::Colorinit()
+void SuperWindow::colorInit()
 {
-    QStringList rgbbackgroundcolor = Core->Readonlyfile(Backgroundcolorpath).split(",");
-    QStringList rgbfontcolor = Core->Readonlyfile(Fontcolorpath).split(",");
+    QStringList rgbbackgroundcolor = Core->readOnlyFile(Backgroundcolorpath).split(",");
+    QStringList rgbfontcolor = Core->readOnlyFile(Fontcolorpath).split(",");
     if(rgbbackgroundcolor.count() >= 3 && rgbfontcolor.count() >= 3)
     {
         Backgroundcolor.setRgb(rgbbackgroundcolor.at(0).toInt(),rgbbackgroundcolor.at(1).toInt(),rgbbackgroundcolor.at(2).toInt());
         Fontcolor.setRgb(rgbfontcolor.at(0).toInt(),rgbfontcolor.at(1).toInt(),rgbfontcolor.at(2).toInt());
         Concolor.setRgb(255 - rgbbackgroundcolor.at(0).toInt(),255 - rgbbackgroundcolor.at(1).toInt(),255 - rgbbackgroundcolor.at(2).toInt());
     }
-    Strrgbbackgroundcolor = "rgb(" + Core->Rgbcolor(&Backgroundcolor) + ")";
-    Strrgbfontcolor = "rgb(" + Core->Rgbcolor(&Fontcolor) + ")";
-    Strrgbconcolor = "rgb(" + Core->Rgbcolor(&Concolor) + ")";
+    Strrgbbackgroundcolor = "rgb(" + Core->rgbColor(&Backgroundcolor) + ")";
+    Strrgbfontcolor = "rgb(" + Core->rgbColor(&Fontcolor) + ")";
+    Strrgbconcolor = "rgb(" + Core->rgbColor(&Concolor) + ")";
 }
 
 /*  if rgb file exist,use color saved,else use default color;*/
 
-void SuperWindow::Parameterinit()
+void SuperWindow::parameterInit()
 {
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
     setStyleSheet("QGroupBox{border:1px solid " + Strrgbbackgroundcolor + "}");
@@ -151,20 +151,20 @@ void SuperWindow::Parameterinit()
     Title->Minisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "minimize_.svg"));
     Title->ui->label_2->setText(objectName());
     ui->Titlelayout->addWidget(Title);
-    Addmaxisizebutton(Activatestatus);
-    Addclosebutton(Activatestatus);
+    addMaxisizeButton(Activatestatus);
+    addCloseButton(Activatestatus);
 }
 
 /*  style init;*/
 
-void SuperWindow::Pointerinit()
+void SuperWindow::pointerInit()
 {
     Pluginlayout = ui->Pluginlayout;
 }
 
 /*  public pointer;*/
 
-void SuperWindow::Addmaxisizebutton(QString colorstyle)
+void SuperWindow::addMaxisizeButton(QString colorstyle)
 {
     if(Enablemaxbutton)
     {
@@ -181,7 +181,7 @@ void SuperWindow::Addmaxisizebutton(QString colorstyle)
 
 /*  add maxisize button;*/
 
-void SuperWindow::Addclosebutton(QString colorstyle)
+void SuperWindow::addCloseButton(QString colorstyle)
 {
     if(Enableclosebutton)
     {
@@ -191,24 +191,24 @@ void SuperWindow::Addclosebutton(QString colorstyle)
 
 /*  add close button;*/
 
-void SuperWindow::Addminisizebutton(QString colorstyle)
+void SuperWindow::addMinisizeButton(QString colorstyle)
 {
     Title->Minisizebutton->setIcon(QIcon(":/__supericon__/_" + colorstyle + "minimize_.svg"));
 }
 
 /*  add minisize button;*/
 
-void SuperWindow::Settitle(QString titletext)
+void SuperWindow::setTitle(QString titletext)
 {
     Title->ui->label_2->setText(titletext);
 }
 
 /*  set title;*/
 
-void SuperWindow::Disablemaxisize()
+void SuperWindow::disableMaxisize()
 {
-    disconnect(Title,                   &SuperTitle::Signalsb,  this,&SuperWindow::Changemaxicon);
-    disconnect(Title->Maxisizebutton,   &QPushButton::clicked,  this,&SuperWindow::Changemaxicon);
+    disconnect(Title,                   &SuperTitle::signalSb,  this,&SuperWindow::changeMaxicon);
+    disconnect(Title->Maxisizebutton,   &QPushButton::clicked,  this,&SuperWindow::changeMaxicon);
     Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_blank_.png"));
     Title->Maxisizebutton->setEnabled(false);
     Enablemaxbutton = false;
@@ -216,20 +216,20 @@ void SuperWindow::Disablemaxisize()
 
 /*  disable maxisize function and button;*/
 
-void SuperWindow::Enablemaxisize()
+void SuperWindow::enableMaxisize()
 {
     Enablemaxbutton = true;
-    connect(Title,                  &SuperTitle::Signalsb,this,&SuperWindow::Changemaxicon);
-    connect(Title->Maxisizebutton,&QPushButton::clicked,this,&SuperWindow::Changemaxicon);
+    connect(Title,                  &SuperTitle::signalSb,this,&SuperWindow::changeMaxicon);
+    connect(Title->Maxisizebutton,  &QPushButton::clicked,this,&SuperWindow::changeMaxicon);
     Title->Maxisizebutton->setEnabled(true);
-    Addmaxisizebutton(Activatestatus);
+    addMaxisizeButton(Activatestatus);
 }
 
 /*  enable maxisize function and button;*/
 
-void SuperWindow::Disableclose()
+void SuperWindow::disableClose()
 {
-    disconnect(Title->Closebutton,&QPushButton::clicked,this,&SuperWindow::Close);
+    disconnect(Title->Closebutton,&QPushButton::clicked,this,&::SuperWindow::close);
     Title->Closebutton->setIcon(QIcon(":/__supericon__/_blank_.png"));
     Title->Closebutton->setEnabled(false);
     Enableclosebutton = false;
@@ -237,23 +237,23 @@ void SuperWindow::Disableclose()
 
 /*  disable close function and button;*/
 
-void SuperWindow::Enableclose()
+void SuperWindow::enableClose()
 {
     Enableclosebutton = true;
-    connect(Title->Closebutton,&QPushButton::clicked,this,&SuperWindow::Close);
-    Addclosebutton(Activatestatus);
+    connect(Title->Closebutton,&QPushButton::clicked,this,&SuperWindow::close);
+    addCloseButton(Activatestatus);
 }
 
 /*  enable maxisize function and button;*/
 
-void SuperWindow::Mouseenter(bool mouseontitle)
+void SuperWindow::mouseEnter(bool mouseontitle)
 {
     Mouseontitle = mouseontitle;
 }
 
 /*  title send signal if mouse enter;*/
 
-void SuperWindow::Changeshowstatus()
+void SuperWindow::changeShowStatus()
 {
     if(isMaximized())
     {
@@ -269,7 +269,7 @@ void SuperWindow::Changeshowstatus()
 
 /*  change frame status,minimized or maximized;*/
 
-void SuperWindow::Changemaxicon()
+void SuperWindow::changeMaxicon()
 {
     if(isMaximized())
     {
@@ -279,28 +279,28 @@ void SuperWindow::Changemaxicon()
     {
         Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "restoredown_.svg"));
     }
-    Changeshowstatus();
+    changeShowStatus();
 }
 
 /*  change button status,minimized or maximized;*/
 
-void SuperWindow::Minimized()
+void SuperWindow::minimized()
 {
     showMinimized();
 }
 
 /*  min size;*/
 
-void SuperWindow::Addthemefunction()
+void SuperWindow::addThemeFunction()
 {
-    Themeactioninit();
-    Themeconnectinit();
-    Setframetheme();
+    themeActionInit();
+    themeConnectInit();
+    setFrameTheme();
 }
 
 /*  add theme function;*/
 
-void SuperWindow::Thememenuinit()
+void SuperWindow::themeMenuInit()
 {
     Themes = new QMenu(this);
     Themes->setIcon(QIcon(":/__supericon__/_themes_.svg"));
@@ -308,9 +308,9 @@ void SuperWindow::Thememenuinit()
 
 /*  enable themes menu interface;*/
 
-void SuperWindow::Themeactioninit()
+void SuperWindow::themeActionInit()
 {
-    Thememenuinit();
+    themeMenuInit();
     Actionoriginal = new QAction(QIcon(":/__supericon__/_original_.svg"),"Original",this);
     Actioncolor = new QAction(QIcon(":/__supericon__/_color_.png"),"Color",this);
     Actionheartofiron = new QAction(QIcon(":/__supericon__/_heartofiron_.ico"),"Heartofiron",this);
@@ -324,42 +324,42 @@ void SuperWindow::Themeactioninit()
 
 /*  add action to themes menu interface;*/
 
-void SuperWindow::Addiconfunction()
+void SuperWindow::addIconFunction()
 {
-    connect(Title->ui->pushButton_5,&QPushButton::clicked,  this,&SuperWindow::Callmenu);
+    connect(Title->ui->pushButton_5,&QPushButton::clicked,  this,&SuperWindow::callMenu);
 }
 
 /*  enable icon function;*/
 
-void SuperWindow::Themeconnectinit()
+void SuperWindow::themeConnectInit()
 {
-    Addiconfunction();
-    connect(Actionoriginal,         &QAction::triggered,    this,&SuperWindow::Setoriginaltheme);
-    connect(Actioncolor,            &QAction::triggered,    this,&SuperWindow::Selectcolortheme);
-    connect(Actionheartofiron,      &QAction::triggered,    this,&SuperWindow::Setheartofirontheme);
-    connect(Actiongoertek,          &QAction::triggered,    this,&SuperWindow::Setgoertektheme);
+    addIconFunction();
+    connect(Actionoriginal,         &QAction::triggered,    this,&SuperWindow::setOriginalTheme);
+    connect(Actioncolor,            &QAction::triggered,    this,&SuperWindow::selectColorTheme);
+    connect(Actionheartofiron,      &QAction::triggered,    this,&SuperWindow::setHeartOfIronTheme);
+    connect(Actiongoertek,          &QAction::triggered,    this,&SuperWindow::setGoerTekTheme);
 }
 
 /*  enable themes' function;*/
 
-void SuperWindow::Callmenu()
+void SuperWindow::callMenu()
 {
     if(Functionenable)
     {
-        Supermenu->exec(Core->Widgetleftbottompoint(Title));
+        Supermenu->exec(Core->widgetLeftBottomPoint(Title));
     }
     else
     {
-        Themes->exec(Core->Widgetleftbottompoint(Title));
+        Themes->exec(Core->widgetLeftBottomPoint(Title));
     }
 }
 
 /*  exec file menu;*/
 
-void SuperWindow::Setframetheme()
+void SuperWindow::setFrameTheme()
 {
     bool boola = false;
-    QString stringindex = Core->Readonlyfile(Themepath);
+    QString stringindex = Core->readOnlyFile(Themepath);
     stringindex.toInt(&boola);
     if(boola)
     {
@@ -374,22 +374,22 @@ void SuperWindow::Setframetheme()
     {
         case 0:
         {
-            Setoriginaltheme();
+            setOriginalTheme();
             break;
         }
         case 1:
         {
-            Setcolortheme();
+            setColorTheme();
             break;
         }
         case 2:
         {
-            Setheartofirontheme();
+            setHeartOfIronTheme();
             break;
         }
         case 3:
         {
-            Setgoertektheme();
+            setGoerTekTheme();
             break;
         }
     }
@@ -397,7 +397,7 @@ void SuperWindow::Setframetheme()
 
 /*  set theme by which action checked;*/
 
-void SuperWindow::Enablethemesapi(bool boola,bool boolb,bool boolc,bool boold,QString theme)
+void SuperWindow::enableThemesApi(bool boola,bool boolb,bool boolc,bool boold,QString theme)
 {
     Actionoriginal->setCheckable(boola);
     Actioncolor->setCheckable(boolb);
@@ -407,33 +407,33 @@ void SuperWindow::Enablethemesapi(bool boola,bool boolb,bool boolc,bool boold,QS
     Actioncolor->setChecked(boolb);
     Actionheartofiron->setChecked(boolc);
     Actiongoertek->setChecked(boold);
-    Core->Writeonlyfile(Themepath,theme);
+    Core->writeOnlyFile(Themepath,theme);
 }
 
 /*  set tabwidget background color;*/
 
-void SuperWindow::Setoriginaltheme()
+void SuperWindow::setOriginalTheme()
 {
-    Enablethemesapi(true,false,false,false,"0");
-    Core->Replacefile(":/__supericon__/_originaltitle_.png",Localtitlepath);
+    enableThemesApi(true,false,false,false,"0");
+    Core->replaceFile(":/__supericon__/_originaltitle_.png",Localtitlepath);
     Backgroundcolor.setRgb(16,81,142);
     Fontcolor.setRgb(255,255,255);
-    Setwidgettheme();
+    setWidgetTheme();
 }
 
 /*  set original theme;*/
 
-void SuperWindow::Selectcolortheme()
+void SuperWindow::selectColorTheme()
 {
-    emit Signalwb();
+    emit signalWb();
 }
 
 /*  select color theme;*/
 
-void SuperWindow::Setcolor(QColor color)
+void SuperWindow::setColor(QColor color)
 {
     Backgroundcolor = color;
-    Core->Writeonlyfile(Backgroundcolorpath,Core->Rgbcolor(&Backgroundcolor));
+    Core->writeOnlyFile(Backgroundcolorpath,Core->rgbColor(&Backgroundcolor));
     if(Backgroundcolor.red() + Backgroundcolor.green() + Backgroundcolor.blue() > 380)
     {
         Fontcolor.setRgb(0,0,0);
@@ -442,65 +442,65 @@ void SuperWindow::Setcolor(QColor color)
     {
         Fontcolor.setRgb(255,255,255);
     }
-    Core->Writeonlyfile(Fontcolorpath,Core->Rgbcolor(&Fontcolor));
-    Setcolortheme();
+    Core->writeOnlyFile(Fontcolorpath,Core->rgbColor(&Fontcolor));
+    setColorTheme();
 }
 
 /*  set color;*/
 
-void SuperWindow::Setcolortheme()
+void SuperWindow::setColorTheme()
 {
-    Enablethemesapi(false,true,false,false,"1");
-    QStringList backgroundrgb = Core->Readonlyfile(Backgroundcolorpath).split(",");
-    QStringList fontrgb = Core->Readonlyfile(Fontcolorpath).split(",");
-    Core->Replacefile(":/__supericon__/_colortitle_.png",Localtitlepath);
+    enableThemesApi(false,true,false,false,"1");
+    QStringList backgroundrgb = Core->readOnlyFile(Backgroundcolorpath).split(",");
+    QStringList fontrgb = Core->readOnlyFile(Fontcolorpath).split(",");
+    Core->replaceFile(":/__supericon__/_colortitle_.png",Localtitlepath);
     if(backgroundrgb.count() >= 3 && fontrgb.count() >= 3)
     {
         Backgroundcolor.setRgb(backgroundrgb.at(0).toInt(),backgroundrgb.at(1).toInt(),backgroundrgb.at(2).toInt());
         Fontcolor.setRgb(fontrgb.at(0).toInt(),fontrgb.at(1).toInt(),fontrgb.at(2).toInt());
     }
-    Setwidgettheme();
+    setWidgetTheme();
 }
 
 /*  set color theme;*/
 
-void SuperWindow::Setheartofirontheme()
+void SuperWindow::setHeartOfIronTheme()
 {
-    Enablethemesapi(false,false,true,false,"2");
-    Core->Replacefile(":/__supericon__/_heartofirontitle_.png",Localtitlepath);
+    enableThemesApi(false,false,true,false,"2");
+    Core->replaceFile(":/__supericon__/_heartofirontitle_.png",Localtitlepath);
     Backgroundcolor.setRgb(121,35,32);
     Fontcolor.setRgb(255,255,255);
-    Setwidgettheme();
+    setWidgetTheme();
 }
 
 /*  set Heart of iron theme;*/
 
-void SuperWindow::Setgoertektheme()
+void SuperWindow::setGoerTekTheme()
 {
-    Enablethemesapi(false,false,false,true,"3");
-    Core->Replacefile(":/__supericon__/_goertektitle_.png",Localtitlepath);
+    enableThemesApi(false,false,false,true,"3");
+    Core->replaceFile(":/__supericon__/_goertektitle_.png",Localtitlepath);
     Backgroundcolor.setRgb(69,86,17);
     Fontcolor.setRgb(255,255,255);
-    Setwidgettheme();
+    setWidgetTheme();
 }
 
 /*  set goertek theme;*/
 
-void SuperWindow::Setwidgettheme()
+void SuperWindow::setWidgetTheme()
 {
-    Strrgbbackgroundcolor = "rgb(" + Core->Rgbcolor(&Backgroundcolor) + ")";
-    Strrgbfontcolor = "rgb(" + Core->Rgbcolor(&Fontcolor) + ")";
+    Strrgbbackgroundcolor = "rgb(" + Core->rgbColor(&Backgroundcolor) + ")";
+    Strrgbfontcolor = "rgb(" + Core->rgbColor(&Fontcolor) + ")";
     setStyleSheet("QGroupBox{border:1px solid " + Strrgbbackgroundcolor + "}");
     Title->setStyleSheet("QFrame#SuperTitleui{border-image:url(" + Localtitlepath + ");background-color:" + Strrgbbackgroundcolor + "}QWidget{color:" + Strrgbfontcolor + "}");
-    Title->Setsourcecolor(Strrgbbackgroundcolor);
-    Core->Writeonlyfile(Backgroundcolorpath,Core->Rgbcolor(&Backgroundcolor));
-    Core->Writeonlyfile(Fontcolorpath,Core->Rgbcolor(&Fontcolor));
-    Updatesvgfile();
+    Title->setSourceColor(Strrgbbackgroundcolor);
+    Core->writeOnlyFile(Backgroundcolorpath,Core->rgbColor(&Backgroundcolor));
+    Core->writeOnlyFile(Fontcolorpath,Core->rgbColor(&Fontcolor));
+    updateSvgFile();
 }
 
 /*  set widget style sheet;*/
 
-void SuperWindow::Updatesvgfile()
+void SuperWindow::updateSvgFile()
 {
     if(Backgroundcolor.red() + Backgroundcolor.green() + Backgroundcolor.blue() > 380)
     {
@@ -510,37 +510,37 @@ void SuperWindow::Updatesvgfile()
     {
         Activatestatus = "w";
     }
-    Addmaxisizebutton(Activatestatus);
-    Addclosebutton(Activatestatus);
-    Addminisizebutton(Activatestatus);
+    addMaxisizeButton(Activatestatus);
+    addCloseButton(Activatestatus);
+    addMinisizeButton(Activatestatus);
 }
 
 /*  update svg file when change color and frame show status;*/
 
-void SuperWindow::Setdeactivetheme()
+void SuperWindow::setDeactiveTheme()
 {
     Activatestatus = "b";
     Title->setStyleSheet("");
-    Addmaxisizebutton(Activatestatus);
-    Addclosebutton(Activatestatus);
-    Addminisizebutton(Activatestatus);
+    addMaxisizeButton(Activatestatus);
+    addCloseButton(Activatestatus);
+    addMinisizeButton(Activatestatus);
 }
 
 /*  set deactive style sheet;*/
 
-void SuperWindow::Addframefunction()
+void SuperWindow::addFrameFunction()
 {
     Functionenable = true;
     Supermenu = new QMenu(this);
-    Core->Addmenu(Supermenu,Themes,"Themes");
-    Enablemaxisize();
+    Core->addMenu(Supermenu,Themes,"Themes");
+    enableMaxisize();
 }
 
 /*  enable frames' function;*/
 
-void SuperWindow::Addmenu(QMenu *menu,QString titlename,bool addseparator)
+void SuperWindow::addMenu(QMenu *menu,QString titlename,bool addseparator)
 {
-    Core->Addmenu(Supermenu,menu,titlename);
+    Core->addMenu(Supermenu,menu,titlename);
     if(addseparator)
     {
         Supermenu->addSeparator();
@@ -549,26 +549,26 @@ void SuperWindow::Addmenu(QMenu *menu,QString titlename,bool addseparator)
 
 /*  frame add menu interface;*/
 
-void SuperWindow::Addaction(QAction *action)
+void SuperWindow::addAction(QAction *action)
 {
     Supermenu->addAction(action);
 }
 
 /*  frame add action interface;*/
 
-void SuperWindow::Addthemesaction(QAction *action)
+void SuperWindow::addThemesAction(QAction *action)
 {
     Themes->addAction(action);
 }
 
 /*  themes add action interface;*/
 
-void SuperWindow::Show()
+void SuperWindow::show()
 {
     if(windowState().testFlag(Qt::WindowNoState) && !Showtimes)
     {
-        show();
-        Movecenter(this);
+        QWidget::show();
+        moveCenter(this);
         activateWindow();
         Showtimes = true;
         Timer->start(Showinterval);
@@ -590,7 +590,7 @@ void SuperWindow::Show()
 
 /*  dialog show,move to center and activate windows;*/
 
-void SuperWindow::Movecenter(QWidget *widget)
+void SuperWindow::moveCenter(QWidget *widget)
 {
     int width = qApp->primaryScreen()->geometry().width();
     int height = qApp->primaryScreen()->geometry().height();
@@ -599,7 +599,7 @@ void SuperWindow::Movecenter(QWidget *widget)
 
 /*  cal screen width and height and move to center;*/
 
-void SuperWindow::Addresizefunction()
+void SuperWindow::addResizeFunction()
 {
     setMouseTracking(true);
     ui->PluginBox->setMouseTracking(true);
@@ -607,7 +607,7 @@ void SuperWindow::Addresizefunction()
 
 /*  add drag function;*/
 
-Qt::CursorShape SuperWindow::Calmouseposition(QMouseEvent *event)
+Qt::CursorShape SuperWindow::calMousePosition(QMouseEvent *event)
 {
     int mousewidth = event->position().x();
     int mouseheight = event->position().y();
@@ -635,7 +635,7 @@ Qt::CursorShape SuperWindow::Calmouseposition(QMouseEvent *event)
 
 /*  cal mouse position;*/
 
-void SuperWindow::Resizebycursor()
+void SuperWindow::resizeByCursor()
 {
     QPointF movesize = QCursor::pos() - Point;
     QRectF tempgeometry = Geometry;
@@ -668,10 +668,10 @@ void SuperWindow::Resizebycursor()
 
 /*  resize;*/
 
-void SuperWindow::Close()
+void SuperWindow::close()
 {
     Mouseontitle = false;
-    close();
+    QWidget::close();
 }
 
 /*  close and reset parameter;*/

@@ -13,7 +13,7 @@ SuperCore::~SuperCore()
 
 //**************************************************QString********************************************************//
 
-QString SuperCore::Firstwordupper(QString str)
+QString SuperCore::firstWordUpper(QString str)
 {
     for(int i = 0;i < str.count();i++)
     {
@@ -27,7 +27,7 @@ QString SuperCore::Firstwordupper(QString str)
 
 /*  set QString first word upper;*/
 
-QString SuperCore::Firstwordlower(QString str)
+QString SuperCore::firstWordLower(QString str)
 {
     for(int i = 0;i < str.count();i++)
     {
@@ -41,7 +41,7 @@ QString SuperCore::Firstwordlower(QString str)
 
 /*  set QString first word lower;*/
 
-QString SuperCore::Allwordupper(QString str)
+QString SuperCore::allWordUpper(QString str)
 {
     for(int i = 0;i < str.count();i++)
     {
@@ -52,7 +52,7 @@ QString SuperCore::Allwordupper(QString str)
 
 /*  set QString all word upper;*/
 
-QString SuperCore::Allwordlower(QString str)
+QString SuperCore::allWordLower(QString str)
 {
     for(int i = 0;i < str.count();i++)
     {
@@ -63,7 +63,7 @@ QString SuperCore::Allwordlower(QString str)
 
 /*  set QString all word lower;*/
 
-bool SuperCore::Checkiprules(QString strip)
+bool SuperCore::checkIpRules(QString strip)
 {
     QRegularExpression iprules("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
     QRegularExpressionMatch match = iprules.match(strip);
@@ -72,7 +72,7 @@ bool SuperCore::Checkiprules(QString strip)
 
 /*  check whether the QString complies with ip rules;*/
 
-bool SuperCore::Checkfilename(QString filename)
+bool SuperCore::checkFileName(QString filename)
 {
     QStringList filerules = {"\\","/",":","*","?","\"","<",">","|"};
     for(int i = 0;i < filerules.count();i++)
@@ -89,14 +89,14 @@ bool SuperCore::Checkfilename(QString filename)
 
 //************************************************QStringList******************************************************//
 
-QString SuperCore::Getlistlastmember(QStringList *list)
+QString SuperCore::getListLastMember(QStringList *list)
 {
     return list->at(list->count() - 1);
 }
 
 /*  get the current list last member;*/
 
-int SuperCore::Findlistmember(QStringList *list,QString str)
+int SuperCore::findListMember(QStringList *list,QString str)
 {
     for(int i = 0;i < list->count();i++)
     {
@@ -112,17 +112,17 @@ int SuperCore::Findlistmember(QStringList *list,QString str)
 
 //**************************************************QSystem********************************************************//
 
-void SuperCore::Runcommand(QString strpath, QString strcommand)
+void SuperCore::runCommand(QString strpath, QString strcommand)
 {
     QProcess *process = new QProcess();
     connect(process,&QProcess::finished,process,&QObject::deleteLater);
-    Writeonlyfile(strpath,strcommand);
+    writeOnlyFile(strpath,strcommand);
     process->start("cmd",{"/c",strcommand});
 }
 
 /*  run command and output result;*/
 
-bool SuperCore::Creatfolder(QString strfolder)
+bool SuperCore::creatFolder(QString strfolder)
 {
     QDir dir(QDir::currentPath());
     return dir.mkdir(strfolder);
@@ -130,7 +130,7 @@ bool SuperCore::Creatfolder(QString strfolder)
 
 /*  creat folder using Qstring path;*/
 
-bool SuperCore::Creatfile(QString strfile)
+bool SuperCore::creatFile(QString strfile)
 {
     QFile file(strfile);
     if(file.exists())
@@ -147,24 +147,24 @@ bool SuperCore::Creatfile(QString strfile)
 
 //***************************************************QFile*********************************************************//
 
-void SuperCore::Getfileinfolist(QString filename,QStringList *fileinfo)
+void SuperCore::getFileInfoList(QString filename,QStringList *fileinfo)
 {
     fileinfo->clear();
     QFileInfo file(filename);
-    if(file.exists() == true)
+    if(file.exists())
     {
-        fileinfo->append(Fixfilepath(file.absolutePath()));
+        fileinfo->append(fixFilePath(file.absolutePath()));
         fileinfo->append(file.completeBaseName() + "." + file.suffix());
         fileinfo->append(QString::number(file.size()));
         fileinfo->append(file.birthTime().toString("yyyyMMddhhmmss"));
-        fileinfo->append(Getfilehash(file.absoluteFilePath()));
+        fileinfo->append(getFileHash(file.absoluteFilePath()));
         fileinfo->append("available");
     }
     else
     {
         QStringList filepathlist = filename.split("/");
         fileinfo->append("unavailable");
-        fileinfo->append(Getlistlastmember(&filepathlist));
+        fileinfo->append(getListLastMember(&filepathlist));
         fileinfo->append("unavailable");
         fileinfo->append("unavailable");
         fileinfo->append("unavailable");
@@ -174,25 +174,25 @@ void SuperCore::Getfileinfolist(QString filename,QStringList *fileinfo)
 
 /*  get file info by stringlist;*/
 
-void SuperCore::Getfileinfobyte(QString filename,QByteArray *fileinfo)
+void SuperCore::getFileInfoByte(QString filename,QByteArray *fileinfo)
 {
     fileinfo->clear();
     QFileInfo file(filename);
-    if(file.exists() == true)
+    if(file.exists())
     {
         QByteArray filenamebyte = (file.completeBaseName() + "." + file.suffix()).toUtf8();
-        fileinfo->append(Fixfilepath(file.absolutePath()).toUtf8() + "<split>");
+        fileinfo->append(fixFilePath(file.absolutePath()).toUtf8() + "<split>");
         fileinfo->append(filenamebyte + "<split>");
         fileinfo->append(QByteArray::number(file.size()) + "<split>");
         fileinfo->append(file.birthTime().toString("yyyyMMddhhmmss").toUtf8() + "<split>");
-        fileinfo->append(Getfilehash(file.absoluteFilePath()) + "<split>");
+        fileinfo->append(getFileHash(file.absoluteFilePath()) + "<split>");
         fileinfo->append("available");
     }
     else
     {
         QStringList filepathlist = filename.split("/");
         fileinfo->append("unavailable<split>");
-        fileinfo->append(Getlistlastmember(&filepathlist).toUtf8() + "<split>");
+        fileinfo->append(getListLastMember(&filepathlist).toUtf8() + "<split>");
         fileinfo->append("unavailable<split>");
         fileinfo->append("unavailable<split>");
         fileinfo->append("unavailable<split>");
@@ -202,7 +202,7 @@ void SuperCore::Getfileinfobyte(QString filename,QByteArray *fileinfo)
 
 /*  get file info by bytearray;*/
 
-QByteArray SuperCore::Getfilehash(QString filename)
+QByteArray SuperCore::getFileHash(QString filename)
 {
     QByteArray hashvalue;
     QCryptographicHash hash(QCryptographicHash::Md5);
@@ -219,7 +219,7 @@ QByteArray SuperCore::Getfilehash(QString filename)
 
 /*  get file 1 MBits hash value;*/
 
-QString SuperCore::Fixfilepath(QString filepath)
+QString SuperCore::fixFilePath(QString filepath)
 {
     if(filepath.at(filepath.count() - 1) != '/' && !filepath.isEmpty())
     {
@@ -230,7 +230,7 @@ QString SuperCore::Fixfilepath(QString filepath)
 
 /*  add // at path last;*/
 
-void SuperCore::Writeonlyfile(QString strpath, QString strtext)
+void SuperCore::writeOnlyFile(QString strpath, QString strtext)
 {
     QFile file(strpath);
     file.open(QIODevice::WriteOnly);
@@ -241,7 +241,7 @@ void SuperCore::Writeonlyfile(QString strpath, QString strtext)
 
 /*  write only for Qstring text and using QString path;*/
 
-void SuperCore::Writeonlyfilelist(QString strpath, QStringList *list,QString parameters,bool addlast)
+void SuperCore::writeOnlyFileList(QString strpath, QStringList *list,QString parameters,bool addlast)
 {
     QString temp;
     QFile file(strpath);
@@ -271,7 +271,7 @@ void SuperCore::Writeonlyfilelist(QString strpath, QStringList *list,QString par
 
 /*  write only for QstringList and using QString path;*/
 
-void SuperCore::Writebytes(QString strpath,QByteArray bytes)
+void SuperCore::writeBytes(QString strpath,QByteArray bytes)
 {
     QFile file(strpath);
     file.open(QIODevice::WriteOnly);
@@ -282,7 +282,7 @@ void SuperCore::Writebytes(QString strpath,QByteArray bytes)
 
 /*  write only for QByteArray and using QString path;*/
 
-void SuperCore::Appendfile(QString strpath, QString strtext)
+void SuperCore::appendFile(QString strpath, QString strtext)
 {
     QFile file(strpath);
     file.open(QIODevice::Append);
@@ -293,7 +293,7 @@ void SuperCore::Appendfile(QString strpath, QString strtext)
 
 /*  append QString and using QString path;*/
 
-void SuperCore::Appendbytes(QString strpath,QByteArray bytes)
+void SuperCore::appendBytes(QString strpath,QByteArray bytes)
 {
     QFile file(strpath);
     file.open(QIODevice::Append);
@@ -304,7 +304,7 @@ void SuperCore::Appendbytes(QString strpath,QByteArray bytes)
 
 /*  read only return QByteArray and using QString path;*/
 
-QString SuperCore::Readonlyfile(QString strpath)
+QString SuperCore::readOnlyFile(QString strpath)
 {
     QFile file(strpath);
     if(file.exists())
@@ -320,7 +320,7 @@ QString SuperCore::Readonlyfile(QString strpath)
 
 /*  read only return QString and using QString path;*/
 
-QByteArray SuperCore::Readbytesint64(QString strpath,qint64 fileseek,qint64 datasize)
+QByteArray SuperCore::readBytesInt64(QString strpath,qint64 fileseek,qint64 datasize)
 {
     QFile file(strpath);
     file.open( QIODevice::ReadOnly);
@@ -333,7 +333,7 @@ QByteArray SuperCore::Readbytesint64(QString strpath,qint64 fileseek,qint64 data
 
 /*  read only return QByteArray and using QString path;*/
 
-void SuperCore::Replacefile(QString srcfile, QString targetfile)
+void SuperCore::replaceFile(QString srcfile, QString targetfile)
 {
     QFile file(targetfile);
     if(!file.exists())
@@ -342,8 +342,8 @@ void SuperCore::Replacefile(QString srcfile, QString targetfile)
     }
     else
     {
-        QByteArray oldhash = Getfilehash(targetfile);
-        QByteArray newhash = Getfilehash(srcfile);
+        QByteArray oldhash = getFileHash(targetfile);
+        QByteArray newhash = getFileHash(srcfile);
         if(oldhash != newhash)
         {
             QFile::remove(targetfile);
@@ -355,7 +355,7 @@ void SuperCore::Replacefile(QString srcfile, QString targetfile)
 
 /*  creat qrc file for use;*/
 
-QString SuperCore::Getfilepath(QString filepath)
+QString SuperCore::getFilePath(QString filepath)
 {
     QFileInfo fileinfo(filepath);
     if(fileinfo.isFile() || fileinfo.isDir())
@@ -372,7 +372,7 @@ QString SuperCore::Getfilepath(QString filepath)
 
 //**************************************************QVector********************************************************//
 
-QVector <double> SuperCore::Linspace(double doublemin, double doublemax, int intnum)
+QVector <double> SuperCore::linspace(double doublemin, double doublemax, int intnum)
 {
     QVector <double> matharray = {};
     double discrepancy = (doublemax - doublemin) / intnum;
@@ -385,7 +385,7 @@ QVector <double> SuperCore::Linspace(double doublemin, double doublemax, int int
 
 /*  return arithmetic discrepancy by min,max,number;*/
 
-QVector <double> SuperCore::Arange(double doublemin, double doublemax, double step)
+QVector <double> SuperCore::arange(double doublemin, double doublemax, double step)
 {
     QVector <double> matharray = {};
     int intnum = (doublemax - doublemin) / step;
@@ -398,7 +398,37 @@ QVector <double> SuperCore::Arange(double doublemin, double doublemax, double st
 
 /*  return arithmetic discrepancy by min,max,step;*/
 
-double SuperCore::Getqvectormaxvalue(QVector<double> *qvectord,int intsize)
+int SuperCore::getVectorMaxValue(QVector<int> *qvectord,int intsize)
+{
+    int temp = qvectord->at(0);
+    for(int i = 0;i < intsize;i++)
+    {
+        if(temp < qvectord->at(i))
+        {
+            temp = qvectord->at(i);
+        }
+    }
+    return temp;
+}
+
+/*  return qvector max int value;*/
+
+int SuperCore::getVectorMinValue(QVector<int> *qvectord,int intsize)
+{
+    int temp = qvectord->at(0);
+    for(int i = 0;i < intsize;i++)
+    {
+        if(temp > qvectord->at(i))
+        {
+            temp = qvectord->at(i);
+        }
+    }
+    return temp;
+}
+
+/*  return qvector min int value;*/
+
+double SuperCore::getVectorMaxValue(QVector<double> *qvectord,int intsize)
 {
     double temp = qvectord->at(0);
     for(int i = 0;i < intsize;i++)
@@ -411,9 +441,9 @@ double SuperCore::Getqvectormaxvalue(QVector<double> *qvectord,int intsize)
     return temp;
 }
 
-/*  return qvector max value;*/
+/*  return qvector max double value;*/
 
-double SuperCore::Getqvectorminvalue(QVector<double> *qvectord,int intsize)
+double SuperCore::getVectorMinValue(QVector<double> *qvectord,int intsize)
 {
     double temp = qvectord->at(0);
     for(int i = 0;i < intsize;i++)
@@ -426,9 +456,9 @@ double SuperCore::Getqvectorminvalue(QVector<double> *qvectord,int intsize)
     return temp;
 }
 
-/*  return qvector min value;*/
+/*  return qvector min double value;*/
 
-double SuperCore::Getqvectormeanvalue(QVector<double> *qvectord,int intsize)
+double SuperCore::getVectorMeanValue(QVector<double> *qvectord,int intsize)
 {
     double temp = 0;
     for(int i = 0;i < intsize;i++)
@@ -438,9 +468,9 @@ double SuperCore::Getqvectormeanvalue(QVector<double> *qvectord,int intsize)
     return temp / intsize;
 }
 
-/*  return qvector mean value;*/
+/*  return qvector mean double value;*/
 
-double SuperCore::Getqvectorstandarddeviation(QVector<double> *qvectord,int intsize,double mean)
+double SuperCore::getVectorStandardDeviation(QVector<double> *qvectord,int intsize,double mean)
 {
     double tempa = 0;
     double tempb = 0;
@@ -456,7 +486,7 @@ double SuperCore::Getqvectorstandarddeviation(QVector<double> *qvectord,int ints
 
 //*****************************************************QPointF***********************************************************//
 
-QPointF SuperCore::Getqvectormaxpointf(QVector<QPointF> *qvectorpf,int intsize)
+QPointF SuperCore::getVectorMaxPointF(QVector<QPointF> *qvectorpf,int intsize)
 {
     QPointF pointftemp = qvectorpf->at(0);
     for(int i = 0;i < intsize;i++)
@@ -475,7 +505,7 @@ QPointF SuperCore::Getqvectormaxpointf(QVector<QPointF> *qvectorpf,int intsize)
 
 /*  return qvector max pointf;*/
 
-QPointF SuperCore::Getqvectorminpointf(QVector<QPointF> *qvectorpf,int intsize)
+QPointF SuperCore::getVectorMinPointF(QVector<QPointF> *qvectorpf,int intsize)
 {
     QPointF pointftemp = qvectorpf->at(0);
     for(int i = 0;i < intsize;i++)
@@ -496,7 +526,7 @@ QPointF SuperCore::Getqvectorminpointf(QVector<QPointF> *qvectorpf,int intsize)
 
 //***************************************************doublearray*********************************************************//
 
-double SuperCore::Getdoublearraymaxvalue(double* doublearray,int intcount)
+double SuperCore::getDoubleArrayMaxValue(double* doublearray,int intcount)
 {
     double temp = 0;
     if(intcount > 0)
@@ -515,7 +545,7 @@ double SuperCore::Getdoublearraymaxvalue(double* doublearray,int intcount)
 
 /*  return double array max value;*/
 
-double SuperCore::Getdoublearrayminvalue(double* doublearray,int intcount)
+double SuperCore::getDoubleArrayMinValue(double* doublearray,int intcount)
 {
     double temp = 0;
     if(intcount > 0)
@@ -534,7 +564,7 @@ double SuperCore::Getdoublearrayminvalue(double* doublearray,int intcount)
 
 /*  return double array min value;*/
 
-double SuperCore::Getdoublearraymeanvalue(double* doublearray,int intcount)
+double SuperCore::getDoubleArrayMeanValue(double* doublearray,int intcount)
 {
     double temp = 0;
     for(int i = 0;i < intcount;i++)
@@ -549,13 +579,13 @@ double SuperCore::Getdoublearraymeanvalue(double* doublearray,int intcount)
 
 //****************************************************QMenu********************************************************//
 
-void SuperCore::Addmenu(QMenu* parent,QMenu* menu,QString menuname)
+void SuperCore::addMenu(QMenu* parent,QMenu* menu,QString menuname)
 {
     menu->setTitle(menuname);
     parent->addMenu(menu);
 }
 
-void SuperCore::Addaction(QMenu* parent,QAction* action,QString actionname,QString objectname)
+void SuperCore::addAction(QMenu* parent,QAction* action,QString actionname,QString objectname)
 {
     action->setText(actionname);
     action->setObjectName(objectname);
@@ -564,14 +594,14 @@ void SuperCore::Addaction(QMenu* parent,QAction* action,QString actionname,QStri
 
 //****************************************************QColor*******************************************************//
 
-QString SuperCore::Rgbcolor(QColor *color)
+QString SuperCore::rgbColor(QColor *color)
 {
     return QString::number(color->red()) + "," + QString::number(color->green()) + "," + QString::number(color->blue());
 }
 
 /*  get qbytearray rgb color;*/
 
-void SuperCore::Settablewidgetitem(int rowcounts,int columncounts,int height,QTableWidget *tablewidget)
+void SuperCore::setTableWidgetItem(int rowcounts,int columncounts,int height,QTableWidget *tablewidget)
 {
     tablewidget->clear();
     tablewidget->setRowCount(rowcounts);
@@ -592,10 +622,10 @@ void SuperCore::Settablewidgetitem(int rowcounts,int columncounts,int height,QTa
 
 //**********************************************SuperTools Plugin**************************************************//
 
-void SuperCore::Colorinit(QColor *backgroundcolor,QColor *fontcolor,QColor *concolor,QString *strrgbbackgroundcolor,QString *strrgbfontcolor,QString *strconcolor)
+void SuperCore::colorInit(QColor *backgroundcolor,QColor *fontcolor,QColor *concolor,QString *strrgbbackgroundcolor,QString *strrgbfontcolor,QString *strconcolor)
 {
-    QStringList rgbbackgroundcolor = Readonlyfile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini").split(",");
-    QStringList rgbfontcolor = Readonlyfile("./__depycache__/__cache__/__ini__/_fontcolor_.ini").split(",");
+    QStringList rgbbackgroundcolor = readOnlyFile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini").split(",");
+    QStringList rgbfontcolor = readOnlyFile("./__depycache__/__cache__/__ini__/_fontcolor_.ini").split(",");
     if(rgbbackgroundcolor.count() >= 3 && rgbfontcolor.count() >= 3)
     {
         backgroundcolor->setRgb(rgbbackgroundcolor.at(0).toInt(),rgbbackgroundcolor.at(1).toInt(),rgbbackgroundcolor.at(2).toInt());
@@ -605,14 +635,14 @@ void SuperCore::Colorinit(QColor *backgroundcolor,QColor *fontcolor,QColor *conc
     strrgbbackgroundcolor->clear();
     strrgbfontcolor->clear();
     strconcolor->clear();
-    strrgbbackgroundcolor->append("rgb(" + Rgbcolor(backgroundcolor) + ")");
-    strrgbfontcolor->append("rgb(" + Rgbcolor(fontcolor) + ")");
-    strconcolor->append("rgb(" + Rgbcolor(concolor) + ")");
+    strrgbbackgroundcolor->append("rgb(" + rgbColor(backgroundcolor) + ")");
+    strrgbfontcolor->append("rgb(" + rgbColor(fontcolor) + ")");
+    strconcolor->append("rgb(" + rgbColor(concolor) + ")");
 }
 
 /*  if rgb file exist,use color saved,else use default color;*/
 
-void SuperCore::Enablewidgetlist(QList<QWidget*>* widgetlist,bool boola)
+void SuperCore::enableWidgetList(QList<QWidget*>* widgetlist,bool boola)
 {
     for(int i = 0;i < widgetlist->count();i++)
     {
@@ -622,7 +652,7 @@ void SuperCore::Enablewidgetlist(QList<QWidget*>* widgetlist,bool boola)
 
 /*  enable widget in a list or not;*/
 
-void SuperCore::Checkedwidgetlist(QList<QCheckBox*>* checkboxlist,bool boola)
+void SuperCore::checkedWidgetList(QList<QCheckBox*>* checkboxlist,bool boola)
 {
     for(int i = 0;i < checkboxlist->count();i++)
     {
@@ -632,7 +662,7 @@ void SuperCore::Checkedwidgetlist(QList<QCheckBox*>* checkboxlist,bool boola)
 
 /*  check widget in a list or not;*/
 
-void SuperCore::Closethread(QThread *threada)
+void SuperCore::closeThread(QThread *threada)
 {
     if(threada != nullptr)
     {
@@ -654,7 +684,7 @@ void SuperCore::Closethread(QThread *threada)
 
 /*  close thread api;*/
 
-void SuperCore::Deleteobject(QObject *object)
+void SuperCore::deleteObject(QObject *object)
 {
     if(object != nullptr)
     {
@@ -665,28 +695,28 @@ void SuperCore::Deleteobject(QObject *object)
 
 /*  super delete;*/
 
-QPoint SuperCore::Widgetleftbottompoint(QWidget* widget)
+QPoint SuperCore::widgetLeftBottomPoint(QWidget* widget)
 {
     return widget->mapToGlobal(QPoint(0,widget->height()));
 }
 
 /*  return widget clicked point;*/
 
-QPoint SuperCore::Widgetrightbottompoint(QWidget* widget)
+QPoint SuperCore::widgetRightBottomPoint(QWidget* widget)
 {
     return widget->mapToGlobal(QPoint(widget->width(),widget->height()));
 }
 
 /*  return widget right bottom point;*/
 
-void SuperCore::Openpath(QString path)
+void SuperCore::openPath(QString path)
 {
-    QDesktopServices::openUrl(QUrl(Getfilepath(path), QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl(getFilePath(path), QUrl::TolerantMode));
 }
 
 /*  open folder;*/
 
-void SuperCore::Deleteallitemsoflayout(QLayout *layout)
+void SuperCore::deleteAllItemsOfLayout(QLayout *layout)
 {
     QLayoutItem *child = nullptr;
     while ((child = layout->takeAt(0)) != nullptr)

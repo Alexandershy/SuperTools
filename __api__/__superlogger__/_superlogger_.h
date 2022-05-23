@@ -27,14 +27,14 @@ public:
 
 public slots:
 
-    void Displaylog(
+    void displayLog(
         QString direction,
         QString strllog,
         QString strtlog);
 
-    void Cleartextbrowser();
+    void clearTextBrowser();
 
-    void Addtransfercodec();
+    void addTransferCodec();
 
 private:
 
@@ -45,18 +45,18 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Addinit();
+    void addInit();
 
-    QString Displaylogdirection(
+    QString displayLogDirection(
         QString direction);
 
-    void Transfercodecs();
+    void transferCodecs();
 
-    void Openfilepath();
+    void openFilePath();
 
 };
 

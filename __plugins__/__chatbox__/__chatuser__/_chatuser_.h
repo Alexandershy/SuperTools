@@ -23,11 +23,11 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Policyinit();
+    void policyInit();
 
-    void Setusericon();
+    void setUserIcon();
 
 };
 

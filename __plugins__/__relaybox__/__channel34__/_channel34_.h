@@ -5,7 +5,7 @@
 #include "__superwindow__/_superwindow_.h"
 #include "__superserial__/_superserial_.h"
 #include "__supercore__/_supercore_.h"
-#include "_channel34__ui_.h"
+#include "ui__channel34_.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Channel34; }
@@ -25,13 +25,17 @@ public:
 
     ~Channel34();
 
-    void Setsetting(
+public slots:
+
+    void setSetting(
             QString path);
 
-    void Enablelineedit(
+    void enableLineEdit(
             bool boola);
 
-    ScanSerialPort *Threadsa                = nullptr;
+public:
+
+    SuperScanSerial *Threadsa                = nullptr;
     QList<QWidget*> Connectwidgetet         = {};
     QList<QWidget*> Disconnectwidgetef      = {};
     QList<QProgressBar*> Progressbarlist    = {};
@@ -57,7 +61,7 @@ public:
 
 private:
 
-    SuperCore *SuperC                       = nullptr;
+    SuperCore *Core                         = nullptr;
     Ui::Channel34 *ui                       = nullptr;
     QWidget *Widget                         = nullptr;
     QSerialPort *Serial                     = nullptr;
@@ -67,183 +71,184 @@ private:
 
 private slots:
     /*  main function*/
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Widgetlistinit();
+    void widgetListInit();
 
-    void Closechannel01();
+    void closeChannel01();
 
-    void Closechannel02();
+    void closeChannel02();
 
-    void Closechannel03();
+    void closeChannel03();
 
-    void Closechannel04();
+    void closeChannel04();
 
-    void Closechannel05();
+    void closeChannel05();
 
-    void Closechannel06();
+    void closeChannel06();
 
-    void Closechannel07();
+    void closeChannel07();
 
-    void Closechannel08();
+    void closeChannel08();
 
-    void Closechannel09();
+    void closeChannel09();
 
-    void Closechannel10();
+    void closeChannel10();
 
-    void Closechannel11();
+    void closeChannel11();
 
-    void Closechannel12();
+    void closeChannel12();
 
-    void Closechannel13();
+    void closeChannel13();
 
-    void Closechannel14();
+    void closeChannel14();
 
-    void Closechannel15();
+    void closeChannel15();
 
-    void Closechannel16();
+    void closeChannel16();
 
-    void Closechannel17();
+    void closeChannel17();
 
-    void Closechannel18();
+    void closeChannel18();
 
-    void Closechannel19();
+    void closeChannel19();
 
-    void Closechannel20();
+    void closeChannel20();
 
-    void Closechannel21();
+    void closeChannel21();
 
-    void Closechannel22();
+    void closeChannel22();
 
-    void Closechannel23();
+    void closeChannel23();
 
-    void Closechannel24();
+    void closeChannel24();
 
-    void Closechannel25();
+    void closeChannel25();
 
-    void Closechannel26();
+    void closeChannel26();
 
-    void Closechannel27();
+    void closeChannel27();
 
-    void Closechannel28();
+    void closeChannel28();
 
-    void Closechannel29();
+    void closeChannel29();
 
-    void Closechannel30();
+    void closeChannel30();
 
-    void Closechannel31();
+    void closeChannel31();
 
-    void Closechannel32();
+    void closeChannel32();
 
-    void Closechannel33();
+    void closeChannel33();
 
-    void Closechannel34();
+    void closeChannel34();
 
-    void Openchannel01();
+    void openChannel01();
 
-    void Openchannel02();
+    void openChannel02();
 
-    void Openchannel03();
+    void openChannel03();
 
-    void Openchannel04();
+    void openChannel04();
 
-    void Openchannel05();
+    void openChannel05();
 
-    void Openchannel06();
+    void openChannel06();
 
-    void Openchannel07();
+    void openChannel07();
 
-    void Openchannel08();
+    void openChannel08();
 
-    void Openchannel09();
+    void openChannel09();
 
-    void Openchannel10();
+    void openChannel10();
 
-    void Openchannel11();
+    void openChannel11();
 
-    void Openchannel12();
+    void openChannel12();
 
-    void Openchannel13();
+    void openChannel13();
 
-    void Openchannel14();
+    void openChannel14();
 
-    void Openchannel15();
+    void openChannel15();
 
-    void Openchannel16();
+    void openChannel16();
 
-    void Openchannel17();
+    void openChannel17();
 
-    void Openchannel18();
+    void openChannel18();
 
-    void Openchannel19();
+    void openChannel19();
 
-    void Openchannel20();
+    void openChannel20();
 
-    void Openchannel21();
+    void openChannel21();
 
-    void Openchannel22();
+    void openChannel22();
 
-    void Openchannel23();
+    void openChannel23();
 
-    void Openchannel24();
+    void openChannel24();
 
-    void Openchannel25();
+    void openChannel25();
 
-    void Openchannel26();
+    void openChannel26();
 
-    void Openchannel27();
+    void openChannel27();
 
-    void Openchannel28();
+    void openChannel28();
 
-    void Openchannel29();
+    void openChannel29();
 
-    void Openchannel30();
+    void openChannel30();
 
-    void Openchannel31();
+    void openChannel31();
 
-    void Openchannel32();
+    void openChannel32();
 
-    void Openchannel33();
+    void openChannel33();
 
-    void Openchannel34();
+    void openChannel34();
 
-    void Emitdisplaylog(
-            QString direction,
-            QString strtlog,
-            QString strllog);
+    void emitDisplayLog(
+        QString direction,
+        QString strtlog,
+        QString strllog);
 
-    void Emitsignalsbslot(
-            QString strcommand);
+    void emitSignalSbSlot(
+        QString strcommand);
 
-    void Emitsignalscslot();
+    void emitSignalScSlot();
 
-    void Emitenablerelaybutton();
+    void emitEnableRelayButton();
 
-    void Savecurrenttext();
+    void saveCurrentText();
 
-    void Checklineedittext(
-            QString text);
+    void checkLineEditText(
+        QString text);
 
-    void Loadsetting();
+    void loadSetting();
+
 
 signals:
 
-    void Signalca(
-            QString direction,
-            QString strtlog,
-            QString strllog);
+    void signalCa(
+        QString direction,
+        QString strtlog,
+        QString strllog);
 
-    void Signalcb(
-            QString strcommand);
+    void signalCb(
+        QString strcommand);
 
-    void Signalcc();
+    void signalCc();
 
-    void Signalcd(
-            QString strcommand);
+    void signalCd(
+        QString strcommand);
 
-    void Signalce();
+    void signalCe();
 
 };
 

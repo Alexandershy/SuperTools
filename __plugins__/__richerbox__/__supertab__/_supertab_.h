@@ -30,19 +30,19 @@ public:
 
 public slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Setgroupbox(
+    void setGroupBox(
         int left,
         int right);
 
-    void Setstretch(
+    void setStretch(
         QList<int> leftstretch,
         QList<int> rightstretch);
 
-    void Readme(
+    void readMe(
         QString objectname);
 
 private:

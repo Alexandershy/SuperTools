@@ -1,1 +1,0 @@
-uic -o _channel34__ui_.h _channel34_.ui

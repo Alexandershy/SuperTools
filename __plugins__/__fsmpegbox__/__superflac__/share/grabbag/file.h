@@ -31,8 +31,8 @@
 
 #include <sys/types.h> /* for off_t */
 #include <stdio.h> /* for FILE */
-#include "__supercodec__/__flac__/FLAC/ordinals.h"
-#include "__supercodec__/__flac__/share/compat.h"
+#include "FLAC/ordinals.h"
+#include "share/compat.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -14,19 +14,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    __formatdialog__/_formatbox_.cpp \
-    __formatdialog__/_formatdialog_.cpp \
-    __module__/_modulea_.cpp \
-    __module__/_moduleb_.cpp \
-    __module__/_modulec_.cpp \
+    __formatdialog__/_wasapiformatdialog_.cpp \
+    __formatdialog__/_wasapiformatdialogui_.cpp \
+    __module__/_wasapimodulea_.cpp \
+    __module__/_wasapimoduleb_.cpp \
+    __module__/_wasapimodulec_.cpp \
     _wasapibox_.cpp
 
 HEADERS += \
-    __formatdialog__/_formatbox_.h \
-    __formatdialog__/_formatdialog_.h \
-    __module__/_modulea_.h \
-    __module__/_moduleb_.h \
-    __module__/_modulec_.h \
+    __formatdialog__/_wasapiformatdialog_.h \
+    __formatdialog__/_wasapiformatdialogui_.h \
+    __module__/_wasapimodulea_.h \
+    __module__/_wasapimoduleb_.h \
+    __module__/_wasapimodulec_.h \
     __superchartview__/_superchartview_.h \
     __supercore__/_supercore_.h \
     __superfftw__/fftw3.h \
@@ -40,6 +40,7 @@ HEADERS += \
     __superwindow__/_superwindow_.h \
     _wasapibox_.h
 
+
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
@@ -47,17 +48,21 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    __formatdialog__/_formatbox_.ui \
-    __module__/_modulea_.ui \
-    __module__/_moduleb_.ui \
-    __module__/_modulec_.ui
+    __formatdialog__/_wasapiformatdialogui_.ui \
+    __module__/_wasapimodulea_.ui \
+    __module__/_wasapimoduleb_.ui \
+    __module__/_wasapimodulec_.ui \
+    __superfiledialog__/_superfiledialogui_.ui \
+    __supernotedialog__/_supernotedialogui_.ui \
+    __supertab__/_supertabui_.ui \
+    __superwindow__/_supertitleui_.ui \
+    __superwindow__/_superwindowui_.ui
 
 DISTFILES += \
     _wasapibox_.html \
     _wasapibox_.pdf
 
-LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\fftw3.lib"
+LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__windows__\fftw3.lib"
 LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
 
-RESOURCES += \
-    _wasapibox_.qrc
+RESOURCES +=  _wasapibox_.qrc

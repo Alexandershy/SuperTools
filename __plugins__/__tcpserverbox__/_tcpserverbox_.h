@@ -1,14 +1,14 @@
 #ifndef _TCPSERVERBOX__H
 #define _TCPSERVERBOX__H
+#define _TCPSERVERBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__supernetwork__/_supernetwork_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "_tcpserverbox__global.h"
+#include "__module__/_tcpservermodulea_.h"
+#include "__module__/_tcpservermoduleb_.h"
 
 class _TCPSERVERBOX__EXPORT Interface
 {
@@ -29,9 +29,9 @@ public:
 
 private:
 
-    SuperNetwork *SuperN                            = nullptr;
-    ModuleA* Modulea                                = nullptr;
-    ModuleB* Moduleb                                = nullptr;
+    SuperNetwork *Network                           = nullptr;
+    TcpServerModuleA* Modulea                       = nullptr;
+    TcpServerModuleB* Moduleb                       = nullptr;
     QTcpServer *Tcpserver                           = nullptr;
     QList<QTcpSocket*> Tcpsocketlist                = {};
     QList<QWidget*> Connectwidgetet                 = {};
@@ -56,75 +56,74 @@ private:
 private slots:
 
     /* main function;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void widgetListInit();
 
-    void Widgetlistinit();
+    void tempDirInit();
 
-    void Tempdirinit();
+    void getLocalIpAddress();
 
-    void Getlocalipaddress();
+    void enableStartTcpserver();
 
-    void Enablestarttcpserver();
+    void startTcpserver();
 
-    void Starttcpserver();
+    void closeTcpserver();
 
-    void Closetcpserver();
+    void forceDisconnect();
 
-    void Forcedisconnect();
-
-    void Writeapi(
+    void writeApi(
             QTcpSocket *tcpsocket,
             QByteArray serverinfo);
 
-    void Receivecommand();
+    void receiveCommand();
 
-    void Operatorcommand(
+    void operatorCommand(
             QTcpSocket *tcpsocket,
             QByteArray bytes);
 
-    void Exitmode(
+    void exitMode(
             QTcpSocket *tcpsocket);
 
-    void Stringtostring();
+    void stringToString();
 
-    void Stringtostringmode(
+    void stringTostringMode(
             QByteArray bytes,
             QTcpSocket *tcpsocket);
 
-    void Stringtohex();
+    void stringToHex();
 
-    void Stringtohexmode(
+    void stringToHexMode(
             QByteArray bytes,
             QTcpSocket *tcpsocket);
 
-    void Hextostring();
+    void hexTostring();
 
-    void Hextostringmode(
+    void hexTostringMode(
             QByteArray bytes,
             QTcpSocket *tcpsocket);
 
-    void Receiverfiles();
+    void receiverFiles();
 
-    void Receiverfilesmode(
+    void receiverFilesMode(
             QByteArray bytes,
             QTcpSocket *tcpsocket);
 
-    void Transferfiles();
+    void transferFiles();
 
-    void Transferfilesmode(
+    void transferFilesMode(
             QByteArray bytes,
             QTcpSocket *tcpsocket);
 
-    void Getfilepath();
+    void getFilePath();
 
-    void Disconnected();
+    void disconnected();
 
-    void Newtcpsocket();
+    void newTcpsocket();
 
-    void Signalraslot(
+    void signalRaSlot(
             QFile *file,
             QTcpSocket *tcpsocket,
             QString string);
@@ -158,11 +157,11 @@ private:
 
 private slots:
 
-    void Initrun();
+    void initRun();
 
 signals:
 
-    void Signalra(
+    void signalRa(
             QFile *file,
             QTcpSocket *tcpsocket,
             QString string);

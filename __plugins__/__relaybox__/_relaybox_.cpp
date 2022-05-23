@@ -10,76 +10,76 @@ SuperTab* Interface::Loadplugin()
 RelayBox::RelayBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("RelayBox");
-    Setgroupbox(2,2);
-    Setstretch({1,99},{1,99});
-    Init();
+    readMe("RelayBox");
+    setGroupBox(2,2);
+    setStretch({1,99},{1,99});
+    init();
 }
 
 RelayBox::~RelayBox()
 {
-    SuperS->Closeserial(Serial);
-    SuperC->Closethread(Threadta);
+    Serial->closeSerial(Serialport);
+    Core->closeThread(Threadta);
     delete Channel15relay;
     delete Channel34relay;
 }
 
-void RelayBox::Init()
+void RelayBox::init()
 {
-    Timerinit();
-    Objectinit();
-    Widgetlistinit();
+    timerInit();
+    objectInit();
+    widgetListInit();
 }
 
-void RelayBox::Timerinit()
+void RelayBox::timerInit()
 {
     Timerca = new QTimer(this);
     Timerca->setInterval(1000);
-    connect(Timerca,&QTimer::timeout,this,&RelayBox::Timercaslot);
+    connect(Timerca,&QTimer::timeout,this,&RelayBox::timerCaSlot);
 }
 
-void RelayBox::Objectinit()
+void RelayBox::objectInit()
 {
-    SuperS = new SuperSerial(this);
-    Serial = new QSerialPort(this);
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Serial = new SuperSerial(this);
+    Serialport = new QSerialPort(this);
+    Modulea = new RelayModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
     Logger = new SuperLogger(this,Leftgroupboxlist.at(1)->Insidelayout);
-    Moduleb = new ModuleB(this,Rightgroupboxlist.at(0)->Insidelayout);
-    Modulec = new ModuleC(this,Rightgroupboxlist.at(1)->Insidelayout);
-    connect(Modulea->ui->pushButton_35,  &QPushButton::clicked,      this,   &RelayBox::Getserialport);
-    connect(Modulea->ui->comboBox_1,     &QComboBox::textActivated,  this,   &RelayBox::Enableconnectbutton);
-    connect(Modulea->ui->pushButton_31,  &QPushButton::clicked,      this,   &RelayBox::Connectserialport);
-    connect(Modulea->ui->pushButton_32,  &QPushButton::clicked,      this,   &RelayBox::Disconnectserialport);
-    connect(Modulea->ui->pushButton_33,  &QPushButton::clicked,      this,   &RelayBox::Resetallchannel);
-    connect(Modulea->ui->pushButton_34,  &QPushButton::clicked,      this,   &RelayBox::Closeallchannel);
-    connect(Modulea->ui->pushButton_45,  &QPushButton::clicked,      this,   &RelayBox::Openselectchannel);
-    connect(Modulea->ui->pushButton_44,  &QPushButton::clicked,      this,   &RelayBox::Closeselectchannel);
-    connect(Modulea->ui->pushButton_57,  &QPushButton::clicked,      this,   &RelayBox::Scanrelayport);
-    connect(Moduleb->ui->comboBox_2,     &QComboBox::textActivated,  this,   &RelayBox::Selectrelaymodel);
-    connect(Moduleb->ui->pushButton,     &QPushButton::clicked,      this,   &RelayBox::Selectsetting);
-    connect(Moduleb->ui->lineEdit_16,    &QLineEdit::textChanged,    this,   &RelayBox::Setsetting);
-    Channel15relay = new Channel15(this,Serial,Modulea->ui->checkBox_29,Modulea->ui->lineEdit);
-    connect(Channel15relay,&Channel15::Signalca,Logger,&SuperLogger::Displaylog);
-    connect(Channel15relay,&Channel15::Signalcb,this,&RelayBox::Signalsbslot);
-    connect(Channel15relay,&Channel15::Signalcc,this,&RelayBox::Signalscslot);
-    connect(Channel15relay,&Channel15::Signalcd,this,&RelayBox::Writecommand);
-    connect(Channel15relay,&Channel15::Signalce,this,&RelayBox::Enablerelaybutton);
-    Channel34relay = new Channel34(this,Serial,Modulea->ui->checkBox_29,Modulea->ui->lineEdit);
-    connect(Channel34relay,&Channel34::Signalca,Logger,&SuperLogger::Displaylog);
-    connect(Channel34relay,&Channel34::Signalcb,this,&RelayBox::Signalsbslot);
-    connect(Channel34relay,&Channel34::Signalcc,this,&RelayBox::Signalscslot);
-    connect(Channel34relay,&Channel34::Signalcd,this,&RelayBox::Writecommand);
-    connect(Channel34relay,&Channel34::Signalce,this,&RelayBox::Enablerelaybutton);
-    Threadta = new SerialThread(Serial,1000);
-    connect(Threadta,&SerialThread::Signaltt,this,  &RelayBox::Readyreadslot);
-    connect(Threadta,&SerialThread::Signaltf,this,  &RelayBox::Readtimeoutslot);
+    Moduleb = new RelayModuleB(this,Rightgroupboxlist.at(0)->Insidelayout);
+    Modulec = new RelayModuleC(this,Rightgroupboxlist.at(1)->Insidelayout);
+    connect(Modulea->ui->pushButton_35,  &QPushButton::clicked,      this,   &RelayBox::getSerialPort);
+    connect(Modulea->ui->comboBox_1,     &QComboBox::textActivated,  this,   &RelayBox::enableConnectButton);
+    connect(Modulea->ui->pushButton_31,  &QPushButton::clicked,      this,   &RelayBox::connectSerialPort);
+    connect(Modulea->ui->pushButton_32,  &QPushButton::clicked,      this,   &RelayBox::disconnectSerialPort);
+    connect(Modulea->ui->pushButton_33,  &QPushButton::clicked,      this,   &RelayBox::resetAllChannel);
+    connect(Modulea->ui->pushButton_34,  &QPushButton::clicked,      this,   &RelayBox::closeAllChannel);
+    connect(Modulea->ui->pushButton_45,  &QPushButton::clicked,      this,   &RelayBox::openSelectChannel);
+    connect(Modulea->ui->pushButton_44,  &QPushButton::clicked,      this,   &RelayBox::closeSelectChannel);
+    connect(Modulea->ui->pushButton_57,  &QPushButton::clicked,      this,   &RelayBox::scanRelayPort);
+    connect(Moduleb->ui->comboBox_2,     &QComboBox::textActivated,  this,   &RelayBox::selectRelayModel);
+    connect(Moduleb->ui->pushButton,     &QPushButton::clicked,      this,   &RelayBox::selectSetting);
+    connect(Moduleb->ui->lineEdit_16,    &QLineEdit::textChanged,    this,   &RelayBox::setSetting);
+    Channel15relay = new Channel15(this,Serialport,Modulea->ui->checkBox_29,Modulea->ui->lineEdit);
+    connect(Channel15relay,&Channel15::signalCa,Logger,&SuperLogger::displayLog);
+    connect(Channel15relay,&Channel15::signalCb,this,&RelayBox::signalSbSlot);
+    connect(Channel15relay,&Channel15::signalCc,this,&RelayBox::signalScSlot);
+    connect(Channel15relay,&Channel15::signalCd,this,&RelayBox::writeCommand);
+    connect(Channel15relay,&Channel15::signalCe,this,&RelayBox::enableRelayButton);
+    Channel34relay = new Channel34(this,Serialport,Modulea->ui->checkBox_29,Modulea->ui->lineEdit);
+    connect(Channel34relay,&Channel34::signalCa,Logger,&SuperLogger::displayLog);
+    connect(Channel34relay,&Channel34::signalCb,this,&RelayBox::signalSbSlot);
+    connect(Channel34relay,&Channel34::signalCc,this,&RelayBox::signalScSlot);
+    connect(Channel34relay,&Channel34::signalCd,this,&RelayBox::writeCommand);
+    connect(Channel34relay,&Channel34::signalCe,this,&RelayBox::enableRelayButton);
+    Threadta = new SuperSerialThread(Serialport,1000);
+    connect(Threadta,&SuperSerialThread::signalTt,this,  &RelayBox::readyReadSlot);
+    connect(Threadta,&SuperSerialThread::signalTf,this,  &RelayBox::readTimeoutSlot);
     Modulec->ui->verticalLayout_8->addWidget(Channel15relay);
     Modulec->ui->verticalLayout_8->addWidget(Channel34relay);
     Fileinfo = QFileInfo(Defaultsettingpath);
     Channel34relay->hide();
 }
 
-void RelayBox::Widgetlistinit()
+void RelayBox::widgetListInit()
 {
     Connectwidgetet     = {Modulea->ui->pushButton_32,Modulea->ui->pushButton_33,Modulea->ui->pushButton_34,Moduleb->ui->lineEdit_16,Moduleb->ui->pushButton};
     Disconnectwidgetef  = {Modulea->ui->pushButton_33,Modulea->ui->pushButton_34,Modulea->ui->pushButton_32,Modulea->ui->pushButton_44,Modulea->ui->pushButton_45,Moduleb->ui->lineEdit_16,Moduleb->ui->pushButton};
@@ -89,37 +89,37 @@ void RelayBox::Widgetlistinit()
 
 /*  widget list init;*/
 
-void RelayBox::Getserialport()
+void RelayBox::getSerialPort()
 {
-    SuperS->Getserialport(&Serialnamelist,Modulea->ui->comboBox_1);
-    SuperS->Enableserialcombobox(&Serialnamelist,Modulea->ui->comboBox_1,Modulea->ui->comboBox_1);
-    Enableconnectbutton();
+    Serial->getSerialPort(&Serialnamelist,Modulea->ui->comboBox_1);
+    Serial->enableSerialComboBox(&Serialnamelist,Modulea->ui->comboBox_1,Modulea->ui->comboBox_1);
+    enableConnectButton();
     if(Modulea->ui->comboBox_1->currentText().isEmpty())
     {
-        Logger->Displaylog("N","can not find any serial device","Getserialport function run completed");
+        Logger->displayLog("N","can not find any serial device","Getserialport function run completed");
     }
     else
     {
         for(int i = 0;i < Modulea->ui->comboBox_1->count();i++)
         {
-            Logger->Displaylog("N",Modulea->ui->comboBox_1->itemText(i),"Getserialport function run completed");
+            Logger->displayLog("N",Modulea->ui->comboBox_1->itemText(i),"Getserialport function run completed");
         }
     }
 }
 
 /*  get windows system serial port and add item to combobox, enable connect button or not;*/
 
-bool RelayBox::Enableconnectbutton()
+bool RelayBox::enableConnectButton()
 {
     if(!Moduleb->ui->comboBox_2->currentIndex())
     {
         Modulea->ui->pushButton_31->setEnabled(false);
-        Logger->Displaylog("N","disable connect button ,select relay model","Enableconnectbutton function run completed");
+        Logger->displayLog("N","disable connect button ,select relay model","Enableconnectbutton function run completed");
         return false;
     }
-    if(SuperS->Enableconnectbutton(Modulea->ui->comboBox_1,Modulea->ui->comboBox,Modulea->ui->pushButton_31))
+    if(Serial->enableConnectButton(Modulea->ui->comboBox_1,Modulea->ui->comboBox,Modulea->ui->pushButton_31))
     {
-        Logger->Displaylog("N","enable connect button success","Enableconnectbutton function run completed");
+        Logger->displayLog("N","enable connect button success","Enableconnectbutton function run completed");
         return true;
     }
     return false;
@@ -127,60 +127,60 @@ bool RelayBox::Enableconnectbutton()
 
 /*  check is enable connect button;*/;
 
-void RelayBox::Enablescanportbutton()
+void RelayBox::enableScanPortButton()
 {
     if(Moduleb->ui->comboBox_2->currentIndex() && !Modulea->ui->pushButton_32->isEnabled())
     {
         Modulea->ui->pushButton_57->setEnabled(true);
-        Logger->Displaylog("N","enable scan serial button success","Enablescanportbutton function run completed");
+        Logger->displayLog("N","enable scan serial button success","Enablescanportbutton function run completed");
     }
     else
     {
         Modulea->ui->pushButton_57->setEnabled(false);
-        Logger->Displaylog("N","disable scan serial button","Enablescanportbutton function run completed");
+        Logger->displayLog("N","disable scan serial button","Enablescanportbutton function run completed");
     }
 }
 
 /*  check is enable scan serial port button*/;
 
-void RelayBox::Connectserialport()
+void RelayBox::connectSerialPort()
 {
-    SuperS->Connectserialport(Serial,Serialnamelist[Modulea->ui->comboBox_1->currentIndex()],Modulea->ui->comboBox->currentText().toInt());
-    if(Serial->isOpen())
+    Serial->connectSerialPort(Serialport,Serialnamelist[Modulea->ui->comboBox_1->currentIndex()],Modulea->ui->comboBox->currentText().toInt());
+    if(Serialport->isOpen())
     {
-        SuperC->Enablewidgetlist(&Connectwidgetet,true);
-        SuperC->Enablewidgetlist(&Connectwidgetef,false);
-        SuperC->Enablewidgetlist(Relayconnectwidgetet,true);
-        Enablelineeditlist(Lineeditlist,true);
-        Enablerelaybutton();
-        Logger->Displaylog("N","connect " + Modulea->ui->comboBox_1->currentText() + " and set baudrate as " + Modulea->ui->comboBox->currentText() + " success","connectserialport function run completed");
+        Core->enableWidgetList(&Connectwidgetet,true);
+        Core->enableWidgetList(&Connectwidgetef,false);
+        Core->enableWidgetList(Relayconnectwidgetet,true);
+        enableLineEditList(Lineeditlist,true);
+        enableRelayButton();
+        Logger->displayLog("N","connect " + Modulea->ui->comboBox_1->currentText() + " and set baudrate as " + Modulea->ui->comboBox->currentText() + " success","connectserialport function run completed");
         Timerca->start();
     }
     else
     {
-        Logger->Displaylog("N","connect " + Modulea->ui->comboBox_1->currentText() + " and set baudrate as " + Modulea->ui->comboBox->currentText() + " failed","connectserialport function run completed");
+        Logger->displayLog("N","connect " + Modulea->ui->comboBox_1->currentText() + " and set baudrate as " + Modulea->ui->comboBox->currentText() + " failed","connectserialport function run completed");
     }
 }
 
 /*  connect serial port and operate ui,start new thread for check connected device;*/
 
-void RelayBox::Disconnectserialport()
+void RelayBox::disconnectSerialPort()
 {
-    Serial->close();
-    if(!Serial->isOpen())
+    Serialport->close();
+    if(!Serialport->isOpen())
     {
-        SuperC->Enablewidgetlist(&Disconnectwidgetet,true);
-        SuperC->Enablewidgetlist(&Disconnectwidgetef,false);
-        SuperC->Enablewidgetlist(Relaydisconnectwidgetef,false);
-        Enablelineeditlist(Lineeditlist,false);
+        Core->enableWidgetList(&Disconnectwidgetet,true);
+        Core->enableWidgetList(&Disconnectwidgetef,false);
+        Core->enableWidgetList(Relaydisconnectwidgetef,false);
+        enableLineEditList(Lineeditlist,false);
         Timerca->stop();
-        Logger->Displaylog("N",this->objectName() + " has been disconnected","disconnectserialport function run completed");
+        Logger->displayLog("N",this->objectName() + " has been disconnected","disconnectserialport function run completed");
     }
 }
 
 /*  disconnect serial port and operate ui;*/
 
-void RelayBox::Enablelineeditlist(QList<QLineEdit*>* lineeditlist,bool boola)
+void RelayBox::enableLineEditList(QList<QLineEdit*>* lineeditlist,bool boola)
 {
     if(!Moduleb->ui->lineEdit_16->text().isEmpty())
     {
@@ -193,50 +193,50 @@ void RelayBox::Enablelineeditlist(QList<QLineEdit*>* lineeditlist,bool boola)
 
 /*  enable lineedit in a list or not;*/
 
-void RelayBox::Timercaslot()
+void RelayBox::timerCaSlot()
 {
-    if(SuperS->Checkserialdevice(Serial,Modulea->ui->comboBox_1->currentText()) == false)
+    if(Serial->checkSerialDevice(Serialport,Modulea->ui->comboBox_1->currentText()) == false)
     {
-        Disconnectserialport();
-        Getserialport();
-        Logger->Displaylog("N","serial port has been removed","Timercaslot function run completed");
-        Enableconnectbutton();
+        disconnectSerialPort();
+        getSerialPort();
+        Logger->displayLog("N","serial port has been removed","Timercaslot function run completed");
+        enableConnectButton();
         Timerca->stop();
     }
 }
 
 /*  receive result from signalc,check serial port is connect or not;*/
 
-void RelayBox::Writecommand(QString strcommand)
+void RelayBox::writeCommand(QString strcommand)
 {
     Modulea->ui->lineEdit->setText(strcommand);
-    SuperS->Writeserial(Modulea->ui->checkBox_29,Modulea->ui->checkBox_27,Modulea->ui->checkBox_27,Serial,Modulea->ui->lineEdit);
+    Serial->writeSerial(Modulea->ui->checkBox_29,Modulea->ui->checkBox_27,Modulea->ui->checkBox_27,Serialport,Modulea->ui->lineEdit);
     if(Threadta->isRunning())
     {
-        Logger->Displaylog("N","waitting for return value or timeout;","Writecommand function run completed");
+        Logger->displayLog("N","waitting for return value or timeout;","Writecommand function run completed");
     }
     else
     {
-        Logger->Displaylog("W",Modulea->ui->lineEdit->text(),"Writecommand function run completed");
+        Logger->displayLog("W",Modulea->ui->lineEdit->text(),"Writecommand function run completed");
         Threadta->start();
     }
 }
 
 /*  click single button api;*/
 
-void RelayBox::Opreateallchannel(QStringList *listcommand)
+void RelayBox::opreateAllChannel(QStringList *listcommand)
 {
     QString Command = "";
     for(int i = 0;i < listcommand->count();i++)
     {
         Command = Command + listcommand->at(i);
     }
-    Writecommand(Command);
+    writeCommand(Command);
 }
 
 /*  opreate all channel api;*/
 
-void RelayBox::Opreateselectchannel(QStringList *listcommand)
+void RelayBox::opreateSelectChannel(QStringList *listcommand)
 {
     QString comand = "";
     for(int i = 0;i < Checkboxlist->count();i++)
@@ -246,40 +246,40 @@ void RelayBox::Opreateselectchannel(QStringList *listcommand)
             comand = comand + listcommand->at(i);
         }
     }
-    Writecommand(comand);
+    writeCommand(comand);
 }
 
 /*  opreate selected channel api;*/
 
-void RelayBox::Resetallchannel()
+void RelayBox::resetAllChannel()
 {
-    Opreateallchannel(Gtkrelayopencommand);
+    opreateAllChannel(Gtkrelayopencommand);
 }
 
 /*  open all channel;*/
 
-void RelayBox::Closeallchannel()
+void RelayBox::closeAllChannel()
 {
-    Opreateallchannel(Gtkrelayclosecommand);
+    opreateAllChannel(Gtkrelayclosecommand);
 }
 
 /*  close all channel;*/
 
-void RelayBox::Closeselectchannel()
+void RelayBox::closeSelectChannel()
 {
-    Opreateselectchannel(Gtkrelayclosecommand);
+    opreateSelectChannel(Gtkrelayclosecommand);
 }
 
 /*  close select channel;*/
 
-void RelayBox::Openselectchannel()
+void RelayBox::openSelectChannel()
 {
-    Opreateselectchannel(Gtkrelayopencommand);
+    opreateSelectChannel(Gtkrelayopencommand);
 }
 
 /*  open select channel;*/
 
-QString RelayBox::Checkselectchannel()
+QString RelayBox::checkSelectChannel()
 {
     QString temp = "";
     for(int i = 0;i < Checkboxlist->count();i++)
@@ -294,9 +294,9 @@ QString RelayBox::Checkselectchannel()
 
 /*  return checked checkbox;*/
 
-void RelayBox::Enablerelaybutton()
+void RelayBox::enableRelayButton()
 {
-    QString strchannels = Checkselectchannel();
+    QString strchannels = checkSelectChannel();
     if(strchannels.isEmpty())
     {
         Modulea->ui->pushButton_44->setEnabled(false);
@@ -307,12 +307,12 @@ void RelayBox::Enablerelaybutton()
         Modulea->ui->pushButton_44->setEnabled(true);
         Modulea->ui->pushButton_45->setEnabled(true);
     }
-    Logger->Displaylog("N","current selected channels: " + strchannels,"enablerelaybutton function run completed");
+    Logger->displayLog("N","current selected channels: " + strchannels,"enablerelaybutton function run completed");
 }
 
 /*  enable button or not;*/
 
-void RelayBox::Scanrelayport()
+void RelayBox::scanRelayPort()
 {
     Modulea->ui->pushButton_57->setEnabled(false);
     Threadsa->start();
@@ -320,7 +320,7 @@ void RelayBox::Scanrelayport()
 
 /*  start scan relay port;*/
 
-void RelayBox::Selectrelaymodel()
+void RelayBox::selectRelayModel()
 {
     switch (Moduleb->ui->comboBox_2->currentIndex())
     {
@@ -340,8 +340,8 @@ void RelayBox::Selectrelaymodel()
             Lineeditlist            = &Channel15relay->Lineeditlist;
             Threadsa                = Channel15relay->Threadsa;
             Moduleb->ui->lineEdit_16->setText(Channel15relay->Settingpath);
-            Logger->Displaylog("N","communication type: hex;","Displayrelaymodel function run completed;");
-            Logger->Displaylog("N","setting save path:  " + Channel15relay->Settingpath,"Displayrelaymodel function run completed;");
+            Logger->displayLog("N","communication type: hex;","Displayrelaymodel function run completed;");
+            Logger->displayLog("N","setting save path:  " + Channel15relay->Settingpath,"Displayrelaymodel function run completed;");
             break;
         }
         case 2:
@@ -360,48 +360,48 @@ void RelayBox::Selectrelaymodel()
             Lineeditlist            = &Channel34relay->Lineeditlist;
             Threadsa                = Channel34relay->Threadsa;
             Moduleb->ui->lineEdit_16->setText(Channel34relay->Settingpath);
-            Logger->Displaylog("N","communication type: string;","Displayrelaymodel function run completed;");
-            Logger->Displaylog("N","setting save path:  " + Channel34relay->Settingpath,"Displayrelaymodel function run completed;");
+            Logger->displayLog("N","communication type: string;","Displayrelaymodel function run completed;");
+            Logger->displayLog("N","setting save path:  " + Channel34relay->Settingpath,"Displayrelaymodel function run completed;");
             break;
         }
     }
-    Enableconnectbutton();
-    Enablescanportbutton();
+    enableConnectButton();
+    enableScanPortButton();
 }
 
 /*  select gtk relay model;*/
 
-void RelayBox::Signalsbslot(QString strcommand)
+void RelayBox::signalSbSlot(QString strcommand)
 {
     Modulea->ui->lineEdit->setText(strcommand);
-    SuperS->Writeserial(Modulea->ui->checkBox_29,Modulea->ui->checkBox_27,Modulea->ui->checkBox_27,Serial,Modulea->ui->lineEdit);
+    Serial->writeSerial(Modulea->ui->checkBox_29,Modulea->ui->checkBox_27,Modulea->ui->checkBox_27,Serialport,Modulea->ui->lineEdit);
 }
 
 /*  receive signal and write strcommand;*/
 
-void RelayBox::Signalscslot()
+void RelayBox::signalScSlot()
 {
     Modulea->ui->pushButton_57->setEnabled(true);
 }
 
 /*  reset scan pushbutton;*/
 
-void RelayBox::Readyreadslot()
+void RelayBox::readyReadSlot()
 {
-    QByteArray result = SuperS->Readdatastream(Serial,Modulea->ui->checkBox_29);
-    Logger->Displaylog("R",result,"Signaltaslot function run completed");
-    Operatorprogressbar(result,Gtkrelayclosebackvalue,99);
-    Operatorprogressbar(result,Gtkrelayopenbackvalue,0);
+    QByteArray result = Serial->readDataStream(Serialport,Modulea->ui->checkBox_29);
+    Logger->displayLog("R",result,"Signaltaslot function run completed");
+    operatorProgressBar(result,Gtkrelayclosebackvalue,99);
+    operatorProgressBar(result,Gtkrelayopenbackvalue,0);
 }
 
 /*  receive signal and read data from serial port;*/
 
-void RelayBox::Readtimeoutslot()
+void RelayBox::readTimeoutSlot()
 {
-    Logger->Displaylog("R","serial port receive time out","Signaltaslot function run completed");
+    Logger->displayLog("R","serial port receive time out","Signaltaslot function run completed");
 }
 
-void RelayBox::Operatorprogressbar(QString backvalue,QStringList *backvaluelist,int intlight)
+void RelayBox::operatorProgressBar(QString backvalue,QStringList *backvaluelist,int intlight)
 {
     for(int i = 0;i < backvaluelist->count();i++)
     {
@@ -414,31 +414,31 @@ void RelayBox::Operatorprogressbar(QString backvalue,QStringList *backvaluelist,
 
 /*  check result and opearte progressbar;*/
 
-void RelayBox::Selectsetting()
+void RelayBox::selectSetting()
 {
     SuperFileDialog *filedialog = new SuperFileDialog(nullptr,Fileinfo.absolutePath(),{"*.ini"});
-    connect(filedialog,&SuperFileDialog::Signalfb,Moduleb->ui->lineEdit_16,  &QLineEdit::setText);
-    connect(filedialog,&SuperFileDialog::Signalfb,filedialog,       &QObject::deleteLater);
-    filedialog->Setsinglefile();
-    filedialog->Show();
+    connect(filedialog,&SuperFileDialog::signalFb,Moduleb->ui->lineEdit_16,  &QLineEdit::setText);
+    connect(filedialog,&SuperFileDialog::signalFb,filedialog,       &QObject::deleteLater);
+    filedialog->setSingleFile();
+    filedialog->show();
 }
 
 /*  select setting;*/
 
-void RelayBox::Setsetting(QString file)
+void RelayBox::setSetting(QString file)
 {
     switch (Moduleb->ui->comboBox_2->currentIndex())
     {
         case 1:
         {
-            Channel15relay->Enablelineedit(false);
-            Channel15relay->Setsetting(file);
+            Channel15relay->enableLineEdit(false);
+            Channel15relay->setSetting(file);
             break;
         }
         case 2:
         {
-            Channel34relay->Enablelineedit(false);
-            Channel34relay->Setsetting(file);
+            Channel34relay->enableLineEdit(false);
+            Channel34relay->setSetting(file);
             break;
         }
     }

@@ -28,11 +28,10 @@ public:
 public slots:
 
     /*  wav file;*/
-
-    QStringList Wavinfo(
+    QStringList wavInfo(
         QString wavfile);
 
-    void Writewavfile(
+    void writeWavFile(
         QString wavfile,
         int filelen,
         short channels,
@@ -41,43 +40,43 @@ public slots:
         short blockalign,
         QByteArray data);
 
-    QByteArray Writewavinfo(
+    QByteArray writeWavInfo(
         int filelen,
         short channels,
         int samplerate,
         int transmitrate,
         short blockalign);
 
-    void Int2bytearray(
+    void int2ByteArray(
         QByteArray *bytearry,
         int inta);
 
-    void Short2bytearray(
+    void short2ByteArray(
         QByteArray *bytearry,
         short shorta);
 
     /*  audio device;*/
-    void Checkdeviceexist(
+    void checkDeviceExist(
         QList<bool> *boollist);
 
-    void Getaudiooutputdeviceinfo(
+    void getAudioOutputDeviceInfo(
         QList<QAudioDevice> *outputdevicelist,
         QStringList* listname,
         QStringList* listnumber);
 
-    void Getaudioinputdeviceinfo(
+    void getAudioInputDeviceInfo(
         QList<QAudioDevice> *inputdevicelist,
         QStringList* listname,
         QStringList* listnumber);
 
-    int Enumbitstoint(
+    int enumBitsToInt(
         QAudioFormat::SampleFormat bits);
 
-    QAudioFormat::SampleFormat Intbitstoenum(
+    QAudioFormat::SampleFormat intBitsToEnum(
         int bits);
 
     /*  audio analysis*/
-    void Cal16bitsdata(
+    void cal16BitsData(
         int channels,
         int channel,
         QVector<double> *vectorx,
@@ -86,35 +85,35 @@ public slots:
         int samplerate,
         QByteArray *wavfiledata);
 
-    QString Caldbv(
+    QString calDecibelVoltage(
         double* y,
         int intcount,
         int mode,
         int maxval);
 
-    double Calfreq(
+    double calFrequency(
         double* y,
         int inicount,
         int samplerate);
 
-    QString Calthd(
+    QString calTotalHarmonicDistortion(
         double realfreq,
         double* yfft,
         int samplerate,
         int count,
         int degree);
 
-    void Changeplayicon(
+    void changePlayIcon(
         QPushButton *playbutton,
         QByteArray *playstatus,
         int status);
 
-    void Changeplaytext(
+    void changePlayText(
         QPushButton *playbutton,
         QByteArray *playstatus,
         int status);
 
-    void Changeanalysistext(
+    void changeAnalysisText(
         QPushButton *playbutton,
         QByteArray *analysisstatus,
         int status);
@@ -149,17 +148,17 @@ public slots:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Timerinit();
+    void timerInit();
 
-    void Filestatusinit();
+    void fileStatusInit();
 
-    void Iodeviceinit();
+    void ioDeviceInit();
 
-    void Playing();
+    void playing();
 
-    void Writedata();
+    void writeData();
 
 private:
 
@@ -173,12 +172,12 @@ private:
 
 signals:
 
-    void Signalpa();
+    void signalPa();
 
-    void Signalpb(
+    void signalPb(
         QString strstatus);
 
-    void Signalpc();
+    void signalPc();
 
 };
 
@@ -213,25 +212,25 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Timerinit();
+    void timerInit();
 
-    void Iodeviceinit();
+    void ioDeviceInit();
 
-    void Initrun();
+    void initRun();
 
-    void Playing();
+    void playing();
 
-    void Stop();
+    void stop();
 
-    void Writedata();
+    void writeData();
 
 signals:
 
-    void Signalpa();
+    void signalPa();
 
-    void Signalpb();
+    void signalPb();
 
 };
 

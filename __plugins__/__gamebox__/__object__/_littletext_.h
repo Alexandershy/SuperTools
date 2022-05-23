@@ -25,6 +25,8 @@ public:
 
     ~LittleText();
 
+public:
+
     QRectF boundingRect() const override;
 
     QPainterPath shape() const override;
@@ -37,19 +39,19 @@ public:
     void advance(
             int phase) override;
 
-    void Settext(
+    void setText(
             QString text);
 
-    QString Gettext();
+    QString getText();
 
-    void Addvalue(
+    void addValue(
             QString name,
             int length,
             int value);
 
-    int Getvalue();
+    int getValue();
 
-    void Setbonus(
+    void setBonus(
             bool boola);
 
 protected:
@@ -62,7 +64,7 @@ protected:
 
 private:
 
-    SuperCore *SuperC       = nullptr;
+    SuperCore *Core         = nullptr;
     QGraphicsScene *Scene   = nullptr;
     QRectF Littletextrectf  = QRectF(0,0,0,0);
     QTimer *Timer           = nullptr;
@@ -81,28 +83,29 @@ private:
     int Value               = 0;
 
 private slots:
+
     /*  mainfunction;*/
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Rectfinit();
+    void rectfInit();
 
-    void Posinit();
+    void posInit();
 
-    void Colorinit();
+    void colorInit();
 
-    void Timerinit();
+    void timerInit();
 
-    void Collisioncheck();
+    void collisionCheck();
 
-    void Alphacolortimerslot();
+    void alphaColorTimerSlot();
 
-    void Statictimerslot();
+    void staticTimerSlot();
 
 signals:
 
-    void Signalta(
+    void signalTa(
             QString text);
 };
 

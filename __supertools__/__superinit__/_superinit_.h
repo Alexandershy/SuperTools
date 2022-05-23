@@ -4,6 +4,7 @@
 #include "__supercore__/_supercore_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__supercolordialog__/_supercolordialog_.h"
+#include "ui__superinit_.h"
 #include <QLibrary>
 #include <QFrame>
 
@@ -23,39 +24,40 @@ public:
     ~SuperInit();
 
 private slots:
+
     /*main function;*/
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Creatfolder();
+    void creatFolder();
 
-    void Creatfile();
+    void creatFile();
 
-    void Creatmodulefiles();
+    void creatModuleFiles();
 
-    void Readmeinit();
+    void readmeInit();
 
-    void Default();
+    void defaultSetting();
 
-    void Entermainframe();
+    void enterMainFrame();
 
-    void Selectini();
+    void selectIni();
 
-    void Setinifile(
+    void setIniFile(
             QString file);
 
-    void Local();
+    void local();
 
 private:
 
     Ui::SuperInit *ui       = nullptr;
-    SuperCore *SuperC       = nullptr;
+    SuperCore *Core         = nullptr;
     QString Defaultsetting  = "/__depycache__/__cache__/__setting__/_defaultsetting_.ini";
 
 signals:
 
-    void Signalia(
+    void signalIa(
             QString setting);
 
 };

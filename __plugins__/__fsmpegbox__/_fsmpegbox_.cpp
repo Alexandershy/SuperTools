@@ -10,10 +10,10 @@ SuperTab* Interface::Loadplugin()
 FsmpegBox::FsmpegBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("FsmpegBox");
-    Setgroupbox(1,1);
-    Setstretch({100},{100});
-    Init();
+    readMe("FsmpegBox");
+    setGroupBox(1,1);
+    setStretch({100},{100});
+    init();
 }
 
 FsmpegBox::~FsmpegBox()
@@ -21,189 +21,189 @@ FsmpegBox::~FsmpegBox()
     delete Progressbar;
 }
 
-void FsmpegBox::Init()
+void FsmpegBox::init()
 {
-    Objectinit();
-    Parameterinit();
+    objectInit();
+    parameterInit();
 }
 
-void FsmpegBox::Objectinit()
+void FsmpegBox::objectInit()
 {
-    SuperM = new SuperMultiMedia(this);
+    Multimedia = new SuperMultiMedia(this);
     Progressbar = new SuperProgressBarDialog(nullptr);
     Logger = new SuperLogger(this,Rightgroupboxlist.at(0)->Insidelayout);
     Filemanager = new SuperFileManager(this,Leftgroupboxlist.at(0)->Insidelayout,{"*.flac","*.ape","*.mp3"});
-    connect(Filemanager,&SuperFileManager::Signalfa,Logger,&SuperLogger::Displaylog);
-    connect(Filemanager,&SuperFileManager::Signalfc,this,&FsmpegBox::Convert);
-    connect(Filemanager,&SuperFileManager::Signalfd,this,&FsmpegBox::Convert);
+    connect(Filemanager,&SuperFileManager::signalFa,Logger,&SuperLogger::displayLog);
+    connect(Filemanager,&SuperFileManager::signalFc,this,&FsmpegBox::convert);
+    connect(Filemanager,&SuperFileManager::signalFd,this,&FsmpegBox::convert);
 }
 
 /*  object init;*/
 
-void FsmpegBox::Parameterinit()
+void FsmpegBox::parameterInit()
 {
     Mpegfilelist = &Filemanager->Filelist;
-    Filemanager->Enablewidgetlist();
-    Filemanager->Personalization(Sourcepath,"Mpeg");
-    Filemanager->Checkfilevaildinit();
+    Filemanager->enableWidgetList();
+    Filemanager->personalization(Sourcepath,"Mpeg");
+    Filemanager->checkFileVaildInit();
 }
 
 /*  parameter init;*/
 
-void FsmpegBox::Convert()
+void FsmpegBox::convert()
 {
-    QString mpegfile = Filemanager->Getcurrentitemtext();
-    Filemanager->Setcurrentfile(mpegfile);
+    QString mpegfile = Filemanager->getCurrentItemText();
+    Filemanager->setCurrentFile(mpegfile);
     AudioFormatDialog *audiodialog = new AudioFormatDialog(nullptr);
-    connect(audiodialog,&AudioFormatDialog::Signalaa,this,&FsmpegBox::Convertmode);
-    connect(audiodialog,&AudioFormatDialog::Signalab,this,&FsmpegBox::Selectconvertpostion);
-    audiodialog->Show();
-    Logger->Displaylog("N",mpegfile + " audio format dialog opened;","Convert function run completed");
+    connect(audiodialog,&AudioFormatDialog::signalAa,this,&FsmpegBox::convertMode);
+    connect(audiodialog,&AudioFormatDialog::signalAb,this,&FsmpegBox::selectConvertPostion);
+    audiodialog->show();
+    Logger->displayLog("N",mpegfile + " audio format dialog opened;","Convert function run completed");
 }
 
 /*  convert;*/
 
-void FsmpegBox::Convertmode(int id)
+void FsmpegBox::convertMode(int id)
 {
     Convertid = id;
 }
 
 /*  record convert id;*/
 
-void FsmpegBox::Selectconvertpostion(int convertpath)
+void FsmpegBox::selectConvertPostion(int convertpath)
 {
     QString convertfoldertemp = "";
     if(convertpath)
     {
         SuperFileDialog *filedialog = new SuperFileDialog(nullptr,"./",{});
-        connect(filedialog,&SuperFileDialog::Signalfb,this,         &FsmpegBox::Convertposition);
-        connect(filedialog,&SuperFileDialog::Signalfb,filedialog,   &QObject::deleteLater);
-        filedialog->Setsavefolder();
-        filedialog->Show();
+        connect(filedialog,&SuperFileDialog::signalFb,this,         &FsmpegBox::convertPosition);
+        connect(filedialog,&SuperFileDialog::signalFb,filedialog,   &QObject::deleteLater);
+        filedialog->setSaveFolder();
+        filedialog->show();
     }
     else
     {
-        QFileInfo fileinfo(Filemanager->Getcurrentitemtext());
-        Convertposition(fileinfo.absolutePath());
+        QFileInfo fileinfo(Filemanager->getCurrentItemText());
+        convertPosition(fileinfo.absolutePath());
     }
 }
 
 /*  select convert path;*/
 
-void FsmpegBox::Convertposition(QString convertpath)
+void FsmpegBox::convertPosition(QString convertpath)
 {
-    Convertfolder = SuperC->Fixfilepath(convertpath);
-    Finddecoder();
+    Convertfolder = Core->fixFilePath(convertpath);
+    findDecoder();
 }
 
 /*  select convert path;*/
 
-void FsmpegBox::Finddecoder()
+void FsmpegBox::findDecoder()
 {
     if(!Convertfolder.isEmpty())
     {
-        Infileinfo.setFile(Filemanager->Getcurrentitemtext());
+        Infileinfo.setFile(Filemanager->getCurrentItemText());
         QFile::remove(Outfilename);
         Infilename = Cachefile + Infileinfo.suffix();
-        SuperC->Replacefile(Infileinfo.absoluteFilePath(),Infilename);
-        Logger->Displaylog("N","convert path:\n" + Convertfolder,"Convertaslocalpath function run completed;");
+        Core->replaceFile(Infileinfo.absoluteFilePath(),Infilename);
+        Logger->displayLog("N","convert path:\n" + Convertfolder,"Convertaslocalpath function run completed;");
         if(Infileinfo.suffix().contains("flac",Qt::CaseInsensitive))
         {
-            Decodeflac();
+            decodeFlac();
         }
         else if(Infileinfo.suffix().contains("ape",Qt::CaseInsensitive))
         {
-            Decodeape();
+            decodeApe();
         }
         else if(Infileinfo.suffix().contains("mp3",Qt::CaseInsensitive))
         {
-            Decodemp3();
+            decodeMp3();
         }
     }
     else
     {
-        Logger->Displaylog("N","cancel select convert path;","Selectconvertpath function run completed;");
+        Logger->displayLog("N","cancel select convert path;","Selectconvertpath function run completed;");
     }
 }
 
 /*  find decoder;*/
 
-void FsmpegBox::Decodeflac()
+void FsmpegBox::decodeFlac()
 {
-    Flacdecoder = new FlacFileDecoder(this,Infilename,Outfilename);
-    connect(Flacdecoder,&FlacFileDecoder::finished,this,        &FsmpegBox::Decodeend);
-    connect(Flacdecoder,&FlacFileDecoder::Signalfa,this,        &FsmpegBox::Setprogress);
-    connect(Flacdecoder,&FlacFileDecoder::Signalfb,this,        &FsmpegBox::Converterror);
-    connect(Flacdecoder,&FlacFileDecoder::finished,Flacdecoder, &QObject::deleteLater);
-    Progressbar->Show();
+    Flacdecoder = new SuperFlacDecoder(this,Infilename,Outfilename);
+    connect(Flacdecoder,&SuperFlacDecoder::finished,this,        &FsmpegBox::decodeEnd);
+    connect(Flacdecoder,&SuperFlacDecoder::signalFa,this,        &FsmpegBox::setProgress);
+    connect(Flacdecoder,&SuperFlacDecoder::signalFb,this,        &FsmpegBox::convertError);
+    connect(Flacdecoder,&SuperFlacDecoder::finished,Flacdecoder, &QObject::deleteLater);
+    Progressbar->show();
     Flacdecoder->start();
 }
 
 /*  decode flac file;*/
 
-void FsmpegBox::Decodeend()
+void FsmpegBox::decodeEnd()
 {
     QFileInfo fileinfo(Outfilename);
-    Progressbar->Setvaluemessage(100,"convert completed;");
+    Progressbar->setValueMessage(100,"convert completed;");
     if(fileinfo.exists() && fileinfo.size() > 44)
     {
-        SuperC->Replacefile(Outfilename,Convertfolder + Infileinfo.completeBaseName() + "." + fileinfo.suffix());
-        QStringList wavfileinfo = SuperM->Wavinfo(fileinfo.absoluteFilePath());
+        Core->replaceFile(Outfilename,Convertfolder + Infileinfo.completeBaseName() + "." + fileinfo.suffix());
+        QStringList wavfileinfo = Multimedia->wavInfo(fileinfo.absoluteFilePath());
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"samplerate: " + wavfileinfo.at(7) + ",bits: " + wavfileinfo.at(10) + ",channel: " + wavfileinfo.at(6) + ";\nclick ok open path;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&FsmpegBox::Openconvertpath);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&FsmpegBox::openConvertPath);
+        notedialog->messageInit();
     }
     else
     {
         QFile::remove(fileinfo.absoluteFilePath());
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,Error + ";/ntips: make sure no chinese path;");
-        notedialog->Messageinit();
+        notedialog->messageInit();
     }
 }
 
 /*  delete flac decoder;*/
 
-void FsmpegBox::Decodeape()
+void FsmpegBox::decodeApe()
 {
-    Apedecoder = new ApeFileDecoder(this,Infilename,Outfilename);
-    connect(Apedecoder,&ApeFileDecoder::finished,Apedecoder,&QObject::deleteLater);
-    connect(Apedecoder,&ApeFileDecoder::Signalaa,this,      &FsmpegBox::Setprogress);
-    connect(Apedecoder,&ApeFileDecoder::finished,this,      &FsmpegBox::Decodeend);
-    Progressbar->Show();
+    Apedecoder = new SuperApeDecoder(this,Infilename,Outfilename);
+    connect(Apedecoder,&SuperApeDecoder::finished,Apedecoder,&QObject::deleteLater);
+    connect(Apedecoder,&SuperApeDecoder::signalAa,this,      &FsmpegBox::setProgress);
+    connect(Apedecoder,&SuperApeDecoder::finished,this,      &FsmpegBox::decodeEnd);
+    Progressbar->show();
     Apedecoder->start();
 }
 
 /*  decode flac file;*/
 
-void FsmpegBox::Decodemp3()
+void FsmpegBox::decodeMp3()
 {
-    Mp3decoder = new Mp3FileDecoder(this,Infilename,Outfilename);
-    connect(Mp3decoder,&Mp3FileDecoder::finished,Mp3decoder,&QObject::deleteLater);
-    connect(Mp3decoder,&Mp3FileDecoder::Signalma,this,      &FsmpegBox::Setprogress);
-    connect(Mp3decoder,&Mp3FileDecoder::finished,this,      &FsmpegBox::Decodeend);
-    Progressbar->Show();
+    Mp3decoder = new SuperMp3Decoder(this,Infilename,Outfilename);
+    connect(Mp3decoder,&SuperMp3Decoder::finished,Mp3decoder,&QObject::deleteLater);
+    connect(Mp3decoder,&SuperMp3Decoder::Signalma,this,      &FsmpegBox::setProgress);
+    connect(Mp3decoder,&SuperMp3Decoder::finished,this,      &FsmpegBox::decodeEnd);
+    Progressbar->show();
     Mp3decoder->start();
 }
 
 /*  decode mp3 file;*/
 
-void FsmpegBox::Setprogress(int progress)
+void FsmpegBox::setProgress(int progress)
 {
-    Progressbar->Setvaluemessage(progress,"converting...");
+    Progressbar->setValueMessage(progress,"converting...");
 }
 
 /*  set progress;*/
 
-void FsmpegBox::Converterror(QString error)
+void FsmpegBox::convertError(QString error)
 {
     Error = error;
 }
 
 /*  change error info;*/
 
-void FsmpegBox::Openconvertpath()
+void FsmpegBox::openConvertPath()
 {
-    SuperC->Openpath(Convertfolder);
+    Core->openPath(Convertfolder);
 }
 
 /*  open convert path;*/

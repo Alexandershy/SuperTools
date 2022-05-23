@@ -27,9 +27,11 @@ public:
 
     ~SuperSender();
 
-    void Enable();
+public slots:
 
-    void Disable();
+    void enable();
+
+    void disable();
 
 private:
 
@@ -42,27 +44,27 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Objectinit();
+    void objectInit();
 
-    void Enablesendbutton(
+    void enableSendButton(
             QString text);
 
-    void Sendtext();
+    void sendText();
 
-    void Send();
+    void send();
 
-    void Enablespinbox();
+    void enableSpinBox();
 
 signals:
 
-    void Signalsa(
+    void signalSa(
             QLineEdit *lineedit);
 
-    void Signalsb();
+    void signalSb();
 };
 
 #endif // _SUPERSENDER__H

@@ -4,7 +4,7 @@ ChatUser::ChatUser(QWidget *parent,QString role,QString username) : QLabel(paren
 {
     Role = role;
     Username = username;
-    Init();
+    init();
 }
 
 ChatUser::~ChatUser()
@@ -12,13 +12,13 @@ ChatUser::~ChatUser()
 
 }
 
-void ChatUser::Init()
+void ChatUser::init()
 {
-    Policyinit();
-    Setusericon();
+    policyInit();
+    setUserIcon();
 }
 
-void ChatUser::Policyinit()
+void ChatUser::policyInit()
 {
     setAlignment(Qt::AlignCenter);
     QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -30,7 +30,7 @@ void ChatUser::Policyinit()
     setMinimumHeight(50);
 }
 
-void ChatUser::Setusericon()
+void ChatUser::setUserIcon()
 {
     QString filename = "./__depycache__/__chat__/__" + Username + "__/_user_.png";
     if(!QFile::exists(filename))

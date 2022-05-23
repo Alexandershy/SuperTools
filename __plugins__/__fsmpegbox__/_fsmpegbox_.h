@@ -1,11 +1,12 @@
 #ifndef _FSMPEGBOX__H
 #define _FSMPEGBOX__H
+#define _FSMPEGBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
-#include "__supercodec__/_apedecoder_.h"
-#include "__supercodec__/_mp3decoder_.h"
-#include "__supercodec__/_flacdecoder_.h"
+#include "__supercodec__/_superapedecoder_.h"
+#include "__supercodec__/_supermp3decoder_.h"
+#include "__supercodec__/_superflacdecoder_.h"
 #include "__superwindow__/_superwindow_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
@@ -15,7 +16,6 @@
 #include "__superfilemanager__/_superfilemanager_.h"
 #include "__audioformatdialog__/_audioformatdialog_.h"
 #include "__superprogressbardialog__/_superprogressbardialog_.h"
-#include "_fsmpegbox__global.h"
 #include <QDesktopServices>
 
 /**************interface****************/
@@ -38,7 +38,7 @@ public:
 
 private:
 
-    SuperMultiMedia *SuperM             = nullptr;
+    SuperMultiMedia *Multimedia         = nullptr;
     QString Mpegfile                    = "";
     QStringList *Mpegfilelist           = nullptr;
     QString Cachefile                   = "./__depycache__/__fsmpeg__/_fsmpegfile_.";
@@ -58,47 +58,47 @@ private:
     QMenu *Mpegfilemenu                 = nullptr;
     QAction *Openmpegfile               = nullptr;
     QAction *Deletempegfile             = nullptr;
-    FlacFileDecoder *Flacdecoder        = nullptr;
-    ApeFileDecoder *Apedecoder          = nullptr;
-    Mp3FileDecoder *Mp3decoder          = nullptr;
+    SuperFlacDecoder *Flacdecoder        = nullptr;
+    SuperApeDecoder *Apedecoder          = nullptr;
+    SuperMp3Decoder *Mp3decoder          = nullptr;
     QString Sourcepath                  = "./";
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Convert();
+    void convert();
 
-    void Convertmode(
+    void convertMode(
             int convertid);
 
-    void Selectconvertpostion(
+    void selectConvertPostion(
             int convertpath);
 
-    void Convertposition(
+    void convertPosition(
             QString convertpath);
 
-    void Finddecoder();
+    void findDecoder();
 
-    void Decodeflac();
+    void decodeFlac();
 
-    void Decodeend();
+    void decodeEnd();
 
-    void Decodeape();
+    void decodeApe();
 
-    void Decodemp3();
+    void decodeMp3();
 
-    void Setprogress(
+    void setProgress(
             int progress);
 
-    void Converterror(
+    void convertError(
             QString error);
 
-    void Openconvertpath();
+    void openConvertPath();
 
 };
 

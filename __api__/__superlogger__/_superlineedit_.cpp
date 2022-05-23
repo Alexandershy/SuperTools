@@ -4,7 +4,7 @@ SuperLineEdit::SuperLineEdit(QWidget *parent)
     : QLineEdit(parent)
 {
     Widget = parent;
-    Init();
+    init();
 }
 
 SuperLineEdit::~SuperLineEdit()
@@ -12,23 +12,23 @@ SuperLineEdit::~SuperLineEdit()
 
 }
 
-void SuperLineEdit::Init()
+void SuperLineEdit::init()
 {
-    Objectinit();
-    Parameterinit();
-    Appendtextinit();
+    objectInit();
+    parameterInit();
+    appendTextInit();
 }
 
 /*  lineedit init;*/
 
-void SuperLineEdit::Objectinit()
+void SuperLineEdit::objectInit()
 {
     Core = new SuperCore(this);
 }
 
 /*  object init;*/
 
-void SuperLineEdit::Parameterinit()
+void SuperLineEdit::parameterInit()
 {
     setFrame(false);
     setReadOnly(true);
@@ -39,9 +39,9 @@ void SuperLineEdit::Parameterinit()
 
 /*  parameter init;*/
 
-void SuperLineEdit::Appendtextinit()
+void SuperLineEdit::appendTextInit()
 {
     QString texttemp = Widget->objectName();
-    QString text = Core->Allwordlower(texttemp);
+    QString text = Core->allWordLower(texttemp);
     setText("here will display " + text + " programe run logs!!!");
 }

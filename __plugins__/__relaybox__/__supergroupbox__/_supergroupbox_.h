@@ -1,10 +1,11 @@
 #ifndef _SUPERGROUPBOX__H
 #define _SUPERGROUPBOX__H
+#define _SUPERGROUPBOX__EXPORT Q_DECL_EXPORT
 
 #include <QGroupBox>
 #include <QVBoxLayout>
 
-class SuperGroupBox : public QGroupBox
+class _SUPERGROUPBOX__EXPORT SuperGroupBox : public QGroupBox
 {
     Q_OBJECT
 
@@ -22,7 +23,7 @@ public:
 
 public slots:
 
-    void Addwidget(
+    void addWidget(
         QWidget *widget);
 
 private:
@@ -31,11 +32,11 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectTnit();
 
-    void Parameterinit();
+    void parameterInit();
 
 };
 

@@ -13,13 +13,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    __datadialog__/_datadialog_.cpp \
-    __datadialog__/_datadialogui_.cpp \
+    __datadialog__/_richerdatadialog_.cpp \
+    __datadialog__/_richerdatadialogui_.cpp \
     _richerbox_.cpp
 
 HEADERS += \
-    __datadialog__/_datadialog_.h \
-    __datadialog__/_datadialogui_.h \
+    __datadialog__/_richerdatadialog_.h \
+    __datadialog__/_richerdatadialogui_.h \
     __supercolordialog__/_supercolordialog_.h \
     __supercore__/_supercore_.h \
     __superfiledialog__/_superfiledialog_.h \
@@ -43,7 +43,7 @@ RESOURCES += \
     _richerbox_.qrc
 
 FORMS += \
-    __datadialog__/_datadialogui_.ui \
+    __datadialog__/_richerdatadialogui_.ui \
     __supercolordialog__/_supercolordialogui_.ui \
     __superfiledialog__/_superfiledialogui_.ui \
     __superfilemanager__/_superfilemanagerui_.ui \

@@ -18,7 +18,9 @@ public:
 
     ~SuperPainter();
 
-    void Repainter(
+public slots:
+
+    void repainter(
         int basiccolor,
         int colorvalue);
 
@@ -43,19 +45,19 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Calcolorvector();
+    void calColorVector();
 
-    void Calpointcolor(
+    void calPointColor(
         int xvalue,
         int yvalue);
 
 signals:
 
-    void Signalpa(
+    void signalPa(
         QColor color);
 
 };

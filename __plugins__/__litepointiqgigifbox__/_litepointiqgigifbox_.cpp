@@ -10,10 +10,10 @@ SuperTab* Interface::Loadplugin()
 LitePointIQGigIfBox::LitePointIQGigIfBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("LitePointIQGigIfBox");
-    Setgroupbox(2,2);
-    Setstretch({1,99},{5,5});
-    Init();
+    readMe("LitePointIQGigIfBox");
+    setGroupBox(2,2);
+    setStretch({1,99},{5,5});
+    init();
 }
 
 LitePointIQGigIfBox::~LitePointIQGigIfBox()
@@ -23,78 +23,78 @@ LitePointIQGigIfBox::~LitePointIQGigIfBox()
     delete Pldatamenu;
 }
 
-void LitePointIQGigIfBox::Init()
+void LitePointIQGigIfBox::init()
 {
-    Objectinit();
+    objectInit();
 }
 
 /*  init ui;*/
 
-void LitePointIQGigIfBox::Objectinit()
+void LitePointIQGigIfBox::objectInit()
 {
-    SuperN = new SuperNetwork(this);
+    Network = new SuperNetwork(this);
     Tcpsocket = new QTcpSocket(this);
     Technologymenu = new Technology(this);
     Rout = new RoutDialog(nullptr);
     Pathloss = new PathLossDialog(nullptr);
     Pldatamenu = new PathLossDataMenu(nullptr);
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
-    Moduleb = new ModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
+    Modulea = new LitePointIQGigIfModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Moduleb = new LitePointIQGigIfModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
     Logger = new SuperLogger(this,Rightgroupboxlist.at(1)->Insidelayout);
-    connect(Modulea->ui->lineEdit,              &QLineEdit::textChanged,    this,   &LitePointIQGigIfBox::Enableconnectlitepoint);
-    connect(Modulea->ui->pushButton_2,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Connecttcpserver);
-    connect(Modulea->ui->pushButton_8,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Disconnecttcpserver);
-    connect(Modulea->ui->pushButton_3,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Opentechnologymenu);
-    connect(Modulea->ui->pushButton_5,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Openroutconfig);
-    connect(Modulea->ui->pushButton,            &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Openpathlosseditor);
-    connect(Modulea->ui->pushButton_6,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Displayvsasetting);
-    connect(Modulea->ui->pushButton_7,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Displaytrigglesetting);
-    connect(Moduleb->ui->pushButton_10,         &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Displayimpairmentssetting);
-    connect(Tcpsocket,                          &QTcpSocket::disconnected,  this,   &LitePointIQGigIfBox::Operatordisconnectui);
-    connect(Technologymenu->Gprf,               &QAction::triggered,        this,   &LitePointIQGigIfBox::Settechnology);
-    connect(Technologymenu->Fivegaction,        &QAction::triggered,        this,   &LitePointIQGigIfBox::Settechnology);
-    connect(Technologymenu->Fivegsmallcell,     &QAction::triggered,        this,   &LitePointIQGigIfBox::Settechnology);
-    connect(Technologymenu->Wifigig,            &QAction::triggered,        this,   &LitePointIQGigIfBox::Settechnology);
-    connect(Pathloss->Plugin->ui->pushButton_7, &QPushButton::clicked,      this,   &LitePointIQGigIfBox::Refreshpathloss);
-    connect(Pathloss->Plugin->ui->treeWidget,   &QTreeWidget::itemClicked,  this,   &LitePointIQGigIfBox::Refreshpathlossdata);
-    connect(Pathloss->Configmenu->Newconfig,    &QAction::triggered,        this,   &LitePointIQGigIfBox::Newpathlossconfig);
-    connect(Pathloss->Datamenu->Newrow,         &QAction::triggered,        this,   &LitePointIQGigIfBox::Newpathlossdatarow);
-    connect(Pathloss->Datamenu->Save,           &QAction::triggered,        this,   &LitePointIQGigIfBox::Savepathlossdata);
-    connect(Pathloss->Datamenu->Deleterow,      &QAction::triggered,        this,   &LitePointIQGigIfBox::Deletepathlossdatarow);
+    connect(Modulea->ui->lineEdit,              &QLineEdit::textChanged,    this,   &LitePointIQGigIfBox::enableConnectLitePoint);
+    connect(Modulea->ui->pushButton_2,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::connectTcpserver);
+    connect(Modulea->ui->pushButton_8,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::disconnectTcpserver);
+    connect(Modulea->ui->pushButton_3,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::openTechnologyMenu);
+    connect(Modulea->ui->pushButton_5,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::openRoutConfig);
+    connect(Modulea->ui->pushButton,            &QPushButton::clicked,      this,   &LitePointIQGigIfBox::openPathLossEditor);
+    connect(Modulea->ui->pushButton_6,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::displayVSASetting);
+    connect(Modulea->ui->pushButton_7,          &QPushButton::clicked,      this,   &LitePointIQGigIfBox::displayTriggleSetting);
+    connect(Moduleb->ui->pushButton_10,         &QPushButton::clicked,      this,   &LitePointIQGigIfBox::displayImpairmentsSetting);
+    connect(Tcpsocket,                          &QTcpSocket::disconnected,  this,   &LitePointIQGigIfBox::operatorDisconnectui);
+    connect(Technologymenu->Gprf,               &QAction::triggered,        this,   &LitePointIQGigIfBox::setTechnology);
+    connect(Technologymenu->Fivegaction,        &QAction::triggered,        this,   &LitePointIQGigIfBox::setTechnology);
+    connect(Technologymenu->Fivegsmallcell,     &QAction::triggered,        this,   &LitePointIQGigIfBox::setTechnology);
+    connect(Technologymenu->Wifigig,            &QAction::triggered,        this,   &LitePointIQGigIfBox::setTechnology);
+    connect(Pathloss->Plugin->ui->pushButton_7, &QPushButton::clicked,      this,   &LitePointIQGigIfBox::refreshPathLoss);
+    connect(Pathloss->Plugin->ui->treeWidget,   &QTreeWidget::itemClicked,  this,   &LitePointIQGigIfBox::refreshPathLossData);
+    connect(Pathloss->Configmenu->Newconfig,    &QAction::triggered,        this,   &LitePointIQGigIfBox::newPathLossConfig);
+    connect(Pathloss->Datamenu->Newrow,         &QAction::triggered,        this,   &LitePointIQGigIfBox::newPathLossDataRow);
+    connect(Pathloss->Datamenu->Save,           &QAction::triggered,        this,   &LitePointIQGigIfBox::savePathLossData);
+    connect(Pathloss->Datamenu->Deleterow,      &QAction::triggered,        this,   &LitePointIQGigIfBox::deletePathLossDataRow);
 }
 
 /*  object init;*/
 
-void LitePointIQGigIfBox::Enableconnectlitepoint()
+void LitePointIQGigIfBox::enableConnectLitePoint()
 {
     bool boola;
-    boola = SuperC->Checkiprules(Modulea->ui->lineEdit->text());
+    boola = Core->checkIpRules(Modulea->ui->lineEdit->text());
     if(boola == true)
     {
         Modulea->ui->pushButton_2->setEnabled(true);
-        Logger->Displaylog("N","ipaddress check rules passed","Enableconnectlitepoint function run completed;");
+        Logger->displayLog("N","ipaddress check rules passed","Enableconnectlitepoint function run completed;");
     }
     else
     {
         Modulea->ui->pushButton_2->setEnabled(false);
-        Logger->Displaylog("N","ipaddress check rules failed,local ip is: " + Modulea->ui->lineEdit->text(),"Enableconnectlitepoint function run completed;");
+        Logger->displayLog("N","ipaddress check rules failed,local ip is: " + Modulea->ui->lineEdit->text(),"Enableconnectlitepoint function run completed;");
     }
 }
 
 /*  enable connect litepoint button or not;*/
 
-void LitePointIQGigIfBox::Connecttcpserver()
+void LitePointIQGigIfBox::connectTcpserver()
 {
-    bool boola = SuperN->Connecttcpserver(Tcpsocket,Modulea->ui->lineEdit->text(),24000,1000);
+    bool boola = Network->connectTcpServer(Tcpsocket,Modulea->ui->lineEdit->text(),24000,1000);
     if(boola)
     {
-        Operatorconnectui();
+        operatorConnectui();
     }
 }
 
 /*  connect to litepoint;*/
 
-void LitePointIQGigIfBox::Operatorconnectui()
+void LitePointIQGigIfBox::operatorConnectui()
 {
     Modulea->ui->pushButton_2->setEnabled(false);
     Modulea->ui->lineEdit->setEnabled(false);
@@ -103,20 +103,19 @@ void LitePointIQGigIfBox::Operatorconnectui()
     Modulea->ui->pushButton->setEnabled(true);
     Modulea->ui->pushButton_4->setEnabled(true);
     Modulea->ui->pushButton_5->setEnabled(true);
-//    Modulea->ui->progressBar->setValue(99);
-    Logger->Displaylog("N","Connect litepoint success","Connecttcpserver function run completed;");
+    Logger->displayLog("N","Connect litepoint success","Connecttcpserver function run completed;");
 }
 
 /*  enable widget after connect litepoint;*/
 
-void LitePointIQGigIfBox::Disconnecttcpserver()
+void LitePointIQGigIfBox::disconnectTcpserver()
 {
-    SuperN->Disconnecttcpserver(Tcpsocket,1000);
+    Network->disConnectTcpServer(Tcpsocket,1000);
 }
 
 /*  disconnect from litepoint;*/
 
-void LitePointIQGigIfBox::Operatordisconnectui()
+void LitePointIQGigIfBox::operatorDisconnectui()
 {
     Modulea->ui->pushButton_2->setEnabled(true);
     Modulea->ui->lineEdit->setEnabled(true);
@@ -125,94 +124,94 @@ void LitePointIQGigIfBox::Operatordisconnectui()
     Modulea->ui->pushButton->setEnabled(false);
     Modulea->ui->pushButton_4->setEnabled(false);
     Modulea->ui->pushButton_5->setEnabled(false);
-    Logger->Displaylog("N","Disconnect litepoint success","Disconnecttcpserver function run completed;");
+    Logger->displayLog("N","Disconnect litepoint success","Disconnecttcpserver function run completed;");
 }
 
 /*  disable widget after disconnect litepoint;*/
 
-void LitePointIQGigIfBox::Litepointwriteapi(QString command)
+void LitePointIQGigIfBox::litepointWriteApi(QString command)
 {
     Modulea->ui->lineEdit_3->setText(command);
-    SuperN->Writesocket(Modulea->ui->checkBox_29,Modulea->ui->checkBox_27,Modulea->ui->checkBox_29,Tcpsocket,Modulea->ui->lineEdit_3);
-    Logger->Displaylog("W",command,"Litepointwriteapi function run completed;");
+    Network->writeSocket(Modulea->ui->checkBox_29,Modulea->ui->checkBox_27,Modulea->ui->checkBox_29,Tcpsocket,Modulea->ui->lineEdit_3);
+    Logger->displayLog("W",command,"litepointWriteApi function run completed;");
 }
 
 /*  write to litepoint api;*/
 
-void LitePointIQGigIfBox::Litepointwaitapi(double timeout)
+void LitePointIQGigIfBox::litepointWaitApi(double timeout)
 {
-    Threadta = new Tcpsocketthread(Tcpsocket,timeout);
-    connect(Threadta,&Tcpsocketthread::Signaltf,this,      &LitePointIQGigIfBox::Litepointreadtimeoutslot);
-    connect(Threadta,&Tcpsocketthread::finished,Threadta,  &QObject::deleteLater);
+    Threadta = new SuperTcpSocketThread(Tcpsocket,timeout);
+    connect(Threadta,&SuperTcpSocketThread::signalTf,this,      &LitePointIQGigIfBox::litepointReadTimeoutSlot);
+    connect(Threadta,&SuperTcpSocketThread::finished,Threadta,  &QObject::deleteLater);
 }
 
 /*  wait data from litepoint api;*/
 
-QByteArray LitePointIQGigIfBox::Litepointreadapi()
+QByteArray LitePointIQGigIfBox::litepointReadApi()
 {
-    QByteArray result = SuperN->Readdatastream(Tcpsocket,Modulea->ui->checkBox_29);
-    Logger->Displaylog("R",result,"Litepointreadapi function run completed;");
+    QByteArray result = Network->readDataStream(Tcpsocket,Modulea->ui->checkBox_29);
+    Logger->displayLog("R",result,"Litepointreadapi function run completed;");
     return result;
 }
 
 /*  read data from litepoint api;*/
 
-void LitePointIQGigIfBox::Opentechnologymenu()
+void LitePointIQGigIfBox::openTechnologyMenu()
 {
     Technologymenu->exec(QCursor::pos());
 }
 
 /*  open technology menu;*/
 
-void LitePointIQGigIfBox::Settechnology()
+void LitePointIQGigIfBox::setTechnology()
 {
     QString command = Modulea->ui->comboBox->currentText() + ";" + sender()->objectName();
-    Litepointwriteapi(command);
-    Litepointwriteapi("MOD?");
-    Litepointwaitapi(1000);
-    connect(Threadta,&Tcpsocketthread::Signaltt,this,&LitePointIQGigIfBox::Getactivemodulesolt);
+    litepointWriteApi(command);
+    litepointWriteApi("MOD?");
+    litepointWaitApi(1000);
+    connect(Threadta,&SuperTcpSocketThread::signalTt,this,&::LitePointIQGigIfBox::getActiveModuleSlot);
     Threadta->start();
 }
 
 /*  set technology and read sucessfully;*/
 
-void LitePointIQGigIfBox::Openpathlosseditor()
+void LitePointIQGigIfBox::openPathLossEditor()
 {
-    Refreshpathloss();
-    Pathloss->Show();
+    refreshPathLoss();
+    Pathloss->show();
 }
 
 /*  refresh pathloss info and exec pathloss editor;*/
 
-void LitePointIQGigIfBox::Refreshpathloss()
+void LitePointIQGigIfBox::refreshPathLoss()
 {
-    Refreshpathlossconfig();
+    refreshPathLossConfig();
 }
 
 /*  refresh pathloss info;*/
 
-void LitePointIQGigIfBox::Refreshpathlossconfig()
+void LitePointIQGigIfBox::refreshPathLossConfig()
 {
     Pathloss->Plugin->ui->treeWidget->clear();
-    Litepointwriteapi("TABL:LOSS:CAT?");
-    Litepointwaitapi(1000);
-    connect(Threadta,&Tcpsocketthread::Signaltt,this,&LitePointIQGigIfBox::Refreshconfigslot);
+    litepointWriteApi("TABL:LOSS:CAT?");
+    litepointWaitApi(1000);
+    connect(Threadta,&SuperTcpSocketThread::signalTt,this,&LitePointIQGigIfBox::refreshConfigSlot);
     Threadta->start();
 }
 
 /*  refresh pathloss config;*/
 
-void LitePointIQGigIfBox::Newpathlossconfig()
+void LitePointIQGigIfBox::newPathLossConfig()
 {
     QString configtime = QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz");
     QString command = "MEM:TABLE '" + configtime + "';MEM:TABLE:DEFINE 'FREQ,LOSS'";
-    Litepointwriteapi(command);
-    Refreshpathlossconfig();
+    litepointWriteApi(command);
+    refreshPathLossConfig();
 }
 
 /*  new pathloss config;*/
 
-void LitePointIQGigIfBox::Newpathlossdatarow()
+void LitePointIQGigIfBox::newPathLossDataRow()
 {
     int rowpos = Pathloss->Plugin->ui->tableWidget->rowCount();
     Pathloss->Plugin->ui->tableWidget->setRowCount(rowpos + 1);
@@ -226,17 +225,17 @@ void LitePointIQGigIfBox::Newpathlossdatarow()
 
 /*  new pathloss data row;*/
 
-void LitePointIQGigIfBox::Savepathlossdata()
+void LitePointIQGigIfBox::savePathLossData()
 {
     QString configname = Pathloss->Plugin->ui->treeWidget->currentItem()->text(0);
-    QString waitforwritedata = Getlocalpathlossdataapi();
-    Litepointwriteapi("MEM:TABLE '" + configname + "';MEMory:TABLe:CLEar;MEM:TABLE:INSert:POINt " + waitforwritedata);
-    Refreshpathlossdata();
+    QString waitforwritedata = getLocalPathLossDataApi();
+    litepointWriteApi("MEM:TABLE '" + configname + "';MEMory:TABLe:CLEar;MEM:TABLE:INSert:POINt " + waitforwritedata);
+    refreshPathLossData();
 }
 
 /*  save pathloss data;*/
 
-void LitePointIQGigIfBox::Deletepathlossdatarow()
+void LitePointIQGigIfBox::deletePathLossDataRow()
 {
     int rowpos = Pathloss->Plugin->ui->tableWidget->currentRow();
     if(rowpos < 0)
@@ -245,32 +244,32 @@ void LitePointIQGigIfBox::Deletepathlossdatarow()
     }
     QString currentconfig = Pathloss->Plugin->ui->treeWidget->currentItem()->text(0);
     QString command = "MEM:TABLE '" + currentconfig + "';MEM:TABLE:DELete:POINt " + Pathloss->Plugin->ui->tableWidget->item(rowpos,0)->text() + "MHz";
-    Litepointwriteapi(command);
-    Refreshpathlossdata();
+    litepointWriteApi(command);
+    refreshPathLossData();
 }
 
 /*  delete pathloss data;*/
 
-void LitePointIQGigIfBox::Refreshpathlossdata()
+void LitePointIQGigIfBox::refreshPathLossData()
 {
     QString configname = Pathloss->Plugin->ui->treeWidget->currentItem()->text(0);
     QString command = "MEM:TABLE '" + configname + "';TABL:FREQ:POIN?;TABL:LOSS:POIN?;TABL:FREQ?;TABL:LOSS?";
-    Litepointwriteapi(command);
-    Litepointwaitapi(1000);
-    connect(Threadta,&Tcpsocketthread::Signaltt,this,&LitePointIQGigIfBox::Refreshpathlossdataslot);
+    litepointWriteApi(command);
+    litepointWaitApi(1000);
+    connect(Threadta,&SuperTcpSocketThread::signalTt,this,&LitePointIQGigIfBox::refreshPathLossDataSlot);
     Threadta->start();
 }
 
 /*  refresh pathloss data depend config;*/
 
-void LitePointIQGigIfBox::Openpathlossdatamenu()
+void LitePointIQGigIfBox::openPathLossDataMenu()
 {
     Pldatamenu->exec(QCursor::pos());
 }
 
 /*  exec pathloss data menu;*/
 
-void LitePointIQGigIfBox::Sethiddenapi(QGroupBox* groupbox)
+void LitePointIQGigIfBox::setHiddenApi(QGroupBox* groupbox)
 {
     if(groupbox->isHidden())
     {
@@ -284,53 +283,53 @@ void LitePointIQGigIfBox::Sethiddenapi(QGroupBox* groupbox)
 
 /*  click for display or hide groupbox api;*/
 
-void LitePointIQGigIfBox::Displayvsasetting()
+void LitePointIQGigIfBox::displayVSASetting()
 {
-    Sethiddenapi(Moduleb->ui->groupBox_5);
+    setHiddenApi(Moduleb->ui->groupBox_5);
 }
 
 /*  display or hide vsa setting;*/
 
-void LitePointIQGigIfBox::Displaytrigglesetting()
+void LitePointIQGigIfBox::displayTriggleSetting()
 {
-    Sethiddenapi(Moduleb->ui->groupBox_6);
+    setHiddenApi(Moduleb->ui->groupBox_6);
 }
 
 /*  display or hide triggle setting;*/
 
-void LitePointIQGigIfBox::Displayimpairmentssetting()
+void LitePointIQGigIfBox::displayImpairmentsSetting()
 {
-    Sethiddenapi(Moduleb->ui->groupBox_8);
+    setHiddenApi(Moduleb->ui->groupBox_8);
 }
 
 /*  display or hide impairments setting;*/
 
-QString LitePointIQGigIfBox::Litepointreadslotapi()
+QString LitePointIQGigIfBox::litepointReadSlotApi()
 {
     Threadta = nullptr;
-    return Litepointreadapi();
+    return litepointReadApi();
 }
 
 /*  thread set as nullptr and return result;*/
 
-void LitePointIQGigIfBox::Litepointreadtimeoutslot()
+void LitePointIQGigIfBox::litepointReadTimeoutSlot()
 {
     Threadta = nullptr;
-    Logger->Displaylog("R","tcpsocket receive data timeout;","Refreshpathlossdataslot function run completed;");
+    Logger->displayLog("R","tcpsocket receive data timeout;","Refreshpathlossdataslot function run completed;");
 }
 
 /*  thread set as nullptr and return timeout;*/
 
-void LitePointIQGigIfBox::Getactivemodulesolt()
+void LitePointIQGigIfBox::getActiveModuleSlot()
 {
-    Modulea->ui->pushButton_3->setText(Litepointreadslotapi());
+    Modulea->ui->pushButton_3->setText(litepointReadSlotApi());
 }
 
 /*  set activate module name;*/
 
-void LitePointIQGigIfBox::Refreshconfigslot()
+void LitePointIQGigIfBox::refreshConfigSlot()
 {
-    QStringList resultlist = Litepointreadslotapi().split("\"");
+    QStringList resultlist = litepointReadSlotApi().split("\"");
     int resultlistcount = resultlist.count();
     for(int i = 0;i < resultlistcount;i++)
     {
@@ -349,25 +348,25 @@ void LitePointIQGigIfBox::Refreshconfigslot()
         Pathloss->Plugin->ui->treeWidget->header()->setSectionResizeMode(1,QHeaderView::ResizeToContents);
         Pathloss->Plugin->ui->treeWidget->header()->setStretchLastSection(false);
         Pathloss->Plugin->ui->treeWidget->setCurrentItem(Pathloss->Plugin->ui->treeWidget->topLevelItem(0));
-        Refreshpathlossdata();
+        refreshPathLossData();
     }
 }
 
 /*  refresh pathloss config slot;*/
 
-void LitePointIQGigIfBox::Refreshpathlossdataslot()
+void LitePointIQGigIfBox::refreshPathLossDataSlot()
 {
     Pathloss->Plugin->ui->tableWidget->clear();
-    Setlocalpathlossdataapi();
+    setLocalPathLossDataApi();
 }
 
 /*  refresh pathloss data slot;*/
 
-void LitePointIQGigIfBox::Setlocalpathlossdataapi()
+void LitePointIQGigIfBox::setLocalPathLossDataApi()
 {
-    QStringList resultlist = Litepointreadslotapi().split(";");
+    QStringList resultlist = litepointReadSlotApi().split(";");
     double countsarray[2] = {resultlist.at(0).toDouble(),resultlist.at(1).toDouble()};
-    int rowcounts = SuperC->Getdoublearraymaxvalue(countsarray,2);
+    int rowcounts = Core->getDoubleArrayMaxValue(countsarray,2);
     QStringList freqlist = resultlist.at(2).split(",");
     QStringList losslist = resultlist.at(3).split(",");
     Pathloss->Plugin->ui->tableWidget->setRowCount(rowcounts);
@@ -394,7 +393,7 @@ void LitePointIQGigIfBox::Setlocalpathlossdataapi()
 
 /*  refresh pathloss data slot;*/
 
-QString LitePointIQGigIfBox::Getlocalpathlossdataapi()
+QString LitePointIQGigIfBox::getLocalPathLossDataApi()
 {
     int row = Pathloss->Plugin->ui->tableWidget->rowCount();
     int column = Pathloss->Plugin->ui->tableWidget->columnCount();
@@ -418,7 +417,7 @@ QString LitePointIQGigIfBox::Getlocalpathlossdataapi()
 
 /*  refresh local pathloss data as command;*/
 
-QString LitePointIQGigIfBox::Getlocalpathlossfreqapi()
+QString LitePointIQGigIfBox::getLocalPathLossFreqApi()
 {
     int row = Pathloss->Plugin->ui->tableWidget->rowCount();
     int column = Pathloss->Plugin->ui->tableWidget->columnCount();
@@ -438,7 +437,7 @@ QString LitePointIQGigIfBox::Getlocalpathlossfreqapi()
 
 /*  refresh local pathloss freq as command;*/
 
-void LitePointIQGigIfBox::Openroutconfig()
+void LitePointIQGigIfBox::openRoutConfig()
 {
     Rout->show();
 }
@@ -448,25 +447,25 @@ void LitePointIQGigIfBox::Openroutconfig()
 Technology::Technology(QWidget *parent)
     : QMenu(parent)
 {
-    Init();
+    init();
 }
 
-void Technology::Init()
+void Technology::init()
 {
-    Objectinit();
-    Actioninit();
+    objectInit();
+    actionInit();
 }
 
-void Technology::Objectinit()
+void Technology::objectInit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
-void Technology::Actioninit()
+void Technology::actionInit()
 {
-    SuperC->Addaction(this,Gprf,"GPRF","GPRF");
-    SuperC->Addmenu(this,Fivegmenu,"5G");
-    SuperC->Addaction(Fivegmenu,Fivegaction,"5G","5G");
-    SuperC->Addaction(Fivegmenu,Fivegsmallcell,"5G Small Cell","5GBS");
-    SuperC->Addaction(this,Wifigig,"WiGig","WIGIG");
+    Core->addAction(this,Gprf,"GPRF","GPRF");
+    Core->addMenu(this,Fivegmenu,"5G");
+    Core->addAction(Fivegmenu,Fivegaction,"5G","5G");
+    Core->addAction(Fivegmenu,Fivegsmallcell,"5G Small Cell","5GBS");
+    Core->addAction(this,Wifigig,"WiGig","WIGIG");
 }

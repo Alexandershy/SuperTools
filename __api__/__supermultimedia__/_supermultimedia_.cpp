@@ -11,8 +11,7 @@ SuperMultiMedia::~SuperMultiMedia()
 
 }
 
-
-QStringList SuperMultiMedia::Wavinfo(QString wavfile)
+QStringList SuperMultiMedia::wavInfo(QString wavfile)
 {
     QStringList listtemp = {"RIFF","filelen","WAVE","fmt","fmtlen","wformattag","wchannels","dwsamplerate","dwavgbyterate","wblockalign","wbitspersample","wextsize","extralinfo"};
     unsigned long longtemp;
@@ -46,7 +45,7 @@ QStringList SuperMultiMedia::Wavinfo(QString wavfile)
 
 /*  read wav title info;*/
 
-QByteArray SuperMultiMedia::Writewavinfo(int filelen,short channels,int samplerate,int transmitrate,short blockalign)
+QByteArray SuperMultiMedia::writeWavInfo(int filelen,short channels,int samplerate,int transmitrate,short blockalign)
 {
     QByteArray byteriff = "RIFF";
     QByteArray bytefilelen;
@@ -60,20 +59,20 @@ QByteArray SuperMultiMedia::Writewavinfo(int filelen,short channels,int samplera
     QByteArray byteblockalign;
     QByteArray bytebitspersample;
     QByteArray bytedatachunk = """data";
-    Int2bytearray(&bytefilelen,filelen);
-    Int2bytearray(&byteformatlen,16);
-    Short2bytearray(&byteformattag,1);
-    Short2bytearray(&bytechannels,channels);
-    Int2bytearray(&bytesamplerate,samplerate);
-    Int2bytearray(&bytetransmitraterate,transmitrate);
-    Short2bytearray(&byteblockalign,blockalign);
-    Short2bytearray(&bytebitspersample,16);
+    int2ByteArray(&bytefilelen,filelen);
+    int2ByteArray(&byteformatlen,16);
+    short2ByteArray(&byteformattag,1);
+    short2ByteArray(&bytechannels,channels);
+    int2ByteArray(&bytesamplerate,samplerate);
+    int2ByteArray(&bytetransmitraterate,transmitrate);
+    short2ByteArray(&byteblockalign,blockalign);
+    short2ByteArray(&bytebitspersample,16);
     return byteriff + bytefilelen + bytewave + bytefmt + byteformatlen + byteformattag + bytechannels + bytesamplerate + bytetransmitraterate + byteblockalign + bytebitspersample + bytedatachunk + bytefilelen;
 }
 
 /*  write wav title info;*/
 
-void SuperMultiMedia::Writewavfile(QString wavfile,int filelen,short channels,int samplerate,int transmitrate,short blockalign,QByteArray data)
+void SuperMultiMedia::writeWavFile(QString wavfile,int filelen,short channels,int samplerate,int transmitrate,short blockalign,QByteArray data)
 {
     QByteArray Wavfiledata;
     QByteArray byteriff = "RIFF";
@@ -88,14 +87,14 @@ void SuperMultiMedia::Writewavfile(QString wavfile,int filelen,short channels,in
     QByteArray byteblockalign;
     QByteArray bytebitspersample;
     QByteArray bytedatachunk = """data";
-    Int2bytearray(&bytefilelen,filelen);
-    Int2bytearray(&byteformatlen,16);
-    Short2bytearray(&byteformattag,1);
-    Short2bytearray(&bytechannels,channels);
-    Int2bytearray(&bytesamplerate,samplerate);
-    Int2bytearray(&bytetransmitraterate,transmitrate);
-    Short2bytearray(&byteblockalign,blockalign);
-    Short2bytearray(&bytebitspersample,16);
+    int2ByteArray(&bytefilelen,filelen);
+    int2ByteArray(&byteformatlen,16);
+    short2ByteArray(&byteformattag,1);
+    short2ByteArray(&bytechannels,channels);
+    int2ByteArray(&bytesamplerate,samplerate);
+    int2ByteArray(&bytetransmitraterate,transmitrate);
+    short2ByteArray(&byteblockalign,blockalign);
+    short2ByteArray(&bytebitspersample,16);
     Wavfiledata = byteriff + bytefilelen + bytewave + bytefmt + byteformatlen + byteformattag + bytechannels + bytesamplerate + bytetransmitraterate + byteblockalign + bytebitspersample + bytedatachunk + bytefilelen + data;
     QFile wav(wavfile);
     wav.open(QIODevice::WriteOnly);
@@ -105,7 +104,7 @@ void SuperMultiMedia::Writewavfile(QString wavfile,int filelen,short channels,in
 
 /*  write wav title info and data;*/
 
-void SuperMultiMedia::Int2bytearray(QByteArray *bytearry, int inta)
+void SuperMultiMedia::int2ByteArray(QByteArray *bytearry, int inta)
 {
     bytearry->clear();
     bytearry->append((uchar)((0x000000FF  & inta) >> 0));
@@ -116,7 +115,7 @@ void SuperMultiMedia::Int2bytearray(QByteArray *bytearry, int inta)
 
 /*  transform int to byte;*/
 
-void SuperMultiMedia::Short2bytearray(QByteArray *bytearry, short shorta)
+void SuperMultiMedia::short2ByteArray(QByteArray *bytearry, short shorta)
 {
     bytearry->clear();
     bytearry->append((uchar)((0x00FF  & shorta) >> 0));
@@ -125,7 +124,7 @@ void SuperMultiMedia::Short2bytearray(QByteArray *bytearry, short shorta)
 
 /*  transform byte to int;*/
 
-void SuperMultiMedia::Checkdeviceexist(QList<bool> *boollist)
+void SuperMultiMedia::checkDeviceExist(QList<bool> *boollist)
 {
     QMediaDevices mediadevice;
     boollist->clear();
@@ -135,7 +134,7 @@ void SuperMultiMedia::Checkdeviceexist(QList<bool> *boollist)
 
 /*  check if has audio devices by audio mode;*/
 
-void SuperMultiMedia::Getaudiooutputdeviceinfo(QList<QAudioDevice> *outputdevicelist,QStringList* listname,QStringList* listnumber)
+void SuperMultiMedia::getAudioOutputDeviceInfo(QList<QAudioDevice> *outputdevicelist,QStringList* listname,QStringList* listnumber)
 {
     outputdevicelist->clear();
     outputdevicelist->append(QMediaDevices::audioOutputs());
@@ -148,7 +147,7 @@ void SuperMultiMedia::Getaudiooutputdeviceinfo(QList<QAudioDevice> *outputdevice
 
 /*  get audio output device info;*/
 
-void SuperMultiMedia::Getaudioinputdeviceinfo(QList<QAudioDevice> *inputdevicelist,QStringList* listname,QStringList* listnumber)
+void SuperMultiMedia::getAudioInputDeviceInfo(QList<QAudioDevice> *inputdevicelist,QStringList* listname,QStringList* listnumber)
 {
     inputdevicelist->clear();
     inputdevicelist->append(QMediaDevices::audioInputs());
@@ -161,7 +160,7 @@ void SuperMultiMedia::Getaudioinputdeviceinfo(QList<QAudioDevice> *inputdeviceli
 
 /*  get audio input device info;*/
 
-int SuperMultiMedia::Enumbitstoint(QAudioFormat::SampleFormat bits)
+int SuperMultiMedia::enumBitsToInt(QAudioFormat::SampleFormat bits)
 {
     switch(bits)
     {
@@ -197,7 +196,7 @@ int SuperMultiMedia::Enumbitstoint(QAudioFormat::SampleFormat bits)
 
 /*  transfer enum bits to int bits;*/
 
-QAudioFormat::SampleFormat SuperMultiMedia::Intbitstoenum(int bits)
+QAudioFormat::SampleFormat SuperMultiMedia::intBitsToEnum(int bits)
 {
     switch(bits)
     {
@@ -233,7 +232,7 @@ QAudioFormat::SampleFormat SuperMultiMedia::Intbitstoenum(int bits)
 
 /*  transfer enum bits to int bits;*/
 
-void SuperMultiMedia::Cal16bitsdata(int channels,int channel,QVector<double> *vectorx,QVector<double> *vectory,int wavfiledatacount,int samplerate,QByteArray *wavfiledata)
+void SuperMultiMedia::cal16BitsData(int channels,int channel,QVector<double> *vectorx,QVector<double> *vectory,int wavfiledatacount,int samplerate,QByteArray *wavfiledata)
 {
     int16_t y = 0;
     vectorx->clear();
@@ -244,12 +243,12 @@ void SuperMultiMedia::Cal16bitsdata(int channels,int channel,QVector<double> *ve
         y |= (wavfiledata->at(i * 2 * channels + 1 + channel * 2) << 8) & 0xFF00;
         vectory->append(double(y));
     }
-    vectorx->append(Core->Linspace(0,double(wavfiledatacount) / samplerate,vectory->count()));
+    vectorx->append(Core->linspace(0,double(wavfiledatacount) / samplerate,vectory->count()));
 }
 
 /*  cal channel int16 data;*/
 
-QString SuperMultiMedia::Caldbv(double* y,int intcount,int mode,int maxval)
+QString SuperMultiMedia::calDecibelVoltage(double* y,int intcount,int mode,int maxval)
 {
     if(mode)
     {
@@ -263,7 +262,7 @@ QString SuperMultiMedia::Caldbv(double* y,int intcount,int mode,int maxval)
     }
     else
     {
-        double max = Core->Getdoublearraymaxvalue(y,intcount) / maxval;
+        double max = Core->getDoubleArrayMaxValue(y,intcount) / maxval;
         if(max <= 0)
         {
             return "0";
@@ -277,7 +276,7 @@ QString SuperMultiMedia::Caldbv(double* y,int intcount,int mode,int maxval)
 
 /*  cal dbv by audio input data;*/
 
-double SuperMultiMedia::Calfreq(double* y,int inicount,int samplerate)
+double SuperMultiMedia::calFrequency(double* y,int inicount,int samplerate)
 {
     double freqa = 0;
     double freqb = 0;
@@ -330,8 +329,8 @@ double SuperMultiMedia::Calfreq(double* y,int inicount,int samplerate)
             }
             else
             {
-                freqa = Core->Getqvectormeanvalue(&sampleperroundpos,sampleperroundpos.count());
-                freqb = Core->Getqvectormeanvalue(&sampleperroundneg,sampleperroundneg.count());
+                freqa = Core->getVectorMeanValue(&sampleperroundpos,sampleperroundpos.count());
+                freqb = Core->getVectorMeanValue(&sampleperroundneg,sampleperroundneg.count());
                 return samplerate / (freqa + freqb);
             }
         }
@@ -341,7 +340,7 @@ double SuperMultiMedia::Calfreq(double* y,int inicount,int samplerate)
 
 /*  cal freqency by audio input data;*/
 
-QString SuperMultiMedia::Calthd(double realfreq,double* yfft,int samplerate,int count,int degree)
+QString SuperMultiMedia::calTotalHarmonicDistortion(double realfreq,double* yfft,int samplerate,int count,int degree)
 {
     double basicpowersquare = 1;
     double harmonicpowersquare = 0;
@@ -379,7 +378,7 @@ QString SuperMultiMedia::Calthd(double realfreq,double* yfft,int samplerate,int 
 
 /*  cal thd;*/
 
-void SuperMultiMedia::Changeplayicon(QPushButton *playbutton,QByteArray *playstatus,int status)
+void SuperMultiMedia::changePlayIcon(QPushButton *playbutton,QByteArray *playstatus,int status)
 {
     playstatus->clear();
     switch(status)
@@ -407,7 +406,7 @@ void SuperMultiMedia::Changeplayicon(QPushButton *playbutton,QByteArray *playsta
 
 /*  change play status;*/
 
-void SuperMultiMedia::Changeplaytext(QPushButton *playbutton,QByteArray *playstatus,int status)
+void SuperMultiMedia::changePlayText(QPushButton *playbutton,QByteArray *playstatus,int status)
 {
     playstatus->clear();
     switch(status)
@@ -435,7 +434,7 @@ void SuperMultiMedia::Changeplaytext(QPushButton *playbutton,QByteArray *playsta
 
 /*  change play status;*/
 
-void SuperMultiMedia::Changeanalysistext(QPushButton *playbutton,QByteArray *analysisstatus,int status)
+void SuperMultiMedia::changeAnalysisText(QPushButton *playbutton,QByteArray *analysisstatus,int status)
 {
     analysisstatus->clear();
     switch(status)
@@ -463,7 +462,7 @@ SuperPlayWav::SuperPlayWav(QFile *file,int filepos,QByteArray* playstatus,QAudio
     Filepos = filepos;
     Playstatus = playstatus;
     Audiosink = audiosink;
-    Init();
+    init();
 }
 
 SuperPlayWav::~SuperPlayWav()
@@ -472,23 +471,23 @@ SuperPlayWav::~SuperPlayWav()
     delete Audiosink;
 }
 
-void SuperPlayWav::Init()
+void SuperPlayWav::init()
 {
-    Timerinit();
-    Iodeviceinit();
-    Filestatusinit();
+    timerInit();
+    ioDeviceInit();
+    fileStatusInit();
 }
 
 /*  parameter init;*/
 
 void SuperPlayWav::run()
 {
-    Playing();
+    playing();
 }
 
 /*  play wav file;*/
 
-void SuperPlayWav::Timerinit()
+void SuperPlayWav::timerInit()
 {
     Timer = new QTimer();
     Timer->setInterval(1000);
@@ -498,16 +497,16 @@ void SuperPlayWav::Timerinit()
 
 /*  timer init;*/
 
-void SuperPlayWav::Iodeviceinit()
+void SuperPlayWav::ioDeviceInit()
 {
     Channel = Audiosink->format().channelCount();
     Iodevice = Audiosink->start();
-    connect(this,&SuperPlayWav::Signalpc,this,&SuperPlayWav::Writedata);
+    connect(this,&SuperPlayWav::signalPc,this,&SuperPlayWav::writeData);
 }
 
 /*  iodevice init;*/
 
-void SuperPlayWav::Filestatusinit()
+void SuperPlayWav::fileStatusInit()
 {
     if(Filepos < File->size())
     {
@@ -517,7 +516,7 @@ void SuperPlayWav::Filestatusinit()
 
 /*  file status init;*/
 
-void SuperPlayWav::Playing()
+void SuperPlayWav::playing()
 {
     while(true)
     {
@@ -526,7 +525,7 @@ void SuperPlayWav::Playing()
             QThread::msleep(1);
             if(Audiosink->bytesFree())
             {
-                emit Signalpc();
+                emit signalPc();
             }
         }
         else if(Playstatus->size() == 9)
@@ -535,12 +534,12 @@ void SuperPlayWav::Playing()
         }
         else if(File->pos() >= Filepos || File->atEnd())
         {
-            emit Signalpb(Status);
+            emit signalPb(Status);
             break;
         }
         else
         {
-            emit Signalpa();
+            emit signalPa();
             break;
         }
     }
@@ -548,7 +547,7 @@ void SuperPlayWav::Playing()
 
 /*  playing wav file and check the status;*/
 
-void SuperPlayWav::Writedata()
+void SuperPlayWav::writeData()
 {
     Iodevice->write(File->read(Audiosink->bytesFree()));
 }
@@ -561,7 +560,7 @@ SuperPlaySignal::SuperPlaySignal(QByteArray signaldata,double time,QByteArray* p
     Time = time;
     Playstatus = playstatus;
     Audiosink = audiosink;
-    Init();
+    init();
 }
 
 SuperPlaySignal::~SuperPlaySignal()
@@ -570,27 +569,27 @@ SuperPlaySignal::~SuperPlaySignal()
     delete Audiosink;
 }
 
-void SuperPlaySignal::Init()
+void SuperPlaySignal::init()
 {
-    Timerinit();
-    Iodeviceinit();
+    timerInit();
+    ioDeviceInit();
 }
 
 /*  parameter init;*/
 
 void SuperPlaySignal::run()
 {
-    Initrun();
-    Playing();
+    initRun();
+    playing();
 }
 
 /*  play wav file;*/
 
-void SuperPlaySignal::Timerinit()
+void SuperPlaySignal::timerInit()
 {
     Timer = new QTimer();
     Timer->setInterval(Time * 1000);
-    connect(Timer,&QTimer::timeout,this,&SuperPlaySignal::Stop);
+    connect(Timer,&QTimer::timeout,this,&SuperPlaySignal::stop);
     if(Time)
     {
         Timer->start();
@@ -599,22 +598,22 @@ void SuperPlaySignal::Timerinit()
 
 /*  play signal timer init;*/
 
-void SuperPlaySignal::Iodeviceinit()
+void SuperPlaySignal::ioDeviceInit()
 {
     Iodevice = Audiosink->start();
-    connect(this,&SuperPlaySignal::Signalpb,this,&SuperPlaySignal::Writedata);
+    connect(this,&SuperPlaySignal::signalPb,this,&SuperPlaySignal::writeData);
 }
 
 /*  play signal file init,creat audio output device and io device,read byte from file,choose cycle or by seconds;*/
 
-void SuperPlaySignal::Initrun()
+void SuperPlaySignal::initRun()
 {
     Signalstatus = 1;
 }
 
 /*  init signal status;*/
 
-void SuperPlaySignal::Playing()
+void SuperPlaySignal::playing()
 {
     while(true)
     {
@@ -623,14 +622,14 @@ void SuperPlaySignal::Playing()
             QThread::msleep(1);
             if(Audiosink->bytesFree())
             {
-                emit Signalpb();
+                emit signalPb();
             }
         }
         else
         {
             if(Signalstatus)
             {
-                emit Signalpa();
+                emit signalPa();
             }
             break;
         }
@@ -639,13 +638,13 @@ void SuperPlaySignal::Playing()
 
 /*  play signal by pushbutton text;*/
 
-void SuperPlaySignal::Stop()
+void SuperPlaySignal::stop()
 {
     Signalstatus = 0;
-    emit Signalpa();
+    emit signalPa();
 }
 
-void SuperPlaySignal::Writedata()
+void SuperPlaySignal::writeData()
 {
     Iodevice->write(Signaldata);
 }

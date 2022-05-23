@@ -22,11 +22,13 @@ public:
 
     ~SuperFileDialog();
 
-    void Setsinglefile();
+public slots:
 
-    void Setsavefile();
+    void setSingleFile();
 
-    void Setsavefolder();
+    void setSaveFile();
+
+    void setSaveFolder();
 
 private:
 
@@ -64,95 +66,95 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Dirinit();
+    void dirInit();
 
-    void Systemmodelinit();
+    void systemModelInit();
 
-    void Menuinit();
+    void menuInit();
 
-    void Iconinit();
+    void iconInit();
 
-    void Quickaccessinit();
+    void quickAccessInit();
 
-    void Locationpathinit();
+    void locationPathInit();
 
-    void Treewidgetadditemapi(
+    void treeWidgetAddItemApi(
             QStandardPaths::StandardLocation path);
 
-    void Transfermodelindex(
+    void transferModelIndex(
             QModelIndex index);
 
-    void Checkfolder();
+    void checkFolder();
 
-    void Refreshquickaccessfolder();
+    void refreshQuickAccessFolder();
 
-    void Refreshfolder(
+    void refreshFolder(
             QString folderpath);
 
-    void Fileinfomode();
+    void fileInfoMode();
 
-    void Filepicturemode();
+    void filePictureMode();
 
-    void Getfilesavemode();
+    void getFileSaveMode();
 
-    void Getfile();
+    void getFile();
 
-    void Savefile();
+    void saveFile();
 
-    void Getfoldersavemode();
+    void getFolderSaveMode();
 
-    void Savefolder();
+    void saveFolder();
 
-    bool Checkrepeatfile(
+    bool checkRepeatFile(
             QString filename,
             QString filesuffix);
 
-    void Getfilelist();
+    void getFileList();
 
-    void Enableselectfilebutton();
+    void enableSelectFileButton();
 
-    void Enablesavefilebutton();
+    void enableSaveFileButton();
 
-    void Cdupfolder();
+    void cdUpFolder();
 
-    void Execfilemenu();
+    void execFileMenu();
 
-    void Exectreemenu();
+    void execTreeMenu();
 
-    void Openfiles();
+    void openFiles();
 
-    void Openpaths();
+    void openPaths();
 
-    void Replacefile();
+    void replaceFile();
 
-    void Creatnewfolder();
+    void creatNewFolder();
 
-    void Delete();
+    void deleteitem();
 
-    void Searchfile(
+    void searchFile(
             QString text);
 
-    void Addtoquickaccess();
+    void addToQuickAccess();
 
-    void Changefileiconmode();
+    void changeFileIconMode();
 
-    void Deletequickaccess();
+    void deleteQuickAccess();
 
-    void Expandmodelfolder(
+    void expandModelFolder(
         QDir *dir);
 
 signals:
 
-    void Signalfa();
+    void signalFa();
 
-    void Signalfb(
+    void signalFb(
             QString file);
 
-    void Signalfc(
+    void signalFc(
             QStringList filelist);
 
 };

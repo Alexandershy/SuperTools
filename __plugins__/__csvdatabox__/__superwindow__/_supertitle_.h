@@ -1,13 +1,13 @@
 #ifndef _SUPERTITLE__H
 #define _SUPERTITLE__H
 
-#include "_supertitle__ui_.h"
+#include "ui__supertitleui_.h"
 #include "_supertitlebutton_.h"
 #include <QMouseEvent>
 #include <QEvent>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {class SuperTitle;}
+namespace Ui {class SuperTitleui;}
 QT_END_NAMESPACE
 
 class SuperTitle : public QFrame
@@ -16,7 +16,7 @@ class SuperTitle : public QFrame
 
 public:
 
-    Ui::SuperTitle *ui                  = nullptr;
+    Ui::SuperTitleui *ui                = nullptr;
     SuperTitleButton *Minisizebutton    = nullptr;
     SuperTitleButton *Maxisizebutton    = nullptr;
     SuperTitleButton *Closebutton       = nullptr;
@@ -30,7 +30,7 @@ public:
 
 public slots:
 
-    void Setsourcecolor(
+    void setSourceColor(
         QString rgbcolor);
 
 protected:
@@ -46,18 +46,18 @@ protected:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 signals:
 
-    void Signalsa(
+    void signalSa(
             bool mouseontitle);
 
-    void Signalsb();
+    void signalSb();
 
-    void Signalsc(
+    void signalSc(
         Qt::CursorShape shape);
 
 };

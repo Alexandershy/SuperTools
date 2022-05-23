@@ -25,42 +25,41 @@ public:
 public slots:
 
     /*  QSerialport */
-
-    void Getserialport(
+    void getSerialPort(
             QStringList* listname,
             QComboBox* comboboxnamelist);
 
-    void Enableserialcombobox(
+    void enableSerialComboBox(
             QStringList *namelist,
             QComboBox *comboboxnamelist,
             QComboBox* comboboxbaudrate);
 
-    bool Enableconnectbutton(
+    bool enableConnectButton(
             QComboBox* comboboxnamelist,
             QComboBox* comboboxbaudrate,
             QPushButton* pushbuttonconnect);
 
-    void Connectserialport(
+    void connectSerialPort(
             QSerialPort* seriala,
             QString strportname,
             int intbaudrate);
 
-    void Writeserial(
+    void writeSerial(
             QCheckBox* checkboxstring,
             QCheckBox* checkboxaddr,
             QCheckBox* checkboxaddn,
             QSerialPort* seriala,
             QLineEdit* lineeditdata);
 
-    QByteArray Readdatastream(
+    QByteArray readDataStream(
             QSerialPort* serial,
             QCheckBox* checkboxstring);
 
-    bool Checkserialdevice(
+    bool checkSerialDevice(
             QSerialPort* serial,
             QString strportname);
 
-    void Closeserial(
+    void closeSerial(
             QSerialPort* seriala);
 
 private:
@@ -96,20 +95,20 @@ public slots:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Initrun();
+    void initRun();
 
-    void Connectserialport();
+    void connectSerialPort();
 
-    void Waitforbytes();
+    void waitForBytes();
 
-    void Communicatewithserialporta(
+    void communicateWithSerialPorta(
             QString strport);
 
-    void Communicatewithserialportb(
+    void communicateWithSerialPortb(
             QString strport);
 
 private:
@@ -135,15 +134,15 @@ private:
 
 signals:
 
-    void Signalsa(
+    void signalSa(
             QString direction,
             QString strtlog,
             QString strllog);
 
-    void Signalsb(
+    void signalSb(
             QString);
 
-    void Signalsc();
+    void signalSc();
 
 };
 
@@ -154,7 +153,6 @@ class _SUPERSERIALTHREAD__EXPORT SuperSerialThread : public QThread
 public:
 
     /*main function;*/
-
     SuperSerialThread(
             QSerialPort* serial,
             double timeout);
@@ -163,7 +161,7 @@ public slots:
 
     void run();
 
-    void Init();
+    void init();
 
 private:
 
@@ -175,9 +173,9 @@ private:
 
 signals:
 
-    void Signaltt();
+    void signalTt();
 
-    void Signaltf();
+    void signalTf();
 
 };
 

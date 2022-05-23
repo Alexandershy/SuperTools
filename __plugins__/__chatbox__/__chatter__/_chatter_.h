@@ -3,7 +3,7 @@
 
 #include "__chatbubble__/_chatbubble_.h"
 #include "__chatuser__/_chatuser_.h"
-#include "__chatter__/_chatter__ui_.h"
+#include "ui__chatter_.h"
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +25,9 @@ public:
 
     ~Chatter();
 
-    void Adjustsize();
+public slots:
+
+    void adjustSize();
 
 private:
 
@@ -41,13 +43,13 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Setplaceinit();
+    void setPlaceInit();
 
-    void Timerinit();
+    void timerInit();
 
 };
 

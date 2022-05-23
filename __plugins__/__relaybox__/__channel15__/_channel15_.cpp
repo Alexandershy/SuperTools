@@ -9,106 +9,106 @@ Channel15::Channel15(QWidget *parent,QSerialPort *serial,QCheckBox *checkbox,QLi
     Serial = serial;
     Checkbox = checkbox;
     Lineedit = lineedit;
-    connect(ui->pushButton_1,  &QPushButton::clicked,      this,   &Channel15::Closechannel1);
-    connect(ui->pushButton_2,  &QPushButton::clicked,      this,   &Channel15::Closechannel2);
-    connect(ui->pushButton_3,  &QPushButton::clicked,      this,   &Channel15::Closechannel3);
-    connect(ui->pushButton_4,  &QPushButton::clicked,      this,   &Channel15::Closechannel4);
-    connect(ui->pushButton_5,  &QPushButton::clicked,      this,   &Channel15::Closechannel5);
-    connect(ui->pushButton_6,  &QPushButton::clicked,      this,   &Channel15::Closechannel6);
-    connect(ui->pushButton_7,  &QPushButton::clicked,      this,   &Channel15::Closechannel7);
-    connect(ui->pushButton_8,  &QPushButton::clicked,      this,   &Channel15::Closechannel8);
-    connect(ui->pushButton_9,  &QPushButton::clicked,      this,   &Channel15::Closechannel9);
-    connect(ui->pushButton_10, &QPushButton::clicked,      this,   &Channel15::Closechannela);
-    connect(ui->pushButton_11, &QPushButton::clicked,      this,   &Channel15::Closechannelb);
-    connect(ui->pushButton_12, &QPushButton::clicked,      this,   &Channel15::Closechannelc);
-    connect(ui->pushButton_13, &QPushButton::clicked,      this,   &Channel15::Closechanneld);
-    connect(ui->pushButton_14, &QPushButton::clicked,      this,   &Channel15::Closechannele);
-    connect(ui->pushButton_15, &QPushButton::clicked,      this,   &Channel15::Closechannelf);
-    connect(ui->pushButton_16, &QPushButton::clicked,      this,   &Channel15::Openchannel1);
-    connect(ui->pushButton_17, &QPushButton::clicked,      this,   &Channel15::Openchannel2);
-    connect(ui->pushButton_18, &QPushButton::clicked,      this,   &Channel15::Openchannel3);
-    connect(ui->pushButton_19, &QPushButton::clicked,      this,   &Channel15::Openchannel4);
-    connect(ui->pushButton_20, &QPushButton::clicked,      this,   &Channel15::Openchannel5);
-    connect(ui->pushButton_21, &QPushButton::clicked,      this,   &Channel15::Openchannel6);
-    connect(ui->pushButton_22, &QPushButton::clicked,      this,   &Channel15::Openchannel7);
-    connect(ui->pushButton_23, &QPushButton::clicked,      this,   &Channel15::Openchannel8);
-    connect(ui->pushButton_24, &QPushButton::clicked,      this,   &Channel15::Openchannel9);
-    connect(ui->pushButton_25, &QPushButton::clicked,      this,   &Channel15::Openchannela);
-    connect(ui->pushButton_26, &QPushButton::clicked,      this,   &Channel15::Openchannelb);
-    connect(ui->pushButton_27, &QPushButton::clicked,      this,   &Channel15::Openchannelc);
-    connect(ui->pushButton_28, &QPushButton::clicked,      this,   &Channel15::Openchanneld);
-    connect(ui->pushButton_29, &QPushButton::clicked,      this,   &Channel15::Openchannele);
-    connect(ui->pushButton_30, &QPushButton::clicked,      this,   &Channel15::Openchannelf);
-    connect(ui->checkBox_9,    &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_10,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_11,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_12,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_13,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_14,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_15,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_16,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_17,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_18,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_19,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_20,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_21,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_22,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->checkBox_23,   &QCheckBox::stateChanged,   this,   &Channel15::Emitenablerelaybutton);
-    connect(ui->lineEdit,      &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit,      &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_2,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_2,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_3,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_3,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_4,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_4,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_5,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_5,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_6,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_6,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_7,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_7,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_8,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_8,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_9,    &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_9,    &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_10,   &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_10,   &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_11,   &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_11,   &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_12,   &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_12,   &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_13,   &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_13,   &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_14,   &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_14,   &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    connect(ui->lineEdit_15,   &QLineEdit::textChanged,    this,   &Channel15::Checklineedittext);
-    connect(ui->lineEdit_15,   &QLineEdit::editingFinished,this,   &Channel15::Savecurrenttext);
-    Init();
+    connect(ui->pushButton_1,  &QPushButton::clicked,      this,   &Channel15::closeChannel1);
+    connect(ui->pushButton_2,  &QPushButton::clicked,      this,   &Channel15::closeChannel2);
+    connect(ui->pushButton_3,  &QPushButton::clicked,      this,   &Channel15::closeChannel3);
+    connect(ui->pushButton_4,  &QPushButton::clicked,      this,   &Channel15::closeChannel4);
+    connect(ui->pushButton_5,  &QPushButton::clicked,      this,   &Channel15::closeChannel5);
+    connect(ui->pushButton_6,  &QPushButton::clicked,      this,   &Channel15::closeChannel6);
+    connect(ui->pushButton_7,  &QPushButton::clicked,      this,   &Channel15::closeChannel7);
+    connect(ui->pushButton_8,  &QPushButton::clicked,      this,   &Channel15::closeChannel8);
+    connect(ui->pushButton_9,  &QPushButton::clicked,      this,   &Channel15::closeChannel9);
+    connect(ui->pushButton_10, &QPushButton::clicked,      this,   &Channel15::closeChannela);
+    connect(ui->pushButton_11, &QPushButton::clicked,      this,   &Channel15::closeChannelb);
+    connect(ui->pushButton_12, &QPushButton::clicked,      this,   &Channel15::closeChannelc);
+    connect(ui->pushButton_13, &QPushButton::clicked,      this,   &Channel15::closeChanneld);
+    connect(ui->pushButton_14, &QPushButton::clicked,      this,   &Channel15::closeChannele);
+    connect(ui->pushButton_15, &QPushButton::clicked,      this,   &Channel15::closeChannelf);
+    connect(ui->pushButton_16, &QPushButton::clicked,      this,   &Channel15::openChannel1);
+    connect(ui->pushButton_17, &QPushButton::clicked,      this,   &Channel15::openChannel2);
+    connect(ui->pushButton_18, &QPushButton::clicked,      this,   &Channel15::openChannel3);
+    connect(ui->pushButton_19, &QPushButton::clicked,      this,   &Channel15::openChannel4);
+    connect(ui->pushButton_20, &QPushButton::clicked,      this,   &Channel15::openChannel5);
+    connect(ui->pushButton_21, &QPushButton::clicked,      this,   &Channel15::openChannel6);
+    connect(ui->pushButton_22, &QPushButton::clicked,      this,   &Channel15::openChannel7);
+    connect(ui->pushButton_23, &QPushButton::clicked,      this,   &Channel15::openChannel8);
+    connect(ui->pushButton_24, &QPushButton::clicked,      this,   &Channel15::openChannel9);
+    connect(ui->pushButton_25, &QPushButton::clicked,      this,   &Channel15::openChannela);
+    connect(ui->pushButton_26, &QPushButton::clicked,      this,   &Channel15::openChannelb);
+    connect(ui->pushButton_27, &QPushButton::clicked,      this,   &Channel15::openChannelc);
+    connect(ui->pushButton_28, &QPushButton::clicked,      this,   &Channel15::openChanneld);
+    connect(ui->pushButton_29, &QPushButton::clicked,      this,   &Channel15::openChannele);
+    connect(ui->pushButton_30, &QPushButton::clicked,      this,   &Channel15::openChannelf);
+    connect(ui->checkBox_9,    &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_10,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_11,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_12,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_13,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_14,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_15,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_16,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_17,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_18,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_19,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_20,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_21,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_22,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->checkBox_23,   &QCheckBox::stateChanged,   this,   &Channel15::emitEnableRelayButton);
+    connect(ui->lineEdit,      &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit,      &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_2,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_2,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_3,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_3,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_4,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_4,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_5,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_5,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_6,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_6,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_7,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_7,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_8,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_8,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_9,    &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_9,    &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_10,   &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_10,   &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_11,   &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_11,   &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_12,   &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_12,   &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_13,   &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_13,   &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_14,   &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_14,   &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    connect(ui->lineEdit_15,   &QLineEdit::textChanged,    this,   &Channel15::checkLineEditText);
+    connect(ui->lineEdit_15,   &QLineEdit::editingFinished,this,   &Channel15::saveCurrentText);
+    init();
 }
 
 Channel15::~Channel15()
 {
-    SuperC->Closethread(Threadsa);
+    Core->closeThread(Threadsa);
     delete ui;
 }
 
-void Channel15::Init()
+void Channel15::init()
 {
-    Objectinit();
-    Widgetlistinit();
+    objectInit();
+    widgetListInit();
 }
 
-void Channel15::Objectinit()
+void Channel15::objectInit()
 {
-    SuperC = new SuperCore(this);
-    Threadsa = new ScanSerialPort(Widget,Serial,9600,"aaf1","aaf0",Checkbox,Lineedit,"66f1","66f0");
-    connect(Threadsa,&ScanSerialPort::Signalsa,this,&Channel15::Emitdisplaylog);
-    connect(Threadsa,&ScanSerialPort::Signalsb,this,&Channel15::Emitsignalsbslot);
-    connect(Threadsa,&ScanSerialPort::Signalsc,this,&Channel15::Emitsignalscslot);
+    Core = new SuperCore(this);
+    Threadsa = new SuperScanSerial(Widget,Serial,9600,"aaf1","aaf0",Checkbox,Lineedit,"66f1","66f0");
+    connect(Threadsa,&SuperScanSerial::signalSa,this,&Channel15::emitDisplayLog);
+    connect(Threadsa,&SuperScanSerial::signalSb,this,&Channel15::emitSignalSbSlot);
+    connect(Threadsa,&SuperScanSerial::signalSc,this,&Channel15::emitSignalScSlot);
 }
 
-void Channel15::Widgetlistinit()
+void Channel15::widgetListInit()
 {
     Connectwidgetet     = {ui->pushButton_1,ui->pushButton_2,ui->pushButton_3,ui->pushButton_4,ui->pushButton_5,ui->pushButton_6,
                            ui->pushButton_7,ui->pushButton_8,ui->pushButton_9,ui->pushButton_10,ui->pushButton_11,ui->pushButton_12,
@@ -136,283 +136,283 @@ void Channel15::Widgetlistinit()
                            ui->lineEdit_9,ui->lineEdit_10,ui->lineEdit_11,ui->lineEdit_12,ui->lineEdit_13,ui->lineEdit_14,ui->lineEdit_15};
 }
 
-void Channel15::Setsetting(QString path)
+void Channel15::setSetting(QString path)
 {
     Settingpath = path;
-    Loadsetting();
-    Enablelineedit(Serial->isOpen());
+    loadSetting();
+    enableLineEdit(Serial->isOpen());
 }
 
 /*  set setting path;*/
 
-void Channel15::Closechannel1()
+void Channel15::closeChannel1()
 {
-    emit Signalcd("aa11");
+    emit signalCd("aa11");
 }
 
 /*  close gtk relay channel 1;*/
 
-void Channel15::Closechannel2()
+void Channel15::closeChannel2()
 {
-    emit Signalcd("aa21");
+    emit signalCd("aa21");
 }
 
 /*  close gtk relay channel 2;*/
 
-void Channel15::Closechannel3()
+void Channel15::closeChannel3()
 {
-    emit Signalcd("aa31");
+    emit signalCd("aa31");
 }
 
 /*  close gtk relay channel 3;*/
 
-void Channel15::Closechannel4()
+void Channel15::closeChannel4()
 {
-    emit Signalcd("aa41");
+    emit signalCd("aa41");
 }
 
 /*  close gtk relay channel 4;*/
 
-void Channel15::Closechannel5()
+void Channel15::closeChannel5()
 {
-    emit Signalcd("aa51");
+    emit signalCd("aa51");
 }
 
 /*  close gtk relay channel 5;*/
 
-void Channel15::Closechannel6()
+void Channel15::closeChannel6()
 {
-    emit Signalcd("aa61");
+    emit signalCd("aa61");
 }
 
 /*  close gtk relay channel 6;*/
 
-void Channel15::Closechannel7()
+void Channel15::closeChannel7()
 {
-    emit Signalcd("aa71");
+    emit signalCd("aa71");
 }
 
 /*  close gtk relay channel 7;*/
 
-void Channel15::Closechannel8()
+void Channel15::closeChannel8()
 {
-    emit Signalcd("aa81");
+    emit signalCd("aa81");
 }
 
 /*  close gtk relay channel 8;*/
 
-void Channel15::Closechannel9()
+void Channel15::closeChannel9()
 {
-    emit Signalcd("aa91");
+    emit signalCd("aa91");
 }
 
 /*  close gtk relay channel 9;*/
 
-void Channel15::Closechannela()
+void Channel15::closeChannela()
 {
-    emit Signalcd("aaa1");
+    emit signalCd("aaa1");
 }
 
 /*  close gtk relay channel 10;*/
 
-void Channel15::Closechannelb()
+void Channel15::closeChannelb()
 {
-    emit Signalcd("aab1");
+    emit signalCd("aab1");
 }
 
 /*  close gtk relay channel 11;*/
 
-void Channel15::Closechannelc()
+void Channel15::closeChannelc()
 {
-    emit Signalcd("aac1");
+    emit signalCd("aac1");
 }
 
 /*  close gtk relay channel 12;*/
 
-void Channel15::Closechanneld()
+void Channel15::closeChanneld()
 {
-    emit Signalcd("aad1");
+    emit signalCd("aad1");
 }
 
 /*  close gtk relay channel 13;*/
 
-void Channel15::Closechannele()
+void Channel15::closeChannele()
 {
-    emit Signalcd("aae1");
+    emit signalCd("aae1");
 }
 
 /*  close gtk relay channel 14;*/
 
-void Channel15::Closechannelf()
+void Channel15::closeChannelf()
 {
-    emit Signalcd("aaf1");
+    emit signalCd("aaf1");
 }
 
 /*  close gtk relay channel 15;*/
 
-void Channel15::Openchannel1()
+void Channel15::openChannel1()
 {
-    emit Signalcd("aa10");
+    emit signalCd("aa10");
 }
 
 /*  open gtk relay channel 1;*/
 
-void Channel15::Openchannel2()
+void Channel15::openChannel2()
 {
-    emit Signalcd("aa20");
+    emit signalCd("aa20");
 }
 
 /*  open gtk relay channel 2;*/
 
-void Channel15::Openchannel3()
+void Channel15::openChannel3()
 {
-    emit Signalcd("aa30");
+    emit signalCd("aa30");
 }
 
 /*  open gtk relay channel 3;*/
 
-void Channel15::Openchannel4()
+void Channel15::openChannel4()
 {
-    emit Signalcd("aa40");
+    emit signalCd("aa40");
 }
 
 /*  open gtk relay channel 4;*/
 
-void Channel15::Openchannel5()
+void Channel15::openChannel5()
 {
-    emit Signalcd("aa50");
+    emit signalCd("aa50");
 }
 
 /*  open gtk relay channel 5;*/
 
-void Channel15::Openchannel6()
+void Channel15::openChannel6()
 {
-    emit Signalcd("aa60");
+    emit signalCd("aa60");
 }
 
 /*  open gtk relay channel 6;*/
 
-void Channel15::Openchannel7()
+void Channel15::openChannel7()
 {
-    emit Signalcd("aa70");
+    emit signalCd("aa70");
 }
 
 /*  open gtk relay channel 7;*/
 
-void Channel15::Openchannel8()
+void Channel15::openChannel8()
 {
-    emit Signalcd("aa80");
+    emit signalCd("aa80");
 }
 
 /*  open gtk relay channel 8;*/
 
-void Channel15::Openchannel9()
+void Channel15::openChannel9()
 {
-    emit Signalcd("aa90");
+    emit signalCd("aa90");
 }
 
 /*  open gtk relay channel 9;*/
 
-void Channel15::Openchannela()
+void Channel15::openChannela()
 {
-    emit Signalcd("aaa0");
+    emit signalCd("aaa0");
 }
 
 /*  open gtk relay channel 10;*/
 
-void Channel15::Openchannelb()
+void Channel15::openChannelb()
 {
-    emit Signalcd("aab0");
+    emit signalCd("aab0");
 }
 
 /*  open gtk relay channel 11;*/
 
-void Channel15::Openchannelc()
+void Channel15::openChannelc()
 {
-    emit Signalcd("aac0");
+    emit signalCd("aac0");
 }
 
 /*  open gtk relay channel 12;*/
 
-void Channel15::Openchanneld()
+void Channel15::openChanneld()
 {
-    emit Signalcd("aad0");
+    emit signalCd("aad0");
 }
 
 /*  open gtk relay channel 13;*/
 
-void Channel15::Openchannele()
+void Channel15::openChannele()
 {
-    emit Signalcd("aae0");
+    emit signalCd("aae0");
 }
 
 /*  open gtk relay channel 14;*/
 
-void Channel15::Openchannelf()
+void Channel15::openChannelf()
 {
-    emit Signalcd("aaf0");
+    emit signalCd("aaf0");
 }
 
 /*  open gtk relay channel 15;*/
 
-void Channel15::Emitdisplaylog(QString direction,QString strtlog,QString strllog)
+void Channel15::emitDisplayLog(QString direction,QString strtlog,QString strllog)
 {
-    emit Signalca(direction,strtlog,strllog);
+    emit signalCa(direction,strtlog,strllog);
 }
 
 /*  emit signal for dislpaylog function;*/
 
-void Channel15::Emitsignalsbslot(QString strcommand)
+void Channel15::emitSignalSbSlot(QString strcommand)
 {
-    emit Signalcb(strcommand);
+    emit signalCb(strcommand);
 }
 
 /*  emit signal for thread write serial function;*/
 
-void Channel15::Emitsignalscslot()
+void Channel15::emitSignalScSlot()
 {
-    emit Signalcc();
+    emit signalCc();
 }
 
 /*  emit signal for thread finished;*/
 
-void Channel15::Emitenablerelaybutton()
+void Channel15::emitEnableRelayButton()
 {
-    emit Signalce();
+    emit signalCe();
 }
 
 /*  emit signal for enable button;*/
 
-void Channel15::Savecurrenttext()
+void Channel15::saveCurrentText()
 {
-    SuperC->Writeonlyfile(Settingpath,"15" + Spliter);
+    Core->writeOnlyFile(Settingpath,"15" + Spliter);
     QString currenttext = "";
     for(int i = 0;i < Lineeditlist.count();i++)
     {
         currenttext.append(Lineeditlist.at(i)->text() + Spliter);
     }
-    SuperC->Appendfile(Settingpath,currenttext);
+    Core->appendFile(Settingpath,currenttext);
 }
 
 /*  emit signal for thread finished;*/
 
-void Channel15::Checklineedittext(QString text)
+void Channel15::checkLineEditText(QString text)
 {
     QLineEdit *lineedit = (QLineEdit*)sender();
     if(text.contains(Spliter) && lineedit->isEnabled())
     {
         lineedit->clear();
         SuperNoteDialog *messagbox = new SuperNoteDialog(nullptr,"can not input " + Spliter + ";");
-        messagbox->Hideleftbutton();
-        messagbox->Messageinit();
+        messagbox->hideLeftButton();
+        messagbox->messageInit();
     }
 }
 
 /*  emit signal for thread finished;*/
 
-void Channel15::Loadsetting()
+void Channel15::loadSetting()
 {
-    QStringList textlist = SuperC->Readonlyfile(Settingpath).split(Spliter);
+    QStringList textlist = Core->readOnlyFile(Settingpath).split(Spliter);
     if(textlist.count() >= 16)
     {
         for(int i = 0;i < Lineeditlist.count();i++)
@@ -423,7 +423,7 @@ void Channel15::Loadsetting()
     else if(!Settingpath.isEmpty())
     {
         SuperNoteDialog *messagbox = new SuperNoteDialog(nullptr,"unknown parameter,set as new setting;");
-        messagbox->Messageinit();
+        messagbox->messageInit();
         for(int i = 0;i < Lineeditlist.count();i++)
         {
             Lineeditlist.at(i)->clear();
@@ -433,7 +433,7 @@ void Channel15::Loadsetting()
 
 /*  load setting;*/
 
-void Channel15::Enablelineedit(bool boola)
+void Channel15::enableLineEdit(bool boola)
 {
     for(int i = 0;i < Lineeditlist.count();i++)
     {

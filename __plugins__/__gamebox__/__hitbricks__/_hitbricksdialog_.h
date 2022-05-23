@@ -2,7 +2,7 @@
 #define _HITBRICKSDIALOG__H
 
 #include "__superwindow__/_superwindow_.h"
-#include "_hitbricksbox_.h"
+#include "_hitbricksdialogui_.h"
 #include "_hitbricksscene_.h"
 
 class HitBricksDialog : public SuperWindow
@@ -18,22 +18,22 @@ public:
 
 private:
 
-    HitBricksBox *Plugin        = nullptr;
-    SuperCore *SuperC           = nullptr;
+    HitBricksDialogui *Plugin   = nullptr;
+    SuperCore *Core             = nullptr;
     HitBricksScene *Mainscene   = nullptr;
     QTimer *Refreshview         = nullptr;
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Backgroundinit();
+    void backgroundInit();
 
-    void Setfocus();
+    void setFocus();
 
-    void Addsceneinit();
+    void addSceneInit();
 
 };
 

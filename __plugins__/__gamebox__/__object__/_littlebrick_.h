@@ -22,6 +22,8 @@ public:
 
     ~LittleBrick();
 
+public:
+
     QRectF boundingRect() const override;
 
     QPainterPath shape() const override;
@@ -47,21 +49,20 @@ private:
 private slots:
 
     /*  mainfunction;*/
+    void init();
 
-    void Init();
+    void colorInit();
 
-    void Colorinit();
+    void timerInit();
 
-    void Timerinit();
-
-    void Timerslot();
+    void timerSlot();
 
 signals:
 
-    void Signalba(
+    void signalBa(
             QPointF point);
 
-    void Signalbb(
+    void signalBb(
             int score);
 };
 

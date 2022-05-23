@@ -4,7 +4,7 @@ SuperGroupBox::SuperGroupBox(QWidget *parent,QLayout *layout)
     : QGroupBox(parent)
 {
     Outsidelayout = layout;
-    Init();
+    init();
 }
 
 SuperGroupBox::~SuperGroupBox()
@@ -12,22 +12,22 @@ SuperGroupBox::~SuperGroupBox()
 
 }
 
-void SuperGroupBox::Init()
+void SuperGroupBox::init()
 {
-    Objectinit();
-    Parameterinit();
+    objectTnit();
+    parameterInit();
 }
 
 /*  groupbox init;*/
 
-void SuperGroupBox::Objectinit()
+void SuperGroupBox::objectTnit()
 {
     Insidelayout = new QVBoxLayout(this);
 }
 
 /*  creat object for groupbox;*/
 
-void SuperGroupBox::Parameterinit()
+void SuperGroupBox::parameterInit()
 {
     setTitle("");
     Outsidelayout->addWidget(this);
@@ -36,7 +36,7 @@ void SuperGroupBox::Parameterinit()
 
 /*  groupbox init;*/
 
-void SuperGroupBox::Addwidget(QWidget *widget)
+void SuperGroupBox::addWidget(QWidget *widget)
 {
     Insidelayout->addWidget(widget);
 }

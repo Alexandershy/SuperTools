@@ -38,6 +38,7 @@ SOURCES += \
     __superlogger__/_superlogger_.cpp \
     __superlogger__/_supertextbrowser_.cpp \
     __supermultimedia__/_supermultimedia_.cpp \
+    __supernetwork__/_superhttp_.cpp \
     __supernetwork__/_supernetwork_.cpp \
     __supernotedialog__/_supernotedialog_.cpp \
     __supernotedialog__/_supernotedialogui_.cpp \
@@ -118,6 +119,7 @@ HEADERS += \
     __supermp3__/fmt123.h \
     __supermp3__/mpg123.h \
     __supermultimedia__/_supermultimedia_.h \
+    __supernetwork__/_superhttp_.h \
     __supernetwork__/_supernetwork_.h \
     __supernotedialog__/_supernotedialog_.h \
     __supernotedialog__/_supernotedialogui_.h \
@@ -131,8 +133,7 @@ HEADERS += \
     __superwindow__/_supertitlebutton_.h \
     __superwindow__/_superwindow_.h
 
-RESOURCES += \
-    _superapi_.qrc
+RESOURCES += _superapi_.qrc
 
 FORMS += \
     __supercolordialog__/_supercolordialogui_.ui \
@@ -148,26 +149,12 @@ FORMS += \
     __superwindow__/_superwindowui_.ui
 
 DISTFILES += \
-    __superape__/__x64__/MACDll.dll \
-    __superape__/__x64__/MACDll.lib \
-    __superape__/__x86__/MACDll.dll \
-    __superape__/__x86__/MACDll.lib \
-    __superfftw__/__x64__/libfftw3-3.dll \
-    __superfftw__/__x64__/libfftw3-3.lib \
-    __superfftw__/__x64__/libfftw3f-3.dll \
-    __superfftw__/__x64__/libfftw3f-3.lib \
-    __superfftw__/__x64__/libfftw3l-3.dll \
-    __superfftw__/__x64__/libfftw3l-3.lib \
-    __superfftw__/__x86__/libfftw3-3.dll \
-    __superfftw__/__x86__/libfftw3-3.lib \
-    __superfftw__/__x86__/libfftw3f-3.dll \
-    __superfftw__/__x86__/libfftw3f-3.lib \
-    __superfftw__/__x86__/libfftw3l-3.dll \
-    __superfftw__/__x86__/libfftw3l-3.lib \
-    __superflac__/__x64__/libFLAC_dynamic.dll \
-    __superflac__/__x64__/libFLAC_dynamic.lib \
-    __superflac__/__x86__/libFLAC_dynamic.dll \
-    __superflac__/__x86__/libFLAC_dynamic.lib \
+    __superape__/__windows__/MACDll.dll \
+    __superape__/__windows__/MACDll.lib \
+    __superfftw__/__windows__/fftw3.dll \
+    __superfftw__/__windows__/fftw3.lib \
+    __superflac__/__windows__/flac.dll \
+    __superflac__/__windows__/flac.lib \
     __supericon__/_appraiserchart_.svg \
     __supericon__/_backward_.svg \
     __supericon__/_bclose_.svg \
@@ -282,18 +269,24 @@ DISTFILES += \
     __supericon__/_wmaximize_.svg \
     __supericon__/_wminimize_.svg \
     __supericon__/_wrestoredown_.svg \
-    __supermp3__/__x64__/libmpg123-0.dll \
-    __supermp3__/__x64__/libmpg123-0.lib \
-    __supermp3__/__x86__/libmpg123-0.dll \
-    __supermp3__/__x86__/libmpg123-0.lib \
-    __superplot__/_superplot_.cpp.old \
-    __superplot__/_superplot_.h.old \
+    __supermp3__/__windows__/libmpg123-0.dll \
+    __supermp3__/__windows__/libmpg123-0.lib \
     _superapi_.html \
     _superapi_.pdf
 
-LIBS += -luser32
-LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\fftw3.lib"
-LIBS += "C:\repos\SuperTools-Source\__api__\__superape__\__x64__\MACDll.lib"
-LIBS += "C:\repos\SuperTools-Source\__api__\__supermp3__\__x64__\libmpg123-0.lib"
-LIBS += "C:\repos\SuperTools-Source\__api__\__superflac__\__x64__\libFLAC_dynamic.lib"
+win32
+{
+    LIBS += -luser32
+    LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__windows__\fftw3.lib"
+    LIBS += "C:\repos\SuperTools-Source\__api__\__superape__\__windows__\MACDll.lib"
+    LIBS += "C:\repos\SuperTools-Source\__api__\__supermp3__\__windows__\libmpg123-0.lib"
+    LIBS += "C:\repos\SuperTools-Source\__api__\__superflac__\__windows__\flac.lib"
+}
+
+unix
+{
+
+}
+
+
 

@@ -10,58 +10,58 @@ SuperTab* Interface::Loadplugin()
 ScannerBox::ScannerBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("ScannerBox");
-    Setgroupbox(2,1);
-    Setstretch({1,99},{100});
-    Init();
+    readMe("ScannerBox");
+    setGroupBox(2,1);
+    setStretch({1,99},{100});
+    init();
 }
 
 ScannerBox::~ScannerBox()
 {
-    SuperS->Closeserial(Serial);
-    SuperC->Closethread(Threadsa);
+    Serial->closeSerial(Serialport);
+    Core->closeThread(Threadsa);
     delete Serial;
 }
 
-void ScannerBox::Init()
+void ScannerBox::init()
 {
-    Objectinit();
-    Timerinit();
-    Widgetlistinit();
-    Pictureinit();
-    Functioninit();
-    Displayscannerpicture();
-    Sliderinit();
+    objectInit();
+    timerInit();
+    widgetListInit();
+    pictureInit();
+    functionInit();
+    displayScannerPicture();
+    sliderInit();
 }
 
-void ScannerBox::Objectinit()
+void ScannerBox::objectInit()
 {
-    SuperS = new SuperSerial(this);
-    Serial  = new QSerialPort(this);
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Serial = new SuperSerial(this);
+    Serialport  = new QSerialPort(this);
+    Modulea = new ScannerModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
     Logger = new SuperLogger(this,Leftgroupboxlist.at(1)->Insidelayout);
-    Moduleb = new ModuleB(this,Rightgroupboxlist.at(0)->Insidelayout);
-    connect(Serial,                         &QSerialPort::readyRead,    this,   &ScannerBox::Readyreadslot);
-    connect(Modulea->ui->pushButton_58,     &QPushButton::clicked,      this,   &ScannerBox::Getserialport);
-    connect(Modulea->ui->comboBox_11,       &QComboBox::textActivated,  this,   &ScannerBox::Enableconnectbutton);
-    connect(Modulea->ui->pushButton_59,     &QPushButton::clicked,      this,   &ScannerBox::Connectserialport);
-    connect(Modulea->ui->pushButton_60,     &QPushButton::clicked,      this,   &ScannerBox::Scanscannerport);
-    connect(Modulea->ui->pushButton_61,     &QPushButton::clicked,      this,   &ScannerBox::Disconnectserialport);
-    connect(Modulea->ui->pushButton_62,     &QPushButton::clicked,      this,   &ScannerBox::Openscanner);
-    connect(Modulea->ui->pushButton_63,     &QPushButton::clicked,      this,   &ScannerBox::Closescanner);
-    connect(Moduleb->ui->comboBox_10,       &QComboBox::textActivated,  this,   &ScannerBox::Displayscannerpicture);
-    connect(Moduleb->ui->comboBox_12,       &QComboBox::textActivated,  this,   &ScannerBox::Displayscannerfunction);
-    connect(Moduleb->ui->horizontalSlider,  &QSlider::valueChanged,     this,   &ScannerBox::Changepicturesize);
+    Moduleb = new ScannerModuleB(this,Rightgroupboxlist.at(0)->Insidelayout);
+    connect(Serialport,                     &QSerialPort::readyRead,    this,   &ScannerBox::readyReadSlot);
+    connect(Modulea->ui->pushButton_58,     &QPushButton::clicked,      this,   &ScannerBox::getSerialPort);
+    connect(Modulea->ui->comboBox_11,       &QComboBox::textActivated,  this,   &ScannerBox::enableConnectButton);
+    connect(Modulea->ui->pushButton_59,     &QPushButton::clicked,      this,   &ScannerBox::connectSerialPort);
+    connect(Modulea->ui->pushButton_60,     &QPushButton::clicked,      this,   &ScannerBox::scanScannerPort);
+    connect(Modulea->ui->pushButton_61,     &QPushButton::clicked,      this,   &ScannerBox::disconnectSerialPort);
+    connect(Modulea->ui->pushButton_62,     &QPushButton::clicked,      this,   &ScannerBox::openScanner);
+    connect(Modulea->ui->pushButton_63,     &QPushButton::clicked,      this,   &ScannerBox::closeScanner);
+    connect(Moduleb->ui->comboBox_10,       &QComboBox::textActivated,  this,   &ScannerBox::displayScannerPicture);
+    connect(Moduleb->ui->comboBox_12,       &QComboBox::textActivated,  this,   &ScannerBox::displayScannerFunction);
+    connect(Moduleb->ui->horizontalSlider,  &QSlider::valueChanged,     this,   &ScannerBox::changePictureSize);
 }
 
-void ScannerBox::Timerinit()
+void ScannerBox::timerInit()
 {
     Timerca = new QTimer(this);
     Timerca->setInterval(1000);
-    connect(Timerca,&QTimer::timeout,this,&ScannerBox::Timercaslot);
+    connect(Timerca,&QTimer::timeout,this,&ScannerBox::timerCaSlot);
 }
 
-void ScannerBox::Widgetlistinit()
+void ScannerBox::widgetListInit()
 {
     Connectwidgetet     = {Modulea->ui->pushButton_61,Modulea->ui->pushButton_62,Modulea->ui->pushButton_63};
     Connectwidgetef     = {Modulea->ui->pushButton_58,Modulea->ui->pushButton_59,Modulea->ui->pushButton_60,Modulea->ui->comboBox_11};
@@ -69,7 +69,7 @@ void ScannerBox::Widgetlistinit()
     Disconnectwidgetef  = {Modulea->ui->pushButton_61,Modulea->ui->pushButton_62,Modulea->ui->pushButton_63};
 }
 
-void ScannerBox::Pictureinit()
+void ScannerBox::pictureInit()
 {
     Scannerpicturelist.append(":/__supericon__/_scanner_.png");
     Scannerpicturelist.append(":/__supericon__/_fs361415r_.png");
@@ -90,7 +90,7 @@ void ScannerBox::Pictureinit()
     Picture = {Scannerpicturelist,Fs361415rpicturelist,Honeywellpicturelist};
 }
 
-void ScannerBox::Functioninit()
+void ScannerBox::functionInit()
 {
     Scannerfunction.append("no scanner function");
     Fs361415rfunction.append("select scanner function");
@@ -109,107 +109,107 @@ void ScannerBox::Functioninit()
     Function = {Scannerfunction,Fs361415rfunction,Honeywellfunction};
 }
 
-void ScannerBox::Sliderinit()
+void ScannerBox::sliderInit()
 {
     Timercb = new QTimer(this);
     Timercb->setInterval(1000);
-    connect(Timercb,&QTimer::timeout,this,&ScannerBox::Timercbslot);
+    connect(Timercb,&QTimer::timeout,this,&ScannerBox::timerCbSlot);
     Slidermaxvalue = Moduleb->ui->horizontalSlider->maximum();
     Timercb->start();
 }
 
 /*  slider init;*/
 
-void ScannerBox::Getserialport()
+void ScannerBox::getSerialPort()
 {
-    SuperS->Getserialport(&Serialnamelist,Modulea->ui->comboBox_11);
-    SuperS->Enableserialcombobox(&Serialnamelist,Modulea->ui->comboBox_11,Modulea->ui->comboBox_11);
-    SuperS->Enableconnectbutton(Modulea->ui->comboBox_11,Modulea->ui->comboBox_35,Modulea->ui->pushButton_59);
+    Serial->getSerialPort(&Serialnamelist,Modulea->ui->comboBox_11);
+    Serial->enableSerialComboBox(&Serialnamelist,Modulea->ui->comboBox_11,Modulea->ui->comboBox_11);
+    Serial->enableConnectButton(Modulea->ui->comboBox_11,Modulea->ui->comboBox_35,Modulea->ui->pushButton_59);
     if(Modulea->ui->comboBox_11->currentText().isEmpty())
     {
-        Logger->Displaylog("N","can not find any serial device","Getserialport function run completed");
+        Logger->displayLog("N","can not find any serial device","Getserialport function run completed");
     }
     else
     {
         for(int i = 0;i < Modulea->ui->comboBox_11->count();i++)
         {
-            Logger->Displaylog("N",Modulea->ui->comboBox_11->itemText(i),"Getserialport function run completed");
+            Logger->displayLog("N",Modulea->ui->comboBox_11->itemText(i),"Getserialport function run completed");
         }
     }
 }
 
 /*  get windows system serial port and add item to combobox, enable connect button or not;*/
 
-bool ScannerBox::Enableconnectbutton()
+bool ScannerBox::enableConnectButton()
 {
-    return SuperS->Enableconnectbutton(Modulea->ui->comboBox_11,Modulea->ui->comboBox_35,Modulea->ui->pushButton_59);
+    return Serial->enableConnectButton(Modulea->ui->comboBox_11,Modulea->ui->comboBox_35,Modulea->ui->pushButton_59);
 }
 
 /*  is enable serial port connect button;*/
 
-void ScannerBox::Connectserialport()
+void ScannerBox::connectSerialPort()
 {
-    SuperS->Connectserialport(Serial,Serialnamelist[Modulea->ui->comboBox_11->currentIndex()],Modulea->ui->comboBox_35->currentText().toInt());
-    if(Serial->isOpen())
+    Serial->connectSerialPort(Serialport,Serialnamelist[Modulea->ui->comboBox_11->currentIndex()],Modulea->ui->comboBox_35->currentText().toInt());
+    if(Serialport->isOpen())
     {
-        SuperC->Enablewidgetlist(&Connectwidgetet,true);
-        SuperC->Enablewidgetlist(&Connectwidgetef,false);
+        Core->enableWidgetList(&Connectwidgetet,true);
+        Core->enableWidgetList(&Connectwidgetef,false);
         Timerca->start();
-        Logger->Displaylog("N","connect " + Modulea->ui->comboBox_11->currentText() + " and set baudrate as " + Modulea->ui->comboBox_35->currentText() + " success","connectserialport function run completed");
+        Logger->displayLog("N","connect " + Modulea->ui->comboBox_11->currentText() + " and set baudrate as " + Modulea->ui->comboBox_35->currentText() + " success","connectSerialPort function run completed");
     }
     else
     {
-        Logger->Displaylog("N","connect " + Modulea->ui->comboBox_11->currentText() + " and set baudrate as " + Modulea->ui->comboBox_35->currentText() + " failed","connectserialport function run completed");
+        Logger->displayLog("N","connect " + Modulea->ui->comboBox_11->currentText() + " and set baudrate as " + Modulea->ui->comboBox_35->currentText() + " failed","connectSerialPort function run completed");
     }
 }
 
 /*  connect serial port and operate ui,start new thread for check connected device;*/
 
-void ScannerBox::Disconnectserialport()
+void ScannerBox::disconnectSerialPort()
 {
-    Serial->close();
-    if(!Serial->isOpen())
+    Serialport->close();
+    if(!Serialport->isOpen())
     {
-        SuperC->Enablewidgetlist(&Disconnectwidgetet,true);
-        SuperC->Enablewidgetlist(&Disconnectwidgetef,false);
+        Core->enableWidgetList(&Disconnectwidgetet,true);
+        Core->enableWidgetList(&Disconnectwidgetef,false);
         Timerca->stop();
-        Logger->Displaylog("N",this->objectName() + " has been disconnected","disconnectserialport function run completed");
+        Logger->displayLog("N",this->objectName() + " has been disconnected","disconnectSerialPort function run completed");
     }
 }
 
 /*  disconnect serial port and operate ui*/
 
-void ScannerBox::Openscanner()
+void ScannerBox::openScanner()
 {
     Modulea->ui->lineEdit_35->setText("16540d");
-    SuperS->Writeserial(Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Serial,Modulea->ui->lineEdit_35);
-    Logger->Displaylog("W","16540d","Openscanner function run completed");
+    Serial->writeSerial(Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Serialport,Modulea->ui->lineEdit_35);
+    Logger->displayLog("W","16540d","Openscanner function run completed");
 }
 
 /*  write 16540d to serial port;*/
 
-void ScannerBox::Closescanner()
+void ScannerBox::closeScanner()
 {
     Modulea->ui->lineEdit_35->setText("16550d");
-    SuperS->Writeserial(Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Serial,Modulea->ui->lineEdit_35);
-    Logger->Displaylog("W","16550d","Openscanner function run completed");
+    Serial->writeSerial(Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Modulea->ui->checkBox_31,Serialport,Modulea->ui->lineEdit_35);
+    Logger->displayLog("W","16550d","Openscanner function run completed");
 }
 
 /*  write 16550d to serial port;*/
 
-void ScannerBox::Scanscannerport()
+void ScannerBox::scanScannerPort()
 {
     Modulea->ui->pushButton_60->setEnabled(false);
     Threadsa = new ScanPort(115200);
-    connect(Threadsa,&ScanPort::Signalsa,Logger,&SuperLogger::Displaylog);
-    connect(Threadsa,&ScanPort::Signalsb,this,&ScannerBox::Signalsbsolt);
+    connect(Threadsa,&ScanPort::signalSa,Logger,&SuperLogger::displayLog);
+    connect(Threadsa,&ScanPort::signalSb,this,&ScannerBox::signalSbSlot);
     connect(Threadsa,&QThread::finished,Threadsa,&QObject::deleteLater);
     Threadsa->start();
 }
 
 /*  start a new thread to scan scanner;*/
 
-void ScannerBox::Displayscanner(bool boola,QString strpicturepath,QStringList Scanneritem)
+void ScannerBox::displayScanner(bool boola,QString strpicturepath,QStringList Scanneritem)
 {
     Moduleb->ui->comboBox_12->clear();
     Moduleb->ui->comboBox_12->setEnabled(boola);
@@ -218,55 +218,55 @@ void ScannerBox::Displayscanner(bool boola,QString strpicturepath,QStringList Sc
     Pixmap.convertFromImage(QImage(strpicturepath));
     Moduleb->ui->horizontalSlider->setValue(Moduleb->ui->horizontalSlider->maximum());
     Moduleb->ui->label_63->setPixmap(Pixmap);
-    Logger->Displaylog("N",strpicturepath,"Timercaslot function run completed");
+    Logger->displayLog("N",strpicturepath,"Timercaslot function run completed");
 }
 
 /*  display scanner picture and add its function api;*/
 
-void ScannerBox::Displayscannerpicture()
+void ScannerBox::displayScannerPicture()
 {
-    Displayscanner(true,Scannerpicturelist.at(Moduleb->ui->comboBox_10->currentIndex()),Function.at(Moduleb->ui->comboBox_10->currentIndex()));
+    displayScanner(true,Scannerpicturelist.at(Moduleb->ui->comboBox_10->currentIndex()),Function.at(Moduleb->ui->comboBox_10->currentIndex()));
 }
 
 /*  display scanner picture and add its function;*/
 
-void ScannerBox::Displayfunction(QString strpicturepath)
+void ScannerBox::displayFunction(QString strpicturepath)
 {
     Moduleb->ui->comboBox_12->setEnabled(true);
     Moduleb->ui->horizontalSlider->setEnabled(true);
     Pixmap.convertFromImage(QImage(strpicturepath));
     Moduleb->ui->label_63->setPixmap(Pixmap.scaled(Moduleb->ui->label_63->width(), Moduleb->ui->label_63->height(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    Logger->Displaylog("N",strpicturepath,"Timercaslot function run completed");
+    Logger->displayLog("N",strpicturepath,"Timercaslot function run completed");
 }
 
 /*  display function picture and add its function api;*/
 
-void ScannerBox::Displayscannerfunction()
+void ScannerBox::displayScannerFunction()
 {
     int scannerindex = Moduleb->ui->comboBox_10->currentIndex();
     int functionindex = Moduleb->ui->comboBox_12->currentIndex();
     QStringList tempa = Picture.at(scannerindex);
     QStringList tempb = Function.at(scannerindex);
-    Displayfunction(tempa.at(functionindex));
+    displayFunction(tempa.at(functionindex));
 }
 
 /*  display function picture and add its function;*/
 
-void ScannerBox::Timercaslot()
+void ScannerBox::timerCaSlot()
 {
-    if(SuperS->Checkserialdevice(Serial,Modulea->ui->comboBox_11->currentText()) == false)
+    if(Serial->checkSerialDevice(Serialport,Modulea->ui->comboBox_11->currentText()) == false)
     {
-        Disconnectserialport();
-        Getserialport();
-        Logger->Displaylog("N","serial port has been removed","Timercaslot function run completed");
-        Enableconnectbutton();
+        disconnectSerialPort();
+        getSerialPort();
+        Logger->displayLog("N","serial port has been removed","Timercaslot function run completed");
+        enableConnectButton();
         Timerca->stop();
     }
 }
 
 /*  receive result from signalc,check serial port is connect or not;*/
 
-void ScannerBox::Timercbslot()
+void ScannerBox::timerCbSlot()
 {
     if(Moduleb->ui->label_63->height() != 30 && Moduleb->ui->label_63->width() != 100)
     {
@@ -277,7 +277,7 @@ void ScannerBox::Timercbslot()
 
 /*  cal label size;*/
 
-void ScannerBox::Signalsbsolt()
+void ScannerBox::signalSbSlot()
 {
     Threadsa = nullptr;
     Modulea->ui->pushButton_60->setEnabled(true);
@@ -285,15 +285,15 @@ void ScannerBox::Signalsbsolt()
 
 /*  receive signal from signalsb,enable pushbutton;*/
 
-void ScannerBox::Readyreadslot()
+void ScannerBox::readyReadSlot()
 {
-    QByteArray result = SuperS->Readdatastream(Serial,Modulea->ui->checkBox);
-    Logger->Displaylog("R",result,"Readyreadslot function receive result completed");
+    QByteArray result = Serial->readDataStream(Serialport,Modulea->ui->checkBox);
+    Logger->displayLog("R",result,"Readyreadslot function receive result completed");
 }
 
 /*  receive singalr result, and display on textbrowser;*/
 
-void ScannerBox::Changepicturesize()
+void ScannerBox::changePictureSize()
 {
     double percent = double(Moduleb->ui->horizontalSlider->value()) / Slidermaxvalue;
     Moduleb->ui->lineEdit->setText(QString::number(100 * percent,'f',0) + "%");
@@ -306,25 +306,25 @@ void ScannerBox::Changepicturesize()
 ScanPort::ScanPort(int baudrate)
 {
     Baudrate = baudrate;
-    Init();
+    init();
 }
 
 ScanPort::~ScanPort()
 {
-    delete SuperS;
+    delete Serial;
 }
 
-void ScanPort::Init()
+void ScanPort::init()
 {
-    Objectinit();
+    objectInit();
 }
 
-void ScanPort::Objectinit()
+void ScanPort::objectInit()
 {
-    SuperS = new SuperSerial();
+    Serial = new SuperSerial();
 }
 
-void ScanPort::Initrun()
+void ScanPort::initRun()
 {
     Serialportname = "no device ";
     Listname.clear();
@@ -336,66 +336,66 @@ void ScanPort::Initrun()
 
 void ScanPort::run()
 {
-    Initrun();
+    initRun();
     foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
     {
         QString Portname = info.portName();
         Listname.append(Portname);
-        emit Signalsa("N","add " + Portname + " completed","Scanscannerport function running...");
+        emit signalSa("N","add " + Portname + " completed","Scanscannerport function running...");
     }
     if(Listname.isEmpty())
     {
-        emit Signalsa("N","have not found serial port","Scanscannerport function run completed");
+        emit signalSa("N","have not found serial port","Scanscannerport function run completed");
     }
     else
     {
-        emit Signalsa("N","all serial port add completed","scanserialport function running...");
-        Connectserialport();
+        emit signalSa("N","all serial port add completed","scanserialport function running...");
+        connectSerialPort();
     }
-    emit Signalsb();
-    Releaseobject(&Seriallista);
-    emit Signalsa("N","all serial port scan completed",Serialportname + " is scanner");
+    emit signalSb();
+    releaseObject(&Seriallista);
+    emit signalSa("N","all serial port scan completed",Serialportname + " is scanner");
 }
 
 /*  run scan scanner thread;*/
 
-void ScanPort::Connectserialport()
+void ScanPort::connectSerialPort()
 {
     for(int i = 0;i < Listname.count();i++)
     {
         QString Portname = Listname.at(i);
         Seriallista.append(new QSerialPort());
-        emit Signalsa("N","try to connect " + Portname + "...","Connectserialport function running...");
-        SuperS->Connectserialport(Seriallista.at(i),Portname,Baudrate);
+        emit signalSa("N","try to connect " + Portname + "...","connectSerialPort function running...");
+        Serial->connectSerialPort(Seriallista.at(i),Portname,Baudrate);
         if(Seriallista.at(i)->isOpen())
         {
-            emit Signalsa("N","connect " + Portname + " completed","Connectserialport function running...");
+            emit signalSa("N","connect " + Portname + " completed","connectSerialPort function running...");
             Seriallistb.append(Seriallista.at(i));
         }
         else
         {
-            emit Signalsa("N","connect " + Portname + " failed","Connectserialport function running...");
+            emit signalSa("N","connect " + Portname + " failed","connectSerialPort function running...");
         }
     }
     if(!Seriallistb.isEmpty())
     {
-        emit Signalsa("N","have 10 seconds scan any info QR!!","Connectserialport function running...");
-        Receivedata();
+        emit signalSa("N","have 10 seconds scan any info QR!!","connectSerialPort function running...");
+        receiveData();
     }
     else
     {
-        emit Signalsa("N","no port could return value","Connectserialport function running...");
+        emit signalSa("N","no port could return value","connectSerialPort function running...");
     }
 }
 
 /*  connect all serial port;*/
 
-void ScanPort::Receivedata()
+void ScanPort::receiveData()
 {
     QString temp = "";
     for(int i = 0;i < 10;i++)
     {
-        emit Signalsa("N","time remains " + QString::number(10 - i) + " seconds","Receivedata function running...");
+        emit signalSa("N","time remains " + QString::number(10 - i) + " seconds","Receivedata function running...");
         QThread::msleep(1000);
         if(!temp.isEmpty())
         {
@@ -411,7 +411,7 @@ void ScanPort::Receivedata()
                 {
                     temp = Seriallistb.at(j)->readAll();
                     Serialportname = Seriallistb.at(j)->portName();
-                    emit Signalsa("N",Serialportname + " is scanner",Serialportname + " is scanner");
+                    emit signalSa("N",Serialportname + " is scanner",Serialportname + " is scanner");
                     break;
                 }
             }
@@ -421,14 +421,14 @@ void ScanPort::Receivedata()
 
 /*  receive data form all serial port;*/
 
-void ScanPort::Releaseobject(QVector<QSerialPort*> *seriallist)
+void ScanPort::releaseObject(QVector<QSerialPort*> *seriallist)
 {
     for(int i = 0;i < seriallist->count();i++)
     {
         if(seriallist->at(i)->isOpen())
         {
             seriallist->at(i)->close();
-            emit Signalsa("N","close " + seriallist->at(i)->portName() + " completed","Releaseobject function run completed");
+            emit signalSa("N","close " + seriallist->at(i)->portName() + " completed","Releaseobject function run completed");
         }
         delete seriallist->at(i);
     }

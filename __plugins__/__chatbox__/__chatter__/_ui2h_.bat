@@ -1,1 +1,0 @@
-uic -o _chatter__ui_.h _chatter_.ui

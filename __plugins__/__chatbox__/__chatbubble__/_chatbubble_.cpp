@@ -4,9 +4,9 @@ ChatBubble::ChatBubble(QWidget *parent,QString message)
     : QTextEdit(parent)
 {
     Parent = parent;
-    Init();
+    init();
     setHtml(message);
-    Adjustwidth();
+    adjustWidth();
 }
 
 ChatBubble::~ChatBubble()
@@ -14,7 +14,7 @@ ChatBubble::~ChatBubble()
 
 }
 
-void ChatBubble::Init()
+void ChatBubble::init()
 {
     setReadOnly(true);
     setAlignment(Qt::AlignCenter);
@@ -30,7 +30,7 @@ void ChatBubble::Init()
     setStyleSheet("QTextEdit{background-color:rgb(169, 189, 255);margin:0px;}");
 }
 
-void ChatBubble::Adjustwidth()
+void ChatBubble::adjustWidth()
 {
     int maxwidth = 2 * Parent->width() / 3;
     QTextDocument *document = this->document();
@@ -48,7 +48,7 @@ void ChatBubble::Adjustwidth()
 
 /*  adjust bubble width api;*/
 
-void ChatBubble::Adjustheight()
+void ChatBubble::adjustHeight()
 {
     int height = verticalScrollBar()->maximum() - verticalScrollBar()->minimum() + verticalScrollBar()->pageStep();
     setMinimumHeight(height);

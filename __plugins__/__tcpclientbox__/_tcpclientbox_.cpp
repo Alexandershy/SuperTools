@@ -10,47 +10,47 @@ SuperTab* Interface::Loadplugin()
 TcpClientBox::TcpClientBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("TcpClientBox");
-    Setgroupbox(2,1);
-    Setstretch({1,99},{100});
-    Init();
+    readMe("TcpClientBox");
+    setGroupBox(2,1);
+    setStretch({1,99},{100});
+    init();
 }
 
 TcpClientBox::~TcpClientBox()
 {
-    SuperN->Closetcpclient(Tcpsocket);
+    Network->closeTcpClient(Tcpsocket);
 }
 
-void TcpClientBox::Init()
+void TcpClientBox::init()
 {
-    Objectinit();
-    Parameterinit();
-    Widgetlistinit();
-    Tcpsocketinit();
+    objectInit();
+    parameterInit();
+    widgetListInit();
+    tcpsocketInit();
 }
 
-void TcpClientBox::Objectinit()
+void TcpClientBox::objectInit()
 {
-    SuperN = new SuperNetwork(this);
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
-    Moduleb = new ModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
+    Network = new SuperNetwork(this);
+    Modulea = new TcpClientModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Moduleb = new TcpClientModuleB(this,Leftgroupboxlist.at(1)->Insidelayout);
     Logger = new SuperLogger(this,Rightgroupboxlist.at(0)->Insidelayout);
-    connect(Modulea->ui->pushButton,    &QPushButton::clicked,          this,   &TcpClientBox::Getlocalipaddress);
-    connect(Modulea->ui->pushButton_37, &QPushButton::clicked,          this,   &TcpClientBox::Connecttcpserver);
-    connect(Modulea->ui->pushButton_38, &QPushButton::clicked,          this,   &TcpClientBox::Disconnecttcpserver);
-    connect(Moduleb->ui->spinBox,       &QSpinBox::editingFinished,     this,   &TcpClientBox::Adjustsenderbox);
-    connect(Modulea->ui->comboBox,      &QComboBox::currentTextChanged, this,   &TcpClientBox::Enableconnecttcpserver);
-    connect(Modulea->ui->comboBox_2,    &QComboBox::currentTextChanged, this,   &TcpClientBox::Enableconnecttcpserver);
-    connect(Modulea->ui->checkBox_2,    &QCheckBox::stateChanged,       this,   &TcpClientBox::Enableaddn);
-    connect(Modulea->ui->checkBox_1,    &QCheckBox::stateChanged,       this,   &TcpClientBox::Enableaddr);
-    connect(Modulea->ui->checkBox_3,    &QCheckBox::stateChanged,       this,   &TcpClientBox::Changetypea);
-    connect(Modulea->ui->checkBox_4,    &QCheckBox::stateChanged,       this,   &TcpClientBox::Changetypeb);
+    connect(Modulea->ui->pushButton,    &QPushButton::clicked,          this,   &TcpClientBox::getLocalIpAddress);
+    connect(Modulea->ui->pushButton_37, &QPushButton::clicked,          this,   &TcpClientBox::connectTcpServer);
+    connect(Modulea->ui->pushButton_38, &QPushButton::clicked,          this,   &TcpClientBox::disconnectTcpServer);
+    connect(Moduleb->ui->spinBox,       &QSpinBox::editingFinished,     this,   &TcpClientBox::adjustSenderBox);
+    connect(Modulea->ui->comboBox,      &QComboBox::currentTextChanged, this,   &TcpClientBox::enableConnectTcpServer);
+    connect(Modulea->ui->comboBox_2,    &QComboBox::currentTextChanged, this,   &TcpClientBox::enableConnectTcpServer);
+    connect(Modulea->ui->checkBox_2,    &QCheckBox::stateChanged,       this,   &TcpClientBox::enableAddn);
+    connect(Modulea->ui->checkBox_1,    &QCheckBox::stateChanged,       this,   &TcpClientBox::enableAddr);
+    connect(Modulea->ui->checkBox_3,    &QCheckBox::stateChanged,       this,   &TcpClientBox::changeTypea);
+    connect(Modulea->ui->checkBox_4,    &QCheckBox::stateChanged,       this,   &TcpClientBox::changeTypeb);
 }
 
-void TcpClientBox::Parameterinit()
+void TcpClientBox::parameterInit()
 {
-    Logger->Addtransfercodec();
-    Stringlist = SuperC->Readonlyfile(Cachefile).split(Spliter);
+    Logger->addTransferCodec();
+    Stringlist = Core->readOnlyFile(Cachefile).split(Spliter);
     if(Stringlist.count() < Moduleb->ui->spinBox->maximum())
     {
         Stringlist.clear();
@@ -59,12 +59,12 @@ void TcpClientBox::Parameterinit()
             Stringlist.append("");
         }
     }
-    Adjustsenderbox();
+    adjustSenderBox();
 }
 
 /*  read cache file to stringlist;*/
 
-void TcpClientBox::Widgetlistinit()
+void TcpClientBox::widgetListInit()
 {
     Connectwidgetet     = {Modulea->ui->pushButton_38,Modulea->ui->checkBox_1,Modulea->ui->checkBox_2,Modulea->ui->checkBox_3,Modulea->ui->checkBox_4};
     Connectwidgetef     = {Modulea->ui->pushButton_37,Modulea->ui->pushButton,Modulea->ui->comboBox,Modulea->ui->comboBox_2,Moduleb->ui->spinBox};
@@ -72,51 +72,51 @@ void TcpClientBox::Widgetlistinit()
     Disconnectwidgetef  = {Modulea->ui->pushButton_38,Modulea->ui->checkBox_1,Modulea->ui->checkBox_2,Modulea->ui->checkBox_3,Modulea->ui->checkBox_4};
 }
 
-void TcpClientBox::Tcpsocketinit()
+void TcpClientBox::tcpsocketInit()
 {
     Tcpsocket = new QTcpSocket(this);
-    connect(Tcpsocket,&QTcpSocket::readyRead,   this,   &TcpClientBox::Readdata);
-    connect(Tcpsocket,&QTcpSocket::disconnected,this,   &TcpClientBox::Abnormaldisconnect);
+    connect(Tcpsocket,&QTcpSocket::readyRead,   this,   &TcpClientBox::readData);
+    connect(Tcpsocket,&QTcpSocket::disconnected,this,   &TcpClientBox::abnormalDisconnect);
 }
 
 /*  creat socket and connect its slot;*/
 
-void TcpClientBox::Getlocalipaddress()
+void TcpClientBox::getLocalIpAddress()
 {
     Modulea->ui->comboBox->clear();
     Networkinterface = QNetworkInterface::allInterfaces();
     for(int i = 0;i < Networkinterface.count();i++)
     {
         Networkaddressentry = Networkinterface.at(i).addressEntries();
-        SuperN->Getlocalipaddress(&Networkaddressentry,Modulea->ui->comboBox);
+        Network->getLocalIpAddress(&Networkaddressentry,Modulea->ui->comboBox);
     }
-    Enablelistenport();
+    enableListenPort();
 }
 
 /*  add system ipddress;*/
 
-void TcpClientBox::Enablelistenport()
+void TcpClientBox::enableListenPort()
 {
     if(Modulea->ui->comboBox->count() > 0)
     {
         Modulea->ui->comboBox_2->setEnabled(true);
         for(int i = 0;i < Modulea->ui->comboBox->count();i++)
         {
-            Logger->Displaylog("N",Modulea->ui->comboBox->itemText(i),"Enablelistenport function run completed");
+            Logger->displayLog("N",Modulea->ui->comboBox->itemText(i),"Enablelistenport function run completed");
         }
     }
     else
     {
-        Logger->Displaylog("N","no found ip address;","Enablelistenport function run completed");
+        Logger->displayLog("N","no found ip address;","Enablelistenport function run completed");
     }
 }
 
 /*  enable listen port combobox;*/
 
-void TcpClientBox::Enableconnecttcpserver()
+void TcpClientBox::enableConnectTcpServer()
 {
     bool boolb = false;
-    bool boola = SuperC->Checkiprules(Modulea->ui->comboBox->currentText());
+    bool boola = Core->checkIpRules(Modulea->ui->comboBox->currentText());
     Modulea->ui->comboBox_2->currentText().toInt(&boolb);
     if(boola == true && boolb == true)
     {
@@ -126,170 +126,170 @@ void TcpClientBox::Enableconnecttcpserver()
 
 /*  Enable connect tcpserver button or not*/
 
-void TcpClientBox::Connecttcpserver()
+void TcpClientBox::connectTcpServer()
 {
-    bool boola = SuperN->Connecttcpserver(Tcpsocket,Modulea->ui->comboBox->currentText(),Modulea->ui->comboBox_2->currentText().toInt(),1000);
+    bool boola = Network->connectTcpServer(Tcpsocket,Modulea->ui->comboBox->currentText(),Modulea->ui->comboBox_2->currentText().toInt(),1000);
     if(boola)
     {
-        SuperC->Enablewidgetlist(&Connectwidgetet,true);
-        SuperC->Enablewidgetlist(&Connectwidgetef,false);
-        Enablesenderbox(true);
-        Logger->Displaylog("N","tcpclient has been connected","Connecttcpserver function run completed");
+        Core->enableWidgetList(&Connectwidgetet,true);
+        Core->enableWidgetList(&Connectwidgetef,false);
+        enableSenderBox(true);
+        Logger->displayLog("N","tcpclient has been connected","Connecttcpserver function run completed");
     }
     else
     {
-        Logger->Displaylog("N","connect " + Modulea->ui->comboBox->currentText() + " failed","Connecttcpserver function run completed;");
+        Logger->displayLog("N","connect " + Modulea->ui->comboBox->currentText() + " failed","Connecttcpserver function run completed;");
     }
 }
 
 /*  use current setting connect to server;*/
 
-void TcpClientBox::Disconnecttcpserver()
+void TcpClientBox::disconnectTcpServer()
 {
-    SuperN->Disconnecttcpserver(Tcpsocket,1000);
+    Network->disConnectTcpServer(Tcpsocket,1000);
 }
 
 /*  disconnect server;*/
 
-void TcpClientBox::Enablesenderbox(bool boola)
+void TcpClientBox::enableSenderBox(bool boola)
 {
     if(boola)
     {
         for(int i = 0;i < Senderboxlist.count();i++)
         {
-            Senderboxlist.at(i)->Enable();
+            Senderboxlist.at(i)->enable();
         }
     }
     else
     {
         for(int i = 0;i < Senderboxlist.count();i++)
         {
-            Senderboxlist.at(i)->Disable();
+            Senderboxlist.at(i)->disable();
         }
     }
 }
 
 /*  enable senderbox or not;*/
 
-void TcpClientBox::Writeapi(QLineEdit* lineeditdata)
+void TcpClientBox::writeApi(QLineEdit* lineeditdata)
 {
     Logger->Result.clear();
-    SuperN->Writesocket(Modulea->ui->checkBox_3,Modulea->ui->checkBox_1,Modulea->ui->checkBox_2,Tcpsocket,lineeditdata);
-    Logger->Displaylog("W",lineeditdata->text(),"Writedata function run completed");
+    Network->writeSocket(Modulea->ui->checkBox_3,Modulea->ui->checkBox_1,Modulea->ui->checkBox_2,Tcpsocket,lineeditdata);
+    Logger->displayLog("W",lineeditdata->text(),"Writedata function run completed");
 }
 
 /*  write text to socket;*/
 
-void TcpClientBox::Recordtext()
+void TcpClientBox::recordText()
 {
     for(int i = 0;i < Senderboxlist.count();i++)
     {
         Stringlist[i] = Senderboxlist.at(i)->Lineedit->text();
     }
-    SuperC->Writeonlyfilelist(Cachefile,&Stringlist,Spliter,false);
+    Core->writeOnlyFileList(Cachefile,&Stringlist,Spliter,false);
 }
 
 /*  record last text;*/
 
-void TcpClientBox::Readdata()
+void TcpClientBox::readData()
 {
-    QByteArray byteresult = SuperN->Readdatastream(Tcpsocket,Modulea->ui->checkBox_3);
-    Logger->Displaylog("R",byteresult,"Readdata function run completed;");
+    QByteArray byteresult = Network->readDataStream(Tcpsocket,Modulea->ui->checkBox_3);
+    Logger->displayLog("R",byteresult,"Readdata function run completed;");
     Logger->Result.append(byteresult);
 }
 
 /*  read tcpsocket data;*/
 
-void TcpClientBox::Enableaddn()
+void TcpClientBox::enableAddn()
 {
     if(Modulea->ui->checkBox_2->isChecked())
     {
-        Logger->Displaylog("N","input line has been add \\n","enableaddn function run completed");
+        Logger->displayLog("N","input line has been add \\n","enableaddn function run completed");
     }
     else
     {
-        Logger->Displaylog("N","input line has been cancel \\n","enableaddn function run completed");
+        Logger->displayLog("N","input line has been cancel \\n","enableaddn function run completed");
     }
 }
 
 /*  write data add \\n;*/
 
-void TcpClientBox::Enableaddr()
+void TcpClientBox::enableAddr()
 {
     if(Modulea->ui->checkBox_1->isChecked())
     {
-        Logger->Displaylog("N","input line has been add \\r","enableaddr function run completed");
+        Logger->displayLog("N","input line has been add \\r","enableaddr function run completed");
     }
     else
     {
-        Logger->Displaylog("N","input line has been cancel \\r","enableaddr function run completed");
+        Logger->displayLog("N","input line has been cancel \\r","enableaddr function run completed");
     }
 }
 
 /*  write data add \\r;*/
 
-void TcpClientBox::Changetypea()
+void TcpClientBox::changeTypea()
 {
     if(Modulea->ui->checkBox_3->isChecked())
     {
-        Changetypeapi(Modulea->ui->checkBox_4,"input line has been changed to string","changetypea function run completed",false,true,true);
+        changeTypeapi(Modulea->ui->checkBox_4,"input line has been changed to string","changetypea function run completed",false,true,true);
     }
     else
     {
-        Changetypeapi(Modulea->ui->checkBox_4,"input line has been changed to hex","changetypea function run completed",true,false,false);
+        changeTypeapi(Modulea->ui->checkBox_4,"input line has been changed to hex","changetypea function run completed",true,false,false);
     }
 }
 
 /*  change write data type string or hex;*/
 
-void TcpClientBox::Changetypeb()
+void TcpClientBox::changeTypeb()
 {
     if(Modulea->ui->checkBox_4->isChecked())
     {
-        Changetypeapi(Modulea->ui->checkBox_3,"input line has been changed to hex","Changetypeb function run completed",false,false,false);
+        changeTypeapi(Modulea->ui->checkBox_3,"input line has been changed to hex","Changetypeb function run completed",false,false,false);
     }
     else
     {
-        Changetypeapi(Modulea->ui->checkBox_3,"input line has been changed to string","Changetypeb function run completed",true,true,true);
+        changeTypeapi(Modulea->ui->checkBox_3,"input line has been changed to string","Changetypeb function run completed",true,true,true);
     }
 }
 
 /*  change write data type string or hex;*/
 
-void TcpClientBox::Changetypeapi(QCheckBox* checkboxtype,QString strtlog,QString strllog,bool boola,bool boolb,bool boolc)
+void TcpClientBox::changeTypeapi(QCheckBox* checkboxtype,QString strtlog,QString strllog,bool boola,bool boolb,bool boolc)
 {
     checkboxtype->setChecked(boola);
     Modulea->ui->checkBox_1->setEnabled(boolb);
     Modulea->ui->checkBox_2->setEnabled(boolc);
-    Logger->Displaylog("N",strtlog,strllog);
+    Logger->displayLog("N",strtlog,strllog);
 }
 
 /*  change write data type api;*/
 
-void TcpClientBox::Abnormaldisconnect()
+void TcpClientBox::abnormalDisconnect()
 {
-    SuperC->Enablewidgetlist(&Disconnectwidgetet,true);
-    SuperC->Enablewidgetlist(&Disconnectwidgetef,false);
-    Enableconnecttcpserver();
-    Enablesenderbox(false);
-    Logger->Displaylog("N","tcpclient has been disconnect","checkconnect function run completed");
+    Core->enableWidgetList(&Disconnectwidgetet,true);
+    Core->enableWidgetList(&Disconnectwidgetef,false);
+    enableConnectTcpServer();
+    enableSenderBox(false);
+    Logger->displayLog("N","tcpclient has been disconnect","checkconnect function run completed");
 }
 
 /*  receive result from signalc,check serial port is connect or not;*/
 
-void TcpClientBox::Adjustsenderbox()
+void TcpClientBox::adjustSenderBox()
 {
     Senderboxlist.clear();
-    SuperC->Deleteallitemsoflayout(Moduleb->ui->verticalLayout_8);
-    Logger->Displaylog("N","senderbox adjust counts as: " + QString::number(Moduleb->ui->spinBox->value()),"Adjustsenderbox function run completed;");
+    Core->deleteAllItemsOfLayout(Moduleb->ui->verticalLayout_8);
+    Logger->displayLog("N","senderbox adjust counts as: " + QString::number(Moduleb->ui->spinBox->value()),"Adjustsenderbox function run completed;");
     for(int i = 0;i < Moduleb->ui->spinBox->value();i++)
     {
         SuperSender *senderbox = new SuperSender(this,Moduleb->ui->verticalLayout_8);
-        connect(senderbox,&SuperSender::Signalsa,this,&TcpClientBox::Writeapi);
-        connect(senderbox,&SuperSender::Signalsb,this,&TcpClientBox::Recordtext);
+        connect(senderbox,&SuperSender::signalSa,this,&TcpClientBox::writeApi);
+        connect(senderbox,&SuperSender::signalSb,this,&TcpClientBox::recordText);
         senderbox->Lineedit->setText(Stringlist.at(Senderboxlist.count()));
         Senderboxlist.append(senderbox);
-        senderbox->Disable();
+        senderbox->disable();
     }
 }
 

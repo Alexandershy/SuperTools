@@ -10,54 +10,54 @@ SuperTab* Interface::Loadplugin()
 LedAnalyserBox::LedAnalyserBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("LedAnalyserBox");
-    Setgroupbox(2,1);
-    Setstretch({1,99},{100});
-    Init();
+    readMe("LedAnalyserBox");
+    setGroupBox(2,1);
+    setStretch({1,99},{100});
+    init();
 }
 
 LedAnalyserBox::~LedAnalyserBox()
 {
-    SuperS->Closeserial(Serial);
-    SuperC->Closethread(Threadaa);
-    SuperC->Closethread(Threadsa);
-    SuperC->Closethread(Threadta);;
+    Serial->closeSerial(Serialport);
+    Core->closeThread(Threadaa);
+    Core->closeThread(Threadsa);
+    Core->closeThread(Threadta);;
 }
 
-void LedAnalyserBox::Init()
+void LedAnalyserBox::init()
 {
-    Objectinit();
-    Timerinit();
-    Widgetlistinit();
+    objectInit();
+    timerInit();
+    widgetListInit();
 }
 
-void LedAnalyserBox::Objectinit()
+void LedAnalyserBox::objectInit()
 {
-    SuperS = new SuperSerial(this);
-    Serial  = new QSerialPort(this);
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
-    Moduleb = new ModuleB(this,Rightgroupboxlist.at(0)->Insidelayout);
+    Serial = new SuperSerial(this);
+    Serialport  = new QSerialPort(this);
+    Modulea = new LedAnalyserModuleA(this,Leftgroupboxlist.at(0)->Insidelayout);
+    Moduleb = new LedAnalyserModuleB(this,Rightgroupboxlist.at(0)->Insidelayout);
     Logger = new SuperLogger(this,Leftgroupboxlist.at(1)->Insidelayout);
-    connect(Modulea->ui->comboBox_26,    &QComboBox::textActivated,  this,   &LedAnalyserBox::Enableconnectbutton);
-    connect(Modulea->ui->comboBox_30,    &QComboBox::textActivated,  this,   &LedAnalyserBox::Systemcommand);
-    connect(Modulea->ui->pushButton_89,  &QPushButton::clicked,      this,   &LedAnalyserBox::Connectserialport);
-    connect(Modulea->ui->pushButton_90,  &QPushButton::clicked,      this,   &LedAnalyserBox::Getserialport);
-    connect(Modulea->ui->pushButton_91,  &QPushButton::clicked,      this,   &LedAnalyserBox::Scanledport);
-    connect(Modulea->ui->pushButton_92,  &QPushButton::clicked,      this,   &LedAnalyserBox::Disconnectserialport);
-    connect(Modulea->ui->pushButton_94,  &QPushButton::clicked,      this,   &LedAnalyserBox::Startdisplayvalue);
-    connect(Modulea->ui->radioButton_3,  &QRadioButton::toggled,     this,   &LedAnalyserBox::Enablepwm);
-    connect(Modulea->ui->radioButton_4,  &QRadioButton::toggled,     this,   &LedAnalyserBox::Enablepwm);
-    connect(Moduleb->ui->comboBox_28,    &QComboBox::textActivated,  this,   &LedAnalyserBox::Selectledanalyserinfo);
+    connect(Modulea->ui->comboBox_26,    &QComboBox::textActivated,  this,   &LedAnalyserBox::enableConnectButton);
+    connect(Modulea->ui->comboBox_30,    &QComboBox::textActivated,  this,   &LedAnalyserBox::systemCommand);
+    connect(Modulea->ui->pushButton_89,  &QPushButton::clicked,      this,   &LedAnalyserBox::connectSerialPort);
+    connect(Modulea->ui->pushButton_90,  &QPushButton::clicked,      this,   &LedAnalyserBox::getSerialPort);
+    connect(Modulea->ui->pushButton_91,  &QPushButton::clicked,      this,   &LedAnalyserBox::scanLedPort);
+    connect(Modulea->ui->pushButton_92,  &QPushButton::clicked,      this,   &LedAnalyserBox::disconnectSerialPort);
+    connect(Modulea->ui->pushButton_94,  &QPushButton::clicked,      this,   &LedAnalyserBox::startDisplayValue);
+    connect(Modulea->ui->radioButton_3,  &QRadioButton::toggled,     this,   &LedAnalyserBox::enablePwm);
+    connect(Modulea->ui->radioButton_4,  &QRadioButton::toggled,     this,   &LedAnalyserBox::enablePwm);
+    connect(Moduleb->ui->comboBox_28,    &QComboBox::textActivated,  this,   &LedAnalyserBox::selectLedAnalyserInfo);
 }
 
-void LedAnalyserBox::Timerinit()
+void LedAnalyserBox::timerInit()
 {
     Timerca = new QTimer(this);
     Timerca->setInterval(1000);
-    connect(Timerca,&QTimer::timeout,this,&LedAnalyserBox::Timercaslot);
+    connect(Timerca,&QTimer::timeout,this,&LedAnalyserBox::timerCaSlot);
 }
 
-void LedAnalyserBox::Widgetlistinit()
+void LedAnalyserBox::widgetListInit()
 {
     Titlelable  = {Moduleb->ui->label_231,Moduleb->ui->label_168,Moduleb->ui->label_169,Moduleb->ui->label_170};
     Valuelabel  = {Moduleb->ui->label_171,Moduleb->ui->label_172,Moduleb->ui->label_173,Moduleb->ui->label_174,Moduleb->ui->label_175,Moduleb->ui->label_176,Moduleb->ui->label_177,Moduleb->ui->label_178,Moduleb->ui->label_179,Moduleb->ui->label_180,
@@ -72,24 +72,24 @@ void LedAnalyserBox::Widgetlistinit()
 
 /*  widget list init;*/
 
-void LedAnalyserBox::Selectledanalyserinfo()
+void LedAnalyserBox::selectLedAnalyserInfo()
 {
     if(Moduleb->ui->comboBox_28->currentText() == "select led analyser model")
     {
-        Resetfunction();
+        resetFunction();
     }
     else
     {
-        Resetfunction();
-        Ledanalyserinfo();
+        resetFunction();
+        ledAnalyserInfo();
     }
-    Enableconnectbutton();
-    Enablescanportbutton();
+    enableConnectButton();
+    enableScanPortButton();
 }
 
 /*  select led analyser info;*/
 
-void LedAnalyserBox::Resetfunction()
+void LedAnalyserBox::resetFunction()
 {
     for(int i = 0;i < Titlelable.count();i++)
     {
@@ -109,7 +109,7 @@ void LedAnalyserBox::Resetfunction()
 
 /*  reset function widget;*/
 
-void LedAnalyserBox::Ledanalyserinfo()
+void LedAnalyserBox::ledAnalyserInfo()
 {
     QStringList ledanalyserinfo = Moduleb->ui->comboBox_28->currentText().split(" - ");
     Model = ledanalyserinfo.at(0);
@@ -128,12 +128,12 @@ void LedAnalyserBox::Ledanalyserinfo()
     Channels = ledanalyserinfo.at(0).toInt();
     Baudrate = ledanalyserinfo.at(0).toInt();
     Modulea->ui->comboBox_36->setCurrentText(ledanalyserinfo.at(3));
-    Logger->Displaylog("N","set ledanalyser info is " + Moduleb->ui->comboBox_28->currentText(),"Ledanalyserinfo function run completed");
+    Logger->displayLog("N","set ledanalyser info is " + Moduleb->ui->comboBox_28->currentText(),"Ledanalyserinfo function run completed");
 }
 
 /*  pass in the correct parameters;*/
 
-void LedAnalyserBox::Enableledanalyserfunction()
+void LedAnalyserBox::enableLedAnalyserFunction()
 {
     Titlelable.at(0)->setEnabled(true);
     Titlelable.at(1)->setEnabled(!Rgbbool);
@@ -151,34 +151,34 @@ void LedAnalyserBox::Enableledanalyserfunction()
 
 /*  enable widget by ledanalyser info;*/
 
-void LedAnalyserBox::Getserialport()
+void LedAnalyserBox::getSerialPort()
 {
-    SuperS->Getserialport(&Serialnamelist,Modulea->ui->comboBox_26);
-    SuperS->Enableserialcombobox(&Serialnamelist,Modulea->ui->comboBox_26,Modulea->ui->comboBox_26);
-    Enableconnectbutton();
+    Serial->getSerialPort(&Serialnamelist,Modulea->ui->comboBox_26);
+    Serial->enableSerialComboBox(&Serialnamelist,Modulea->ui->comboBox_26,Modulea->ui->comboBox_26);
+    enableConnectButton();
     if(Modulea->ui->comboBox_26->currentText().isEmpty())
     {
-        Logger->Displaylog("N","can not find any serial device","Getserialport function run completed");
+        Logger->displayLog("N","can not find any serial device","Getserialport function run completed");
     }
     else
     {
         for(int i = 0;i < Modulea->ui->comboBox_26->count();i++)
         {
-            Logger->Displaylog("N",Modulea->ui->comboBox_26->itemText(i),"Getserialport function run completed");
+            Logger->displayLog("N",Modulea->ui->comboBox_26->itemText(i),"Getserialport function run completed");
         }
     }
 }
 
 /*  get windows system serial port and add item to combobox, enable connect button or not;*/
 
-void LedAnalyserBox::Connectserialport()
+void LedAnalyserBox::connectSerialPort()
 {
     QWidgetList connectwidgetet = {Modulea->ui->comboBox_27,Modulea->ui->comboBox_30,Modulea->ui->pushButton_92,Modulea->ui->pushButton_94,Modulea->ui->radioButton_3,Modulea->ui->radioButton_4};
     QWidgetList connectwidgetef = {Moduleb->ui->comboBox_28,Modulea->ui->pushButton_89,Modulea->ui->pushButton_90,Modulea->ui->pushButton_91,Modulea->ui->comboBox_26};
-    SuperS->Connectserialport(Serial,Serialnamelist[Modulea->ui->comboBox_26->currentIndex()],Modulea->ui->comboBox_36->currentText().toInt());
-    if(Serial->isOpen())
+    Serial->connectSerialPort(Serialport,Serialnamelist[Modulea->ui->comboBox_26->currentIndex()],Modulea->ui->comboBox_36->currentText().toInt());
+    if(Serialport->isOpen())
     {
-        Enableledanalyserfunction();
+        enableLedAnalyserFunction();
         for(int i = 0;i < connectwidgetet.count();i++)
         {
             connectwidgetet.at(i)->setEnabled(true);
@@ -188,24 +188,24 @@ void LedAnalyserBox::Connectserialport()
             connectwidgetef.at(i)->setEnabled(false);
         }
         Timerca->start();
-        Logger->Displaylog("N","connect " + Modulea->ui->comboBox_26->currentText() + " and set baudrate as " + Modulea->ui->comboBox_36->currentText() + " success",
+        Logger->displayLog("N","connect " + Modulea->ui->comboBox_26->currentText() + " and set baudrate as " + Modulea->ui->comboBox_36->currentText() + " success",
                    "Connectserialport function run completed");
     }
     else
     {
-        Logger->Displaylog("N","connect " + Modulea->ui->comboBox_26->currentText() + " and set baudrate as " + Modulea->ui->comboBox_36->currentText() + " failed",
+        Logger->displayLog("N","connect " + Modulea->ui->comboBox_26->currentText() + " and set baudrate as " + Modulea->ui->comboBox_36->currentText() + " failed",
                    "Connectserialport function run completed");
     }
 }
 
 /*  connect serial port and operate ui,start new thread for read data and check connected device;*/
 
-void LedAnalyserBox::Disconnectserialport()
+void LedAnalyserBox::disconnectSerialPort()
 {
-    Serial->close();
+    Serialport->close();
     QWidgetList disconnectwidgetet = {Moduleb->ui->comboBox_28,Modulea->ui->pushButton_89,Modulea->ui->pushButton_90,Modulea->ui->pushButton_91,Modulea->ui->comboBox_26};
     QWidgetList disconnectwidgetef = {Modulea->ui->comboBox_27,Modulea->ui->comboBox_30,Modulea->ui->pushButton_92,Modulea->ui->pushButton_94,Modulea->ui->radioButton_3,Modulea->ui->radioButton_4};
-    if(!Serial->isOpen())
+    if(!Serialport->isOpen())
     {
         for(int i = 0;i < disconnectwidgetef.count();i++)
         {
@@ -216,25 +216,25 @@ void LedAnalyserBox::Disconnectserialport()
             disconnectwidgetet.at(i)->setEnabled(true);
         }
         Modulea->ui->radioButton_4->setChecked(true);
-        Resetfunction();
+        resetFunction();
         Timerca->stop();
-        Logger->Displaylog("N",this->objectName() + " has been disconnected","disconnectserialport function run completed");
+        Logger->displayLog("N",this->objectName() + " has been disconnected","disconnectserialport function run completed");
     }
 }
 
 /*  disconnect serial port and operate ui*/;
 
-bool LedAnalyserBox::Enableconnectbutton()
+bool LedAnalyserBox::enableConnectButton()
 {
     if(Moduleb->ui->comboBox_28->currentText().contains("select led analyser model"))
     {
         Modulea->ui->pushButton_89->setEnabled(false);
-        Logger->Displaylog("N","disable connect button ,select led analyser model","Enableconnectbutton function run completed");
+        Logger->displayLog("N","disable connect button ,select led analyser model","Enableconnectbutton function run completed");
         return false;
     }
-    if(SuperS->Enableconnectbutton(Modulea->ui->comboBox_26,Modulea->ui->comboBox_36,Modulea->ui->pushButton_89))
+    if(Serial->enableConnectButton(Modulea->ui->comboBox_26,Modulea->ui->comboBox_36,Modulea->ui->pushButton_89))
     {
-        Logger->Displaylog("N","enable connect button success","Enableconnectbutton function run completed");
+        Logger->displayLog("N","enable connect button success","Enableconnectbutton function run completed");
         return true;
     }
     return false;
@@ -242,41 +242,41 @@ bool LedAnalyserBox::Enableconnectbutton()
 
 /*  check is enable connect button;*/;
 
-void LedAnalyserBox::Enablescanportbutton()
+void LedAnalyserBox::enableScanPortButton()
 {
     if(!Moduleb->ui->comboBox_28->currentText().contains("select led analyser model") && !Modulea->ui->pushButton_92->isEnabled())
     {
         Modulea->ui->pushButton_91->setEnabled(true);
-        Logger->Displaylog("N","enable scan serial button success","Enablescanportbutton function run completed");
+        Logger->displayLog("N","enable scan serial button success","Enablescanportbutton function run completed");
     }
     else
     {
         Modulea->ui->pushButton_91->setEnabled(false);
-        Logger->Displaylog("N","disable scan serial button","Enablescanportbutton function run completed");
+        Logger->displayLog("N","disable scan serial button","Enablescanportbutton function run completed");
     }
 }
 
 /*  check is enable scan serial port button*/;
 
-void LedAnalyserBox::Enablepwm()
+void LedAnalyserBox::enablePwm()
 {
     if(Modulea->ui->radioButton_3->isChecked())
     {
         Modulea->ui->comboBox_29->setEnabled(true);
-        Logger->Displaylog("N","pwm mode is enabled","enablepwm function run completed");
+        Logger->displayLog("N","pwm mode is enabled","enablepwm function run completed");
     }
     else
     {
         Modulea->ui->comboBox_29->setEnabled(false);
-        Logger->Displaylog("N","pwm mode is disabled","enablepwm function run completed");
+        Logger->displayLog("N","pwm mode is disabled","enablepwm function run completed");
     }
 }
 
 /*  is enable pwm level combobox;*/
 
-void LedAnalyserBox::Startdisplayvalue()
+void LedAnalyserBox::startDisplayValue()
 {
-    QString strcommand = Setcommandlineedit();
+    QString strcommand = setCommandLineEdit();
     if(!strcommand.isEmpty())
     {
         Modulea->ui->pushButton_94->setText("Value Displaying...");
@@ -287,19 +287,19 @@ void LedAnalyserBox::Startdisplayvalue()
             Checkbox.at(i)->setEnabled(false);
         }
         double timeout = (6 - Modulea->ui->comboBox_27->currentIndex() + Modulea->ui->comboBox_29->currentIndex()) * 1000;
-        SuperS->Writeserial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serial,Modulea->ui->lineEdit_52);
-        Logger->Displaylog("W",strcommand,"ledanalysercommandapi function run completed");
-        Threadtb = new SerialThread(Serial,timeout);
-        connect(Threadtb,&SerialThread::Signaltt,this,     &LedAnalyserBox::Signalttbslot);
-        connect(Threadtb,&SerialThread::Signaltf,this,     &LedAnalyserBox::Signaltfbslot);
-        connect(Threadtb,&SerialThread::finished,Threadtb, &QObject::deleteLater);
+        Serial->writeSerial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serialport,Modulea->ui->lineEdit_52);
+        Logger->displayLog("W",strcommand,"ledAnalyserCommandApi function run completed");
+        Threadtb = new SuperSerialThread(Serialport,timeout);
+        connect(Threadtb,&SuperSerialThread::signalTt,this,     &LedAnalyserBox::signalTtbSlot);
+        connect(Threadtb,&SuperSerialThread::signalTf,this,     &LedAnalyserBox::signalTfbSlot);
+        connect(Threadtb,&SuperSerialThread::finished,Threadtb, &QObject::deleteLater);
         Threadtb->start();
     }
 }
 
 /*  start capture led info and analysis info;*/
 
-QString LedAnalyserBox::Setcommandlineedit()
+QString LedAnalyserBox::setCommandLineEdit()
 {
     QString strcommand = "";
     if(Modulea->ui->comboBox_27->currentIndex() != 0 && Modulea->ui->radioButton_3->isChecked() && Modulea->ui->comboBox_29->currentIndex() != 0)
@@ -308,7 +308,7 @@ QString LedAnalyserBox::Setcommandlineedit()
     }
     else if(Modulea->ui->comboBox_27->currentIndex() != 0 && Modulea->ui->radioButton_3->isChecked() && Modulea->ui->comboBox_29->currentIndex() == 0)
     {
-        Logger->Displaylog("N","select correct pwm level","Setcommandlineedit function run completed");
+        Logger->displayLog("N","select correct pwm level","Setcommandlineedit function run completed");
     }
     else if(Modulea->ui->comboBox_27->currentIndex() != 0 && !Modulea->ui->radioButton_3->isChecked())
     {
@@ -316,7 +316,7 @@ QString LedAnalyserBox::Setcommandlineedit()
     }
     else if(Modulea->ui->comboBox_27->currentIndex() == 0)
     {
-        Logger->Displaylog("N","select correct range level","Setcommandlineedit function run completed");
+        Logger->displayLog("N","select correct range level","Setcommandlineedit function run completed");
     }
     Modulea->ui->lineEdit_52->setText(strcommand);
     return strcommand;
@@ -324,7 +324,7 @@ QString LedAnalyserBox::Setcommandlineedit()
 
 /*  set command lineedit string command and return command;*/
 
-void LedAnalyserBox::Stopdisplayvalue()
+void LedAnalyserBox::stopDisplayValue()
 {
     Threadaa = nullptr;
     Modulea->ui->pushButton_94->setText("Start Display Value");
@@ -338,102 +338,102 @@ void LedAnalyserBox::Stopdisplayvalue()
 
 /*  receive readblock signal and enable widget;*/
 
-void LedAnalyserBox::Systemcommand()
+void LedAnalyserBox::systemCommand()
 {
     if(Modulea->ui->comboBox_30->currentText() == "select led command")
     {
-        Logger->Displaylog("N","selcet led analyser system command","Systemcommand function run completed");
+        Logger->displayLog("N","selcet led analyser system command","Systemcommand function run completed");
     }
     else
     {
         QString command = Systemcommandlist[Modulea->ui->comboBox_30->currentIndex()];
-        ledanalysercommandapi(command);
+        ledAnalyserCommandApi(command);
     }
 }
 
 /*  select combobox and run system command;*/
 
-void LedAnalyserBox::ledanalysercommandapi(QString strcommand)
+void LedAnalyserBox::ledAnalyserCommandApi(QString strcommand)
 {
     double timeout = (6 - Modulea->ui->comboBox_27->currentIndex() + Modulea->ui->comboBox_29->currentIndex()) * 1000;
     Modulea->ui->lineEdit_52->setText(strcommand);
     Modulea->ui->comboBox_30->setEnabled(false);
     Modulea->ui->pushButton_94->setEnabled(false);
-    SuperS->Writeserial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serial,Modulea->ui->lineEdit_52);
-    Logger->Displaylog("W",strcommand,"ledanalysercommandapi function run completed");
-    Threadta = new SerialThread(Serial,timeout);
-    connect(Threadta,&SerialThread::Signaltt,this,     &LedAnalyserBox::Signalttaslot);
-    connect(Threadta,&SerialThread::Signaltf,this,     &LedAnalyserBox::Signaltfaslot);
-    connect(Threadta,&SerialThread::finished,Threadta, &QObject::deleteLater);
+    Serial->writeSerial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serialport,Modulea->ui->lineEdit_52);
+    Logger->displayLog("W",strcommand,"ledAnalyserCommandApi function run completed");
+    Threadta = new SuperSerialThread(Serialport,timeout);
+    connect(Threadta,&SuperSerialThread::signalTt,this,     &LedAnalyserBox::signalTtaSlot);
+    connect(Threadta,&SuperSerialThread::signalTf,this,     &LedAnalyserBox::signalTfaSlot);
+    connect(Threadta,&SuperSerialThread::finished,Threadta, &QObject::deleteLater);
     Threadta->start();
 }
 
 /*  system command api;*/
 
-void LedAnalyserBox::Timercaslot()
+void LedAnalyserBox::timerCaSlot()
 {
-    if(SuperS->Checkserialdevice(Serial,Modulea->ui->comboBox_26->currentText()) == false)
+    if(Serial->checkSerialDevice(Serialport,Modulea->ui->comboBox_26->currentText()) == false)
     {
-        Disconnectserialport();
-        Getserialport();
-        Logger->Displaylog("N","serial port has been removed","checkconnect function run completed");
-        Enableconnectbutton();
+        disconnectSerialPort();
+        getSerialPort();
+        Logger->displayLog("N","serial port has been removed","checkconnect function run completed");
+        enableConnectButton();
         Timerca->stop();
     }
 }
 
 /*  receive result from signalc,check serial port is connect or not;*/
 
-void LedAnalyserBox::Signalttaslot()
+void LedAnalyserBox::signalTtaSlot()
 {
     Threadta = nullptr;
     Modulea->ui->comboBox_30->setEnabled(true);
     Modulea->ui->pushButton_94->setEnabled(true);
     Modulea->ui->pushButton_94->setText("Start Display Value");
-    Logger->Displaylog("R",SuperS->Readdatastream(Serial,Modulea->ui->checkBox_33),"Signalraslot function run completed");
+    Logger->displayLog("R",Serial->readDataStream(Serialport,Modulea->ui->checkBox_33),"Signalraslot function run completed");
 }
 
 /*  receive true readblock signal;*/
 
-void LedAnalyserBox::Signaltfaslot()
+void LedAnalyserBox::signalTfaSlot()
 {
     Threadta = nullptr;
     Modulea->ui->comboBox_30->setEnabled(true);
     Modulea->ui->pushButton_94->setEnabled(true);
     Modulea->ui->pushButton_94->setText("Start Display Value");
-    Logger->Displaylog("R","serial port receive time out","Signalraslot function run completed");
+    Logger->displayLog("R","serial port receive time out","Signalraslot function run completed");
 }
 
 /*  receive false result from signal;*/
 
-void LedAnalyserBox::Signalttbslot()
+void LedAnalyserBox::signalTtbSlot()
 {
     Threadtb = nullptr;
-    QString Backvaluetempb = SuperS->Readdatastream(Serial,Modulea->ui->checkBox_33);
-    Logger->Displaylog("R",Backvaluetempb,"Signalraslot function run completed");
-    Resetlabelvalue();
+    QString Backvaluetempb = Serial->readDataStream(Serialport,Modulea->ui->checkBox_33);
+    Logger->displayLog("R",Backvaluetempb,"Signalraslot function run completed");
+    resetLabelValue();
     double timeout = 1000;
-    Channellist = Checkboxenabled();
-    Threadaa = new Analysisled(Serial,timeout,Modulea->ui->checkBox_33,&Channellist);
-    connect(Threadaa,&Analysisled::Signalaa,this,&LedAnalyserBox::Signalaaslot);
-    connect(Threadaa,&Analysisled::Signalab,this,&LedAnalyserBox::Signalabslot);
-    connect(Threadaa,&Analysisled::Signalac,this,&LedAnalyserBox::Stopdisplayvalue);
+    Channellist = checkBoxEnabled();
+    Threadaa = new Analysisled(Serialport,timeout,Modulea->ui->checkBox_33,&Channellist);
+    connect(Threadaa,&Analysisled::signalAa,this,&LedAnalyserBox::signalAaSlot);
+    connect(Threadaa,&Analysisled::signalAb,this,&LedAnalyserBox::signalAbSlot);
+    connect(Threadaa,&Analysisled::signalAc,this,&LedAnalyserBox::stopDisplayValue);
     connect(Threadaa,&Analysisled::finished,Threadaa,&QObject::deleteLater);
     Threadaa->start();
 }
 
 /*  receive capture result and start channel value threads;*/
 
-void LedAnalyserBox::Signaltfbslot()
+void LedAnalyserBox::signalTfbSlot()
 {
     Threadtb = nullptr;
-    Stopdisplayvalue();
-    Logger->Displaylog("R","serial port receive time out","Signalraslot function run completed");
+    stopDisplayValue();
+    Logger->displayLog("R","serial port receive time out","Signalraslot function run completed");
 }
 
 /*  receive false result from signal;*/
 
-QStringList LedAnalyserBox::Checkboxenabled()
+QStringList LedAnalyserBox::checkBoxEnabled()
 {
     QStringList temp = {};
     for(int i = 0;i<Channels;i++)
@@ -448,7 +448,7 @@ QStringList LedAnalyserBox::Checkboxenabled()
 
 /*  return checked checkbox index;*/
 
-void LedAnalyserBox::Resetlabelvalue()
+void LedAnalyserBox::resetLabelValue()
 {
     for(int i = 0;i<Channels;i++)
     {
@@ -460,33 +460,33 @@ void LedAnalyserBox::Resetlabelvalue()
 
 /*  reset all label value;*/
 
-void LedAnalyserBox::Signalaaslot(int counts)
+void LedAnalyserBox::signalAaSlot(int counts)
 {
     QString strcommand = Command + Channelrule[counts];
     Modulea->ui->lineEdit_52->setText(strcommand);
-    SuperS->Writeserial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serial,Modulea->ui->lineEdit_52);
-    Logger->Displaylog("W",strcommand,"Signalaaslot function run completed");
+    Serial->writeSerial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serialport,Modulea->ui->lineEdit_52);
+    Logger->displayLog("W",strcommand,"Signalaaslot function run completed");
 }
 
 /*  receive readblock signal and enable pushbutton;*/
 
-void LedAnalyserBox::Signalabslot(int counts)
+void LedAnalyserBox::signalAbSlot(int counts)
 {
     QString Result;
     QStringList Valuelist;
-    Result = SuperS->Readdatastream(Serial,Modulea->ui->checkBox_33);
+    Result = Serial->readDataStream(Serialport,Modulea->ui->checkBox_33);
     if(!Result.contains("serial port receive time out") && Result.contains("\r\n"))
     {
-        Valuelist = Processresult(Result);
+        Valuelist = processResult(Result);
         Valuelabel.at(counts * 3 + Index[0])->setText(Valuelist.at(0));
         Valuelabel.at(counts * 3 + Index[1])->setText(Valuelist.at(1));
     }
-    Logger->Displaylog("R",Result,"Signalraslot function run completed");
+    Logger->displayLog("R",Result,"Signalraslot function run completed");
 }
 
 /*  receive readblock signal and enable pushbutton;*/
 
-QStringList LedAnalyserBox::Processresult(QString strresult)
+QStringList LedAnalyserBox::processResult(QString strresult)
 {
     QStringList tempa;
     QStringList tempb = {"",""};
@@ -513,29 +513,29 @@ QStringList LedAnalyserBox::Processresult(QString strresult)
 
 /*  return result list;*/
 
-void LedAnalyserBox::Scanledport()
+void LedAnalyserBox::scanLedPort()
 {
-    QString Backvaluea = SuperC->Firstwordupper(Model);
+    QString Backvaluea = Core->firstWordUpper(Model);
     Modulea->ui->pushButton_91->setEnabled(false);
-    Threadsa = new ScanSerialPort(this,Serial,Baudrate,"getHW","capture5pwm01",Modulea->ui->checkBox_33,Modulea->ui->lineEdit_52,Backvaluea,"OK");
-    connect(Threadsa,&ScanSerialPort::Signalsa,Logger,  &SuperLogger::Displaylog);
-    connect(Threadsa,&ScanSerialPort::Signalsb,this,    &LedAnalyserBox::Signalsbslot);
-    connect(Threadsa,&ScanSerialPort::Signalsc,this,    &LedAnalyserBox::Signalscslot);
-    connect(Threadsa,&ScanSerialPort::finished,Threadsa,&QObject::deleteLater);
+    Threadsa = new SuperScanSerial(this,Serialport,Baudrate,"getHW","capture5pwm01",Modulea->ui->checkBox_33,Modulea->ui->lineEdit_52,Backvaluea,"OK");
+    connect(Threadsa,&SuperScanSerial::signalSa,Logger,  &SuperLogger::displayLog);
+    connect(Threadsa,&SuperScanSerial::signalSb,this,    &LedAnalyserBox::signalSbSlot);
+    connect(Threadsa,&SuperScanSerial::signalSc,this,    &LedAnalyserBox::signalScSlot);
+    connect(Threadsa,&SuperScanSerial::finished,Threadsa,&QObject::deleteLater);
     Threadsa->start();
 }
 
 /*  start scan relay port;*/
 
-void LedAnalyserBox::Signalsbslot(QString strcommand)
+void LedAnalyserBox::signalSbSlot(QString strcommand)
 {
     Modulea->ui->lineEdit_52->setText(strcommand);
-    SuperS->Writeserial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serial,Modulea->ui->lineEdit_52);
+    Serial->writeSerial(Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Modulea->ui->checkBox_33,Serialport,Modulea->ui->lineEdit_52);
 }
 
 /*  set command lineedit strcommand and write to serial port;*/
 
-void LedAnalyserBox::Signalscslot()
+void LedAnalyserBox::signalScSlot()
 {
     Threadsa = nullptr;
     Modulea->ui->pushButton_91->setEnabled(true);
@@ -545,7 +545,7 @@ void LedAnalyserBox::Signalscslot()
 
 Analysisled::Analysisled(QSerialPort* serial,double timeout,QCheckBox* checkboxstring,QStringList *channellist)
 {
-    Serial = serial;
+    Serialport = serial;
     Timeout = timeout;
     Checkboxstring = checkboxstring;
     Channellist = channellist;
@@ -556,31 +556,31 @@ void Analysisled::run()
     for(int i = 0;i < Channellist->count();i++)
     {
         BytesAvailable = 0;
-        emit Signalaa(Channellist->at(i).toInt());
+        emit signalAa(Channellist->at(i).toInt());
         while(Inittime < Timeout)
         {
             QThread::msleep(50);
-            Serial->waitForReadyRead(1);
+            Serialport->waitForReadyRead(1);
             Inittime = Inittime + 50;
-            int bytesAvailable = Serial->bytesAvailable();
+            int bytesAvailable = Serialport->bytesAvailable();
             if(BytesAvailable != bytesAvailable && bytesAvailable != 0)
             {
                 BytesAvailable = bytesAvailable;
             }
             else if(BytesAvailable == bytesAvailable && BytesAvailable != 0)
             {
-                emit Signalab(Channellist->at(i).toInt());
+                emit signalAb(Channellist->at(i).toInt());
                 Inittime = 0;
                 break;
             }
             else if(Inittime >= Timeout)
             {
-                emit Signalad();
+                emit signalAd();
                 Inittime = 0;
                 break;
             }
         }
     }
-    emit Signalac();
+    emit signalAc();
 }
 

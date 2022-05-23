@@ -6,9 +6,9 @@ SuperFindDialog::SuperFindDialog(QWidget *parent,QTextEdit *textedit)
     Textedit = textedit;
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
-    Disablemaxisize();
-    Settitle("SuperFindDialog");
-    Init();
+    disableMaxisize();
+    setTitle("SuperFindDialog");
+    init();
 }
 
 SuperFindDialog::~SuperFindDialog()
@@ -16,33 +16,33 @@ SuperFindDialog::~SuperFindDialog()
 
 }
 
-void SuperFindDialog::Init()
+void SuperFindDialog::init()
 {
-    Objectinit();
-    Parameterinit();
+    objectInit();
+    parameterInit();
 }
 
-void SuperFindDialog::Objectinit()
+void SuperFindDialog::objectInit()
 {
     Plugin = new SuperFindDialogui(this);
     Pluginlayout->addWidget(Plugin);
-    connect(Plugin->ui->pushButton_3,   &QPushButton::clicked,          this,&SuperFindDialog::Findnexttext);
-    connect(Plugin->ui->comboBox,       &QComboBox::textActivated,      this,&SuperFindDialog::Findnexttext);
-    connect(Plugin->ui->pushButton,     &QPushButton::clicked,          this,&SuperFindDialog::Findlasttext);
-    connect(Plugin->ui->comboBox,       &QComboBox::currentTextChanged, this,&SuperFindDialog::Enablenextbutton);
+    connect(Plugin->ui->pushButton_3,   &QPushButton::clicked,          this,&SuperFindDialog::findNextText);
+    connect(Plugin->ui->comboBox,       &QComboBox::textActivated,      this,&SuperFindDialog::findNextText);
+    connect(Plugin->ui->pushButton,     &QPushButton::clicked,          this,&SuperFindDialog::findLastText);
+    connect(Plugin->ui->comboBox,       &QComboBox::currentTextChanged, this,&SuperFindDialog::enableNextButton);
     connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,          this,&SuperFindDialog::close);
 }
 
 /*  creat object and connect its slot;*/
 
-void SuperFindDialog::Parameterinit()
+void SuperFindDialog::parameterInit()
 {
     Plugin->ui->comboBox->setFocus();
 }
 
 /*  parameter init;*/
 
-void SuperFindDialog::Enablenextbutton()
+void SuperFindDialog::enableNextButton()
 {
     if(Plugin->ui->comboBox->currentText().isEmpty())
     {
@@ -58,7 +58,7 @@ void SuperFindDialog::Enablenextbutton()
 
 /*  enable button or not;*/
 
-void SuperFindDialog::Highlightpalette(QWidget *widget)
+void SuperFindDialog::highLightPalette(QWidget *widget)
 {
     QPalette palette = widget->palette();
     palette.setColor(QPalette::Highlight,palette.color(QPalette::Active,QPalette::Highlight));
@@ -67,48 +67,48 @@ void SuperFindDialog::Highlightpalette(QWidget *widget)
 
 /*  high light next text;*/
 
-void SuperFindDialog::Findnexttext()
+void SuperFindDialog::findNextText()
 {
     QString text = Plugin->ui->comboBox->currentText();
     if(Textedit->find(text))
     {
-        Highlightpalette(Textedit);
+        highLightPalette(Textedit);
     }
     else
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to start;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetostart);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFindDialog::moveToStart);
+        notedialog->messageInit();
     }
 }
 
 /*  find next text;*/
 
-void SuperFindDialog::Findlasttext()
+void SuperFindDialog::findLastText()
 {
     QString text = Plugin->ui->comboBox->currentText();
     if(Textedit->find(text,QTextDocument::FindBackward))
     {
-        Highlightpalette(Textedit);
+        highLightPalette(Textedit);
     }
     else
     {
         SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"cannot find \"" + text + "\";,\nclick ok move to end;");
-        connect(notedialog,&SuperNoteDialog::Signalnb,this,&SuperFindDialog::Movetoend);
-        notedialog->Messageinit();
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperFindDialog::moveToEnd);
+        notedialog->messageInit();
     }
 }
 
 /*  find last text;*/
 
-void SuperFindDialog::Movetostart()
+void SuperFindDialog::moveToStart()
 {
     Textedit->moveCursor(Textedit->textCursor().Start);
 }
 
 /*  move text cursor to start;*/
 
-void SuperFindDialog::Movetoend()
+void SuperFindDialog::moveToEnd()
 {
     Textedit->moveCursor(Textedit->textCursor().End);
 }

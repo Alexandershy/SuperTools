@@ -3,8 +3,8 @@
 SuperTitleButton::SuperTitleButton(QWidget *parent)
     : QPushButton(parent)
 {
-    Init();
-    connect(this,&QPushButton::clicked,this,&SuperTitleButton::Removebackgroundcolor);
+    init();
+    connect(this,&QPushButton::clicked,this,&SuperTitleButton::removeBackGroundColor);
 }
 
 SuperTitleButton::~SuperTitleButton()
@@ -16,7 +16,7 @@ void SuperTitleButton::enterEvent(QEnterEvent *)
 {
     if(isEnabled())
     {
-        Addbackgroundcolor();
+        addBackGroundColor();
     }
 }
 
@@ -26,21 +26,21 @@ void SuperTitleButton::leaveEvent(QEvent *)
 {
     if(isEnabled())
     {
-        Removebackgroundcolor();
+        removeBackGroundColor();
     }
 }
 
 /*  emit signal for could not move;*/
 
-void SuperTitleButton::Init()
+void SuperTitleButton::init()
 {
-    Sizeinit();
-    Stylesheetinit();
+    sizeInit();
+    styleSheetInit();
 }
 
 /*  init;*/
 
-void SuperTitleButton::Sizeinit()
+void SuperTitleButton::sizeInit()
 {
     QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
     sizePolicy1.setHorizontalStretch(0);
@@ -53,28 +53,28 @@ void SuperTitleButton::Sizeinit()
 
 /*  size init;*/
 
-void SuperTitleButton::Stylesheetinit()
+void SuperTitleButton::styleSheetInit()
 {
     setStyleSheet("QPushButton{border-style: none;background-color: transparent;}");
 }
 
 /*  stylesheetinit;*/
 
-void SuperTitleButton::Setsourcecolor(QString rgbcolor)
+void SuperTitleButton::setSourceColor(QString rgbcolor)
 {
     Rgbcolor = rgbcolor;
 }
 
 /*  set rgb color;*/
 
-void SuperTitleButton::Addbackgroundcolor()
+void SuperTitleButton::addBackGroundColor()
 {
     setStyleSheet("QPushButton{border-style: none;background-color: " + Rgbcolor + ";}");
 }
 
 /*  remove color;*/
 
-void SuperTitleButton::Removebackgroundcolor()
+void SuperTitleButton::removeBackGroundColor()
 {
     setStyleSheet("QPushButton{border-style: none;background-color: transparent;}");
 }

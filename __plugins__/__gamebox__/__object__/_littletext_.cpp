@@ -9,7 +9,7 @@ LittleText::LittleText(QString text,QFont font,QPointF pos,bool colorstatus,QVec
     Pointpos = pointpos;
     Scene = scene;
     Timer = timer;
-    Init();
+    init();
 }
 
 LittleText::~LittleText()
@@ -17,21 +17,21 @@ LittleText::~LittleText()
 
 }
 
-void LittleText::Init()
+void LittleText::init()
 {
-    Objectinit();
-    Rectfinit();
-    Posinit();
-    Colorinit();
-    Timerinit();
+    objectInit();
+    rectfInit();
+    posInit();
+    colorInit();
+    timerInit();
 }
 
-void LittleText::Objectinit()
+void LittleText::objectInit()
 {
-    SuperC = new SuperCore(this);
+    Core = new SuperCore(this);
 }
 
-void LittleText::Rectfinit()
+void LittleText::rectfInit()
 {
     Littletextrectf = QRectF(0,0,Font.pointSize() * Text.size() * 0.75,Font.pointSize() * 2);
     Distancex = Littletextrectf.width() / 2;
@@ -40,16 +40,16 @@ void LittleText::Rectfinit()
 
 /*  init little text rect;*/
 
-void LittleText::Posinit()
+void LittleText::posInit()
 {
     setPos(Pos.x() - Pointpos.at(0) * Distancex,Pos.y() - Pointpos.at(1) * Distancey);
 }
 
 /*  init little text pos;*/
 
-void LittleText::Colorinit()
+void LittleText::colorInit()
 {
-    QStringList backgroundrgb = SuperC->Readonlyfile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini").split(",");
+    QStringList backgroundrgb = Core->readOnlyFile("./__depycache__/__cache__/__ini__/_backgroundcolor_.ini").split(",");
     Colorlist.append(QColor(backgroundrgb[0].toInt(),backgroundrgb[1].toInt(),backgroundrgb[2].toInt()));
     Rectcolor.setRgb(255,255,255);
     Rectcolor.setAlpha(0);
@@ -57,13 +57,13 @@ void LittleText::Colorinit()
 
 /*  init little text color;*/
 
-void LittleText::Timerinit()
+void LittleText::timerInit()
 {
     if(Colorstatus == true)
     {
-        connect(Timer,&QTimer::timeout,this,&LittleText::Alphacolortimerslot);
+        connect(Timer,&QTimer::timeout,this,&LittleText::alphaColorTimerSlot);
     }
-    connect(Timer,&QTimer::timeout,this,&LittleText::Statictimerslot);
+    connect(Timer,&QTimer::timeout,this,&LittleText::staticTimerSlot);
 }
 
 /*  init little text timer;*/
@@ -104,13 +104,13 @@ void LittleText::advance(int phase)
     if(Bonus == true)
     {
         moveBy(0,0.2);
-        Collisioncheck();
+        collisionCheck();
     }
 }
 
 /*  move delta;*/
 
-void LittleText::Collisioncheck()
+void LittleText::collisionCheck()
 {
     if(!Scene->collidingItems(this).isEmpty())
     {
@@ -119,7 +119,7 @@ void LittleText::Collisioncheck()
         {
             if(collitems.at(i)->boundingRect().width() > 100)
             {
-                emit Signalta(Text);
+                emit signalTa(Text);
                 delete this;
                 break;
             }
@@ -147,19 +147,19 @@ void LittleText::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
 /*  ignore little text double click event;*/
 
-void LittleText::Settext(QString text)
+void LittleText::setText(QString text)
 {
     Text = text;
 }
 
 /*  set text function;*/
 
-QString LittleText::Gettext()
+QString LittleText::getText()
 {
     return Text;
 }
 
-void LittleText::Addvalue(QString name,int length,int value)
+void LittleText::addValue(QString name,int length,int value)
 {
     Value = Value + value;
     if(Value < 0)
@@ -171,17 +171,17 @@ void LittleText::Addvalue(QString name,int length,int value)
 
 /*  add score function;*/
 
-int LittleText::Getvalue()
+int LittleText::getValue()
 {
     return Value;
 }
 
-void LittleText::Setbonus(bool boola)
+void LittleText::setBonus(bool boola)
 {
     Bonus = boola;
 }
 
-void LittleText::Alphacolortimerslot()
+void LittleText::alphaColorTimerSlot()
 {
     Alphaindex[0] = Alphaindex.at(0) + 20;
     if(Alphaindex.at(0) >= 200)
@@ -201,7 +201,7 @@ void LittleText::Alphacolortimerslot()
 
 /*  display alpha text;*/
 
-void LittleText::Statictimerslot()
+void LittleText::staticTimerSlot()
 {
     update();
 }

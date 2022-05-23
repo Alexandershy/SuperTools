@@ -36,9 +36,9 @@ public:
 
 public slots:
 
-    void Startplay();
+    void startPlay();
 
-    void Stopplayapi(
+    void stopPlayApi(
             QString texta,
             QString textb,
             QString textc);
@@ -56,7 +56,7 @@ private:
     QFont Font;
     int Started                             = 0;
     QGraphicsView *View                     = nullptr;
-    SuperCore *SuperC                       = nullptr;
+    SuperCore *Core                         = nullptr;
     QVector<LittleBrick*> Brickvector       = {};
     QVector<LittleText*> Textvector         = {};
     LittleText *Inittitle                   = nullptr;
@@ -99,12 +99,11 @@ private:
 private slots:
 
     /*  main function;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
-
-    QFont Setfont(
+    QFont setFont(
             QString family,
             bool bold,
             bool overline,
@@ -112,104 +111,104 @@ private slots:
             bool italic,
             int pointsize);
 
-    void Initobjects();
+    void initObjects();
 
-    void Initskatevector();
+    void initSkateVector();
 
-    void Initballvector();
+    void initBallVector();
 
-    LittleBall* Addballbyhealth(
+    LittleBall* addBallByHealth(
             int health);
 
-    void Initbrickvector();
+    void initBrickVector();
 
-    void Initbulletvector();
+    void initBulletVector();
 
-    void Inittimer();
+    void initTimer();
 
-    void Addmaxfps();
+    void addMaxFps();
 
-    void Resetfps();
+    void resetFps();
 
-    void Refreshskatespeed(
+    void refreshSkateSpeed(
             double speed);
 
-    void Addtime(
+    void addTime(
             int time);
 
-    void Reducetime();
+    void reduceTime();
 
-    void Addscore(
+    void addScore(
             int score);
 
-    void Reducehealth();
+    void reduceHealth();
 
-    void Levelupanimationa();
+    void levelupAnimationa();
 
-    void Levelupanimationb();
+    void levelupAnimationb();
 
-    void Levelup();
+    void levelup();
 
-    void Addhealth(
+    void addHealth(
             int health);
 
-    void Addbricks(
+    void addBricks(
             QVector<QVector<int>> leveltemp);
 
-    void Checkhasbricks(
+    void checkHasBricks(
             QPointF point);
 
-    void Movestoppointer(
+    void moveStopPointer(
             int step);
 
-    void Selectyesorquit();
+    void selectYesOrQuit();
 
-    void Resume();
+    void resume();
 
-    void Addendlessbricks();
+    void addEndlessBricks();
 
-    void Addbullet(
+    void addBullet(
             int value);
 
-    void Retry();
+    void retry();
 
     /*  bonus*/
-
-    LittleBall* Generateball(
+    LittleBall* generateBall(
             QPointF point,
             double speedx,
             double speedy);
 
-    void Generatebonus(
+    void generateBonus(
             QPointF point);
 
-    void Getbonus(
+    void getBonus(
             QString text);
 
-    void movebulletpointer(
+    void moveBulletPointer(
             int step);
 
-    void Firebullets();
+    void fireBullets();
 
-    void Cbullets();
+    void cBullets();
 
-    void Dbullets();
+    void dBullets();
 
-    void Fbullets();
+    void fBullets();
 
-    void Gbullets();
+    void gBullets();
 
-    void Hbullets();
+    void hBullets();
 
-    void Ibullets();
+    void iBullets();
 
-    void Lbullets();
+    void lBullets();
 
-    void Rbullets();
+    void rBullets();
 
-    void Sbullets();
+    void sBullets();
 
 private:
+
     /*normal level bricks*/
     QVector<QVector<QVector<int>>> Levelbricks =
     {
@@ -236,7 +235,7 @@ private:
 
 signals:
 
-    void Signalsa();
+    void signalSa();
 
 };
 

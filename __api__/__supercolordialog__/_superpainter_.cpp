@@ -5,7 +5,7 @@ SuperPainter::SuperPainter(QWidget *parent,QLayout *layout)
 {
     Widget = parent;
     Layout = layout;
-    Init();
+    init();
 }
 
 SuperPainter::~SuperPainter()
@@ -40,8 +40,8 @@ void SuperPainter::mousePressEvent(QMouseEvent *event)
     {
         case Qt::LeftButton:
         {          
-            Calpointcolor(event->position().x(),event->position().y());
-            emit Signalpa(Pointcolor);
+            calPointColor(event->position().x(),event->position().y());
+            emit signalPa(Pointcolor);
             break;
         }
         default:
@@ -53,31 +53,31 @@ void SuperPainter::mousePressEvent(QMouseEvent *event)
 
 /*  rewrite press event function;*/
 
-void SuperPainter::Init()
+void SuperPainter::init()
 {
-    Parameterinit();
+    parameterInit();
 }
 
 /*  widget init;*/
 
-void SuperPainter::Parameterinit()
+void SuperPainter::parameterInit()
 {
     Layout->addWidget(this);
 }
 
 /*  parameter init;*/
 
-void SuperPainter::Repainter(int basiccolor,int colorvalue)
+void SuperPainter::repainter(int basiccolor,int colorvalue)
 {
     Basiccolor = basiccolor;
     Colorvalue = colorvalue;
-    Calcolorvector();
+    calColorVector();
     update();
 }
 
 /*  repaint label;*/
 
-void SuperPainter::Calcolorvector()
+void SuperPainter::calColorVector()
 {
     Colorvector.clear();
     int xcolor = 0;
@@ -131,7 +131,7 @@ void SuperPainter::Calcolorvector()
 
 /*  cal color vector;*/
 
-void SuperPainter::Calpointcolor(int xvalue,int yvalue)
+void SuperPainter::calPointColor(int xvalue,int yvalue)
 {
     int xcolor = 255 * xvalue / width();
     int ycolor = 255 * yvalue / height();

@@ -33,45 +33,47 @@ public:
 
 public slots:
 
-    void Settitle(
+    void setTitle(
         QString titletext);
 
-    void Disablemaxisize();
+    void disableMaxisize();
 
-    void Enablemaxisize();
+    void enableMaxisize();
 
-    void Enableclose();
+    void enableClose();
 
-    void Disableclose();
+    void disableClose();
 
-    void Addiconfunction();
+    void addIconFunction();
 
-    void Addthemefunction();
+    void addThemeFunction();
 
-    void Addframefunction();
+    void addFrameFunction();
 
-    void Addresizefunction();
+    void addResizeFunction();
 
-    void Thememenuinit();
+    void themeMenuInit();
 
-    void Addmenu(
+    void addMenu(
         QMenu *menu,
         QString titlename,
         bool addseparator);
 
-    void Addaction(
+    void addAction(
         QAction *action);
 
-    void Addthemesaction(
+    void addThemesAction(
         QAction *action);
 
-    void Show();
+    void show();
 
-    void Movecenter(
+    void moveCenter(
         QWidget *widget);
 
-    void Setcolor(
+    void setColor(
         QColor color);
+
+    void close();
 
 protected:
 
@@ -126,81 +128,79 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Colorinit();
+    void colorInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Pointerinit();
+    void pointerInit();
 
-    void Addmaxisizebutton(
+    void addMaxisizeButton(
         QString colorstyle);
 
-    void Addclosebutton(
+    void addCloseButton(
         QString colorstyle);
 
-    void Addminisizebutton(
+    void addMinisizeButton(
         QString colorstyle);
 
-    void Mouseenter(
+    void mouseEnter(
         bool mouseontitle);
 
-    void Changeshowstatus();
+    void changeShowStatus();
 
-    void Changemaxicon();
+    void changeMaxicon();
 
-    void Minimized();
+    void minimized();
 
-    void Enablethemesapi(
+    void enableThemesApi(
         bool boola,
         bool boolb,
         bool boolc,
         bool boold,
         QString theme);
 
-    void Themeactioninit();
+    void themeActionInit();
 
-    void Themeconnectinit();
+    void themeConnectInit();
 
-    void Callmenu();
+    void callMenu();
 
-    void Setframetheme();
+    void setFrameTheme();
 
-    void Setoriginaltheme();
+    void setOriginalTheme();
 
-    void Selectcolortheme();
+    void selectColorTheme();
 
-    void Setcolortheme();
+    void setColorTheme();
 
-    void Setheartofirontheme();
+    void setHeartOfIronTheme();
 
-    void Setgoertektheme();
+    void setGoerTekTheme();
 
-    void Setwidgettheme();
+    void setWidgetTheme();
 
-    void Updatesvgfile();
+    void updateSvgFile();
 
-    void Setdeactivetheme();
+    void setDeactiveTheme();
 
-    Qt::CursorShape Calmouseposition(
+    Qt::CursorShape calMousePosition(
         QMouseEvent *event);
 
-    void Resizebycursor();
-
-    void Close();
+    void resizeByCursor();
 
 signals:
 
-    void Signalwa();
+    void signalWa();
 
-    void Signalwb();
+    void signalWb();
 
-    void Signalwc();
+    void signalWc();
 
-    void Signalwd();
+    void signalWd();
 
 };
 

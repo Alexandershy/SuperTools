@@ -1,5 +1,6 @@
 #ifndef _DEMOBOX__H
 #define _DEMOBOX__H
+#define _DEMOBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
@@ -8,9 +9,8 @@
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__superfilemanager__/_superfilemanager_.h"
 #include "__superwindow__/_superwindow_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "_demobox__global.h"
+#include "__module__/_demomodulea_.h"
+#include "__module__/_demomoduleb_.h"
 
 /**************interface****************/
 class _DEMOBOX__EXPORT Interface
@@ -32,8 +32,8 @@ public:
 
 private:
 
-    ModuleA *Modulea                = nullptr;
-    ModuleB *Moduleb                = nullptr;
+    DemoModuleA *Modulea            = nullptr;
+    DemoModuleB *Moduleb            = nullptr;
     SuperLogger *Logger             = nullptr;
     SuperFileManager *Filemanager   = nullptr;
     QStringList *Demofilelist       = nullptr;
@@ -42,21 +42,20 @@ private:
 private slots:
 
     /*  main function*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void parameterInit();
 
-    void Parameterinit();
+    void selectSnFile();
 
-    void Selectsnfile();
-
-    void Displaysnfile(
+    void displaySnFile(
         QString text);
 
-    void Process();
+    void process();
 
-    void Processcsvfile(
+    void processCsvFile(
         QString serialnumber);
 
 };

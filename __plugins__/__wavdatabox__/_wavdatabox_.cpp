@@ -1,8 +1,8 @@
 #include "_wavdatabox_.h"
 
-Interface::Interface()
+SuperTab* Interface::Loadplugin()
 {
-    WavDataBox();
+    return new WavDataBox();
 }
 
 /*  return class wavdatabox new instance pointer;*/
@@ -10,80 +10,80 @@ Interface::Interface()
 WavDataBox::WavDataBox(QWidget *parent)
     : SuperTab(parent)
 {
-    Readme("WavDataBox");
-    Setgroupbox(2,1);
-    Setstretch({99,1},{100}); 
-    Init();
+    readMe("WavDataBox");
+    setGroupBox(2,1);
+    setStretch({99,1},{100});
+    init();
 }
 
 WavDataBox::~WavDataBox()
 {
-    Stop();
-    SuperC->Closethread(Threadpa);
+    stop();
+    Core->closeThread(Threadpa);
 }
 
-void WavDataBox::Init()
+void WavDataBox::init()
 {
-    Objectinit();
-    Parameterinit();
+    objectInit();
+    parameterInit();
 }
 
 /*  object init;*/
 
-void WavDataBox::Objectinit()
+void WavDataBox::objectInit()
 {
     File = new QFile(this);
     Hook = new SuperHook(this);
-    SuperM = new SuperMultiMedia(this);
+    Multimedia = new SuperMultiMedia(this);
     Logger = new SuperLogger(this,Rightgroupboxlist.at(0)->Insidelayout);
     Filemanager = new SuperFileManager(this,Leftgroupboxlist.at(0)->Insidelayout,{"*.wav"});
-    Modulea = new ModuleA(this,Leftgroupboxlist.at(1)->Insidelayout);
-    connect(Filemanager,&SuperFileManager::Signalfa,Logger, &SuperLogger::Displaylog);
-    connect(Filemanager,&SuperFileManager::Signalfb,this,   &WavDataBox::Stop);
-    connect(Filemanager,&SuperFileManager::Signalfc,this,   &WavDataBox::Clickwavfile);
-    connect(Filemanager,&SuperFileManager::Signalfd,this,   &WavDataBox::Actionopen);
-    connect(Filemanager,&SuperFileManager::Signalfe,this,   &WavDataBox::Deletefileslot);
-    connect(Modulea->ui->pushButton_5,    &QPushButton::clicked,    this,   &WavDataBox::Changeplaymode);
-    connect(Modulea->ui->pushButton_7,    &QPushButton::clicked,    this,   &WavDataBox::Play);
-    connect(Modulea->ui->pushButton_2,    &QPushButton::clicked,    this,   &WavDataBox::Stop);
-    connect(Modulea->ui->horizontalSlider,&QSlider::sliderReleased, this,   &WavDataBox::Setwavfilepos);
-    connect(Modulea->ui->pushButton_6,    &QPushButton::clicked,    this,   &WavDataBox::Nextwavfile);
-    connect(Modulea->ui->pushButton_3,    &QPushButton::clicked,    this,   &WavDataBox::Lastwavfile);
-    connect(Modulea,                      &ModuleA::Signalwa,       this,   &WavDataBox::Nodeviceexist);
-    connect(Modulea,                      &ModuleA::Signalwb,       this,   &WavDataBox::Signalcaslot);
-    Hook->Setpressedfunction(std::bind(&WavDataBox::Keypressedevent,this,std::placeholders::_1));
-    Hook->Setsourcekeylist(&Multikeylist);
+    Modulea = new WavdataModuleA(this,Leftgroupboxlist.at(1)->Insidelayout);
+    connect(Filemanager,&SuperFileManager::signalFa,Logger, &SuperLogger::displayLog);
+    connect(Filemanager,&SuperFileManager::signalFb,this,   &WavDataBox::stop);
+    connect(Filemanager,&SuperFileManager::signalFc,this,   &WavDataBox::clickWavFile);
+    connect(Filemanager,&SuperFileManager::signalFd,this,   &WavDataBox::actionOpen);
+    connect(Filemanager,&SuperFileManager::signalFe,this,   &WavDataBox::deleteFileSlot);
+    connect(Modulea->ui->pushButton_5,    &QPushButton::clicked,    this,   &WavDataBox::changePlayMode);
+    connect(Modulea->ui->pushButton_7,    &QPushButton::clicked,    this,   &WavDataBox::play);
+    connect(Modulea->ui->pushButton_2,    &QPushButton::clicked,    this,   &WavDataBox::stop);
+    connect(Modulea->ui->horizontalSlider,&QSlider::sliderReleased, this,   &WavDataBox::setWavFilePos);
+    connect(Modulea->ui->pushButton_6,    &QPushButton::clicked,    this,   &WavDataBox::nextWavFile);
+    connect(Modulea->ui->pushButton_3,    &QPushButton::clicked,    this,   &WavDataBox::lastWavFile);
+    connect(Modulea,                      &WavdataModuleA::signalWa,this,   &WavDataBox::nodeviceExist);
+    connect(Modulea,                      &WavdataModuleA::signalWb,this,   &WavDataBox::signalCaSlot);
+    Hook->setPressedFunction(std::bind(&WavDataBox::keyPressedEvent,this,std::placeholders::_1));
+    Hook->setSourceKeyList(&Multikeylist);
 }
 
 /*  object init;*/
 
-void WavDataBox::Parameterinit()
+void WavDataBox::parameterInit()
 {
     Wavfilelist = &Filemanager->Filelist;
     Filemanager->Widgetlist.append(Modulea->ui->pushButton_5);
     Filemanager->Widgetlist.append(Modulea->ui->pushButton_7);
-    Filemanager->Enablewidgetlist();
-    Filemanager->Personalization(Sourcepath,"Wav");
-    Filemanager->Checkfilevaildinit();
-    Modulea->Checkdefaultdevice();
+    Filemanager->enableWidgetList();
+    Filemanager->personalization(Sourcepath,"Wav");
+    Filemanager->checkFileVaildInit();
+    Modulea->checkDefaultDevice();
 }
 
 /*  parameter init;*/
 
-void WavDataBox::Deletefileslot(QString file)
+void WavDataBox::deleteFileSlot(QString file)
 {
     if(Wavfile == file)
     {
-        Stop();
+        stop();
     }
 }
 
 /*  delete wav files;*/
 
-void WavDataBox::Changewavfileapi(int direction)
+void WavDataBox::changeWavFileApi(int direction)
 {
     QTableWidgetItem *item = nullptr;
-    int index = SuperC->Findlistmember(Wavfilelist,Wavfile);
+    int index = Core->findListMember(Wavfilelist,Wavfile);
     if(index >= 0)
     {
         switch(Playmode)
@@ -105,45 +105,45 @@ void WavDataBox::Changewavfileapi(int direction)
             }
         }
         Filemanager->ui->tableWidget->setCurrentItem(item);
-        Wavfile = Filemanager->Getcurrentitemtext();
-        Filemanager->Setcurrentfile(Wavfile);
+        Wavfile = Filemanager->getCurrentItemText();
+        Filemanager->setCurrentFile(Wavfile);
     }
 }
 
 /*  change wavfile api;*/
 
-void WavDataBox::Nextwavfile()
+void WavDataBox::nextWavFile()
 {
-    Stop();
+    stop();
     Wavfilechangedirection = 1;
 }
 
 /*  cal next item position;*/
 
-void WavDataBox::Lastwavfile()
+void WavDataBox::lastWavFile()
 {
-    Stop();
+    stop();
     Wavfilechangedirection = -1;
 }
 
 /*  cal last item position;*/
 
-void WavDataBox::Clickwavfile()
+void WavDataBox::clickWavFile()
 {
-    if(Filemanager->Getcurrentitemtext() == Wavfile)
+    if(Filemanager->getCurrentItemText() == Wavfile)
     {
-        Play();
+        play();
     }
     else
     {
         if(Playstatus.size() == 4)
         {
-            Play();
+            play();
         }
         else
         {
-            Stop();
-            disconnect(Filemanager,&SuperFileManager::Signalfc,this,&WavDataBox::Clickwavfile);
+            stop();
+            disconnect(Filemanager,&SuperFileManager::signalFc,this,&WavDataBox::clickWavFile);
             Wavfilechangedirection = 10;
         }
     }
@@ -151,28 +151,28 @@ void WavDataBox::Clickwavfile()
 
 /*  cal next item position;*/
 
-void WavDataBox::Changeplaymode()
+void WavDataBox::changePlayMode()
 {
     switch(Playmode)
     {
         case 0:
         {
             Playmode = 1;
-            Logger->Displaylog("N","play mode set as list loop","Changeplaymode function run completed;");
+            Logger->displayLog("N","play mode set as list loop","Changeplaymode function run completed;");
             Modulea->ui->pushButton_5->setIcon(QIcon(":/__supericon__/_listloop_.svg"));
             break;
         }
         case 1:
         {
             Playmode = 2;
-            Logger->Displaylog("N","play mode set as random","Changeplaymode function run completed;");
+            Logger->displayLog("N","play mode set as random","Changeplaymode function run completed;");
             Modulea->ui->pushButton_5->setIcon(QIcon(":/__supericon__/_random_.svg"));
             break;
         }
         case 2:
         {
             Playmode = 0;
-            Logger->Displaylog("N","play mode set as single cycle","Changeplaymode function run completed;");
+            Logger->displayLog("N","play mode set as single cycle","Changeplaymode function run completed;");
             Modulea->ui->pushButton_5->setIcon(QIcon(":/__supericon__/_singlecycle_.svg"));
             break;
         }
@@ -181,27 +181,27 @@ void WavDataBox::Changeplaymode()
 
 /*  change play mode;*/
 
-void WavDataBox::Play()
+void WavDataBox::play()
 {
     switch(Playstatus.size())
     {
         case 4:
         {
-            SuperM->Changeplayicon(Modulea->ui->pushButton_7,&Playstatus,7);
-            Setplaywavfile();
-            Playwavfiles();
+            Multimedia->changePlayIcon(Modulea->ui->pushButton_7,&Playstatus,7);
+            setPlayWavFile();
+            playWavFiles();
             break;
         }
         case 7:
         {
-            SuperM->Changeplayicon(Modulea->ui->pushButton_7,&Playstatus,9);
-            Logger->Displaylog("N","wav file play suspended","Play function suspended");
+            Multimedia->changePlayIcon(Modulea->ui->pushButton_7,&Playstatus,9);
+            Logger->displayLog("N","wav file play suspended","Play function suspended");
             break;
         }
         case 9:
         {
-            SuperM->Changeplayicon(Modulea->ui->pushButton_7,&Playstatus,7);
-            Logger->Displaylog("N","wav file resume playing...","Play function running...");
+            Multimedia->changePlayIcon(Modulea->ui->pushButton_7,&Playstatus,7);
+            Logger->displayLog("N","wav file resume playing...","Play function running...");
             break;
         }
     }
@@ -209,85 +209,85 @@ void WavDataBox::Play()
 
 /*  change play mode ,play or suspended,and operate some widget;*/
 
-void WavDataBox::Setplaywavfile()
+void WavDataBox::setPlayWavFile()
 {
     if(Filemanager->ui->tableWidget->currentItem() == nullptr)
     {
         Filemanager->ui->tableWidget->setCurrentItem(Filemanager->ui->tableWidget->item(0,0));
     }
-    Wavfile = Filemanager->Getcurrentitemtext();
-    Filemanager->Setcurrentfile(Wavfile);
+    Wavfile = Filemanager->getCurrentItemText();
+    Filemanager->setCurrentFile(Wavfile);
 }
 
 /*  set wav file will be play;*/
 
-void WavDataBox::Playwavfiles()
+void WavDataBox::playWavFiles()
 {
-    Getwavfileformat();
+    getWavFileFormat();
     Modulea->ui->pushButton_2->setEnabled(true);
     Modulea->ui->pushButton_3->setEnabled(true);
     Modulea->ui->pushButton_6->setEnabled(true);
     Modulea->ui->horizontalSlider->setEnabled(true);
     QAudioSink *audiosink = new QAudioSink(QMediaDevices::defaultAudioOutput(),Format);
     Threadpa = new SuperPlayWav(File,File->size(),&Playstatus,audiosink);
-    connect(Threadpa,       &SuperPlayWav::Signalpa, this,       &WavDataBox::Signalwpaslot);
-    connect(Threadpa,       &SuperPlayWav::Signalpb, this,       &WavDataBox::Signalwpbslot);
-    connect(Threadpa->Timer,&QTimer::timeout,   this,       &WavDataBox::Signalwpcslot);
-    connect(Threadpa,       &SuperPlayWav::finished, Threadpa,   &QObject::deleteLater);
+    connect(Threadpa,       &SuperPlayWav::signalPa,this,       &WavDataBox::signalWpaSlot);
+    connect(Threadpa,       &SuperPlayWav::signalPb,this,       &WavDataBox::signalWpbSlot);
+    connect(Threadpa->Timer,&QTimer::timeout,       this,       &WavDataBox::signalWpcSlot);
+    connect(Threadpa,       &SuperPlayWav::finished,Threadpa,   &QObject::deleteLater);
     Threadpa->Timer->setInterval(200);
     Threadpa->start();
-    Logger->Displaylog("N","start new thread for play wav file","Play function running...");
+    Logger->displayLog("N","start new thread for play wav file","Play function running...");
 }
 
 /*  play wav files;*/
 
-void WavDataBox::Getwavfileformat()
+void WavDataBox::getWavFileFormat()
 {
     File->setFileName(Wavfile);
     File->open(QIODevice::ReadOnly);
-    Wavfileinfo = SuperM->Wavinfo(Wavfile);
+    Wavfileinfo = Multimedia->wavInfo(Wavfile);
     Timelength = Wavfileinfo.at(1).toInt();
     Samplerate = Wavfileinfo.at(7).toInt();
     Bits = Wavfileinfo.at(10).toInt();
     Bitspersample = Wavfileinfo.at(9).toInt();
     Channelcounts = Wavfileinfo.at(6).toInt();
     QList<QString> wavelist = {"RIFF","filelen","WAVE","fmt","fmtlen","wformattag","wchannels","dwsamplerate","dwavgbyterate","wblockalign","wbitspersample","wextsize","extralinfo"};
-    Setdeviceformat(&Format,Samplerate,Bits,Channelcounts);
-    Logger->Displaylog("N","selected wav: " + Wavfile,"Getwavfileformat function run completed");
-    Setslidervalue();
+    setDeviceFormat(&Format,Samplerate,Bits,Channelcounts);
+    Logger->displayLog("N","selected wav: " + Wavfile,"Getwavfileformat function run completed");
+    setSliderValue();
     for(int i = 0;i < Wavfileinfo.count();i++)
     {
-        Logger->Displaylog("N",wavelist.at(i) + ": " + Wavfileinfo.at(i),"Getwavfileformat function run completed");
+        Logger->displayLog("N",wavelist.at(i) + ": " + Wavfileinfo.at(i),"Getwavfileformat function run completed");
     }
 }
 
 /*  get wav file format and set slider pos;*/
 
-void WavDataBox::Setdeviceformat(QAudioFormat *format,int samplerate,int samplesize,int channels)
+void WavDataBox::setDeviceFormat(QAudioFormat *format,int samplerate,int samplesize,int channels)
 {
     format->setSampleRate(samplerate);
-    format->setSampleFormat(SuperM->Intbitstoenum(samplesize));
+    format->setSampleFormat(Multimedia->intBitsToEnum(samplesize));
     format->setChannelCount(channels);
 }
 
 /*  set default audio format;*/
 
-void WavDataBox::Setslidervalue()
+void WavDataBox::setSliderValue()
 {
     Modulea->ui->horizontalSlider->setMaximum(Timelength);
     Modulea->ui->label->setText(QString::number(0,'f',1));
     Modulea->ui->label_3->setText(QString::number(double(Timelength) / Bitspersample / Samplerate,'f',1) + " (s)");
 }
 
-void WavDataBox::Stop()
+void WavDataBox::stop()
 {
     Wavfilechangedirection = 0;
-    SuperM->Changeplayicon(Modulea->ui->pushButton_7,&Playstatus,4);
+    Multimedia->changePlayIcon(Modulea->ui->pushButton_7,&Playstatus,4);
 }
 
 /*  stop play audio;*/
 
-void WavDataBox::Setwavfilepos()
+void WavDataBox::setWavFilePos()
 {
     int filepostemp = Modulea->ui->horizontalSlider->value() / Bitspersample;
     Modulea->ui->label->setText(QString::number(filepostemp / Samplerate,'f',1));
@@ -297,32 +297,32 @@ void WavDataBox::Setwavfilepos()
 
 /*  set wav file pos;*/
 
-void WavDataBox::Showdatadialog()
+void WavDataBox::showDataDialog()
 {
     Modulea->ui->pushButton_7->setEnabled(false);
-    DataDialog *dialog = new DataDialog(nullptr,Wavfile);
-    connect(dialog,&DataDialog::Signalda,this,&WavDataBox::Enableplaykey);
+    WavDataDialog *dialog = new WavDataDialog(nullptr,Wavfile);
+    connect(dialog,&WavDataDialog::signalDa,this,&WavDataBox::enablePlayKey);
     Dialogcounts = Dialogcounts + 1;
-    dialog->Show();
+    dialog->show();
 }
 
 /*  show wav datadialog;*/
 
-void WavDataBox::Actionopen()
+void WavDataBox::actionOpen()
 {
     switch(Playstatus.size())
     {
         case 4:
         {
-            Disableclicked();
-            Showdatadialog();
+            disableClicked();
+            showDataDialog();
             break;
         }
         case 7:
         case 9:
         {
-            Stop();
-            Disableclicked();
+            stop();
+            disableClicked();
             break;
         }
     }
@@ -330,22 +330,22 @@ void WavDataBox::Actionopen()
 
 /*  open wavfile table;*/
 
-void WavDataBox::Disableclicked()
+void WavDataBox::disableClicked()
 {
     Wavfilechangedirection = 11;
-    Wavfile = Filemanager->Getcurrentitemtext();
-    Filemanager->Setcurrentfile(Wavfile);
-    Logger->Displaylog("N",Wavfile + " opened","Open function run completed");
+    Wavfile = Filemanager->getCurrentItemText();
+    Filemanager->setCurrentFile(Wavfile);
+    Logger->displayLog("N",Wavfile + " opened","Open function run completed");
     if(!Dialogcounts)
     {
-        disconnect(Filemanager,&SuperFileManager::Signalfc,this,&WavDataBox::Clickwavfile);
-        Logger->Displaylog("N","filemanager module clicked opened disabled","Disableclicked function run completed");
+        disconnect(Filemanager,&SuperFileManager::signalFc,this,&WavDataBox::clickWavFile);
+        Logger->displayLog("N","filemanager module clicked opened disabled","Disableclicked function run completed");
     }
 }
 
 /*  disable click wav file;*/
 
-void WavDataBox::Signalwpslotapi()
+void WavDataBox::signalWpSlotApi()
 {
     Threadpa = nullptr;
     File->close();
@@ -356,34 +356,34 @@ void WavDataBox::Signalwpslotapi()
     Modulea->ui->pushButton_2->setEnabled(false);
     Modulea->ui->pushButton_3->setEnabled(false);
     Modulea->ui->pushButton_6->setEnabled(false);
-    SuperM->Changeplayicon(Modulea->ui->pushButton_7,&Playstatus,4);
+    Multimedia->changePlayIcon(Modulea->ui->pushButton_7,&Playstatus,4);
     Modulea->ui->horizontalSlider->setEnabled(false);
-    Logger->Displaylog("N",Wavfile + " has been play completed","Signalwpslot function run completed");
+    Logger->displayLog("N",Wavfile + " has been play completed","signalWpslot function run completed");
 }
 
 /*  end signals' thread api;*/
 
-void WavDataBox::Signalwpaslot()
+void WavDataBox::signalWpaSlot()
 {
-    Signalwpslotapi();
+    signalWpSlotApi();
     switch(Wavfilechangedirection)
     {
         case -1:
         case 1:
         {
-            Changewavfileapi(Wavfilechangedirection);
-            Play();
+            changeWavFileApi(Wavfilechangedirection);
+            play();
             break;
         }
         case 10:
         {
-            Play();
-            connect(Filemanager,&SuperFileManager::Signalfc,this,&WavDataBox::Clickwavfile);
+            play();
+            connect(Filemanager,&SuperFileManager::signalFc,this,&WavDataBox::clickWavFile);
             break;
         }
         case 11:
         {
-            Showdatadialog();
+            showDataDialog();
             break;
         }
     }
@@ -391,19 +391,19 @@ void WavDataBox::Signalwpaslot()
 
 /*  end signals' thread, release memory and reset ui;*/
 
-void WavDataBox::Signalwpbslot(QString status)
+void WavDataBox::signalWpbSlot(QString status)
 {
     if(status != "selection")
     {
-        Signalwpslotapi();
-        Changewavfileapi(1);
-        Play();
+        signalWpSlotApi();
+        changeWavFileApi(1);
+        play();
     }
 }
 
 /*  end signals' thread , restart thread;*/
 
-void WavDataBox::Signalwpcslot()
+void WavDataBox::signalWpcSlot()
 {
     if(!Modulea->ui->horizontalSlider->isSliderDown() && File->isOpen())
     {
@@ -415,42 +415,42 @@ void WavDataBox::Signalwpcslot()
 
 /*  display file pos by horizontalslider;*/
 
-void WavDataBox::Signalcaslot()
+void WavDataBox::signalCaSlot()
 {
     if(Playstatus.size() == 7 || Playstatus.size() == 9)
     {
-        Stop();
-        Logger->Displaylog("N","default device changed,wav file play stoped","Signalcaslot function run completed;");
+        stop();
+        Logger->displayLog("N","default device changed,wav file play stoped","signalCaslot function run completed;");
     }
 }
 
 /*  default play device changed;*/
 
-void WavDataBox::Nodeviceexist()
+void WavDataBox::nodeviceExist()
 {
-    Filemanager->Disableopen();
-    disconnect(Modulea->ui->pushButton_7,&QPushButton::clicked,this,&WavDataBox::Play);
+    Filemanager->disableOpen();
+    disconnect(Modulea->ui->pushButton_7,&QPushButton::clicked,this,&WavDataBox::play);
     SuperNoteDialog *messagebox = new SuperNoteDialog(nullptr,"can not find any output deivce;");
-    messagebox->Hideleftbutton();
-    messagebox->Messageinit();
+    messagebox->hideLeftButton();
+    messagebox->messageInit();
 }
 
 /*  not found any play device;*/
 
-void WavDataBox::Enableplaykey()
+void WavDataBox::enablePlayKey()
 {
     Dialogcounts = Dialogcounts - 1;
     if(!Dialogcounts)
     {
         Modulea->ui->pushButton_7->setEnabled(true);
-        connect(Filemanager,&SuperFileManager::Signalfc,this,&WavDataBox::Clickwavfile);
-        Logger->Displaylog("N","filemanager module clicked opened enabled","Disableclicked function run completed");
+        connect(Filemanager,&SuperFileManager::signalFc,this,&WavDataBox::clickWavFile);
+        Logger->displayLog("N","filemanager module clicked opened enabled","Disableclicked function run completed");
     }
 }
 
 /*  enable play key;*/
 
-void WavDataBox::Keypressedevent(int key)
+void WavDataBox::keyPressedEvent(int key)
 {
     switch(key)
     {
@@ -458,7 +458,7 @@ void WavDataBox::Keypressedevent(int key)
         {
             if(Modulea->ui->pushButton_3->isEnabled())
             {
-                Lastwavfile();
+                lastWavFile();
             }
             break;
         }
@@ -466,7 +466,7 @@ void WavDataBox::Keypressedevent(int key)
         {
             if(Modulea->ui->pushButton_7->isEnabled())
             {
-                Play();
+                play();
             }
             break;
         }
@@ -474,7 +474,7 @@ void WavDataBox::Keypressedevent(int key)
         {
             if(Modulea->ui->pushButton_6->isEnabled())
             {
-                Nextwavfile();
+                nextWavFile();
             }
             break;
         }

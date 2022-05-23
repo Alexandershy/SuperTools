@@ -1,5 +1,6 @@
 #ifndef _TCPCLIENTBOX__H
 #define _TCPCLIENTBOX__H
+#define _TCPCLIENTBOX__EXPORT Q_DECL_EXPORT
 
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
@@ -7,9 +8,8 @@
 #include "__supersender__/_supersender_.h"
 #include "__superlogger__/_superlogger_.h"
 #include "__supergroupbox__/_supergroupbox_.h"
-#include "__module__/_modulea_.h"
-#include "__module__/_moduleb_.h"
-#include "_tcpclientbox__global.h"
+#include "__module__/_tcpclientmodulea_.h"
+#include "__module__/_tcpclientmoduleb_.h"
 #include <QThread>
 #include <QTimer>
 #include <QDir>
@@ -33,9 +33,9 @@ public:
 
 private:
 
-    SuperNetwork *SuperN                            = nullptr;
-    ModuleA *Modulea                                = nullptr;
-    ModuleB *Moduleb                                = nullptr;
+    SuperNetwork *Network                           = nullptr;
+    TcpClientModuleA *Modulea                       = nullptr;
+    TcpClientModuleB *Moduleb                       = nullptr;
     QTcpSocket *Tcpsocket                           = nullptr;
     QString Username                                = "";
     QList<QWidget*> Connectwidgetet                 = {};
@@ -53,46 +53,45 @@ private:
 private slots:
 
     /* main function;*/
+    void init();
 
-    void Init();
+    void parameterInit();
 
-    void Parameterinit();
+    void objectInit();
 
-    void Objectinit();
+    void widgetListInit();
 
-    void Widgetlistinit();
+    void tcpsocketInit();
 
-    void Tcpsocketinit();
+    void getLocalIpAddress();
 
-    void Getlocalipaddress();
+    void enableListenPort();
 
-    void Enablelistenport();
+    void enableConnectTcpServer();
 
-    void Enableconnecttcpserver();
+    void connectTcpServer();
 
-    void Connecttcpserver();
-
-    void Enablesenderbox(
+    void enableSenderBox(
             bool boola);
 
-    void Disconnecttcpserver();
+    void disconnectTcpServer();
 
-    void Writeapi(
+    void writeApi(
             QLineEdit* lineeditdata);
 
-    void Recordtext();
+    void recordText();
 
-    void Readdata();
+    void readData();
 
-    void Enableaddn();
+    void enableAddn();
 
-    void Enableaddr();
+    void enableAddr();
 
-    void Changetypea();
+    void changeTypea();
 
-    void Changetypeb();
+    void changeTypeb();
 
-    void Changetypeapi(
+    void changeTypeapi(
             QCheckBox* checkboxtype,
             QString strtlog,
             QString strllog,
@@ -100,9 +99,9 @@ private slots:
             bool boolb,
             bool boolc);
 
-    void Abnormaldisconnect();
+    void abnormalDisconnect();
 
-    void Adjustsenderbox();
+    void adjustSenderBox();
 
 };
 

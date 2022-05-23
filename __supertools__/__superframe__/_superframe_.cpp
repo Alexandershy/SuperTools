@@ -3,11 +3,11 @@
 SuperFrame::SuperFrame(QWidget *parent)
     : SuperWindow(parent)
 {
-    Superinitwindow();
-    Disablemaxisize();
-    Settitle(qApp->applicationVersion());
-    Addthemefunction();
-    Supertimer();
+    superInitWindow();
+    disableMaxisize();
+    setTitle(qApp->applicationVersion());
+    addThemeFunction();
+    superTimer();
 }
 
 SuperFrame::~SuperFrame()
@@ -15,82 +15,82 @@ SuperFrame::~SuperFrame()
 
 }
 
-void SuperFrame::Superinitwindow()
+void SuperFrame::superInitWindow()
 {
     Initbox = new SuperInit(this);
-    connect(Initbox,&SuperInit::Signalia,   this,&SuperFrame::Supermainwindow);
-    connect(this,   &SuperFrame::Signalwb,  this,&SuperFrame::Superselectcolor);
+    connect(Initbox,&SuperInit::signalIa,   this,&SuperFrame::superMainWindow);
+    connect(this,   &SuperFrame::signalWb,  this,&SuperFrame::superSelectColor);
     Pluginlayout->addWidget(Initbox);
 }
 
 /*  add initbox;*/
 
-void SuperFrame::Supertimer()
+void SuperFrame::superTimer()
 {
     Timer = new QTimer(this);
     Timer->setInterval(1000);
-    connect(Timer,&QTimer::timeout,this,&SuperFrame::Checkstatus);
+    connect(Timer,&QTimer::timeout,this,&SuperFrame::checkStatus);
     Timer->start();
 }
 
 /*  add check supertools repeat opened;*/
 
-void SuperFrame::Checkstatus()
+void SuperFrame::checkStatus()
 {
-    if(!Core->Readonlyfile(Openstatuspath).isEmpty())
+    if(!Core->readOnlyFile(Openstatuspath).isEmpty())
     {
-        Show();
-        Core->Writeonlyfile(Openstatuspath,"");
+        show();
+        Core->writeOnlyFile(Openstatuspath,"");
     }
 }
 
 /*  check opened status;*/
 
-void SuperFrame::Supermainwindow(QString setting)
+void SuperFrame::superMainWindow(QString setting)
 {
     delete Initbox;
     Initbox = nullptr;
     Mainbox = new SuperMain(this,setting);
     Pluginlayout->addWidget(Mainbox);
-    Mainbox->Setfocus();
-    connect(Mainbox,&SuperMain::Signalma,   Core,&SuperCore::Openpath);
-    connect(Mainbox,&SuperMain::Signalmb,   this,&SuperFrame::Quit);
-    connect(Mainbox,&SuperMain::Signalmc,   this,&SuperFrame::setCursor);
-    connect(this,   &SuperFrame::Signalwa,  Mainbox,&SuperMain::Setfocus);
-    Addframefunction();
-    Addresizefunction();
-    Addmenu(Mainbox->Load,"Load",false);
-    Addmenu(Mainbox->Config,"Config",false);
-    Addmenu(Mainbox->Help,"Help",true);
-    Addaction(Mainbox->Actionsave);
-    Addaction(Mainbox->Actionsaveas);
-    Addaction(Mainbox->Actionquit);
-    Supersystemtray();
-    Movecenter(Mainbox);
+    Mainbox->setFocus();
+    connect(Mainbox,&SuperMain::signalMa,   Core,&SuperCore::openPath);
+    connect(Mainbox,&SuperMain::signalMb,   this,&SuperFrame::quit);
+    connect(Mainbox,&SuperMain::signalMc,   this,&SuperFrame::setCursor);
+    connect(this,   &SuperFrame::signalWa,  Mainbox,&SuperMain::setFocus);
+    addFrameFunction();
+    addResizeFunction();
+    addMenu(Mainbox->Load,"Load",false);
+    addMenu(Mainbox->Config,"Config",false);
+    addMenu(Mainbox->Help,"Help",true);
+    addAction(Mainbox->Actionsave);
+    addAction(Mainbox->Actionsaveas);
+    addAction(Mainbox->Actionquit);
+    superSystemTray();
+    moveCenter(Mainbox);
 }
 
 /*  add mainbox;*/
 
-void SuperFrame::Supersystemtray()
+void SuperFrame::superSystemTray()
 {
     Tray = new SuperTray(this);
-    connect(Tray,&SuperTray::Signalta,this,&SuperFrame::Quit);
-    connect(Tray,&SuperTray::Signaltb,this,&SuperFrame::Show);
+    connect(Tray,&SuperTray::Signalta,this,&SuperFrame::quit);
+    connect(Tray,&SuperTray::Signaltb,this,&SuperFrame::show);
 }
 
 /*  add system tray;*/
 
-void SuperFrame::Superselectcolor()
+void SuperFrame::superSelectColor()
 {
     SuperColorDialog *colordialog = new SuperColorDialog(nullptr,Backgroundcolor);
-    connect(colordialog,&SuperColorDialog::Signalsa,this,       &SuperFrame::Setcolor);
-    connect(colordialog,&SuperColorDialog::Signalsa,colordialog,&QObject::deleteLater);
-    colordialog->Show();
+    connect(colordialog,&SuperColorDialog::signalSa,this,       &SuperFrame::setColor);
+    connect(colordialog,&SuperColorDialog::signalSa,colordialog,&QObject::deleteLater);
+    colordialog->show();
 }
 
 /*  select color;*/
 
-void SuperFrame::Quit()
+void SuperFrame::quit()
 {
     Tray->setVisible(false);
     close();
@@ -112,24 +112,24 @@ SuperRepeat::~SuperRepeat()
 
 void SuperRepeat::Init()
 {
-    Objectinit();
-    Writeinit();
-    Timerinit();
+    objectInit();
+    writeInit();
+    timerInit();
 }
 
-void SuperRepeat::Objectinit()
+void SuperRepeat::objectInit()
 {
     Core = new SuperCore(this);
 }
 
-void SuperRepeat::Writeinit()
+void SuperRepeat::writeInit()
 {
-    Core->Writeonlyfile(Openstatuspath,"opened");
+    Core->writeOnlyFile(Openstatuspath,"opened");
 }
 
 /*  change opened status;*/
 
-void SuperRepeat::Timerinit()
+void SuperRepeat::timerInit()
 {
     Timer = new QTimer(this);
     Timer->setInterval(1000);

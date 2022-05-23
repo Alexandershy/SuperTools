@@ -1,1 +1,0 @@
-uic -o _infobox__ui_.h _infobox_.ui

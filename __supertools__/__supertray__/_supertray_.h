@@ -28,35 +28,35 @@ public:
 
 private:
 
-    SuperCore *SuperC = nullptr;
+    SuperCore *Core             = nullptr;
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Actioninit();
+    void actionInit();
 
-    void Addactioninfo(
+    void addActionInfo(
             QAction *actiona,
             QString actionname,
             QString icopath);
 
-    void Opentaskmanager();
+    void openTaskManager();
 
-    void Opencomputermanager();
+    void openComputerManager();
 
-    void Openregedit();
+    void openRegedit();
 
-    void Opennetwork();
+    void openNetwork();
 
-    void Trayclick(
+    void trayClick(
             QSystemTrayIcon::ActivationReason reason);
 
-    void Closeevent();
+    void close();
 
 signals:
 

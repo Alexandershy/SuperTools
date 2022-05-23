@@ -18,7 +18,7 @@ public:
 
 public slots:
 
-    void Setvaluemessage(
+    void setValueMessage(
         int value,
         QString message);
 
@@ -29,17 +29,17 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Stopfunction();
+    void stopFunction();
 
 signals:
 
-    void Signalpa();
+    void signalPa();
 
-    void Signalpb();
+    void signalPb();
 
 };
 

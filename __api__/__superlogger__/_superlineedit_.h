@@ -22,13 +22,13 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Appendtextinit();
+    void appendTextInit();
 };
 
 

@@ -24,13 +24,13 @@
 #ifndef GRABAG__SEEKTABLE_H
 #define GRABAG__SEEKTABLE_H
 
-#include "__supercodec__/__flac__/FLAC/format.h"
+#include "FLAC/format.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-FLAC__bool grabbag__seektable_convert_specification_to_template(const char *spec, FLAC__bool only_explicit_placeholders, FLAC__uint64 total_samples_to_encode, unsigned sample_rate, FLAC__StreamMetadata *seektable_template, FLAC__bool *spec_has_real_points);
+FLAC__bool grabbag__seektable_convert_specification_to_template(const char *spec, FLAC__bool only_explicit_placeholders, FLAC__uint64 total_samples_to_encode, uint32_t sample_rate, FLAC__StreamMetadata *seektable_template, FLAC__bool *spec_has_real_points);
 
 #ifdef __cplusplus
 }

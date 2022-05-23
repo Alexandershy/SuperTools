@@ -1,7 +1,7 @@
 #ifndef _SUPERNETWORK__H
 #define _SUPERNETWORK__H
 #define _SUPERNETWORK__EXPORT Q_DECL_EXPORT
-#define _SUPERNETWORK__EXPORT Q_DECL_EXPORT
+#define _SUPERTCPSOCKETTHREAD__EXPORT Q_DECL_EXPORT
 
 #include <QNetworkInterface>
 #include <QNetworkDatagram>
@@ -28,42 +28,41 @@ public:
 public slots:
 
     /*  system;*/
-
-    void Getlocalipaddress(
+    void getLocalIpAddress(
             QList<QNetworkAddressEntry> *entry,
             QComboBox *combobox);
 
-    void Getlocalnetmask(
+    void getLocalNetmask(
             QList<QNetworkAddressEntry> *entry,
             QComboBox *combobox);
 
     /*  QTcpsocket;*/
-    bool Connecttcpserver(
+    bool connectTcpServer(
             QTcpSocket* tcpsocket,
             QString ipaddress,
             int portnumber,
             int timeout);
 
-    bool Disconnecttcpserver(
+    bool disConnectTcpServer(
             QTcpSocket* tcpsocket,
             int timeout);
 
-    void Writesocket(
+    void writeSocket(
             QCheckBox* checkboxstring,
             QCheckBox* checkboxaddr,
             QCheckBox* checkboxaddn,
             QTcpSocket* tcpsocket,
             QLineEdit* lineeditdata);
 
-    QByteArray Readdatastream(
+    QByteArray readDataStream(
             QTcpSocket* tcpsocket,
             QCheckBox* checkboxstring);
 
-    void Closetcpclient(
+    void closeTcpClient(
             QTcpSocket* tcpsocket);
 };
 
-class SuperTcpSocketThread : public QThread
+class _SUPERTCPSOCKETTHREAD__EXPORT SuperTcpSocketThread : public QThread
 {
     Q_OBJECT
 
@@ -90,9 +89,9 @@ private:
 
 signals:
 
-    void Signaltt();
+    void signalTt();
 
-    void Signaltf();
+    void signalTf();
 };
 
 #endif // _SUPERNETWORK__H

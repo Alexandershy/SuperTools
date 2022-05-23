@@ -28,25 +28,25 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
-    void Parameterinit();
+    void parameterInit();
 
-    void Fontlistinit();
+    void fontListInit();
 
-    void Currentfontinit();
+    void currentFontInit();
 
-    void Searchfont();
+    void searchFont();
 
-    void Previewfont();
+    void previewFont();
 
-    void Sendfont();
+    void sendFont();
 
 signals:
 
-    void Signalfa(
+    void signalFa(
             QStringList fontfamilies);
 
 };

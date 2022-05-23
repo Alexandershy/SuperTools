@@ -23,15 +23,15 @@ public:
 
 public slots:
 
-    void Hidebutton();
+    void hideButton();
 
-    void Hideleftbutton();
+    void hideLeftButton();
 
-    void Hiderightbutton();
+    void hideRightButton();
 
-    void Noteinit();
+    void noteInit();
 
-    void Messageinit();
+    void messageInit();
 
 private:
 
@@ -39,15 +39,15 @@ private:
 
 private slots:
 
-    void Init();
+    void init();
 
-    void Objectinit();
+    void objectInit();
 
 signals:
 
-    void Signalna();
+    void signalNa();
 
-    void Signalnb();
+    void signalNb();
 
 };
 

@@ -18,15 +18,15 @@ public:
 
 public:
 
-    static LRESULT CALLBACK Keyhookevent(
+    static LRESULT CALLBACK keyHookEvent(
         int code,
         WPARAM wparameter,
         LPARAM lparameter);
 
-    void Setpressedfunction(
+    void setPressedFunction(
         std::function<void(int)> function);
 
-    void Setsourcekeylist(
+    void setSourceKeyList(
         QList<int> *keyvaluelist);
 
 private:
@@ -34,6 +34,7 @@ private:
     static HHOOK Keyhook;
     static std::function<void(int)> Pressedfunction;
     static QList<int> *Keyvaluelist;
+
 };
 
 #endif // _SUPERHOOK__H

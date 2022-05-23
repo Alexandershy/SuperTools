@@ -7,7 +7,6 @@ start _geminidll_.bat
 start _relaydll_.bat
 start _ledanalyserdll_.bat
 start _litepointiqgigifdll_.bat
-start _resuperdll_.bat
 start _richerdll_.bat
 start _scannerdll_.bat
 start _serialportdll_.bat

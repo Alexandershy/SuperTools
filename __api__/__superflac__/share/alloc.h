@@ -42,11 +42,11 @@
  */
 
 #include <limits.h> /* for SIZE_MAX */
-#if HAVE_STDINT_H
+#ifdef HAVE_STDINT_H
 #include <stdint.h> /* for SIZE_MAX in case limits.h didn't get it */
 #endif
 #include <stdlib.h> /* for size_t, malloc(), etc */
-#include "__supercodec__/__flac__/share/compat.h"
+#include "share/compat.h"
 
 #ifndef SIZE_MAX
 # ifndef SIZE_T_MAX

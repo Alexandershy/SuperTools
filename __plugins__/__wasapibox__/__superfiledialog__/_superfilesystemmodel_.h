@@ -16,9 +16,9 @@ public:
 
 private:
 
-    void Init();
+    void init();
 
-    void Parameterinit();
+    void parameterInit();
 
 };
 

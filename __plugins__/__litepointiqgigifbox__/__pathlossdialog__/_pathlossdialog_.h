@@ -3,7 +3,7 @@
 
 #include "__supercore__/_supercore_.h"
 #include "__superwindow__/_superwindow_.h"
-#include "_pathlossbox_.h"
+#include "_pathlossdialogui_.h"
 #include <QAction>
 #include <QMenu>
 
@@ -17,7 +17,7 @@ class PathLossDialog : public SuperWindow
 
 public:
 
-    PathLossBox *Plugin                 = nullptr;
+    PathLossDialogui *Plugin            = nullptr;
     PathLossConfigMenu *Configmenu      = nullptr;
     PathLossDataMenu *Datamenu          = nullptr;
     PathLossSettingMenu *Settingmenu    = nullptr;
@@ -36,24 +36,23 @@ private:
 private slots:
 
     /*  main function;*/
+    void init();
 
-    void Init();
+    void objectInit();
 
-    void Objectinit();
+    void openPathLossConfigMenu();
 
-    void Openpathlossconfigmenu();
+    void openPathLossDataMenu();
 
-    void Openpathlossdatamenu();
-
-    void Openpathlosssettingmenu();
+    void openPathLossSettingMenu();
 
 signals:
 
-    void Signalin();
+    void signalIn();
 
-    void Signalis();
+    void signalIs();
 
-    void Signalid();
+    void signalId();
 
 };
 
@@ -70,17 +69,16 @@ public:
 public:
 
     /*  main function;*/
-
     PathLossDataMenu(
             QWidget *parent = nullptr);
 
 public slots:
 
-    void Creataction();
+    void creatAction();
 
 private:
 
-    SuperCore *SuperC   = nullptr;
+    SuperCore *Core   = nullptr;
 
 };
 
@@ -99,17 +97,16 @@ public:
 public:
 
     /*  main function;*/
-
     PathLossConfigMenu(
             QWidget *parent = nullptr);
 
 public slots:
 
-    void Creataction();
+    void creatAction();
 
 private:
 
-    SuperCore *SuperC = nullptr;
+    SuperCore *Core = nullptr;
 
 };
 
@@ -124,17 +121,16 @@ public:
 public:
 
     /*  main function;*/
-
     PathLossSettingMenu(
             QWidget *parent = nullptr);
 
 public slots:
 
-    void Creataction();
+    void creatAction();
 
 private:
 
-    SuperCore *SuperC = nullptr;
+    SuperCore *Core = nullptr;
 
 };
 
