@@ -55,7 +55,6 @@ SuperFlacDecoder::~SuperFlacDecoder()
     bps = 0;
     writesamples = 0;
     error = "";
-    fclose(Outfile);
     FLAC__stream_decoder_delete(Decoder);
     delete Timer;
 }
@@ -108,7 +107,8 @@ FLAC__StreamDecoderWriteStatus SuperFlacDecoder::write_callback(const FLAC__Stre
         return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
     }
     /* write WAVE header before we write the first frame */
-    if(frame->header.number.sample_number == 0) {
+    if(frame->header.number.sample_number == 0)
+    {
         if(
             fwrite("RIFF", 1, 4, f) < 4 ||
             !write_little_endian_uint32(f, total_size + 36) ||
@@ -122,7 +122,8 @@ FLAC__StreamDecoderWriteStatus SuperFlacDecoder::write_callback(const FLAC__Stre
             !write_little_endian_uint16(f, (FLAC__uint16)16) ||
             fwrite("data", 1, 4, f) < 4 ||
             !write_little_endian_uint32(f, total_size)
-        ) {
+        )
+        {
             return FLAC__STREAM_DECODER_WRITE_STATUS_ABORT;
         }
     }
@@ -235,6 +236,7 @@ void SuperFlacDecoder::processInit()
     {
         Flacbool = FLAC__stream_decoder_process_until_end_of_stream(Decoder);
     }
+    fclose(Outfile);
     emit signalFb(error);
 }
 

@@ -118,6 +118,9 @@ public slots:
     QString getFilePath(
         QString filepath);
 
+    void setPermissions(
+        QFile *file);
+
     /*  QVector */
     QVector<double> linspace(
         double doublemin,

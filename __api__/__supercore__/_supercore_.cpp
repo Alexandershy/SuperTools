@@ -137,8 +137,8 @@ bool SuperCore::creatFile(QString strfile)
     {
         return true;
     }
+    setPermissions(&file);
     file.open(QIODevice::ReadWrite);
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.close();
     return true;
 }
@@ -233,8 +233,8 @@ QString SuperCore::fixFilePath(QString filepath)
 void SuperCore::writeOnlyFile(QString strpath, QString strtext)
 {
     QFile file(strpath);
+    setPermissions(&file);
     file.open(QIODevice::WriteOnly);
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(strtext.toUtf8());
     file.close();
 }
@@ -245,8 +245,8 @@ void SuperCore::writeOnlyFileList(QString strpath, QStringList *list,QString par
 {
     QString temp;
     QFile file(strpath);
+    setPermissions(&file);
     file.open(QIODevice::WriteOnly);
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     for(int i = 0;i < list->count();i++)
     {
         if(addlast)
@@ -274,8 +274,8 @@ void SuperCore::writeOnlyFileList(QString strpath, QStringList *list,QString par
 void SuperCore::writeBytes(QString strpath,QByteArray bytes)
 {
     QFile file(strpath);
+    setPermissions(&file);
     file.open(QIODevice::WriteOnly);
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(bytes);
     file.close();
 }
@@ -285,8 +285,8 @@ void SuperCore::writeBytes(QString strpath,QByteArray bytes)
 void SuperCore::appendFile(QString strpath, QString strtext)
 {
     QFile file(strpath);
+    setPermissions(&file);
     file.open(QIODevice::Append);
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(strtext.toUtf8());
     file.close();
 }
@@ -296,8 +296,8 @@ void SuperCore::appendFile(QString strpath, QString strtext)
 void SuperCore::appendBytes(QString strpath,QByteArray bytes)
 {
     QFile file(strpath);
+    setPermissions(&file);
     file.open(QIODevice::Append);
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.write(bytes);
     file.close();
 }
@@ -309,8 +309,8 @@ QString SuperCore::readOnlyFile(QString strpath)
     QFile file(strpath);
     if(file.exists())
     {
+        setPermissions(&file);
         file.open(QIODevice::ReadOnly);
-        file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
         QByteArray result = file.readAll();
         file.close();
         return result;
@@ -323,8 +323,8 @@ QString SuperCore::readOnlyFile(QString strpath)
 QByteArray SuperCore::readBytesInt64(QString strpath,qint64 fileseek,qint64 datasize)
 {
     QFile file(strpath);
+    setPermissions(&file);
     file.open( QIODevice::ReadOnly);
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
     file.seek(fileseek);
     QByteArray result = file.read(datasize);
     file.close();
@@ -350,7 +350,7 @@ void SuperCore::replaceFile(QString srcfile, QString targetfile)
             QFile::copy(srcfile,targetfile);
         }
     }
-    file.setPermissions(QFile::ReadOther | QFile::WriteOther | QFile::ReadGroup | QFile::WriteGroup | QFile::ReadOwner | QFile::WriteOwner);
+    setPermissions(&file);
 }
 
 /*  creat qrc file for use;*/
@@ -365,6 +365,28 @@ QString SuperCore::getFilePath(QString filepath)
     else
     {
         return QDir::currentPath();
+    }
+}
+
+/*  change file path to absolutely path;*/
+
+void SuperCore::setPermissions(QFile *file)
+{
+    if(file->exists())
+    {
+        file->setPermissions(
+            QFileDevice::ReadOwner |
+            QFileDevice::WriteOwner |
+            QFileDevice::ExeOwner |
+            QFileDevice::ReadUser |
+            QFileDevice::WriteUser |
+            QFileDevice::ExeUser |
+            QFileDevice::ReadGroup |
+            QFileDevice::WriteGroup |
+            QFileDevice::ExeGroup |
+            QFileDevice::ReadOther |
+            QFileDevice::WriteOther |
+            QFileDevice::ExeOther);
     }
 }
 

@@ -2,6 +2,7 @@
 #define _SUPERMP3DECODER__H
 #define _SUPERMP3DECODER__EXPORT Q_DECL_EXPORT
 
+#include "__supercore__/_supercore_.h"
 #include "__supermultimedia__/_supermultimedia_.h"
 #include "__supermp3__/mpg123.h"
 #include <stdio.h>
@@ -31,6 +32,7 @@ public slots:
 
 private:
 
+    SuperCore *Core             = nullptr;
     SuperMultiMedia *Multimedia = nullptr;
     QString Qinfilename         = "";
     QString Qoutfilename        = "";

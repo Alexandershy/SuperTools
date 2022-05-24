@@ -41,6 +41,7 @@ void SuperMp3Decoder::init()
 
 void SuperMp3Decoder::objectInit()
 {
+    Core = new SuperCore(this);
     Multimedia = new SuperMultiMedia(this);
     Timer = new QTimer();
     Timer->setInterval(100);
@@ -83,6 +84,7 @@ void SuperMp3Decoder::decode()
         }
         else
         {
+            fclose(File);
             break;
         }
     }
@@ -93,6 +95,7 @@ void SuperMp3Decoder::writeWavFile()
     QFile file(Qoutfilename);
     if(file.exists())
     {
+        Core->setPermissions(&file);
         file.open(QIODevice::ReadOnly);
         QByteArray bytes = file.readAll();
         int64_t filesize = file.size();
