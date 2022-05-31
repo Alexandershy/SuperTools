@@ -6,12 +6,16 @@
 #include "__supermultimedia__/_supermultimedia_.h"
 #include "__supermp3__/mpg123.h"
 #include <stdio.h>
-#include <io.h>
-#include <process.h>
-#include <windows.h>
+//#include <io.h>
+//#include <process.h>
+//#include <windows.h>
 #include <sys/stat.h>
 #include <QThread>
 #include <QTimer>
+
+#ifdef Q_CC_GNU
+#define fopen_s(pFile,filename,mode) ((*(pFile))=fopen((filename),  (mode)))=NULL
+#endif
 
 class _SUPERMP3DECODER__EXPORT SuperMp3Decoder : public QThread
 {

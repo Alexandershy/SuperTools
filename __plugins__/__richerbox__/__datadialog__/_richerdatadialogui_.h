@@ -1,5 +1,5 @@
-#ifndef _DATABOX__H
-#define _DATABOX__H
+#ifndef _RICHERDATADIALOGUI__H
+#define _RICHERDATADIALOGUI__H
 
 #include "ui__richerdatadialogui_.h"
 
@@ -25,4 +25,4 @@ public:
 
 };
 
-#endif // _DATABOX__H
+#endif // _RICHERDATADIALOGUI__H

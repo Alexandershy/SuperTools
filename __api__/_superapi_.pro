@@ -8,6 +8,7 @@ greaterThan(QT_MAJOR_VERSION, 5): QT += core5compat
 
 TEMPLATE = lib
 DEFINES += _SUPERAPI__LIBRARY
+#DEFINES += WINDOWS
 
 CONFIG += c++17
 
@@ -274,19 +275,15 @@ DISTFILES += \
     _superapi_.html \
     _superapi_.pdf
 
-win32
-{
+if(contains(DEFINES,WINDOWS)){
     LIBS += -luser32
     LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__windows__\fftw3.lib"
     LIBS += "C:\repos\SuperTools-Source\__api__\__superape__\__windows__\MACDll.lib"
     LIBS += "C:\repos\SuperTools-Source\__api__\__supermp3__\__windows__\libmpg123-0.lib"
     LIBS += "C:\repos\SuperTools-Source\__api__\__superflac__\__windows__\flac.lib"
+}else{
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__superfftw__/__linux__/ -lfftw3
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__superape__/__linux__/ -lMAC
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__superflac__/__linux__/ -lFLAC
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__supermp3__/__linux__/ -lmpg123
 }
-
-unix
-{
-
-}
-
-
-

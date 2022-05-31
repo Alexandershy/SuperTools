@@ -1,5 +1,5 @@
-#ifndef _PATHLOSSBOX__H
-#define _PATHLOSSBOX__H
+#ifndef _PATHLOSSDIALOGUI__H
+#define _PATHLOSSDIALOGUI__H
 
 #include "ui__pathlossdialogui_.h"
 

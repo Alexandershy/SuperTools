@@ -2,6 +2,7 @@ QT += widgets\
       core5compat
 
 CONFIG += c++17
+#DEFINES += WINDOWS
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -15,24 +16,13 @@ SOURCES += \
     _supertools_.cpp
 
 HEADERS += \
-    __supercolordialog__/_supercolordialog_.h \
-    __supercore__/_supercore_.h \
-    __superfiledialog__/_superfiledialog_.h \
     __superframe__/_superframe_.h \
     __superinit__/_superinit_.h \
     __supermain__/_supermain_.h \
-    __supernotedialog__/_supernotedialog_.h \
-    __supertabwidget__/_supertabwidget_.h \
-    __supertray__/_supertray_.h \
-    __superwindow__/_superwindow_.h
+    __supertray__/_supertray_.h
 
 FORMS += \
-    __supercolordialog__/_supercolordialogui_.ui \
-    __superfiledialog__/_superfiledialogui_.ui \
-    __superinit__/_superinit_.ui \
-    __supernotedialog__/_supernotedialogui_.ui \
-    __superwindow__/_supertitleui_.ui \
-    __superwindow__/_superwindowui_.ui
+    __superinit__/_superinit_.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -50,4 +40,11 @@ DISTFILES += \
 
 RC_FILE = _supertools_.rc
 
-LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+INCLUDEPATH = $$PWD/../__api__/
+
+if(contains(DEFINES,WINDOWS)){
+    LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+}else{
+    QMAKE_LFLAGS += -Wl,-rpath=./
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/ -l_superapi_
+}

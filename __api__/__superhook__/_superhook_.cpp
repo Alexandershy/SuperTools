@@ -1,8 +1,10 @@
 #include "_superhook_.h"
 
-HHOOK SuperHook::Keyhook                                = NULL;
 std::function<void(int)> SuperHook::Pressedfunction     = NULL;
 QList<int> *SuperHook::Keyvaluelist                     = nullptr;
+
+#ifdef Q_CC_MSVC
+HHOOK SuperHook::Keyhook                                = NULL;
 
 SuperHook::SuperHook(QObject *parent)
     : QObject(parent)
@@ -50,3 +52,34 @@ void SuperHook::setSourceKeyList(QList<int> *keyvaluelist)
 }
 
 /*  set source key;*/
+
+#endif
+
+#ifdef Q_CC_GNU
+
+SuperHook::SuperHook(QObject *parent)
+    : QObject(parent)
+{
+
+}
+
+SuperHook::~SuperHook()
+{
+
+}
+
+void SuperHook::setPressedFunction(const std::function<void(int)> function)
+{
+    Pressedfunction = function;
+}
+
+/*  set pressed function;*/
+
+void SuperHook::setSourceKeyList(QList<int> *keyvaluelist)
+{
+    Keyvaluelist = keyvaluelist;
+}
+
+/*  set source key;*/
+
+#endif

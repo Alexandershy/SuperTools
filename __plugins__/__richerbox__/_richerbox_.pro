@@ -20,17 +20,6 @@ SOURCES += \
 HEADERS += \
     __datadialog__/_richerdatadialog_.h \
     __datadialog__/_richerdatadialogui_.h \
-    __supercolordialog__/_supercolordialog_.h \
-    __supercore__/_supercore_.h \
-    __superfiledialog__/_superfiledialog_.h \
-    __superfilemanager__/_superfilemanager_.h \
-    __superfinddialog__/_superfinddialog_.h \
-    __superfontdialog__/_superfontdialog_.h \
-    __supergroupbox__/_supergroupbox_.h \
-    __superlogger__/_superlogger_.h \
-    __supernotedialog__/_supernotedialog_.h \
-    __supertab__/_supertab_.h \
-    __superwindow__/_superwindow_.h \
     _richerbox_.h
 
 # Default rules for deployment.
@@ -43,19 +32,19 @@ RESOURCES += \
     _richerbox_.qrc
 
 FORMS += \
-    __datadialog__/_richerdatadialogui_.ui \
-    __supercolordialog__/_supercolordialogui_.ui \
-    __superfiledialog__/_superfiledialogui_.ui \
-    __superfilemanager__/_superfilemanagerui_.ui \
-    __superfinddialog__/_superfinddialogui_.ui \
-    __superfontdialog__/_superfontdialogui_.ui \
-    __supernotedialog__/_supernotedialogui_.ui \
-    __supertab__/_supertabui_.ui \
-    __superwindow__/_supertitleui_.ui \
-    __superwindow__/_superwindowui_.ui
+    __datadialog__/_richerdatadialogui_.ui
 
 DISTFILES += \
     _richerbox_.html \
     _richerbox_.pdf
 
-LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+INCLUDEPATH +=  $$PWD/../../__api__/
+INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
+
+win32{
+    LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+}
+unix {
+    QMAKE_LFLAGS += -Wl,-rpath=./
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/ -l_superapi_
+}

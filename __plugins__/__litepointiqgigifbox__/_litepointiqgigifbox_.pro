@@ -29,14 +29,6 @@ HEADERS += \
     __pathlossdialog__/_pathlossdialogui_.h \
     __routdialog__/_routdialog_.h \
     __routdialog__/_routdialogui_.h \
-    __superchartview__/_superchartview_.h \
-    __supercore__/_supercore_.h \
-    __supergroupbox__/_supergroupbox_.h \
-    __superlogger__/_superlogger_.h \
-    __supernetwork__/_supernetwork_.h \
-    __supertab__/_supertab_.h \
-    __supertabwidget__/_supertabwidget_.h \
-    __superwindow__/_superwindow_.h \
     _litepointiqgigifbox_.h
 
 # Default rules for deployment.
@@ -49,10 +41,7 @@ FORMS += \
     __module__/_litepointiqgigifmodulea_.ui \
     __module__/_litepointiqgigifmoduleb_.ui \
     __pathlossdialog__/_pathlossdialogui_.ui \
-    __routdialog__/_routdialogui_.ui \
-    __supertab__/_supertabui_.ui \
-    __superwindow__/_supertitleui_.ui \
-    __superwindow__/_superwindowui_.ui
+    __routdialog__/_routdialogui_.ui
 
 DISTFILES += \
     _litepointiqgigifbox_.html \
@@ -61,4 +50,13 @@ DISTFILES += \
 RESOURCES += \
     _litepointiqgigifbox_.qrc
 
-LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+INCLUDEPATH +=  $$PWD/../../__api__/
+INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
+
+win32{
+    LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+}
+unix {
+    QMAKE_LFLAGS += -Wl,-rpath=./
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/ -l_superapi_
+}

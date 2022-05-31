@@ -9,8 +9,8 @@ PLATFORM_APPLE
 PLATFORM_LINUX
 **************************************************************************************************/
 #if !defined(PLATFORM_WINDOWS) && !defined(PLATFORM_APPLE) && !defined(PLATFORM_LINUX)
-    #pragma message("No platform set for MACLib, defaulting to Windows")
-    #define PLATFORM_WINDOWS
+    //#pragma message("No platform set for MACLib, defaulting to Windows")
+//    #define PLATFORM_WINDOWS
 #endif
 
 #ifdef PLATFORM_ANDROID

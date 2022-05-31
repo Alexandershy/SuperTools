@@ -1,5 +1,5 @@
-#ifndef _HITBRICKSBOX__H
-#define _HITBRICKSBOX__H
+#ifndef _HITBRICKSDIALOGUI__H
+#define _HITBRICKSDIALOGUI__H
 
 #include "ui__hitbricksdialogui_.h"
 
@@ -25,4 +25,4 @@ public:
 
 };
 
-#endif // _HITBRICKSBOX__H
+#endif // _HITBRICKSDIALOGUI__H

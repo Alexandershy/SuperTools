@@ -6,8 +6,11 @@
 #include "__superape__/MACDll.h"
 #include "__superape__/APETag.h"
 #include "stdio.h"
-#include <windows.h>
 #include <QTimer>
+
+#ifdef Q_CC_GNU
+#define fopen_s(pFile,filename,mode) ((*(pFile))=fopen((filename),  (mode)))=NULL
+#endif
 
 class _SUPERAPEDECODER__EXPORT SuperApeDecoder : public QThread
 {

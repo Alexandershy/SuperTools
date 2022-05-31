@@ -167,6 +167,7 @@ private:
     QIODevice *Iodevice     = nullptr;
     int Filepos             = 0;
     int Channel             = 0;
+    int Samplerate          = 0;
     QString Status          = "whole";
     QFile *File             = nullptr;
 

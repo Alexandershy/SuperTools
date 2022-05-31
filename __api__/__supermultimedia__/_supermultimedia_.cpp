@@ -500,8 +500,10 @@ void SuperPlayWav::timerInit()
 void SuperPlayWav::ioDeviceInit()
 {
     Channel = Audiosink->format().channelCount();
+    Samplerate = Audiosink->format().sampleRate();
+    Audiosink->setBufferSize(Samplerate);
     Iodevice = Audiosink->start();
-    connect(this,&SuperPlayWav::signalPc,this,&SuperPlayWav::writeData);
+    connect(this,&SuperPlayWav::signalPc,this,&SuperPlayWav::writeData,Qt::DirectConnection);
 }
 
 /*  iodevice init;*/
@@ -549,7 +551,7 @@ void SuperPlayWav::playing()
 
 void SuperPlayWav::writeData()
 {
-    Iodevice->write(File->read(Audiosink->bytesFree()));
+    Iodevice->write(File->read(Samplerate / 25));
 }
 
 /*  write data;*/

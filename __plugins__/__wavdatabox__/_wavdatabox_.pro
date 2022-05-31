@@ -19,26 +19,11 @@ SOURCES += \
     __module__/_wavdatamodulea_.cpp \
     _wavdatabox_.cpp
 
-
 HEADERS += \
     __datadialog__/_wavdatadialog_.h \
     __datadialog__/_wavdatadialogui_.h \
     __module__/_wavdatamodulea_.h \
-    __superchartview__/_superchartview_.h \
-    __supercore__/_supercore_.h \
-    __superfftw__/fftw3.h \
-    __superfiledialog__/_superfiledialog_.h \
-    __superfilemanager__/_superfilemanager_.h \
-    __supergroupbox__/_supergroupbox_.h \
-    __superhook__/_superhook_.h \
-    __superlogger__/_superlogger_.h \
-    __supermultimedia__/_supermultimedia_.h \
-    __supernotedialog__/_supernotedialog_.h \
-    __superprogressbardialog__/_superprogressbardialog_.h \
-    __supertab__/_supertab_.h \
-    __superwindow__/_superwindow_.h \
     _wavdatabox_.h
-
 
 # Default rules for deployment.
 unix {
@@ -48,24 +33,25 @@ unix {
 
 FORMS += \
     __datadialog__/_wavdatadialogui_.ui \
-    __module__/_wavdatamodulea_.ui \
-    __superfiledialog__/_superfiledialogui_.ui \
-    __superfilemanager__/_superfilemanagerui_.ui \
-    __supernotedialog__/_supernotedialogui_.ui \
-    __superprogressbardialog__/_superprogressbardialogui_.ui \
-    __supertab__/_supertabui_.ui \
-    __superwindow__/_supertitleui_.ui \
-    __superwindow__/_superwindowui_.ui
-
+    __module__/_wavdatamodulea_.ui
 
 DISTFILES += \
     _wavdatabox_.html \
     _wavdatabox_.pdf
 
-
-LIBS += -luser32
-LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__windows__\fftw3.lib"
-LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
-
 RESOURCES += \
     _wavdatabox_.qrc
+
+INCLUDEPATH +=  $$PWD/../../__api__/
+INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
+
+win32{
+    LIBS += -luser32
+    LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__windows__\fftw3.lib"
+    LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+}
+unix {
+    QMAKE_LFLAGS += -Wl,-rpath=./
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__superfftw__/__linux__/ -lfftw3
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/ -l_superapi_
+}

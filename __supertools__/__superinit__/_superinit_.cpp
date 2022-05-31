@@ -64,7 +64,7 @@ void SuperInit::creatFile()
 
 void SuperInit::creatModuleFiles()
 {
-    QDir dir("./__plugins__/","*.dll");
+    QDir dir("./__plugins__/","*.so");
     QStringList files = dir.entryList();
     for(int i = 0;i < files.count();i++)
     {

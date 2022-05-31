@@ -11,23 +11,13 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    __module__/_demomodulea_.cpp \
-    __module__/_demomoduleb_.cpp \
-    _demobox_.cpp
+SOURCES +=  __module__/_demomodulea_.cpp \
+            __module__/_demomoduleb_.cpp \
+            _demobox_.cpp
 
-HEADERS += \
-    __module__/_demomodulea_.h \
-    __module__/_demomoduleb_.h \
-    __supercore__/_supercore_.h \
-    __superfiledialog__/_superfiledialog_.h \
-    __superfilemanager__/_superfilemanager_.h \
-    __supergroupbox__/_supergroupbox_.h \
-    __superlogger__/_superlogger_.h \
-    __supernotedialog__/_supernotedialog_.h \
-    __supertab__/_supertab_.h \
-    __superwindow__/_superwindow_.h \
-    _demobox_.h
+HEADERS +=  __module__/_demomodulea_.h \
+            __module__/_demomoduleb_.h \
+            _demobox_.h
 
 # Default rules for deployment.
 unix {
@@ -35,22 +25,18 @@ unix {
 }
 !isEmpty(target.path): INSTALLS += target
 
-FORMS += \
-    __module__/_demomodulea_.ui \
-    __module__/_demomoduleb_.ui \
-    __superfiledialog__/_superfiledialogui_.ui \
-    __superfilemanager__/_superfilemanagerui_.ui \
-    __supernotedialog__/_supernotedialogui_.ui \
-    __supertab__/_supertabui_.ui \
-    __superwindow__/_supertitleui_.ui \
-    __superwindow__/_superwindowui_.ui
+FORMS +=    __module__/_demomodulea_.ui \
+            __module__/_demomoduleb_.ui
 
+RESOURCES += _demobox_.qrc
 
-DISTFILES += \
-    _demobox_.html \
-    _demobox_.pdf
+INCLUDEPATH +=  $$PWD/../../__api__/
+INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
 
-RESOURCES += \
-    _demobox_.qrc
-
-LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+win32{
+    LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
+}
+unix {
+    QMAKE_LFLAGS += -Wl,-rpath=./
+    LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/ -l_superapi_
+}

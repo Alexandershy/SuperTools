@@ -8,6 +8,10 @@
 #include <stdio.h>
 #include <QTimer>
 
+#ifdef Q_CC_GNU
+#define fopen_s(pFile,filename,mode) ((*(pFile))=fopen((filename),  (mode)))=NULL
+#endif
+
 class _SUPERFLACDECODER__EXPORT SuperFlacDecoder : public QThread
 {
     Q_OBJECT

@@ -1,5 +1,5 @@
-#ifndef _DATADIALOG__H
-#define _DATADIALOG__H
+#ifndef _RICHERDATADIALOG__H
+#define _RICHERDATADIALOG__H
 
 #include "_richerdatadialogui_.h"
 #include "__superwindow__/_superwindow_.h"
@@ -135,4 +135,4 @@ private slots:
 
 };
 
-#endif // _DATADIALOG__H
+#endif // _RICHERDATADIALOG__H
