@@ -1,4 +1,5 @@
 #include "_audioformatdialog_.h"
+#include "ui__audioformatdialogui_.h"
 
 AudioFormatDialog::AudioFormatDialog(QWidget *parent)
     : SuperWindow(parent)

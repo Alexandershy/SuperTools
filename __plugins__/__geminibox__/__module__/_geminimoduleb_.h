@@ -1,7 +1,7 @@
 #ifndef _GEMINIMODULEB__H
 #define _GEMINIMODULEB__H
 
-#include "ui__geminimoduleb_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

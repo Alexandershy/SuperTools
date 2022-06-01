@@ -3,7 +3,7 @@
 
 #include "__supercore__/_supercore_.h"
 #include "__supermultimedia__/_supermultimedia_.h"
-#include "ui__wavdatamodulea_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

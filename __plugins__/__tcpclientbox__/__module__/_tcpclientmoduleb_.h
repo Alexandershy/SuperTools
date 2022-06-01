@@ -1,7 +1,7 @@
 #ifndef _TCPCLIENTMODULEB__H
 #define _TCPCLIENTMODULEB__H
 
-#include "ui__tcpclientmoduleb_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

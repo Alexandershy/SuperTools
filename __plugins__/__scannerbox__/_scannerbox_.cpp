@@ -1,4 +1,6 @@
 #include "_scannerbox_.h"
+#include "ui__scannermodulea_.h"
+#include "ui__scannermoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

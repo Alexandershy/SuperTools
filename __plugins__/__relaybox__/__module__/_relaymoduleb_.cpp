@@ -1,4 +1,5 @@
 #include "_relaymoduleb_.h"
+#include "ui__relaymoduleb_.h"
 
 RelayModuleB::RelayModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

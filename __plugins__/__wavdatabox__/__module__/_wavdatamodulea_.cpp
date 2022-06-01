@@ -1,4 +1,5 @@
 #include "_wavdatamodulea_.h"
+#include "ui__wavdatamodulea_.h"
 
 WavdataModuleA::WavdataModuleA(QWidget *parent,QLayout *layout)
     : QFrame(parent)

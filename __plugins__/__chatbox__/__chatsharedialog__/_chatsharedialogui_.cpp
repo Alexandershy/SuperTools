@@ -1,4 +1,5 @@
 #include "_chatsharedialogui_.h"
+#include "ui__chatsharedialogui_.h"
 
 ChatShareDialogui::ChatShareDialogui(QWidget *parent)
     : QFrame(parent)

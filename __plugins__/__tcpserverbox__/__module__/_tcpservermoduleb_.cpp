@@ -1,4 +1,5 @@
 #include "_tcpservermoduleb_.h"
+#include "ui__tcpservermoduleb_.h"
 
 TcpServerModuleB::TcpServerModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

@@ -1,4 +1,5 @@
 #include "_ledanalysermoduleb_.h"
+#include "ui__ledanalysermoduleb_.h"
 
 LedAnalyserModuleB::LedAnalyserModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

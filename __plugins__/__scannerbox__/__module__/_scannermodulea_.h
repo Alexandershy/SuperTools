@@ -1,7 +1,7 @@
 #ifndef _SCANNERMODULEA__H
 #define _SCANNERMODULEA__H
 
-#include "ui__scannermodulea_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

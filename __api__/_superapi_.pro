@@ -275,13 +275,14 @@ DISTFILES += \
     _superapi_.html \
     _superapi_.pdf
 
-if(contains(DEFINES,WINDOWS)){
+win32{
     LIBS += -luser32
     LIBS += "C:\repos\SuperTools-Source\__api__\__superfftw__\__windows__\fftw3.lib"
     LIBS += "C:\repos\SuperTools-Source\__api__\__superape__\__windows__\MACDll.lib"
     LIBS += "C:\repos\SuperTools-Source\__api__\__supermp3__\__windows__\libmpg123-0.lib"
     LIBS += "C:\repos\SuperTools-Source\__api__\__superflac__\__windows__\flac.lib"
-}else{
+}
+unix {
     LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__superfftw__/__linux__/ -lfftw3
     LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__superape__/__linux__/ -lMAC
     LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Source/__api__/__superflac__/__linux__/ -lFLAC

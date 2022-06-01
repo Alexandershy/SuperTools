@@ -1,7 +1,7 @@
 #ifndef _CHATMODULED__H
 #define _CHATMODULED__H
 
-#include "ui__chatmoduled_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

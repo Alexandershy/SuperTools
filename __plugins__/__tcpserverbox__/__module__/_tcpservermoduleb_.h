@@ -1,7 +1,7 @@
 #ifndef _TCPSERVERMODULEB__H
 #define _TCPSERVERMODULEB__H
 
-#include "ui__tcpservermoduleb_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

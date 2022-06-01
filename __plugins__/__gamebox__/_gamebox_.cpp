@@ -1,4 +1,5 @@
 #include "_gamebox_.h"
+#include "ui__gamemodulea_.h"
 
 SuperTab* Interface::Loadplugin()
 {

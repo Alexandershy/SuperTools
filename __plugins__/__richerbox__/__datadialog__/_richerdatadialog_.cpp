@@ -1,4 +1,5 @@
 #include "_richerdatadialog_.h"
+#include "ui__richerdatadialogui_.h"
 
 RicherDataDialog::RicherDataDialog(QString richerfile)
 {

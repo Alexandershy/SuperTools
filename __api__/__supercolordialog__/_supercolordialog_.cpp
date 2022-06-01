@@ -1,4 +1,5 @@
 #include "_supercolordialog_.h"
+#include "ui__supercolordialogui_.h"
 
 SuperColorDialog::SuperColorDialog(QWidget *parent,QColor sourcecolor)
     :SuperWindow(parent)

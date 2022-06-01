@@ -10,6 +10,7 @@
 #include "__module__/_ledanalysermodulea_.h"
 #include "__module__/_ledanalysermoduleb_.h"
 #include <QTimer>
+#include <QLabel>
 
 /**************interface****************/
 class _LEDANALYSERBOX__EXPORT Interface

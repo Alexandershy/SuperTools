@@ -1,4 +1,5 @@
 #include "_superfontdialog_.h"
+#include "ui__superfontdialogui_.h"
 
 SuperFontDialog::SuperFontDialog(QWidget *parent,QStringList *fontfamilies)
     :SuperWindow(parent)

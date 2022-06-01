@@ -1,4 +1,5 @@
 #include "_superfilemanager_.h"
+#include "ui__superfilemanagerui_.h"
 
 SuperFileManager::SuperFileManager(QWidget *parent,QLayout *layout,QStringList filesplit)
     : QFrame(parent)
@@ -414,6 +415,27 @@ void SuperFileManager::checkFileVaildInit()
 }
 
 /*  check file vaild or not init;*/
+
+QTableWidgetItem* SuperFileManager::firstItem(int rowindex)
+{
+    return ui->tableWidget->item(rowindex,0);
+}
+
+/*  return current item;*/
+
+QTableWidgetItem* SuperFileManager::currentItem()
+{
+    return ui->tableWidget->currentItem();
+}
+
+/*  return current item;*/
+
+void SuperFileManager::setCurrentItem(QTableWidgetItem* item)
+{
+    ui->tableWidget->setCurrentItem(item);
+}
+
+/*  set current item;*/
 
 void SuperFileManager::checkFileVaild()
 {

@@ -16,10 +16,16 @@ SOURCES += \
     _supertools_.cpp
 
 HEADERS += \
+    __supercolordialog__/_supercolordialog_.h \
+    __supercore__/_supercore_.h \
+    __superfiledialog__/_superfiledialog_.h \
     __superframe__/_superframe_.h \
     __superinit__/_superinit_.h \
     __supermain__/_supermain_.h \
-    __supertray__/_supertray_.h
+    __supernotedialog__/_supernotedialog_.h \
+    __supertabwidget__/_supertabwidget_.h \
+    __supertray__/_supertray_.h \
+    __superwindow__/_superwindow_.h
 
 FORMS += \
     __superinit__/_superinit_.ui
@@ -40,11 +46,10 @@ DISTFILES += \
 
 RC_FILE = _supertools_.rc
 
-INCLUDEPATH = $$PWD/../__api__/
-
-if(contains(DEFINES,WINDOWS)){
+win32{
     LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"
-}else{
+}
+unix{
     QMAKE_LFLAGS += -Wl,-rpath=./
     LIBS += -L/home/alexandershy/Documents/repos/SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/ -l_superapi_
 }

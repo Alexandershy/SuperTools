@@ -1,4 +1,5 @@
 #include "_hitbricksdialogui_.h"
+#include "ui__hitbricksdialogui_.h"
 
 HitBricksDialogui::HitBricksDialogui(QWidget *parent)
     : QFrame(parent)

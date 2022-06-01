@@ -1,4 +1,5 @@
 #include "_supercolordialogui_.h"
+#include "ui__supercolordialogui_.h"
 
 SuperColorDialogui::SuperColorDialogui(QWidget *parent)
     : QFrame(parent)

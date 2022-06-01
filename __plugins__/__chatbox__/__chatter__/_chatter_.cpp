@@ -1,4 +1,5 @@
 #include "_chatter_.h"
+#include "ui__chatter_.h"
 
 Chatter::Chatter(QWidget *parent,QString role,QString username,QString message)
     : QWidget(parent)

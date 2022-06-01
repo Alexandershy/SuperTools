@@ -1,4 +1,5 @@
 #include "_routdialog_.h"
+#include "ui__routdialogui_.h"
 
 RoutDialog::RoutDialog(QWidget *parent)
     : SuperWindow(parent)

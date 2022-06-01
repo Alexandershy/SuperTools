@@ -1,4 +1,5 @@
 #include "_superfontdialogui_.h"
+#include "ui__superfontdialogui_.h"
 
 SuperFontDialogui::SuperFontDialogui(QWidget *parent)
     : QFrame(parent)

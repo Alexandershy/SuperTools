@@ -1,4 +1,6 @@
 #include "_tcpclientbox_.h"
+#include "ui__tcpclientmodulea_.h"
+#include "ui__tcpclientmoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

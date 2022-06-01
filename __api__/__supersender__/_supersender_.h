@@ -3,7 +3,6 @@
 #define _SUPERSENDER__EXPORT Q_DECL_EXPORT
 
 #include "__supernotedialog__/_supernotedialog_.h"
-#include "ui__supersenderui_.h"
 #include <QTimer>
 
 /****************plugin*****************/

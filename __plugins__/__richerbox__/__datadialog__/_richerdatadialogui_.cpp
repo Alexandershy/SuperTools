@@ -1,4 +1,5 @@
 #include "_richerdatadialogui_.h"
+#include "ui__richerdatadialogui_.h"
 
 RicherDataDialogui::RicherDataDialogui(QWidget *parent)
     : QFrame(parent)

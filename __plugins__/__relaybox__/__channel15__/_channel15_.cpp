@@ -1,4 +1,5 @@
 #include "_channel15_.h"
+#include "ui__channel15_.h"
 
 Channel15::Channel15(QWidget *parent,QSerialPort *serial,QCheckBox *checkbox,QLineEdit *lineedit)
     : QFrame(parent)

@@ -1,4 +1,6 @@
 #include "_superwindow_.h"
+#include "ui__supertitleui_.h"
+#include "ui__superwindowui_.h"
 
 SuperWindow::SuperWindow(QWidget *parent)
     : QWidget(parent)

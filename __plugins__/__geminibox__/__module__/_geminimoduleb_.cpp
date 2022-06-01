@@ -1,4 +1,5 @@
 #include "_geminimoduleb_.h"
+#include "ui__geminimoduleb_.h"
 
 GeminiModuleB::GeminiModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

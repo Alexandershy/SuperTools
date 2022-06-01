@@ -1,4 +1,5 @@
 #include "_relaymodulec_.h"
+#include "ui__relaymodulec_.h"
 
 RelayModuleC::RelayModuleC(QWidget *parent,QLayout *layout)
     : QFrame(parent)

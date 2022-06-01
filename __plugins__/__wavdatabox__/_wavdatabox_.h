@@ -7,6 +7,8 @@
 #define PLAYLAST 177
 
 #include "__datadialog__/_wavdatadialog_.h"
+#include "__module__/_wavdatamodulea_.h"
+#include "__superfilemanager__/_superfilemanager_.h"
 #include "__supertab__/_supertab_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superhook__/_superhook_.h"
@@ -14,8 +16,6 @@
 #include "__supergroupbox__/_supergroupbox_.h"
 #include "__supermultimedia__/_supermultimedia_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
-#include "__superfilemanager__/_superfilemanager_.h"
-#include "__module__/_wavdatamodulea_.h"
 #include <QAudioFormat>
 
 /**************interface****************/

@@ -1,7 +1,7 @@
 #ifndef _LITEPOINTIQGIGIFMODULEB__H
 #define _LITEPOINTIQGIGIFMODULEB__H
 
-#include "ui__litepointiqgigifmoduleb_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

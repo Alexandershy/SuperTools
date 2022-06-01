@@ -1,7 +1,7 @@
 #ifndef _WASAPIFORMATDIALOGUI__H
 #define _WASAPIFORMATDIALOGUI__H
 
-#include "ui__wasapiformatdialogui_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

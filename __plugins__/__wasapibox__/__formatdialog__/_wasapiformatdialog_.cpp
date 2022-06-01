@@ -1,4 +1,5 @@
 #include "_wasapiformatdialog_.h"
+#include "ui__wasapiformatdialogui_.h"
 
 WasapiFormatDialog::WasapiFormatDialog(QWidget *parent,QAudioFormat *outformat,QAudioFormat *inputformat)
     : SuperWindow(parent)

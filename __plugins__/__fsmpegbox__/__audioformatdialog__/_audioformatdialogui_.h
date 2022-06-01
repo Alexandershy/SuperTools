@@ -1,7 +1,7 @@
 #ifndef _AUDIOFORMATDIALOGUI__H
 #define _AUDIOFORMATDIALOGUI__H
 
-#include "ui__audioformatdialogui_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

@@ -1,7 +1,7 @@
 #ifndef _RELAYMODULEC__H
 #define _RELAYMODULEC__H
 
-#include "ui__relaymodulec_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

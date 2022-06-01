@@ -1,4 +1,7 @@
 #include "_relaybox_.h"
+#include "ui__relaymodulea_.h"
+#include "ui__relaymoduleb_.h"
+#include "ui__relaymodulec_.h"
 
 SuperTab* Interface::Loadplugin()
 {

@@ -1,4 +1,5 @@
 #include "_gamemodulea_.h"
+#include "ui__gamemodulea_.h"
 
 GameModuleA::GameModuleA(QWidget *parent,QLayout *layout)
     : QFrame(parent)

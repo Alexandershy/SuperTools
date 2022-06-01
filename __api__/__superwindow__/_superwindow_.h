@@ -2,7 +2,6 @@
 #define _SUPERWINDOW__H
 #define _SUPERWINDOW__EXPORT Q_DECL_EXPORT
 
-#include "ui__superwindowui_.h"
 #include "__supercore__/_supercore_.h"
 #include "_supertitle_.h"
 #include <QScreen>

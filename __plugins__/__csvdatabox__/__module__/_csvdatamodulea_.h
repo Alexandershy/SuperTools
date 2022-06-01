@@ -1,7 +1,7 @@
 #ifndef _CSVDATAMODULEA__H
 #define _CSVDATAMODULEA__H
 
-#include "ui__csvdatamodulea_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

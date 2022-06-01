@@ -1,4 +1,5 @@
 #include "_chatsharedialog_.h"
+#include "ui__chatsharedialogui_.h"
 
 ChatShareDialog::ChatShareDialog(QWidget *parent,QLineEdit *lineedit)
     : SuperWindow(parent)

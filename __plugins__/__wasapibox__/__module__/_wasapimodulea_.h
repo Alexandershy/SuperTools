@@ -1,7 +1,7 @@
 #ifndef _WASAPIMODULEA__H
 #define _WASAPIMODULEA__H
 
-#include "ui__wasapimodulea_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

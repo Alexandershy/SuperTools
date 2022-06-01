@@ -4,7 +4,6 @@
 #include "__supercore__/_supercore_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__supercolordialog__/_supercolordialog_.h"
-#include "ui__superinit_.h"
 #include <QLibrary>
 #include <QFrame>
 

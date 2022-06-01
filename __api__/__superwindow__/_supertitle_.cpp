@@ -1,4 +1,5 @@
 #include "_supertitle_.h"
+#include "ui__supertitleui_.h"
 
 SuperTitle::SuperTitle(QWidget *parent)
     : QFrame(parent)

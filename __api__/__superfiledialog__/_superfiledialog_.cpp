@@ -1,4 +1,5 @@
 #include "_superfiledialog_.h"
+#include "ui__superfiledialogui_.h"
 
 SuperFileDialog::SuperFileDialog(QWidget *parent,QString folderpath,QStringList filterlist)
     :SuperWindow(parent)

@@ -38,6 +38,14 @@ HEADERS += \
     __module__/_chatmoduleb_.h \
     __module__/_chatmodulec_.h \
     __module__/_chatmoduled_.h \
+    __supercore__/_supercore_.h \
+    __superfiledialog__/_superfiledialog_.h \
+    __supergroupbox__/_supergroupbox_.h \
+    __supernetwork__/_supernetwork_.h \
+    __supernotedialog__/_supernotedialog_.h \
+    __superprogressbardialog__/_superprogressbardialog_.h \
+    __supertab__/_supertab_.h \
+    __superwindow__/_superwindow_.h \
     _chatbox_.h
 
 # Default rules for deployment.
@@ -56,9 +64,6 @@ FORMS += \
     __module__/_chatmoduled_.ui
 
 RESOURCES += _chatbox_.qrc
-
-INCLUDEPATH +=  $$PWD/../../__api__/
-INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
 
 win32{
     LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"

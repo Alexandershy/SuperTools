@@ -1,7 +1,7 @@
 #ifndef _CHATINFODIALOGUI__H
 #define _CHATINFODIALOGUI__H
 
-#include "ui__chatinfodialogui_.h"
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ChatInfoDialogui; }

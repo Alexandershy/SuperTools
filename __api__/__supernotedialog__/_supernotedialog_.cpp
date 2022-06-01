@@ -1,4 +1,5 @@
 #include "_supernotedialog_.h"
+#include "ui__supernotedialogui_.h"
 
 SuperNoteDialog::SuperNoteDialog(QWidget *parent,QString filestring)
     : SuperWindow(parent)

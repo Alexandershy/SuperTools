@@ -1,4 +1,8 @@
 #include "_chatbox_.h"
+#include "ui__chatmodulea_.h"
+#include "ui__chatmoduleb_.h"
+#include "ui__chatmodulec_.h"
+#include "ui__chatmoduled_.h"
 
 SuperTab* Interface::Loadplugin()
 {

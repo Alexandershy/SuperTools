@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     }
     else if(sharedmemory.create(1))
     {
-        app.setApplicationVersion("V6.22.0531.S058.A130");
+        app.setApplicationVersion("V6.22.0601.S059.A131");
         QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
         SuperFrame *frame = new SuperFrame(nullptr);
         frame->show();

@@ -20,6 +20,11 @@ SOURCES += \
 HEADERS += \
     __module__/_tcpservermodulea_.h \
     __module__/_tcpservermoduleb_.h \
+    __supercore__/_supercore_.h \
+    __supergroupbox__/_supergroupbox_.h \
+    __superlogger__/_superlogger_.h \
+    __supernetwork__/_supernetwork_.h \
+    __supertab__/_supertab_.h \
     _tcpserverbox_.h
 
 # Default rules for deployment.
@@ -38,9 +43,6 @@ DISTFILES += \
 
 RESOURCES += \
     _tcpserverbox_.qrc
-
-INCLUDEPATH +=  $$PWD/../../__api__/
-INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
 
 win32{
     LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"

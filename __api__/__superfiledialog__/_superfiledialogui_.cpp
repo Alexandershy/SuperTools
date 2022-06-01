@@ -1,4 +1,5 @@
 #include "_superfiledialogui_.h"
+#include "ui__superfiledialogui_.h"
 
 SuperFileDialogui::SuperFileDialogui(QWidget *parent)
     : QFrame(parent)

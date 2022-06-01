@@ -5,7 +5,6 @@
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "__supernotedialog__/_supernotedialog_.h"
 #include "__supercore__/_supercore_.h"
-#include "ui__superfilemanagerui_.h"
 #include <QScrollBar>
 
 /****************plugin*****************/
@@ -49,6 +48,14 @@ public slots:
         QString filetemp);
 
     void checkFileVaildInit();
+
+    QTableWidgetItem *firstItem(
+        int rowindex);
+
+    QTableWidgetItem* currentItem();
+
+    void setCurrentItem(
+        QTableWidgetItem* item);
 
 private:
 

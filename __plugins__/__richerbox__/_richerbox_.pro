@@ -20,6 +20,17 @@ SOURCES += \
 HEADERS += \
     __datadialog__/_richerdatadialog_.h \
     __datadialog__/_richerdatadialogui_.h \
+    __supercolordialog__/_supercolordialog_.h \
+    __supercore__/_supercore_.h \
+    __superfiledialog__/_superfiledialog_.h \
+    __superfilemanager__/_superfilemanager_.h \
+    __superfinddialog__/_superfinddialog_.h \
+    __superfontdialog__/_superfontdialog_.h \
+    __supergroupbox__/_supergroupbox_.h \
+    __superlogger__/_superlogger_.h \
+    __supernotedialog__/_supernotedialog_.h \
+    __supertab__/_supertab_.h \
+    __superwindow__/_superwindow_.h \
     _richerbox_.h
 
 # Default rules for deployment.
@@ -37,9 +48,6 @@ FORMS += \
 DISTFILES += \
     _richerbox_.html \
     _richerbox_.pdf
-
-INCLUDEPATH +=  $$PWD/../../__api__/
-INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
 
 win32{
     LIBS += "C:\repos\SuperTools-Build\build-_superapi_-Desktop_Qt_6_3_0_MSVC2019_64bit\release\_superapi_.lib"

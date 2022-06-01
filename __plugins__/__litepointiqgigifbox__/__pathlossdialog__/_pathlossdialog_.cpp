@@ -1,4 +1,5 @@
 #include "_pathlossdialog_.h"
+#include "ui__pathlossdialogui_.h"
 
 PathLossDialog::PathLossDialog(QWidget *parent)
     : SuperWindow(parent)

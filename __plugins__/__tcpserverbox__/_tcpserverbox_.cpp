@@ -1,4 +1,6 @@
 #include "_tcpserverbox_.h"
+#include "ui__tcpservermodulea_.h"
+#include "ui__tcpservermoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

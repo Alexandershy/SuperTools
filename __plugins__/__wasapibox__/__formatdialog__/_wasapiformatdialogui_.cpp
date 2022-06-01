@@ -1,4 +1,5 @@
 #include "_wasapiformatdialogui_.h"
+#include "ui__wasapiformatdialogui_.h"
 
 WasapiFormatDialogui::WasapiFormatDialogui(QWidget *parent)
     : QFrame(parent)

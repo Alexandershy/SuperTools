@@ -5,7 +5,8 @@
 #include "__superwindow__/_superwindow_.h"
 #include "__supercore__/_supercore_.h"
 #include "__superserial__/_superserial_.h"
-#include "ui__channel15_.h"
+#include <QProgressBar>
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Channel15; }

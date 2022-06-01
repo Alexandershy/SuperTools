@@ -1,4 +1,8 @@
 #include "_wasapibox_.h"
+#include "ui__wasapimodulea_.h"
+#include "ui__wasapimoduleb_.h"
+#include "ui__wasapimodulec_.h"
+#include "ui__wasapiformatdialogui_.h"
 
 SuperTab* Interface::Loadplugin()
 {

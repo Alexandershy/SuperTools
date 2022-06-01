@@ -1,7 +1,7 @@
 #ifndef _LEDANALYSERMODULEB__H
 #define _LEDANALYSERMODULEB__H
 
-#include "ui__ledanalysermoduleb_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

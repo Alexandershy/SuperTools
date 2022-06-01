@@ -1,4 +1,5 @@
 #include "_wavdatadialogui_.h"
+#include "ui__wavdatadialogui_.h"
 
 WavDataDialogui::WavDataDialogui(QWidget *parent)
     : QFrame(parent)

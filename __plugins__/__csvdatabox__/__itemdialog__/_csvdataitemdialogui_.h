@@ -1,7 +1,7 @@
 #ifndef _CSVDATAITEMDIALOGUI__H
 #define _CSVDATAITEMDIALOGUI__H
 
-#include "ui__csvdataitemdialogui_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

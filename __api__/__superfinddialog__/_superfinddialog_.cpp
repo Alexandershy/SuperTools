@@ -1,4 +1,5 @@
 #include "_superfinddialog_.h"
+#include "ui__superfinddialogui_.h"
 
 SuperFindDialog::SuperFindDialog(QWidget *parent,QTextEdit *textedit)
     :SuperWindow(parent)

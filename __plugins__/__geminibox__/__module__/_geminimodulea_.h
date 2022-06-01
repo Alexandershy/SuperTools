@@ -1,7 +1,7 @@
 #ifndef _GEMINIMODULEA__H
 #define _GEMINIMODULEA__H
 
-#include "ui__geminimodulea_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

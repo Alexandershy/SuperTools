@@ -1,7 +1,7 @@
 #ifndef _SERIALPORTMODULEB__H
 #define _SERIALPORTMODULEB__H
 
-#include "ui__serialportmoduleb_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

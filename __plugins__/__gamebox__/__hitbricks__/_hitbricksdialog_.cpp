@@ -1,4 +1,5 @@
 #include "_hitbricksdialog_.h"
+#include "ui__hitbricksdialogui_.h"
 
 HitBricksDialog::HitBricksDialog(QWidget *parent)
     : SuperWindow(parent)

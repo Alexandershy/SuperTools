@@ -8,6 +8,7 @@
 #include "_superfilesystemmodel_.h"
 #include <QFileIconProvider>
 #include <QStandardPaths>
+#include <QLabel>
 
 class _SUPERFILEDIALOG__EXPORT SuperFileDialog : public SuperWindow
 {

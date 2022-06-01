@@ -1,4 +1,5 @@
 #include "_serialportmoduleb_.h"
+#include "ui__serialportmoduleb_.h"
 
 SerialPortModuleB::SerialPortModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

@@ -1,8 +1,8 @@
 #ifndef _CHATSHAREDIALOGUI__H
 #define _CHATSHAREDIALOGUI__H
 
-#include "ui__chatsharedialogui_.h"
 #include <QMenu>
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ChatShareDialogui; }

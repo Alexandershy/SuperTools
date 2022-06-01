@@ -1,7 +1,7 @@
 #ifndef _WAVDATADIALOGUI__H
 #define _WAVDATADIALOGUI__H
 
-#include "ui__wavdatadialogui_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

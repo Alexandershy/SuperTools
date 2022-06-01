@@ -1,7 +1,7 @@
 #ifndef _ROUTDIALOGUI__H
 #define _ROUTDIALOGUI__H
 
-#include "ui__routdialogui_.h"
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class RoutDialogui;}

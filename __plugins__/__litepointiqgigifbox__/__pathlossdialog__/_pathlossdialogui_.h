@@ -1,7 +1,7 @@
 #ifndef _PATHLOSSDIALOGUI__H
 #define _PATHLOSSDIALOGUI__H
 
-#include "ui__pathlossdialogui_.h"
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class PathLossDialogui;}

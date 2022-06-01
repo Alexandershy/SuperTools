@@ -1,4 +1,5 @@
 #include "_superprogressbardialog_.h"
+#include "ui__superprogressbardialogui_.h"
 
 SuperProgressBarDialog::SuperProgressBarDialog(QWidget *parent)
     : SuperWindow(parent)

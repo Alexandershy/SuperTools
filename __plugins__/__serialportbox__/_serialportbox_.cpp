@@ -1,4 +1,6 @@
 #include "_serialportbox_.h"
+#include "ui__serialportmodulea_.h"
+#include "ui__serialportmoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

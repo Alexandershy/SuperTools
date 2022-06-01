@@ -1,4 +1,5 @@
 #include "_channel34_.h"
+#include "ui__channel34_.h"
 
 Channel34::Channel34(QWidget *parent,QSerialPort *serial,QCheckBox *checkbox,QLineEdit *lineedit)
     : QFrame(parent)

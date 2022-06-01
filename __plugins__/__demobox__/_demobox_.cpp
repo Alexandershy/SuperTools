@@ -1,4 +1,6 @@
 #include "_demobox_.h"
+#include "ui__demomodulea_.h"
+#include "ui__demomoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

@@ -4,6 +4,7 @@
 #include "__superwindow__/_superwindow_.h"
 #include "__superfiledialog__/_superfiledialog_.h"
 #include "_chatinfodialogui_.h"
+#include <QLineEdit>
 
 class ChatInfoDialog : public SuperWindow
 {

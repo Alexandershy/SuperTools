@@ -1,7 +1,7 @@
 #ifndef _GAMEMODULEA__H
 #define _GAMEMODULEA__H
 
-#include "ui__gamemodulea_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

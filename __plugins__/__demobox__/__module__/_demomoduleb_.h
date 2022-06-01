@@ -1,7 +1,7 @@
 #ifndef _DEMOMODULEB__H
 #define _DEMOMODULEB__H
 
-#include "ui__demomoduleb_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

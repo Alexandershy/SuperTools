@@ -1,4 +1,5 @@
 #include "_supersender_.h"
+#include "ui__supersenderui_.h"
 
 SuperSender::SuperSender(QWidget *parent,QLayout *layout)
     : QFrame(parent)

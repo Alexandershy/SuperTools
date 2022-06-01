@@ -2,13 +2,21 @@
 #define _DEMOBOX__H
 #define _DEMOBOX__EXPORT Q_DECL_EXPORT
 
-#include "__supertab__/_supertab_.h"
-#include "__supercore__/_supercore_.h"
-#include "__supergroupbox__/_supergroupbox_.h"
-#include "__superlogger__/_superlogger_.h"
-#include "__superfiledialog__/_superfiledialog_.h"
-#include "__superfilemanager__/_superfilemanager_.h"
-#include "__superwindow__/_superwindow_.h"
+#include <__supertab__/_supertab_.h>
+#include <__supercore__/_supercore_.h>
+#include <__supergroupbox__/_supergroupbox_.h>
+#include <__superlogger__/_superlogger_.h>
+#include <__superfiledialog__/_superfiledialog_.h>
+#include <__superfilemanager__/_superfilemanager_.h>
+#include <__superwindow__/_superwindow_.h>
+
+//#include "__supertab__/_supertab_.h"
+//#include "__supercore__/_supercore_.h"
+//#include "__supergroupbox__/_supergroupbox_.h"
+//#include "__superlogger__/_superlogger_.h"
+//#include "__superfiledialog__/_superfiledialog_.h"
+//#include "__superfilemanager__/_superfilemanager_.h"
+//#include "__superwindow__/_superwindow_.h"
 #include "__module__/_demomodulea_.h"
 #include "__module__/_demomoduleb_.h"
 

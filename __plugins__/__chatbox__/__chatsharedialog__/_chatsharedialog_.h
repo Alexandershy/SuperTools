@@ -6,6 +6,7 @@
 #include "__superfiledialog__/_superfiledialog_.h"
 #include <QDesktopServices>
 #include <QHostInfo>
+#include <QLineEdit>
 
 class GetFileInfoThread;
 

@@ -1,4 +1,6 @@
 #include "_geminibox_.h"
+#include "ui__geminimodulea_.h"
+#include "ui__geminimoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

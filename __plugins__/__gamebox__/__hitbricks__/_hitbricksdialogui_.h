@@ -1,7 +1,7 @@
 #ifndef _HITBRICKSDIALOGUI__H
 #define _HITBRICKSDIALOGUI__H
 
-#include "ui__hitbricksdialogui_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

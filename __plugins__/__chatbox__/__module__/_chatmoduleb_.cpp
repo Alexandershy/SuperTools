@@ -1,4 +1,5 @@
 #include "_chatmoduleb_.h"
+#include "ui__chatmoduleb_.h"
 
 ChatModuleB::ChatModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

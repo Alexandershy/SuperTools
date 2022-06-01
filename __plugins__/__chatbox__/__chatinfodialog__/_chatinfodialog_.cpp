@@ -1,4 +1,5 @@
 #include "_chatinfodialog_.h"
+#include "ui__chatinfodialogui_.h"
 
 ChatInfoDialog::ChatInfoDialog(QWidget *parent,QLineEdit *lineedit)
     : SuperWindow(parent)

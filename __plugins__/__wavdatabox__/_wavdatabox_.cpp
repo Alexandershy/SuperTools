@@ -1,4 +1,5 @@
 #include "_wavdatabox_.h"
+#include "ui__wavdatamodulea_.h"
 
 SuperTab* Interface::Loadplugin()
 {
@@ -90,21 +91,21 @@ void WavDataBox::changeWavFileApi(int direction)
         {
             case 0:
             {
-                item = Filemanager->ui->tableWidget->item(index,0);
+                item = Filemanager->firstItem(index);
                 break;
             }
             case 1:
             {
-                item = Filemanager->ui->tableWidget->item((index + direction + Wavfilelist->count()) % Wavfilelist->count(),0);
+                item = Filemanager->firstItem((index + direction + Wavfilelist->count()) % Wavfilelist->count());
                 break;
             }
             case 2:
             {
                 int time = QDateTime::currentDateTime().toString("hhmmsszzz").toInt();
-                item = Filemanager->ui->tableWidget->item(time % Wavfilelist->count(),0);
+                item = Filemanager->firstItem(time % Wavfilelist->count());
             }
         }
-        Filemanager->ui->tableWidget->setCurrentItem(item);
+        Filemanager->setCurrentItem(item);
         Wavfile = Filemanager->getCurrentItemText();
         Filemanager->setCurrentFile(Wavfile);
     }
@@ -211,9 +212,9 @@ void WavDataBox::play()
 
 void WavDataBox::setPlayWavFile()
 {
-    if(Filemanager->ui->tableWidget->currentItem() == nullptr)
+    if(Filemanager->currentItem() == nullptr)
     {
-        Filemanager->ui->tableWidget->setCurrentItem(Filemanager->ui->tableWidget->item(0,0));
+        Filemanager->setCurrentItem(Filemanager->firstItem(0));
     }
     Wavfile = Filemanager->getCurrentItemText();
     Filemanager->setCurrentFile(Wavfile);

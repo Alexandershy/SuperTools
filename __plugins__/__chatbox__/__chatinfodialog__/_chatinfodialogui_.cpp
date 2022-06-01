@@ -1,4 +1,5 @@
 #include "_chatinfodialogui_.h"
+#include "ui__chatinfodialogui_.h"
 
 ChatInfoDialogui::ChatInfoDialogui(QWidget *parent)
     : QFrame(parent)

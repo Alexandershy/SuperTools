@@ -1,4 +1,5 @@
 #include "_wavdatadialog_.h"
+#include "ui__wavdatadialogui_.h"
 
 WavDataDialog::WavDataDialog(QWidget *parent,QString wavfile)
     : SuperWindow(parent)

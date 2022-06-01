@@ -1,4 +1,5 @@
 #include "_superinit_.h"
+#include "ui__superinit_.h"
 
 SuperInit::SuperInit(QWidget *parent)
     : QFrame(parent),
@@ -64,7 +65,12 @@ void SuperInit::creatFile()
 
 void SuperInit::creatModuleFiles()
 {
+#ifdef Q_CC_MSVC
+    QDir dir("./__plugins__/","*.dll");
+#endif
+#ifdef Q_CC_GNU
     QDir dir("./__plugins__/","*.so");
+#endif
     QStringList files = dir.entryList();
     for(int i = 0;i < files.count();i++)
     {

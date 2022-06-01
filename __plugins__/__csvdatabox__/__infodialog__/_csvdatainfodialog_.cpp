@@ -1,4 +1,5 @@
 #include "_csvdatainfodialog_.h"
+#include "ui__csvdatainfodialogui_.h"
 
 CsvDataInfoDialog::CsvDataInfoDialog(QWidget *parent)
     : SuperWindow(parent)

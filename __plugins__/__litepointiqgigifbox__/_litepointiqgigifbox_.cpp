@@ -1,4 +1,8 @@
 #include "_litepointiqgigifbox_.h"
+#include "ui__routdialogui_.h"
+#include "ui__pathlossdialogui_.h"
+#include "ui__litepointiqgigifmodulea_.h"
+#include "ui__litepointiqgigifmoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

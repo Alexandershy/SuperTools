@@ -1,4 +1,5 @@
 #include "_demomoduleb_.h"
+#include "ui__demomoduleb_.h"
 
 DemoModuleB::DemoModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

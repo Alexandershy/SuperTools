@@ -1,4 +1,5 @@
 #include "_litepointiqgigifmodulea_.h"
+#include "ui__litepointiqgigifmodulea_.h"
 
 LitePointIQGigIfModuleA::LitePointIQGigIfModuleA(QWidget *parent,QLayout *layout)
     : QFrame(parent)

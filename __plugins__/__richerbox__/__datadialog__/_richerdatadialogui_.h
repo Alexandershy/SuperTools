@@ -1,7 +1,7 @@
 #ifndef _RICHERDATADIALOGUI__H
 #define _RICHERDATADIALOGUI__H
 
-#include "ui__richerdatadialogui_.h"
+#include <QFrame>
 
 /****************plugin*****************/
 QT_BEGIN_NAMESPACE

@@ -23,6 +23,19 @@ HEADERS += \
     __datadialog__/_wavdatadialog_.h \
     __datadialog__/_wavdatadialogui_.h \
     __module__/_wavdatamodulea_.h \
+    __superchartview__/_superchartview_.h \
+    __supercore__/_supercore_.h \
+    __superfftw__/fftw3.h \
+    __superfiledialog__/_superfiledialog_.h \
+    __superfilemanager__/_superfilemanager_.h \
+    __supergroupbox__/_supergroupbox_.h \
+    __superhook__/_superhook_.h \
+    __superlogger__/_superlogger_.h \
+    __supermultimedia__/_supermultimedia_.h \
+    __supernotedialog__/_supernotedialog_.h \
+    __superprogressbardialog__/_superprogressbardialog_.h \
+    __supertab__/_supertab_.h \
+    __superwindow__/_superwindow_.h \
     _wavdatabox_.h
 
 # Default rules for deployment.
@@ -41,9 +54,6 @@ DISTFILES += \
 
 RESOURCES += \
     _wavdatabox_.qrc
-
-INCLUDEPATH +=  $$PWD/../../__api__/
-INCLUDEPATH +=  $$PWD/../../../SuperTools-Build/build-_superapi_-Desktop_Qt_6_3_0_GCC_64bit/release/
 
 win32{
     LIBS += -luser32

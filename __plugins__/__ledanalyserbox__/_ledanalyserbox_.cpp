@@ -1,4 +1,6 @@
 #include "_ledanalyserbox_.h"
+#include "ui__ledanalysermodulea_.h"
+#include "ui__ledanalysermoduleb_.h"
 
 SuperTab* Interface::Loadplugin()
 {

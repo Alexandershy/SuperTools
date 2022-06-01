@@ -1,4 +1,5 @@
 #include "_supertab_.h"
+#include "ui__supertabui_.h"
 
 SuperTab::SuperTab(QWidget *parent)
     : QGroupBox(parent)

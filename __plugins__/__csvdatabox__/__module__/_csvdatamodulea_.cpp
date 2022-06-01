@@ -1,4 +1,5 @@
 #include "_csvdatamodulea_.h"
+#include "ui__csvdatamodulea_.h"
 
 CsvDataModuleA::CsvDataModuleA(QWidget *parent,QLayout *layout)
     : QFrame(parent)

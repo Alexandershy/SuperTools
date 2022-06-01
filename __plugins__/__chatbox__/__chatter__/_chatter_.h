@@ -3,7 +3,6 @@
 
 #include "__chatbubble__/_chatbubble_.h"
 #include "__chatuser__/_chatuser_.h"
-#include "ui__chatter_.h"
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE

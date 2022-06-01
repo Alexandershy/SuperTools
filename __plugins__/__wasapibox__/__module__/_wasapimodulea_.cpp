@@ -1,4 +1,5 @@
 #include "_wasapimodulea_.h"
+#include "ui__wasapimodulea_.h"
 
 WasapiModuleA::WasapiModuleA(QWidget *parent,QLayout *layout)
     : QFrame(parent)

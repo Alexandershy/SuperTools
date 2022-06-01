@@ -1,4 +1,5 @@
 #include "_scannermoduleb_.h"
+#include "ui__scannermoduleb_.h"
 
 ScannerModuleB::ScannerModuleB(QWidget *parent,QLayout *layout)
     : QFrame(parent)

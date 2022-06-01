@@ -1,4 +1,5 @@
 #include "_csvdatadialogui_.h"
+#include "ui__csvdatadialogui_.h"
 
 CsvDataDialogui::CsvDataDialogui(QWidget *parent)
     : QFrame(parent)

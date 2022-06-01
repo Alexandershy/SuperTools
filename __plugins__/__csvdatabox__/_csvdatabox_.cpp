@@ -1,4 +1,5 @@
 #include "_csvdatabox_.h"
+#include "ui__csvdatamodulea_.h"
 
 SuperTab* Interface::Loadplugin()
 {
