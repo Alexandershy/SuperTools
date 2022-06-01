@@ -17,24 +17,3 @@ xcopy/y "SuperTools-Source\__api__\__superlogger__\*.h" "SuperTools-Source\__plu
 xcopy/y "SuperTools-Source\__api__\__supertab__\*.h" "SuperTools-Source\__plugins__\__csvdatabox__\__supertab__\" /e
 
 xcopy/y "SuperTools-Source\__api__\__supergroupbox__\*.h" "SuperTools-Source\__plugins__\__csvdatabox__\__supergroupbox__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supercore__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__supercore__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superchartview__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__superchartview__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superprogressbardialog__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__superprogressbardialog__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superwindow__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__superwindow__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supernotedialog__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__supernotedialog__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superfiledialog__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__superfiledialog__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superfilemanager__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__superfilemanager__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superlogger__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__superlogger__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supertab__\*.ui" "SuperTools-Source\__plugins__\__csvdatabox__\__supertab__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supergroupbox__\*.h" "SuperTools-Source\__plugins__\__csvdatabox__\__supergroupbox__\" /e
-

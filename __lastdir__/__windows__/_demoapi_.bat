@@ -14,21 +14,4 @@ xcopy/y "SuperTools-Source\__api__\__superfilemanager__\*.h" "SuperTools-Source\
 
 xcopy/y "SuperTools-Source\__api__\__supernotedialog__\*.h" "SuperTools-Source\__plugins__\__demobox__\__supernotedialog__\" /e
 
-xcopy/y "SuperTools-Source\__api__\__supercore__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__supercore__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supertab__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__supertab__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supergroupbox__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__supergroupbox__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superlogger__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__superlogger__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superwindow__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__superwindow__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superfiledialog__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__superfiledialog__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superfilemanager__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__superfilemanager__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supernotedialog__\*.ui" "SuperTools-Source\__plugins__\__demobox__\__supernotedialog__\" /e
-
-
 

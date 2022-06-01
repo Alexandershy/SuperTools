@@ -25,32 +25,3 @@ xcopy/y "SuperTools-Source\__api__\__superfilemanager__\*.h" "SuperTools-Source\
 xcopy/y "SuperTools-Source\__api__\__supertab__\*.h" "SuperTools-Source\__plugins__\__fsmpegbox__\__supertab__\" /e
 
 xcopy/y "SuperTools-Source\__api__\__supergroupbox__\*.h" "SuperTools-Source\__plugins__\__fsmpegbox__\__supergroupbox__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supercore__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__supercore__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supercodec__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__supercodec__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supermultimedia__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__supermultimedia__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superprogressbardialog__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__superprogressbardialog__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superwindow__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__superwindow__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supernotedialog__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__supernotedialog__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superfiledialog__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__superfiledialog__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superflac__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__superflac__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supermp3__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__supermp3__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superape__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__superape__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superlogger__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__superlogger__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__superfilemanager__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__superfilemanager__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supertab__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__supertab__\" /e
-
-xcopy/y "SuperTools-Source\__api__\__supergroupbox__\*.ui" "SuperTools-Source\__plugins__\__fsmpegbox__\__supergroupbox__\" /e
-
