@@ -1,0 +1,16 @@
+bash _chatso_.sh
+bash _csvdataso_.sh
+bash _demoso_.sh
+bash _fsmpegso_.sh
+bash _gameso_.sh
+bash _geminiso_.sh
+bash _relayso_.sh
+bash _ledanalyserso_.sh
+bash _litepointiqgigifso_.sh
+bash _richerso_.sh
+bash _scannerso_.sh
+bash _serialportso_.sh
+bash _tcpclientso_.sh
+bash _tcpserverso_.sh
+bash _wasapiso_.sh
+bash _wavdataso_.sh

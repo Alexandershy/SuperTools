@@ -25,7 +25,7 @@ void ChatShareDialog::init()
 
 void ChatShareDialog::objectInit()
 {
-    Localuser = QDir::home().dirName() + " " + QHostInfo::localHostName();
+    Localuser = QDir::home().dirName() + "_" + QHostInfo::localHostName();
     Sharedfolder = "./__depycache__/__chat__/__" + Lineedit->text() + "__/";
     Targetpath = Sharedfolder + "_targetpath_.txt";
     Sharedfilepath = Sharedfolder + "_filesshared_.txt";

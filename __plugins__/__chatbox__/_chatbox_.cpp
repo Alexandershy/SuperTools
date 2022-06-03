@@ -58,7 +58,7 @@ void ChatBox::moduleInit()
 
 void ChatBox::userInit()
 {
-    Username = QDir::home().dirName() + " " + QHostInfo::localHostName();
+    Username = QDir::home().dirName() + "_" + QHostInfo::localHostName();
     Userfolder = "./__depycache__/__chat__/__" + Username + "__/";
     Userprofile = Userfolder + "_user_.png";
     Usersharedfile = Userfolder + "_filesshared_.txt";
