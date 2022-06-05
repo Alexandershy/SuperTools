@@ -10,6 +10,7 @@ bash _litepointiqgigifso_.sh
 bash _richerso_.sh
 bash _scannerso_.sh
 bash _serialportso_.sh
+bash _superapiso_.sh
 bash _tcpclientso_.sh
 bash _tcpserverso_.sh
 bash _wasapiso_.sh
