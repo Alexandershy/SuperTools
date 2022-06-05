@@ -25,7 +25,7 @@ void ChatInfoDialog::init()
 void ChatInfoDialog::objectInit()
 {
     Plugin = new ChatInfoDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->pushButton,&QPushButton::clicked,this,&ChatInfoDialog::selectProfile);
 }
 

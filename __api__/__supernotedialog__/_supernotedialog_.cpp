@@ -24,7 +24,7 @@ void SuperNoteDialog::init()
 void SuperNoteDialog::objectInit()
 {
     Plugin = new SuperNoteDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->pushButton,     &QPushButton::clicked,this,&SuperNoteDialog::signalNa);
     connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,this,&SuperNoteDialog::signalNb);
     connect(Plugin->ui->pushButton,     &QPushButton::clicked,this,&SuperNoteDialog::deleteLater);

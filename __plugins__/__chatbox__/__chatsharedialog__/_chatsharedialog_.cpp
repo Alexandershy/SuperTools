@@ -32,7 +32,7 @@ void ChatShareDialog::objectInit()
     Core->creatFile(Sharedfilepath);
     Plugin = new ChatShareDialogui(this);
     Threadga = new GetFileInfoThread(Sharedfilepath,Plugin->ui->treeWidget->columnCount(),Lineedit->text(),Localuser,&Fileslist,Sharedfolder);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     Plugin->ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     Plugin->ui->treeWidget->header()->setStretchLastSection(false);
     connect(Plugin->Cancelshared,   &QAction::triggered,            this,&ChatShareDialog::cancelSharedFiles);

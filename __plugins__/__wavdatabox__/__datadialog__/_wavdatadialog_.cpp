@@ -37,7 +37,7 @@ void WavDataDialog::objectInit()
     Timerca = new QTimer(this);
     Timerca->setInterval(1000);
     Plugin = new WavDataDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     Progressbardialog = new SuperProgressBarDialog();
     connect(Plugin->ui->pushButton,     &QPushButton::clicked,  this,&WavDataDialog::play);
     connect(Plugin->ui->pushButton_2,   &QPushButton::clicked,  this,&WavDataDialog::refresh);

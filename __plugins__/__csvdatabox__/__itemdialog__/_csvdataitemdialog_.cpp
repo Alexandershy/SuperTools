@@ -26,7 +26,7 @@ void CsvDataItemDialog::init()
 void CsvDataItemDialog::objectInit()
 {
     Plugin = new CsvDataItemDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(this,                   &CsvDataItemDialog::signalIa,       this,&CsvDataItemDialog::hide);
     connect(this,                   &CsvDataItemDialog::signalIb,       this,&CsvDataItemDialog::hide);
     connect(Plugin->ui->treeWidget, &QTreeWidget::itemPressed,          this,&CsvDataItemDialog::itemOptions);

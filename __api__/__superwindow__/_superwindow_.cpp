@@ -111,7 +111,6 @@ void SuperWindow::objectInit()
 {
     Core = new SuperCore(this);
     Title = new SuperTitle(this);
-    Timer = new QTimer(this);
     connect(Title->Minisizebutton,      &QPushButton::clicked,  this,&SuperWindow::minimized);
     connect(Title->Maxisizebutton,      &QPushButton::clicked,  this,&SuperWindow::changeMaxicon);
     connect(Title->Closebutton,         &QPushButton::clicked,  this,&SuperWindow::close);
@@ -120,8 +119,6 @@ void SuperWindow::objectInit()
     connect(Title,                      &SuperTitle::signalSc,  this,&SuperWindow::setCursor);
     connect(this,                       &SuperWindow::signalWa, this,&SuperWindow::setWidgetTheme);
     connect(this,                       &SuperWindow::signalWc, this,&SuperWindow::setDeactiveTheme);
-    connect(Timer,                      &QTimer::timeout,       this,&SuperWindow::signalWd);
-    connect(Timer,                      &QTimer::timeout,       Timer,&QTimer::deleteLater);
 }
 
 /*  objectinit;*/
@@ -206,6 +203,22 @@ void SuperWindow::setTitle(QString titletext)
 }
 
 /*  set title;*/
+
+void SuperWindow::setWidget(QWidget *widget)
+{
+    Widget = widget;
+    Widget->setParent(this);
+    Pluginlayout->addWidget(Widget);
+}
+
+/*  set widget;*/
+
+QWidget* SuperWindow::widget()
+{
+    return Widget;
+}
+
+/*  return widget;*/
 
 void SuperWindow::disableMaxisize()
 {
@@ -573,7 +586,7 @@ void SuperWindow::show()
         moveCenter(this);
         activateWindow();
         Showtimes = true;
-        Timer->start(Showinterval);
+        QTimer::singleShot(10,this,&SuperWindow::signalWd);
     }
     else if(windowState().testFlag(Qt::WindowMinimized) && windowState().testFlag(Qt::WindowMaximized))
     {
@@ -674,6 +687,7 @@ void SuperWindow::close()
 {
     Mouseontitle = false;
     QWidget::close();
+    emit signalWe(Widget);
 }
 
 /*  close and reset parameter;*/

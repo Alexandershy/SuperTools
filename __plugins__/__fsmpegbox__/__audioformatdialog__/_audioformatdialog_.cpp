@@ -24,7 +24,7 @@ void AudioFormatDialog::init()
 void AudioFormatDialog::objectInit()
 {
     Plugin = new AudioFormatDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->pushButton,     &QPushButton::clicked,      this,&AudioFormatDialog::convert);
     connect(Plugin->ui->comboBox,       &QComboBox::textActivated,  this,&AudioFormatDialog::convertMode);
 }

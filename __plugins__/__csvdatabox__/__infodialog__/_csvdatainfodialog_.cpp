@@ -23,7 +23,7 @@ void CsvDataInfoDialog::init()
 void CsvDataInfoDialog::objectInit()
 {
     Plugin = new CsvDataInfoDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->spinBox,   &QSpinBox::textChanged, this,   &CsvDataInfoDialog::checkItemNumber);
     connect(Plugin->ui->spinBox_2, &QSpinBox::textChanged, this,   &CsvDataInfoDialog::checkUpperLimitNumber);
     connect(Plugin->ui->spinBox_3, &QSpinBox::textChanged, this,   &CsvDataInfoDialog::checkLowerLimitNumber);

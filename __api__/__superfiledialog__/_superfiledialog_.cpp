@@ -32,7 +32,7 @@ void SuperFileDialog::init()
 void SuperFileDialog::objectInit()
 {
     Plugin = new SuperFileDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     Plugin->ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     Plugin->ui->tableWidget->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     Plugin->ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);

@@ -26,7 +26,7 @@ void SuperColorDialog::init()
 void SuperColorDialog::objectInit()
 {
     Plugin = new SuperColorDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->tableWidget,        &QTableWidget::itemPressed, this,&SuperColorDialog::refreshRgbColora);
     connect(Plugin->ui->pushButton_2,       &QPushButton::clicked,      this,&SuperColorDialog::selectColor);
     connect(Plugin->ui->spinBox,            &QSpinBox::textChanged,     this,&SuperColorDialog::refreshLabelColor);

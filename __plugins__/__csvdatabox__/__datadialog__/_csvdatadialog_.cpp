@@ -31,7 +31,7 @@ void CsvDataDialog::init()
 void CsvDataDialog::objectInit()
 {
     Plugin = new CsvDataDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     Progressbardialog   = new SuperProgressBarDialog();
     Itemstreedialog     = new CsvDataItemDialog(nullptr,&Dataitems,&Datalistcount);
     Chartview           = new SuperChartView(this);

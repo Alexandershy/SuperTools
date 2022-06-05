@@ -28,7 +28,7 @@ void WasapiFormatDialog::objectInit()
 {
     Multimedia = new SuperMultiMedia(this);
     Plugin = new WasapiFormatDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->doubleSpinBox,  &QDoubleSpinBox::textChanged,   this,&WasapiFormatDialog::changeOutputFormat);
     connect(Plugin->ui->doubleSpinBox_2,&QDoubleSpinBox::textChanged,   this,&WasapiFormatDialog::changeOutputFormat);
     connect(Plugin->ui->doubleSpinBox_3,&QDoubleSpinBox::textChanged,   this,&WasapiFormatDialog::changeOutputFormat);

@@ -551,7 +551,7 @@ void SuperPlayWav::playing()
 
 void SuperPlayWav::writeData()
 {
-    Iodevice->write(File->read(Samplerate / 25));
+    Iodevice->write(File->read(Audiosink->bytesFree()));
 }
 
 /*  write data;*/

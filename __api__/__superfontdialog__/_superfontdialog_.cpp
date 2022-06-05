@@ -28,7 +28,7 @@ void SuperFontDialog::init()
 void SuperFontDialog::objectInit()
 {
     Plugin = new SuperFontDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     Plugin->ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     Plugin->ui->treeWidget->header()->setStretchLastSection(false);
     connect(Plugin->ui->treeWidget, &QTreeWidget::itemDoubleClicked,    this,&SuperFontDialog::sendFont);

@@ -18,7 +18,6 @@ class _SUPERWINDOW__EXPORT SuperWindow : public QWidget
 public:
 
     SuperCore *Core                 = nullptr;
-    QLayout *Pluginlayout           = nullptr;
     QColor Backgroundcolor          = {16,81,142};
     QColor Fontcolor                = Qt::black;
     QColor Concolor                 = {239,174,113};
@@ -74,6 +73,11 @@ public slots:
 
     void close();
 
+    void setWidget(
+            QWidget *widget);
+
+    QWidget* widget();
+
 protected:
 
     void keyPressEvent(
@@ -96,6 +100,7 @@ private:
 
     Ui::SuperWindowui *ui               = nullptr;
     SuperTitle *Title                   = nullptr;
+    QLayout *Pluginlayout               = nullptr;
     bool Mouseontitle                   = false;
     bool Enablemaxbutton                = true;
     bool Enableclosebutton              = true;
@@ -122,7 +127,7 @@ private:
     QAction *Actioncolor                = nullptr;
     QAction *Actionheartofiron          = nullptr;
     QAction *Actiongoertek              = nullptr;
-    QTimer *Timer                       = nullptr;
+    QWidget *Widget                     = nullptr;
     int Showinterval                    = 10;
 
 private slots:
@@ -200,6 +205,9 @@ signals:
     void signalWc();
 
     void signalWd();
+
+    void signalWe(
+        QWidget *widget);
 
 };
 

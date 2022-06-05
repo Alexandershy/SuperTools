@@ -115,6 +115,14 @@ private slots:
 
     void closeTab();
 
+    void openEjectTabBox(
+            int intindex);
+
+    void ejectTab();
+
+    void returnTab(
+        QWidget *widget);
+
     void close();
 
 signals:

@@ -20,7 +20,7 @@ void SuperFrame::superInitWindow()
     Initbox = new SuperInit(this);
     connect(Initbox,&SuperInit::signalIa,   this,&SuperFrame::superMainWindow);
     connect(this,   &SuperFrame::signalWb,  this,&SuperFrame::superSelectColor);
-    Pluginlayout->addWidget(Initbox);
+    setWidget(Initbox);
 }
 
 /*  add initbox;*/
@@ -51,7 +51,7 @@ void SuperFrame::superMainWindow(QString setting)
     delete Initbox;
     Initbox = nullptr;
     Mainbox = new SuperMain(this,setting);
-    Pluginlayout->addWidget(Mainbox);
+    setWidget(Mainbox);
     Mainbox->setFocus();
     connect(Mainbox,&SuperMain::signalMa,   Core,&SuperCore::openPath);
     connect(Mainbox,&SuperMain::signalMb,   this,&SuperFrame::quit);

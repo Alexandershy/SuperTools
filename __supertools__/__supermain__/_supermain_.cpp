@@ -15,6 +15,7 @@ SuperMain::SuperMain(QWidget *parent,QString setting)
     setMouseTracking(true);
     setMinimumSize(800,550);
     connect(this,&QTabWidget::tabCloseRequested,this,&SuperMain::openCloseTabBox);
+    connect(this,&QTabWidget::tabBarDoubleClicked,this,&SuperMain::openEjectTabBox);
     init();
 }
 
@@ -229,12 +230,21 @@ void SuperMain::addTab(QString strtabname,QWidget* widget,QString strobjname)
 
 void SuperMain::showTab(QStringList *listobjname,QString strobjname)
 {
-    for(int i = 0;i < listobjname->count();i++)
+    if(count() == listobjname->count())
     {
-        if(strobjname == listobjname->at(i))
+        for(int i = 0;i < listobjname->count();i++)
         {
-            setCurrentIndex(i);
+            if(strobjname == listobjname->at(i))
+            {
+                setCurrentIndex(i);
+            }
         }
+    }
+    else
+    {
+        SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"need to return all tab;");
+        notedialog->hideLeftButton();
+        notedialog->messageInit();
     }
 }
 
@@ -286,7 +296,7 @@ void SuperMain::saveAs()
 
 void SuperMain::openCachePath()
 {
-    QString dirpath = "./__depycache__/__" + Tabnamelist.at(currentIndex()) + "__";
+    QString dirpath = "./__depycache__/__" + Core->firstWordLower(tabText(currentIndex())) + "__";
     QDir dir(dirpath);
     if(dir.exists())
     {
@@ -309,7 +319,7 @@ void SuperMain::checkVersion()
 
 void SuperMain::readme()
 {
-    emit signalMa("./__readme__/__plugins__/_" + Tabnamelist.at(currentIndex()) + "_.pdf");
+    emit signalMa("./__readme__/__plugins__/_" + Core->firstWordLower(tabText(currentIndex())) + "_.pdf");
 }
 
 /*  open and view readme;*/
@@ -324,7 +334,7 @@ void SuperMain::superApi()
 void SuperMain::openCloseTabBox(int intindex)
 {
     setCurrentIndex(intindex);
-    SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"sure to close " + Tabnamelist.at(intindex) + "?");
+    SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"sure to close " + tabText(intindex) + "?");
     connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperMain::closeTab);
     notedialog->messageInit();
 }
@@ -335,7 +345,7 @@ void SuperMain::closeTab()
 {
     if(count() > 1)
     {
-        Tabnamelist.removeAt(currentIndex());
+        Tabnamelist.removeOne(Core->firstWordLower(tabText(currentIndex())));
         delete widget(currentIndex());
     }
     else if(count() == 1)
@@ -346,7 +356,49 @@ void SuperMain::closeTab()
     }
 }
 
-/*  close current tab,can not close the last tab;*/
+/*  close current tab;*/
+
+void SuperMain::openEjectTabBox(int intindex)
+{
+    if(count() > 1)
+    {
+        SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"sure to eject " + Core->firstWordLower(tabText(intindex)) + "?");
+        connect(notedialog,&SuperNoteDialog::signalNb,this,&SuperMain::ejectTab);
+        notedialog->messageInit();
+    }
+    else if(count() == 1)
+    {
+        SuperNoteDialog *notedialog = new SuperNoteDialog(nullptr,"can not eject last tab;");
+        notedialog->hideLeftButton();
+        notedialog->messageInit();
+    }
+}
+
+/*  show eject tab first,eject notedialog;*/
+
+void SuperMain::ejectTab()
+{
+    QWidget *widget = currentWidget();
+    SuperWindow *window = new SuperWindow(nullptr);
+    connect(window,&SuperWindow::signalWe,this,&SuperMain::returnTab);
+    widget->setParent(nullptr);
+    window->setTitle(widget->objectName().split("Box").at(0) + " Dialog");
+    window->setWidget(widget);
+    widget->setHidden(false);
+    window->show();
+}
+
+/*  eject current tab;*/
+
+void SuperMain::returnTab(QWidget *widget)
+{
+    widget->setParent(nullptr);
+    QString tabname = Core->allWordLower(widget->objectName()).split("box").at(0);
+    QTabWidget::addTab(widget,Core->firstWordUpper(tabname));
+    setCurrentIndex(count() - 1);
+}
+
+/*  return tab;*/
 
 void SuperMain::close()
 {

@@ -60,7 +60,7 @@ void RicherDataDialog::init()
 void RicherDataDialog::objectInit()
 {
     Plugin = new RicherDataDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->pushButton_5,   &QPushButton::clicked,              this,   &RicherDataDialog::apply);
     connect(Plugin->ui->textEdit_2,     &QTextEdit::textChanged,            this,   &RicherDataDialog::enableApply);
     connect(Plugin->ui->textEdit_2,     &QTextEdit::cursorPositionChanged,  this,   &RicherDataDialog::checkCharFormat);

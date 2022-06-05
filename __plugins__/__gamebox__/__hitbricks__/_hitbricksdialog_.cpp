@@ -25,7 +25,7 @@ void HitBricksDialog::init()
 void HitBricksDialog::objectInit()
 {
     Plugin = new HitBricksDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(this,&HitBricksDialog::signalWa,this,&HitBricksDialog::setFocus);
     connect(this,&HitBricksDialog::signalWd,this,&HitBricksDialog::addSceneInit);
 }

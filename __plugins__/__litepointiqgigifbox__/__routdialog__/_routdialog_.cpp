@@ -21,5 +21,5 @@ void RoutDialog::init()
 void RoutDialog::objectInit()
 {
     Plugin = new RoutDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
 }

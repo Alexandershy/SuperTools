@@ -26,7 +26,7 @@ void SuperFindDialog::init()
 void SuperFindDialog::objectInit()
 {
     Plugin = new SuperFindDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     connect(Plugin->ui->pushButton_3,   &QPushButton::clicked,          this,&SuperFindDialog::findNextText);
     connect(Plugin->ui->comboBox,       &QComboBox::textActivated,      this,&SuperFindDialog::findNextText);
     connect(Plugin->ui->pushButton,     &QPushButton::clicked,          this,&SuperFindDialog::findLastText);

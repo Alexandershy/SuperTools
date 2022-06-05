@@ -21,7 +21,7 @@ void PathLossDialog::init()
 void PathLossDialog::objectInit()
 {
     Plugin = new PathLossDialogui(this);
-    Pluginlayout->addWidget(Plugin);
+    setWidget(Plugin);
     Datamenu    = new PathLossDataMenu(this);
     Configmenu  = new PathLossConfigMenu(this);
     Settingmenu = new PathLossSettingMenu(this);
