@@ -73,6 +73,14 @@ void SuperWindow::mouseReleaseEvent(QMouseEvent *event)
 
 /*  move to global pos;*/
 
+void SuperWindow::closeEvent(QCloseEvent *event)
+{
+    Q_UNUSED(event);
+    emit signalWe(Widget);
+}
+
+/*  close event;*/
+
 bool SuperWindow::eventFilter(QObject* object,QEvent *event)
 {
     switch (event->type())
@@ -687,7 +695,6 @@ void SuperWindow::close()
 {
     Mouseontitle = false;
     QWidget::close();
-    emit signalWe(Widget);
 }
 
 /*  close and reset parameter;*/

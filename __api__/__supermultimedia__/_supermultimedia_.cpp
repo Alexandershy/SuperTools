@@ -551,7 +551,12 @@ void SuperPlayWav::playing()
 
 void SuperPlayWav::writeData()
 {
+#ifdef Q_CC_MSVC
     Iodevice->write(File->read(Audiosink->bytesFree()));
+#endif
+#ifdef Q_CC_GNU
+    Iodevice->write(File->read(Samplerate / 25));
+#endif
 }
 
 /*  write data;*/

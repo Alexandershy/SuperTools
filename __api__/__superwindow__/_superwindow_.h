@@ -92,6 +92,9 @@ protected:
     void mouseReleaseEvent(
         QMouseEvent *event);
 
+    void closeEvent(
+        QCloseEvent *event);
+
     bool eventFilter(
         QObject *object,
         QEvent *event);
