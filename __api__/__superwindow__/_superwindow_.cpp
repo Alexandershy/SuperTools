@@ -177,12 +177,12 @@ void SuperWindow::addMaxisizeButton(QString colorstyle)
     {
         if(isMaximized())
         {
-            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "restoredown_.svg"));
+            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + colorstyle + "restoredown_.svg"));
             Title->Maxisizebutton->setToolTip("Maxmize");
         }
         else
         {
-            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "maximize_.svg"));
+            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + colorstyle + "maximize_.svg"));
             Title->Maxisizebutton->setToolTip("Restore Down");
         }
     }
