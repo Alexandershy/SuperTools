@@ -177,11 +177,13 @@ void SuperWindow::addMaxisizeButton(QString colorstyle)
     {
         if(isMaximized())
         {
-            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + colorstyle + "restoredown_.svg"));
+            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "restoredown_.svg"));
+            Title->Maxisizebutton->setToolTip("Maxmize");
         }
         else
         {
-            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + colorstyle + "maximize_.svg"));
+            Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "maximize_.svg"));
+            Title->Maxisizebutton->setToolTip("Restore Down");
         }
     }
 }
@@ -234,6 +236,7 @@ void SuperWindow::disableMaxisize()
     disconnect(Title->Maxisizebutton,   &QPushButton::clicked,  this,&SuperWindow::changeMaxicon);
     Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_blank_.png"));
     Title->Maxisizebutton->setEnabled(false);
+    Title->Maxisizebutton->setToolTip("");
     Enablemaxbutton = false;
 }
 
@@ -297,10 +300,12 @@ void SuperWindow::changeMaxicon()
     if(isMaximized())
     {
         Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "maximize_.svg"));
+        Title->Maxisizebutton->setToolTip("Restore Down");
     }
     else
     {
         Title->Maxisizebutton->setIcon(QIcon(":/__supericon__/_" + Activatestatus + "restoredown_.svg"));
+        Title->Maxisizebutton->setToolTip("Maxmize");
     }
     changeShowStatus();
 }

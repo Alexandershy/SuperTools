@@ -50,6 +50,8 @@ private slots:
 
     void objectInit();
 
+    void parameterInit();
+
 signals:
 
     void signalSa(

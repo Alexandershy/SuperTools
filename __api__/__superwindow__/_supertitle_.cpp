@@ -39,6 +39,7 @@ void SuperTitle::leaveEvent(QEvent *)
 void SuperTitle::init()
 {
     objectInit();
+    parameterInit();
 }
 
 /*  init;*/
@@ -48,13 +49,22 @@ void SuperTitle::objectInit()
     Minisizebutton = new SuperTitleButton(this);
     Maxisizebutton = new SuperTitleButton(this);
     Closebutton = new SuperTitleButton(this);
+}
+
+/*  object init;*/
+
+void SuperTitle::parameterInit()
+{
+    Minisizebutton->setToolTip("Minimize");
+    Maxisizebutton->setToolTip("Maximize");
+    Closebutton->setToolTip("Close");
     ui->horizontalLayout_6->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     ui->horizontalLayout_6->addWidget(Minisizebutton);
     ui->horizontalLayout_6->addWidget(Maxisizebutton);
     ui->horizontalLayout_6->addWidget(Closebutton);
 }
 
-/*  object init;*/
+/*  parameter init;*/
 
 void SuperTitle::setSourceColor(QString rgbcolor)
 {

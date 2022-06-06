@@ -48,6 +48,7 @@ private:
 
     SuperCore *Core                 = nullptr;
     QString Setting                 = "";
+    QRect Rect                      = {0,0,804,580};
     QStringList Tabnamelist         = {};
     QAction *Actionplugin           = nullptr;
     QAction *Actionsetting          = nullptr;

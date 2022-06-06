@@ -384,6 +384,7 @@ void SuperMain::ejectTab()
     widget->setParent(nullptr);
     window->setTitle(widget->objectName().split("Box").at(0) + " Dialog");
     window->setWidget(widget);
+    window->setGeometry(Rect);
     widget->setHidden(false);
     window->show();
 }
@@ -392,10 +393,12 @@ void SuperMain::ejectTab()
 
 void SuperMain::returnTab(QWidget *widget)
 {
+    SuperWindow* window = (SuperWindow*)sender();
     widget->setParent(nullptr);
     QString tabname = Core->allWordLower(widget->objectName()).split("box").at(0);
     QTabWidget::addTab(widget,Core->firstWordUpper(tabname));
     setCurrentIndex(count() - 1);
+    window->deleteLater();
 }
 
 /*  return tab;*/
